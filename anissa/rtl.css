@@ -1,0 +1,425 @@
+/*
+Theme Name: anissa
+
+Adding support for language written in a Right To Left (RTL) direction is easy -
+it's just a matter of overwriting all the horizontal positioning attributes
+of your CSS stylesheet in a separate stylesheet file named rtl.css.
+
+http://codex.wordpress.org/Right_to_Left_Language_Support
+
+*/
+
+body {
+	direction: rtl;
+	unicode-bidi: embed;
+}
+
+ul,
+ol {
+	margin: 0 3em 1.5em 0;
+}
+
+li > ul,
+li > ol {
+	margin-right: 1.5em;
+	margin-left: auto;
+}
+input[type="search"].search-field {
+	padding-right: 2em;
+	padding-left: 0;
+}
+
+.search-form label:before {
+	right: .75em;
+	left: auto;
+}
+
+textarea {
+	padding-right: .75em;
+	padding-left: 0;
+}
+.main-navigation > div:first-of-type {
+	float: right;
+}
+
+.main-navigation ul {
+	padding-right: 0;
+	padding-left: 0;
+}
+
+.main-navigation li {
+	margin-left: 1.5em;
+	margin-right: auto;
+}
+
+.main-navigation .menu li:last-of-type {
+	margin-left: 0;
+	margin-right: auto;
+}
+
+.main-navigation ul ul {
+	float: right;
+	right: -999em;
+	left: auto;
+}
+
+.main-navigation ul ul ul {
+	right: -999em;
+	left: auto;
+}
+
+.main-navigation ul li:hover > ul,
+.main-navigation ul li.focus > ul {
+	right: auto;
+	left: auto;
+}
+
+.main-navigation ul ul li:hover > ul,
+.main-navigation ul ul li.focus > ul {
+	right: 100%;
+	left: auto;
+}
+
+.main-navigation ul li.menu-item-has-children > a:after,
+.main-navigation ul li.page_item_has_children > a:after {
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.main-navigation ul ul li.menu-item-has-children > a:after,
+.main-navigation ul ul li.page_item_has_children > a:after {
+	content: "\f053";
+	margin-right: 10px;
+	margin-left: auto;
+}
+
+/* Social Links */
+
+.social-links {
+	float: left;
+}
+
+.social-links li {
+	margin-left: 15px;
+	margin-right: auto;
+}
+
+.social-links li:last-of-type {
+	margin-left: 0;
+	margin-right: auto;
+}
+
+/* Small menu. */
+
+.menu-toggle:before {
+	margin-left: 5px;
+	margin-right: auto;
+}
+
+.comment-navigation .nav-previous,
+.posts-navigation .nav-previous,
+.post-navigation .nav-previous {
+	float: right;
+}
+
+.comment-navigation .nav-next,
+.posts-navigation .nav-next,
+.post-navigation .nav-next {
+	float: left;
+	text-align: left;
+}
+
+.screen-reader-text:focus {
+	right: 5px;
+	left: auto;
+}
+
+.alignright {
+	float: right;
+	margin: .75em 0 .75em 1.5em;
+}
+
+.alignleft {
+	float: left;
+	margin: .75em 1.5em .75em 0;
+}
+
+.widget_calendar td#next {
+	text-align: left;
+}
+
+.footer-widgets .widget-area {
+	margin-left: 5%;
+	float: right;
+	margin-right: auto;
+}
+
+.footer-widgets .widget-area:last-of-type {
+	margin-left: 0;
+	margin-right: auto;
+}
+
+.footer-widgets .social-links li {
+	padding-left: 2.5%;
+	padding-right: 0;
+}
+
+.footer-widgets .social-links li:last-of-type {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.widget_authors strong {
+	margin-right: 5px;
+	margin-left: auto;
+}
+.entry-summary {
+	float: left;
+}
+
+.entry-meta {
+	float: right;
+}
+
+/* Single posts */
+
+.entry-footer > span {
+	margin-left: 1.5em;
+	margin-right: auto;
+}
+
+.entry-footer > span:before,
+.comment-list .edit-link:before,
+.comment-reply-link:before {
+	margin-left: 7px;
+	margin-right: auto;
+}
+
+.entry-footer .edit-link {
+	float: left;
+	margin-left: 0;
+	margin-right: auto;
+}
+
+.comment-list .children {
+	margin-right: 1.5em;
+	margin-left: auto;
+}
+
+.comment .edit-link {
+	margin-right: .75em;
+	margin-left: auto;
+}
+
+.comment-list .avatar {
+	float: right;
+	margin-left: 1.5em;
+	margin-right: auto;
+}
+
+.comment-reply-link {
+	margin-right: .75em;
+	margin-left: auto;
+}
+
+.site-main {
+	float: right;
+}
+
+.page-template-nosidebar-page-php .site-main,
+.error404 .site-main {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.sidebar-right {
+	margin-right: 3.75%;
+	float: right;
+	margin-left: auto;
+}
+
+.sidebar-left {
+	margin-right: 3.75%;
+	float: left;
+	margin-left: auto;
+}
+
+/*=Media Queries
+---------------------------------------------------------------------------*/
+
+@media screen and (min-width: 1101px) and (max-width: 1200px) {
+	.entry-meta > span {
+		padding-left: .75em;
+		padding-right: 0;
+	}
+
+	.entry-meta > span:last-of-type {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+@media screen and (max-width: 1100px) {
+	.sidebar-left {
+		margin-right: 0;
+		margin-left: 0;
+	}
+
+	.sidebar-left .widget {
+		margin-left: 5%;
+		float: right;
+		margin-right: auto;
+	}
+
+	.sidebar-left .widget:nth-of-type(3n+1) {
+		clear: right;
+	}
+
+	.sidebar-left .widget:nth-of-type(3n) {
+		clear: left;
+		margin-left: 0;
+		margin-right: auto;
+	}
+}
+
+@media screen and (min-width: 751px) and (max-width: 950px) {
+	.entry-meta > span {
+		padding-left: 1.5em;
+		padding-right: 0;
+	}
+
+	.entry-meta > span:last-of-type {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.entry-meta ul li {
+		padding-left: 15px;
+		padding-right: 0;
+	}
+
+	.entry-meta ul li:last-of-type {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+}
+@media screen and (max-width: 750px) {
+	.sidebar-right {
+		margin-right: 0;
+		margin-left: 0;
+	}
+
+	.sidebar-left .widget:nth-of-type(3n) {
+		margin-left: 4%;
+		margin-right: auto;
+	}
+
+	.sidebar-right .widget,
+		.sidebar-left .widget {
+		margin-left: 4%;
+		float: right;
+		margin-right: auto;
+	}
+
+	.sidebar-right .widget:nth-of-type(2n+1),
+	.sidebar-left .widget:nth-of-type(2n+1) {
+		clear: right;
+	}
+
+	.sidebar-right .widget:nth-of-type(2n),
+	.sidebar-left .widget:nth-of-type(2n) {
+		clear: left;
+		margin-left: 0;
+		margin-right: auto;
+	}
+
+	.footer-widgets .widget-area {
+		margin-left: 4%;
+		margin-right: auto;
+	}
+
+	.footer-widgets .widget-area:nth-of-type(2n) {
+		clear: left;
+		margin-left: 0;
+		margin-right: auto;
+	}
+
+	.comment-navigation .nav-next,
+	.posts-navigation .nav-next,
+	.post-navigation .nav-next {
+		text-align: left;
+	}
+
+}
+@media screen and (max-width: 650px) {
+	.entry-meta > span {
+		padding-left: 1.5em;
+		padding-right: 0;
+	}
+
+	.entry-meta > span:last-of-type {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.entry-footer > span {
+		margin-left: 0;
+		margin-right: auto;
+	}
+}
+@media screen and (max-width: 550px) {
+	.site-content,
+	.footer-widgets,
+	.site-info {
+		padding-right: 5%;
+		padding-left: 5%;
+	}
+
+	.social-links {
+		float: right;
+	}
+
+	.entry-meta > span {
+		padding-left: 1.5em;
+		padding-right: 0;
+	}
+
+	.entry-meta > span:last-of-type {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.footer-widgets .widget-area {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+@media screen and (max-width: 37.5em) {
+	.main-navigation > div:first-of-type ul ul a {
+		padding-right: 2em;
+		padding-left: 0;
+	}
+
+	.main-navigation > div:first-of-type ul ul ul a {
+		padding-right: 2.75em;
+		padding-left: 0;
+	}
+
+	.main-navigation > div:first-of-type ul ul ul ul a {
+		padding-right: 3.5em;
+		padding-left: 0;
+	}
+
+	.main-navigation ul ul,
+		.main-navigation ul ul ul,
+		.main-navigation ul ul ul ul {
+		right: auto;
+		left: auto;
+	}
+
+	.main-navigation ul ul li:hover > ul,
+		.main-navigation ul ul li.focus > ul {
+		right: auto;
+		left: auto;
+	}
+}
