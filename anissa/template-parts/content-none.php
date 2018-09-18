@@ -16,16 +16,13 @@
 
 	<div class="page-content">
 		<?php if ( is_home() && current_user_can( 'publish_posts' ) ) : ?>
-
 			<p><?php printf( wp_kses( __( 'Ready to publish your first post? <a href="%1$s">Get started here</a>.', 'anissa' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( admin_url( 'post-new.php' ) ) ); ?></p>
 
 		<?php elseif ( is_search() ) : ?>
-
 			<p class="mb-10"><?php esc_html_e( '[ 搜索小哥生气了，你换个关键词再试试 ]', 'anissa' ); ?></p>
 			<?php get_search_form(); ?>
 
 		<?php else : ?>
-
 			<p class="mb-10"><?php esc_html_e( '[ 主人，请给该分类填充内容 ]', 'anissa' ); ?></p>
 			<?php get_search_form(); ?>
 

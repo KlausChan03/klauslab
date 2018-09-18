@@ -30,7 +30,7 @@ a:hover, a:active { outline: none }
 :focus { outline: none }
 ul, ol, dl { list-style-type: none }
 sub, sup { vertical-align: baseline }
-button, input[type="button"], input[type="submit"] { line-height: normal !important }
+/* button, input[type="button"], input[type="submit"] { line-height: normal !important } */
 img { border: 0; vertical-align: middle }
 a img{ -ms-interpolation-mode: bicubic }
 header, footer, section, aside, details, menu, article, section, nav, address, hgroup, figure, figcaption, legend { display: block; margin: 0; padding: 0 }
@@ -453,7 +453,7 @@ line-height: 1;
 margin-top: -2px;
 margin-right: 5px;
 position: relative;
-top: -1px;
+/* top: -1px; */
 text-decoration: none;
 vertical-align: baseline;
 -webkit-font-smoothing: antialiased;
@@ -766,18 +766,16 @@ color: #495762;
 	display: inline;
 }
 .page-content, .entry-content {
-	width: 90%;
 	margin-top: 10px;
 	margin-left: 5%;
 	margin-right: 5%;
-	margin-bottom: 30px;
 }
 .page-content p, .entry-content p{
 	margin:10px 0;
 	line-height:2;
 }
 .page-content p a img, .entry-content p a img{
-	margin： 10px
+	margin: 10px;
 }
 .post {
 	border: 1px solid #eee;
@@ -1126,11 +1124,7 @@ embed, iframe, object {
 /*=Layout
 ---------------------------------------------------------------------------*/
 
-.site-content {
-	border-top: 1px solid #eee;
-	margin: 0 auto 1.6em;
-	padding: 1.6em 2.5% 0;
-}
+
 
 /* 修正 2018.7.19*/
 .site-main {

@@ -29,7 +29,15 @@
 		<nav id="site-navigation" class="main-navigation" role="navigation">
 		   <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Menu', 'anissa' ); ?>
 		   <span class="line-1"></span><span class="line-2"></span><span class="line-3"></span></button>
-			<?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_id' => 'primary-menu' ,'after'  => '<span class="nm-menu-toggle"><i class="lalaksks lalaksks-ic-add"></i><i class="lalaksks lalaksks-ic-minus"></i></span>',) ); ?>
+				<?php wp_nav_menu( array( 
+					'theme_location' => 'primary', 
+					'menu_id' => 'primary-menu' ,
+					// 'container' => false,
+					// 'fallback_cb' => false,
+					'after'  => '<span class="nm-menu-toggle hide"><i class="lalaksks lalaksks-ic-add add"></i><i class="lalaksks lalaksks-ic-minus minus"></i></span>',
+					// 'items_wrap' => '%3$s'
+					) ); 
+					?>
 
 			<?php if ( has_nav_menu( 'social' ) ) : ?>
 				<?php wp_nav_menu( array(
@@ -37,7 +45,9 @@
 					'depth'           => 1,
 					'link_before'     => '<span class="screen-reader-text">',
 					'link_after'      => '</span>',
-					'container_class' => 'social-links', ) ); ?>
+					'container_class' => 'social-links', 
+					) ); 
+				?>
 			<?php endif; ?>
 			
 		</nav><!-- #site-navigation -->

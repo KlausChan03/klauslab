@@ -74,8 +74,8 @@ if ( post_password_required() ) {
         <?php next_comments_link( esc_html__( 'Newer Comments', 'anissa' ) ); ?>
       </div>
     </div>
-    <!-- .nav-links --> 
   </nav>
+  
   <!-- #comment-nav-below -->
   <?php endif; // Check for comment navigation. ?>
   <?php endif; // Check for have_comments(). ?>

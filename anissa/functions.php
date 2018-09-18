@@ -298,13 +298,18 @@ function anissa_comments( $comment, $args, $depth ) {
 					<div class="comment-metadata flex-hb-vc flex-hw">
 						<div class="flex-v">
 							<!-- 评论者 -->
+							<div>
 							<b class="fn mr-5"><?php printf( '%s', get_comment_author_link() ); ?></b>	
+							<?php if ($comment->user_id == '1') { echo '<span class="vip level_Max">博主</span>'; }else{ echo get_author_class($comment->comment_author_email,$comment->user_id); } ?>
+							</div>
 							<!-- 评论时间 -->
+							<div>
 							<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID, $args ) ); ?>">
 								<time datetime="<?php comment_time( 'c' ); ?>">
 									<?php printf( esc_html_x( '%1$s at %2$s', '1: date, 2: time', 'anissa' ), get_comment_date(), get_comment_time() ); ?>
 								</time>
 							</a>
+							</div>
 						</div>
 						<div class="flex-hc-vc">
 							<!-- 编辑评论 -->
@@ -456,8 +461,10 @@ function my_styles_scripts() {
         // 注册 jquery 脚本
         wp_register_script( 'jquery', '//code.jquery.com/jquery.min.js', array(), 'lastest', false );
         // 提交加载 jquery 脚本
-        wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'util', get_template_directory_uri() . '/js/util.js', array(), 'lastet', false );
+		wp_enqueue_script( 'jquery' );
+		if( is_mobile() == true ){
+			wp_enqueue_script( 'util', get_template_directory_uri() . '/js/util.js', array(), 'lastet', false );
+		}
 
     } else { // 后台加载的脚本与样式表
         // 取消加载 jquery 脚本
@@ -699,6 +706,27 @@ add_action('draft_to_publish', 'autoset_featured');
 add_action('new_to_publish', 'autoset_featured');
 add_action('pending_to_publish', 'autoset_featured');
 add_action('future_to_publish', 'autoset_featured');
+
+
+function get_author_class($comment_author_email, $user_id){
+    global $wpdb;
+    $author_count = count($wpdb->get_results(
+    "SELECT comment_ID as author_count FROM $wpdb->comments WHERE comment_author_email = '$comment_author_email' "));
+    if($author_count>=1 && $author_count<= 10 )//数字可自行修改，代表评论次数。
+        echo '<span class="vip level_1">LV.1</span>';
+    else if($author_count>=11 && $author_count<= 20)
+        echo '<span class="vip level_2">LV.2</span>';
+    else if($author_count>=21 && $author_count<= 40)
+        echo '<span class="vip level_3">LV.3</span>';
+    else if($author_count>=41 && $author_count<= 80)
+        echo '<span class="vip level_4">LV.4</span>';
+    else if($author_count>=81 && $author_count<= 160)
+        echo '<span class="vip level_5">LV.5</span>';
+    else if($author_count>=161 && $author_count<= 320)
+        echo '<span class="vip level_6">LV.6</span>';
+    else if($author_count>=321)
+        echo '<span class="vip level_7">LV.7</span>';
+}
 
 
 // function hide_adminbar() {  
