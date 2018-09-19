@@ -243,10 +243,12 @@ body.color { background: url(../img/bg-6.jpg); background-repeat: no-repeat; bac
  #categories-2 ul li{ list-style-type: disc; list-style-position: inside}
  #recentcomments .comment-author-link img { border-radius: 4px;margin-right: 5px }
  #custom_html-3 #lovetime{height:22px;}
+ .widget-area .tagcloud a, .tagcloud a:visited{margin:0 5px 10px 0;}
+ .widget-area .widget-title{text-align: initial}
 
 /* 归档页 */
 .page-header{ padding:0 1.2em; }
-.page-header .page-title{font-size: .32rem; font-weight: bold}
+.page-header .page-title{font-weight: bold}
 
 /* 搜索页 */
 .search-form label{position: relative}
@@ -468,13 +470,10 @@ body.color { background: url(../img/bg-6.jpg); background-repeat: no-repeat; bac
 /* 过期 */
 
 /* 社交登录 */
-
 /* .textwidget a:first-child { display: flex; justify-content: center; align-items: center; } img.avatar { width: 72px; height: 72px; } .login_box { display: flex; justify-content: center; align-items: center; }  */
 
 /* 登陆按钮样式及动画 */
-
 /* .textwidget .login-KL { border: 1px solid #495762; border-radius: 2px; color: #495762; height: 35px; width: 60%; margin: 0 auto; margin-top: 10px; font-size: 16px; } .textwidget .login-KL:hover { border: none; background-color: #495762; color: #fff; } .textwidget .avatar { border-radius: 4px; } */
 
 /* 轮播 */
-
 /* .site-branding { padding: 0; margin: 0; margin-top: .72rem; border: none; display: flex; justify-content: center; } .site-branding .swiper-container { width: 100%; padding: 0 40px; } .site-branding .swiper-slide { background-position: center; background-size: 70%; width: 88%; } */

@@ -414,6 +414,7 @@
 	.site-main { width: 100%; }
 	.sidebar { width: 100%; }
 	.sidebar-content { width: 100%; margin-top: 15px; }
+	.page-header .page-title{font-size: .32rem; }
 	button,input { height: .3rem; line-height: .3rem; }
 
 }
