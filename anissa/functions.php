@@ -547,8 +547,15 @@ function get_the_link_items($id = null){
     $bookmarks = get_bookmarks('orderby=date&category=' .$id );
     $output = '';
     if ( !empty($bookmarks) ) {
-        $output .= '<ul class="link-items fontSmooth">';
+		
+        $output .= '<ul class="link-items klaus-links">';
         foreach ($bookmarks as $bookmark) {
+
+			$arr_col = array("qs","lvs","ls","zs","lh","hs","cs","hos");
+			shuffle($arr_col);
+			$arr_num = array("1","2");
+			shuffle($arr_num);			
+			
 			$email = $bookmark->link_notes;
 			// $imgUrl = '';
 			if( $email != ''){
@@ -557,18 +564,37 @@ function get_the_link_items($id = null){
 				$imgUrl = get_avatar($email,64);
 			}
 			
-            $output .=  '<li class="link-item"><a class="link-item-inner effect-apollo" href="' . $bookmark->link_url . '" title="' . $bookmark->link_description . '" target="_blank" >'. $imgUrl . '<span class="sitename">'. $bookmark->link_name .'</span></a></li>';
+            $output .=  '<li class="col-md-4 mt-15 mb-15 p-10"> <div class="p-0 borderr-main-4"> <div class="link-1 p-20 bgc-' . $arr_col[0] . $arr_num[0] . '"> <div class="col-md-12 p-0"> <strong><a title="'. $bookmark->link_name . '" href="' . $bookmark->link_url . '" target="_blank" class="w-100 f14 col-fff link-name">'. $bookmark->link_name .'</a></strong> <p class="f12 col-fff text-overflow">' . $bookmark->link_url . '</p> </div> </div> <div class="p-20 pt-10 pb-10 col-primary clearfix link-2"> <p class="col-aaa text-overflow">' . $bookmark->link_description . '</p> </div> <div class="link-3 p-20 pt-10 pb-20 col-primary flex-hb-vc"><span class=" col-aaa"><i class="yuaoicon icon-category"></i>&nbsp;友人链接</span> <span><a title="'. $bookmark->link_name .'" href="' . $bookmark->link_url . '" target="_blank" class="link-avatar f14 col-aaa"> '. $imgUrl . '</a> </span> </div> </div> </li>';
         }
         $output .= '</ul>';
     }
     return $output;
 }
 
+// 友链判断-二维数组经过判断赋值给另一二维数组
+function bookmarks($rel){
+    $bms = array();
+    $bookmarks = get_bookmarks('hide_invisible=0'); // 这个也是二维数组
+    if( $rel == 'nonhome'){ //若非首页
+        foreach( $bookmarks as $bs ){
+            if ( $bs->link_rel ==  'contact' ||  $bs->link_rel == 'acquaintance' ) { continue;} // 若是contact或acquaintance则终止循环输出，意思是排除这两类关系输出
+                $bms[] = array( 'link_rel'=>$bs->link_rel,'link_visible'=>$bs->link_visible,'link_url'=>$bs->link_url,'link_description'=>$bs->link_description,'link_target'=>'','link_name'=>$bs->link_name);
+        }
+    }
+    if( $rel == 'home'){ //若是首页
+        foreach( $bookmarks as $bs ){
+            if ( $bs->link_rel ==  'contact' )  { continue;} // 若是contact则终止循环输出，意思是排除这类关系输出
+                $bms[] = array( 'link_rel'=>$bs->link_rel,'link_visible'=>$bs->link_visible,'link_url'=>$bs->link_url,'link_description'=>$bs->link_description,'link_target'=>'','link_name'=>$bs->link_name);
+        }
+    }
+    return $bms; // 返回二维数组
+}
+
 function get_link_items(){
     $linkcats = get_terms( 'link_category' );
     if ( !empty($linkcats) ) {
         foreach( $linkcats as $linkcat){            
-            $result .=  '<h3 class="link-title">'.$linkcat->name.'</h3>';
+            $result .=  '<blockquote class="link-title">'.$linkcat->name.'</blockquote>';
             if( $linkcat->description ) $result .= '<div class="link-description">' . $linkcat->description . '</div>';
             $result .=  get_the_link_items($linkcat->term_id);
         }
@@ -591,7 +617,7 @@ add_filter('pre_option_link_manager_enabled','__return_true');
 add_filter( 'get_comment_text' , 'comment_add_at', 20, 2); // 添加过滤器，加入以下值
 function comment_add_at( $get_comment_text, $comment = '') {
   if( $comment->comment_parent > 0) {
-    $get_comment_text = '<a class="color-gray at-reply mr-5" href="#comment-' . $comment->comment_parent . '">@'.get_comment_author( $comment->comment_parent ) . '</a>' . $get_comment_text;
+    $get_comment_text = '<a class="col-gray at-reply mr-5" href="#comment-' . $comment->comment_parent . '">@'.get_comment_author( $comment->comment_parent ) . '</a>' . $get_comment_text;
   }
   return $get_comment_text; // 返回添加@的函数,名称不能自定义
 }

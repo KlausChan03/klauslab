@@ -76,10 +76,10 @@ hr {
 	height: 1px;
 	margin-bottom: 1.6em;
 }
-ul, ol {
+/* ul, ol {
 	margin: 0 0 1.6em 2.4em;
 	padding: 0;
-}
+} */
 ul {
 	list-style: disc;
 }
@@ -770,10 +770,10 @@ color: #495762;
 	margin-left: 5%;
 	margin-right: 5%;
 }
-.page-content p, .entry-content p{
+/* .page-content p, .entry-content p{
 	margin:10px 0;
 	line-height:2;
-}
+} */
 .page-content p a img, .entry-content p a img{
 	margin: 10px;
 }
