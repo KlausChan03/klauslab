@@ -174,34 +174,20 @@ layui.define(function (exports) {
                 win = window,
                 $scrollBottom = $(doc).height() - $(win).height() - $(win).scrollTop(),
                 $scrollTop = $(win).scrollTop();
-
             if ($(window).width() > 1000 && $(document).height() > 1500) {
-                // $(".sidebar .sidebar-content").addClass("animated");
                 $(".sidebar .sidebar-content > aside").addClass("animated");              
-                if ($(this).scrollTop() > 900) {
+                if ($(this).scrollTop() > 200) {
                     $(".sidebar .sidebar-content").addClass("is-fixed");
                     $(".widget_custom_html").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")
-
                     $(".widget_categories").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                     $(".widget_recent_comments").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                     $(".widget_tag_cloud").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")                    
-                    // $(".widget_search").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")
-                } else if ($(this).scrollTop() <= 900 && $(this).scrollTop() > 100) {
-                    $(".sidebar .sidebar-content").addClass("is-fixed");
-                    $(".widget_custom_html").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
-
-                    $(".widget_tag_cloud").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")                    
-                    $(".widget_categories").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")
-                    $(".widget_recent_comments").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")
-                    // $(".widget_search").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
-
                 } else {
+                    $(".sidebar .sidebar-content").removeClass("is-fixed");
                     $(".widget_custom_html").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                     $(".widget_tag_cloud").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")                    
                     $(".widget_categories").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                     $(".widget_recent_comments").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
-                    // $(".widget_search").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
-                    $(".sidebar .sidebar-content").removeClass("is-fixed");
                 }
                 if ($scrollBottom < 80) {
                     $(".sidebar .sidebar-content").addClass("is-bottom")

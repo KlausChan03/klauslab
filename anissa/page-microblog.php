@@ -197,6 +197,8 @@ get_header();
                     </div>
                 </li>
             <?php }
+            global $withcomments; $withcomments = true;
+
             } ?>
             </ul>
         </section>

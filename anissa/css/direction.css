@@ -285,11 +285,12 @@ body.color { background: url(../img/bgc-6.jpg); background-repeat: no-repeat; ba
  #categories-2 ul li ul li{ list-style-type: circle; padding-left:1.5em;}
  #categories-2 ul li{ list-style-type: disc; list-style-position: inside}
  #recentcomments .comment-author-link img { border-radius: 4px;margin-right: 5px }
- #custom_html-3 #lovetime{height:22px;}
+ .widget-area .tagcloud a, .tagcloud a:visited{margin:0 5px 10px 0;}
+ .widget-area .widget-title{text-align: initial}
 
 /* 归档页 */
 .page-header{ padding:0 1.2em; }
-.page-header .page-title{font-size: .32rem; font-weight: bold}
+.page-header .page-title{font-weight: bold}
 
 /* 搜索页 */
 .search-form label{position: relative}
@@ -362,7 +363,7 @@ body.color { background: url(../img/bgc-6.jpg); background-repeat: no-repeat; ba
 .style-18 .entry-header .entry-title a{ font-weight: bold; font-size: 18px; }
 .style-18 .entry-header .entry-title a:hover { color:#0f88eb; }
 .style-18 .entry-main .featured-image{ width: 190px; height: 105px; margin: 0; }
-.style-18 .entry-main .featured-image img{ padding:0; width: 190px; height: 105px; object-fit: cover;}
+.style-18 .entry-main .featured-image img{ padding:0; width: 190px; height: 105px; object-fit: cover;border-radius: 4px;}
 .style-18 .entry-main .entry-summary{ margin:0; width:100%; }
 .style-18 .entry-main .entry-summary p{ line-height: 2; }
 .style-18 .entry-main .entry-title h1{ line-height: 2; }
