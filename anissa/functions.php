@@ -317,8 +317,7 @@ function anissa_comments( $comment, $args, $depth ) {
 								if(isAdmin()){
 									edit_comment_link( _e('<span class="edit-link flex-hc-vc"><i class="lalaksks lalaksks-ic-edit"></i>', '</span>' )); 
 								}
-							?>
-							
+							?>							
 							<!-- 回复评论 -->
 							<?php
 							comment_reply_link( array_merge( $args, array(
@@ -409,22 +408,21 @@ function normal_style_script() {
 	// 自定义样式
 	wp_enqueue_style( 'direction', get_template_directory_uri() . '/css/direction.css', array(), '1.0', false );
 	// 媒体查询样式
-	wp_enqueue_style( 'mediaCss', get_template_directory_uri() . '/css/media.css', array(), 'lastet', false );
+	wp_enqueue_style( 'mediaCss', get_template_directory_uri() . '/css/media.css', array(), '1.0', false );
 	// 弹性布局样式
 	wp_enqueue_style( 'flex', get_template_directory_uri() . '/css/flex.css', array(), '1.0', false );
 	// 动画库样式
-	wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.min.css', array(), 'lastest', false );
+	wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.min.css', array(), '3.5.1', false );
+	wp_enqueue_script( 'vue', get_template_directory_uri() . '/js/vue.js', array(), '2.5.17', false );
 } 
 
 
 function footer_script(){
-
-	wp_enqueue_script( 'layui', get_template_directory_uri() . '/frameworks/layui/layui.js', array(), 'lastet', false );
-	wp_enqueue_script( 'common', get_template_directory_uri() . '/js/common.js', array(), 'lastet', false );
-	wp_enqueue_script( 'canvas', get_template_directory_uri() . '/js/canvas.js', array(), 'lastet', false );
-	wp_enqueue_script( 'fixed-plugins', get_template_directory_uri() . '/js/fixed-plugins.js', array(), 'lastet', false );
+	wp_enqueue_script( 'layui', get_template_directory_uri() . '/frameworks/layui/layui.js', array(), 'lastet', false );	
+	wp_enqueue_script( 'common', get_template_directory_uri() . '/js/common.js', array(), '1.0', false );
+	wp_enqueue_script( 'canvas', get_template_directory_uri() . '/js/canvas.js', array(), '1.0', false );
+	wp_enqueue_script( 'fixed-plugins', get_template_directory_uri() . '/js/fixed-plugins.js', array(), '1.0', false );
 	wp_localize_script( 'canvas', 'my_ajax_obj', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) ); // 先将ajaxurl变数设定好
-
 }
 
 

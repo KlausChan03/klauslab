@@ -209,10 +209,10 @@ layui.define(function (exports) {
                      event = event || window.event;
                      direction = event.wheelDelta && (event.wheelDelta > 0 ? "mouseup" : "mousedown");
                      if (direction == "mouseup" || $scrollTop == 0) {
-                         $(".main-navigation").removeClass("slideOutUp outsight").addClass("slideInDown onsight")
+                         $(".main-navigation").removeClass("slideOutUp outsight")
 
                      } else {
-                         $(".main-navigation").removeClass("slideInDown onsight").addClass("slideOutUp outsight");
+                         $(".main-navigation").addClass("slideOutUp outsight");
 
                      }
                  };
