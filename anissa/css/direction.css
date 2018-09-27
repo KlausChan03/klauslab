@@ -252,9 +252,6 @@ body.color { background: url(../img/bgc-6.jpg); background-repeat: no-repeat; ba
 .nav-next { margin-left: -15px; margin-right: 15px; }
 .nav-next a, .nav-previous a { font-size: 20px; }
 
-.nav-menu .sub-menu { position: absolute;display:inherit;z-index: 2; visibility: hidden; float: left; padding: 10px; width: 13em; border-bottom: 4px solid #1a1a1a; background: #fff; opacity: 0; transition: all .2s; }
-.nav-menu .sub-menu li { margin: 0; height: auto; float: left; text-align: left; }
-.nav-menu li:hover .sub-menu { visibility: visible; opacity: 1; }
 
 
 

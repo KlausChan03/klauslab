@@ -504,9 +504,13 @@
 	.site-header .main-navigation ul li a { display: inline-block; font-size: 14px;  color: #282828; padding: 6px 0; white-space: nowrap; }
 	.site-header .main-navigation ul ul li { text-align: left; }
 	.site-header .main-navigation ul ul li a { width: 100%; }
-	.site-header .main-navigation ul li:hover>ul, .main-navigation ul li.focus>ul { left: 0; }
 	.site-header .nav-menu .nm-menu-toggle { float: right; }
 	.site-header .main-navigation { -webkit-transition: opacity 0.25s ease, ease; transition: opacity 0.25s ease, transform 0.25s ease; -webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); top: 0; opacity: 1; }
+	
+	.site-header .nav-menu .sub-menu { position: absolute;display:inherit;z-index: 2; visibility: hidden; float: left; padding: 10px; width: 13em; border-bottom: 4px solid #1a1a1a; background: #fff; opacity: 0; transition: all .2s; }
+	.site-header .nav-menu .sub-menu li { margin: 0; height: auto; float: left; text-align: left; }
+	.site-header .nav-menu li:hover .sub-menu { visibility: visible; opacity: 1; }
+	
 	.menu-toggle { padding: 0; height: 1rem; line-height: 1rem; }
 	
 	.content-area {
