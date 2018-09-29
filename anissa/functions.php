@@ -546,7 +546,7 @@ function get_the_link_items($id = null){
     $output = '';
     if ( !empty($bookmarks) ) {
 		
-        $output .= '<ul class="link-items klaus-links">';
+        $output .= '<ul class="link-items klaus-links flex-hl-vc flex-hw">';
         foreach ($bookmarks as $bookmark) {
 
 			$arr_col = array("qs","lvs","ls","zs","lh","hs","cs","hos");
@@ -555,12 +555,19 @@ function get_the_link_items($id = null){
 			shuffle($arr_num);			
 			
 			$email = $bookmark->link_notes;
+			$link_image = $bookmark->link_image;
 			// $imgUrl = '';
-			if( $email != ''){
-				$imgUrl = '<img src="'.getGravatar($email).'"></img>';
+			if( $link_image != ''){
+				$imgUrl = '<img src="'. $bookmark->link_image .'"></img>';
+				
 			}else{
-				$imgUrl = get_avatar($email,64);
+				if( $email != ''){
+					$imgUrl = '<img src="'.getGravatar($email).'"></img>';
+				}else{
+					$imgUrl = get_avatar($email,64);
+				}
 			}
+			
 			
             $output .=  '<li class="col-md-4 mt-15 mb-15 p-10"> <div class="p-0 borderr-main-4"> <div class="link-1 p-20 bgc-' . $arr_col[0] . $arr_num[0] . '"> <div class="col-md-12 p-0"> <strong><a title="'. $bookmark->link_name . '" href="' . $bookmark->link_url . '" target="_blank" class="w-100 f14 col-fff link-name">'. $bookmark->link_name .'</a></strong> <p class="f12 col-fff text-overflow">' . $bookmark->link_url . '</p> </div> </div> <div class="p-20 pt-10 pb-10 col-primary clearfix link-2"> <p class="col-aaa text-overflow">' . $bookmark->link_description . '</p> </div> <div class="link-3 p-20 pt-10 pb-20 col-primary flex-hb-vc"><span class=" col-aaa"><i class="yuaoicon icon-category"></i>&nbsp;友人链接</span> <span><a title="'. $bookmark->link_name .'" href="' . $bookmark->link_url . '" target="_blank" class="link-avatar f14 col-aaa"> '. $imgUrl . '</a> </span> </div> </div> </li>';
         }
@@ -752,6 +759,37 @@ function get_author_class($comment_author_email, $user_id){
         echo '<span class="vip level_7">LV.7</span>';
 }
 
+
+// Customize your functions
+function mail_smtp( $phpmailer ){
+	$phpmailer->From = "xing930629@163.com"; //发件人
+	$phpmailer->FromName = "测试";   //发件人昵称
+	$phpmailer->Host = "smtp.163.com"; //SMTP服务器地址(比如QQ是smtp.qq.com,腾讯企业邮箱是smtp.exmail.qq.com,阿里云是smtp.域名,其他自行咨询邮件服务商)
+	$phpmailer->Port = 465;    //SMTP端口，常用的有25、465、587，SSL加密连接端口：465或587,qq是25,qq企业邮箱是465
+	$phpmailer->SMTPSecure = "SSL"; //SMTP加密方式，常用的有ssl/tls,一般25端口不填，端口465天ssl
+	$phpmailer->Username = "xing930629@qq.com";  //邮箱帐号，一般和发件人相同
+	$phpmailer->Password = 'xurvgirfzblvcbbi';  //邮箱授权码
+	$phpmailer->IsSMTP(); //使用SMTP发送
+	$phpmailer->SMTPAuth = true; //启用SMTPAuth服务
+}
+add_action('phpmailer_init','mail_smtp');
+
+
+//WordPress非插件发邮件
+// function mail_smtp( $phpmailer ){
+// 	$phpmailer->FromName   = '发件名';
+// 	$phpmailer->Host       = 'smtp.qq.com';//以QQ的SMTP为例
+// 	$phpmailer->Port       = 26;//SMTP服务器端口
+// 	$phpmailer->Username   = '发件邮箱';
+// 	$phpmailer->Password   = '授权码';//注意是授权码
+// 	$phpmailer->From       = '显示邮箱';
+// 	$phpmailer->SMTPAuth   = true; //SMTP认证（true/flase）
+// 	$phpmailer->SMTPSecure = 'tsl'; //SMTP加密方式tls/ssl/no（port=25留空，465为ssl）
+// 	$phpmailer->IsSMTP();
+// }
+// add_action( 'phpmailer_init','mail_smtp' );
+
+//WordPress非插件发邮件 end
 
 // function hide_adminbar() {  
 //     $hide_adminbar = '<script type="text/javascript">  
