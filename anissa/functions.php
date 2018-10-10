@@ -546,7 +546,7 @@ function get_the_link_items($id = null){
     $output = '';
     if ( !empty($bookmarks) ) {
 		
-        $output .= '<ul class="link-items klaus-links flex-hl-vc flex-hw">';
+        $output .= '<ul class="link-items klaus-links flex-hl-vl flex-hw">';
         foreach ($bookmarks as $bookmark) {
 
 			$arr_col = array("qs","lvs","ls","zs","lh","hs","cs","hos");
@@ -554,22 +554,35 @@ function get_the_link_items($id = null){
 			$arr_num = array("1","2");
 			shuffle($arr_num);			
 			
-			$email = $bookmark->link_notes;
+			$link_notes = $bookmark->link_notes;
+			$link_rss = $bookmark->link_rss;
 			$link_image = $bookmark->link_image;
-			// $imgUrl = '';
-			if( $link_image != ''){
-				$imgUrl = '<img src="'. $bookmark->link_image .'"></img>';
-				
+
+			if( $link_rss == '' and  $link_notes == '' and  $link_image != ''){
+				$imgUrl = '<img src="'. $link_image .'"></img>';				
+			}elseif( $link_image == '' and  $link_rss == '' and  $link_notes != ''){
+				// $imgUrl = '<img src="'.getGravatar($link_notes).'"></img>';
+				$imgUrl = '<img src="http://statics.dnspod.cn/proxy_favicon/_/favicon?domain=' . $link_notes . '"/>' ;
+			}elseif( $link_image == '' and  $link_notes == '' and  $link_rss != '' ){
+				$imgUrl  = '<img src="'.getGravatar(str_replace("http://","",$link_rss)).'"/>';
 			}else{
-				if( $email != ''){
-					$imgUrl = '<img src="'.getGravatar($email).'"></img>';
-				}else{
-					$imgUrl = get_avatar($email,64);
-				}
+				$imgUrl = '';
 			}
 			
 			
-            $output .=  '<li class="col-md-4 mt-15 mb-15 p-10"> <div class="p-0 borderr-main-4"> <div class="link-1 p-20 bgc-' . $arr_col[0] . $arr_num[0] . '"> <div class="col-md-12 p-0"> <strong><a title="'. $bookmark->link_name . '" href="' . $bookmark->link_url . '" target="_blank" class="w-100 f14 col-fff link-name">'. $bookmark->link_name .'</a></strong> <p class="f12 col-fff text-overflow">' . $bookmark->link_url . '</p> </div> </div> <div class="p-20 pt-10 pb-10 col-primary clearfix link-2"> <p class="col-aaa text-overflow">' . $bookmark->link_description . '</p> </div> <div class="link-3 p-20 pt-10 pb-20 col-primary flex-hb-vc"><span class=" col-aaa"><i class="yuaoicon icon-category"></i>&nbsp;友人链接</span> <span><a title="'. $bookmark->link_name .'" href="' . $bookmark->link_url . '" target="_blank" class="link-avatar f14 col-aaa"> '. $imgUrl . '</a> </span> </div> </div> </li>';
+
+			
+			
+			$output .=  '<li class="col-md-4 mt-15 mb-15 p-10"> <div class="p-0 borderr-main-4"> <div class="flex-hb-vc link-1 p-20 bgc-' 
+			. $arr_col[0] . $arr_num[0] . '"> <div class="w-85 p-0"> <strong><a title="'
+			. $bookmark->link_name . '" href="' 
+			. $bookmark->link_url . '" target="_blank" class="col-fff link-name">'
+			. $bookmark->link_name .'</a></strong> <p class="f12 col-fff text-overflow">' 
+			. $bookmark->link_url . '</p> </div> <div class="w-15 flex-hr-vc"><a title="'
+			. $bookmark->link_name .'" href="' 
+			. $bookmark->link_url . '" target="_blank" class="link-avatar col-aaa"> '
+			. $imgUrl . '</a> </div></div> <div class="p-20 pt-10 pb-10 col-primary clearfix link-2"> <p class="col-aaa text-overflow">' 
+			. $bookmark->link_description . '</p> </div>  </div> </li>';
         }
         $output .= '</ul>';
     }
@@ -774,6 +787,24 @@ function mail_smtp( $phpmailer ){
 }
 add_action('phpmailer_init','mail_smtp');
 
+
+/* 删除文章时删除图片附件
+/* ------------------------ */
+function delete_post_and_attachments($post_ID) {
+	global $wpdb;
+	//删除特色图片
+	$thumbnails = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key = '_thumbnail_id' AND post_id = $post_ID" );  
+	foreach ( $thumbnails as $thumbnail ) {
+    	wp_delete_attachment( $thumbnail->meta_value, true );  
+	}
+	//删除图片附件
+	$attachments = $wpdb->get_results( "SELECT * FROM $wpdb->posts WHERE post_parent = $post_ID AND post_type = 'attachment'" );
+	foreach ( $attachments as $attachment ) {
+    	wp_delete_attachment( $attachment->ID, true );  
+	}  
+	$wpdb->query( "DELETE FROM $wpdb->postmeta WHERE meta_key = '_thumbnail_id' AND post_id = $post_ID" ); 
+}
+add_action('before_delete_post', 'delete_post_and_attachments');
 
 //WordPress非插件发邮件
 // function mail_smtp( $phpmailer ){
