@@ -1,6 +1,6 @@
 layui.define(function (exports) {
-    layui.use(['jquery'], function () {
-        let $ = layui.$;
+    layui.use(['jquery','layer'], function () {
+        let [$,layer] = [layui.$,layui.layer];
         let Animation = {};
         Animation.animateCss = function () {
             // $(".home article:even").hover(
@@ -140,6 +140,27 @@ layui.define(function (exports) {
                 $(this).parent().parent().siblings(".entry-main").find(".entry-main-excerpt").removeClass("hide");
                 $(this).parent().parent().siblings(".entry-main").find(".entry-main-detail").addClass("hide");               
             });
+
+
+            $(document).on("click", "#Addlike", function() {
+                console.log("...")
+                if ($(this).hasClass("actived")) {
+                    return layer.msg("您已经赞过啦！");
+                } else {
+                    $(this).addClass("actived");
+                    var z = $(this).data("id"), y = $(this).data("action"), x = $(this).children(".count");
+                    var w = {
+                        action: "inlo_like",
+                        um_id: z,
+                        um_action: y
+                    };
+                    $.post("/wp-admin/admin-ajax.php", w, function(A) {
+                        $(x).html(A);
+                    });
+                    return false;
+                }
+            });
+        
 
              //  var data = {
                 //      action: 'list_rec',

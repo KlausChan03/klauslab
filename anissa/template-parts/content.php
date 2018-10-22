@@ -30,31 +30,38 @@
 			<?php if ( !is_mobile() ) : ?>
 				<div class="entry-action flex-hl-vc">
 					<div class="entry-date m-0 mr-10">
-						<i class="lalaksks lalaksks-ic-date"></i>
-						<?php the_time( get_option( 'date_format' ) ); ?>
+						<?php is_icon( get_the_ID() ,"date"); ?>
 					</div>
-					<div class="entry-cat m-0 mr-10">
-						<i class="lalaksks lalaksks-ic-category"></i>
-						<?php the_category( ', ' ) ?>
+					<div class="entry-author m-0 mr-10">
+						<?php is_icon( get_the_ID() ,"author"); ?>
 					</div>
 					<div class="entry-view m-0 mr-10">
-						<i class="lalaksks lalaksks-ic-view"></i>
-						<?php echo getPostViews(get_the_ID()) . "阅读"; ?>
+						<?php is_icon( get_the_ID() , "view"); ?>
 					</div>
-					<div class="entry-view m-0 mr-10">
-						<i class="lalaksks lalaksks-ic-reply"></i>
-						<?php echo get_comments_number() . "评论"; ?>
+					<div class="entry-comment m-0 mr-10">
+						<?php is_icon( get_the_ID() , "reply"); ?>
+					</div>
+					<div class="entry-zan m-0 mr-10">
+						<span class="zan">
+							<a href="#" data-action="ding" data-id="<?php the_ID(); ?>" id="Addlike" class="action flex-hb-vc <?php if(isset($_COOKIE['inlo_ding_'.$post->ID])) echo 'actived';?> <?php $category = get_the_category();  echo $category[0]->category_nicename;?>">
+								<i class="lalaksks lalaksks-ic-zan"></i>
+								<span class="count"><?php if( get_post_meta($post->ID,'inlo_ding',true) ){ echo get_post_meta($post->ID,'inlo_ding',true); } else {echo '0';}?></span>
+							</a>
+						</span>
 					</div>
 				</div>
 			<?php else: ?>
 				<div class="entry-action flex-v flex-hc-vl">
-					<div class="entry-date m-0 mr-10 flex-hl-vc">
-						<i class="lalaksks lalaksks-ic-date"></i>
-						<?php the_time( get_option( 'date_format' ) ); ?>
+					<div class="entry-date m-0 mr-10">
+						<?php is_icon( get_the_ID() ,"date"); ?>
 					</div>
-					<div class="entry-cat m-0 mr-10 flex-hl-vc">
-						<i class="lalaksks lalaksks-ic-category"></i>
-						<?php the_category( ', ' ) ?>
+					<div class="entry-zan m-0 mr-10">
+						<span class="zan">
+							<a href="#" data-action="ding" data-id="<?php the_ID(); ?>" id="Addlike" class="action flex-hb-vc <?php if(isset($_COOKIE['inlo_ding_'.$post->ID])) echo 'actived';?> <?php $category = get_the_category();  echo $category[0]->category_nicename;?>">
+								<i class="lalaksks lalaksks-ic-zan"></i>
+								<span class="count"><?php if( get_post_meta($post->ID,'inlo_ding',true) ){ echo get_post_meta($post->ID,'inlo_ding',true); } else {echo '0';}?></span>
+							</a>
+						</span>
 					</div>
 				</div>
 			<?php endif ?>		

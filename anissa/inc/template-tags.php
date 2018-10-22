@@ -62,11 +62,9 @@ function anissa_entry_footer() {
 	);
 
 	$posted_on = '<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>';
-
 	$byline = '<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>';
 
 	echo '<div class="entry-footer-wrapper flex-hc-vc flex-hw">';
-
 	echo '<span class="posted-on mr-10"><i class="lalaksks lalaksks-ic-date mr-5"></i>' . $posted_on . '</span><span class="byline mr-10"><i class="lalaksks lalaksks-ic-author mr-5"></i>' . $byline . '</span>'; // WPCS: XSS OK.
 
 	// Hide category and tag text for pages.
@@ -86,6 +84,7 @@ function anissa_entry_footer() {
 	// $test = post_views('当前阅读次数：&nbsp;', '&nbsp;');
 	$view_num = getPostViews(get_the_ID());
 	echo '<span class="watch-times mr-10"><i class="lalaksks lalaksks-ic-view mr-5"></i>' . $view_num . '</span>'; // WPCS: XSS OK.
+	
 
 	echo '</div><!--.entry-footer-wrapper-->';
 	if(isAdmin()){

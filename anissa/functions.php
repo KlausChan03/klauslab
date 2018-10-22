@@ -317,8 +317,7 @@ function anissa_comments( $comment, $args, $depth ) {
 								if(isAdmin()){
 									edit_comment_link( _e('<span class="edit-link flex-hc-vc"><i class="lalaksks lalaksks-ic-edit"></i>', '</span>' )); 
 								}
-							?>
-							
+							?>							
 							<!-- 回复评论 -->
 							<?php
 							comment_reply_link( array_merge( $args, array(
@@ -409,23 +408,70 @@ function normal_style_script() {
 	// 自定义样式
 	wp_enqueue_style( 'direction', get_template_directory_uri() . '/css/direction.css', array(), '1.0', false );
 	// 媒体查询样式
-	wp_enqueue_style( 'mediaCss', get_template_directory_uri() . '/css/media.css', array(), 'lastet', false );
+	wp_enqueue_style( 'mediaCss', get_template_directory_uri() . '/css/media.css', array(), '1.0', false );
 	// 弹性布局样式
 	wp_enqueue_style( 'flex', get_template_directory_uri() . '/css/flex.css', array(), '1.0', false );
 	// 动画库样式
-	wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.min.css', array(), 'lastest', false );
+	wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.min.css', array(), '3.5.1', false );
+	wp_enqueue_script( 'vue', get_template_directory_uri() . '/js/vue.js', array(), '2.5.17', false );
 } 
 
 
 function footer_script(){
-
-	wp_enqueue_script( 'layui', get_template_directory_uri() . '/frameworks/layui/layui.js', array(), 'lastet', false );
-	wp_enqueue_script( 'common', get_template_directory_uri() . '/js/common.js', array(), 'lastet', false );
-	wp_enqueue_script( 'canvas', get_template_directory_uri() . '/js/canvas.js', array(), 'lastet', false );
-	wp_enqueue_script( 'fixed-plugins', get_template_directory_uri() . '/js/fixed-plugins.js', array(), 'lastet', false );
+	wp_enqueue_script( 'layui', get_template_directory_uri() . '/frameworks/layui/layui.js', array(), 'lastet', false );	
+	wp_enqueue_script( 'common', get_template_directory_uri() . '/js/common.js', array(), '1.0', false );
+	wp_enqueue_script( 'canvas', get_template_directory_uri() . '/js/canvas.js', array(), '1.0', false );
+	wp_enqueue_script( 'fixed-plugins', get_template_directory_uri() . '/js/fixed-plugins.js', array(), '1.0', false );
 	wp_localize_script( 'canvas', 'my_ajax_obj', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) ); // 先将ajaxurl变数设定好
-
 }
+
+function custom_login() {
+    echo '<link rel="stylesheet" type="text/css" href="' . get_bloginfo('template_directory') . '/css/login.css" />';
+}
+
+
+function my_styles_scripts() {
+    if( ! is_admin() ) { // 前台加载的脚本与样式表
+        // 去除已注册的 jquery 脚本
+        wp_deregister_script( 'jquery' );
+        // 注册 jquery 脚本
+        wp_register_script( 'jquery', '//code.jquery.com/jquery.min.js', array(), 'lastest', false );
+        // 提交加载 jquery 脚本
+		wp_enqueue_script( 'jquery' );
+		if( is_mobile() == true ){
+			wp_enqueue_script( 'util', get_template_directory_uri() . '/js/util.js', array(), 'lastet', false );
+		}
+
+    } else { // 后台加载的脚本与样式表
+        // 取消加载 jquery 脚本
+        wp_dequeue_script( 'jquery' );
+        // 注册并加载 jquery 脚本
+        wp_enqueue_script( 'jquery', '//code.jquery.com/jquery.min.js', array(), 'lastest', false );
+    }
+}
+// 添加回调函数到 init 动作上
+add_action('init', 'my_styles_scripts');
+add_action('wp_footer', 'footer_script'); 
+add_action('wp_enqueue_scripts', 'normal_style_script'); 
+add_action('login_head', 'custom_login');
+
+
+//自定义登录页面的LOGO图片
+function my_custom_login_logo() {
+    echo '<style type="text/css">
+        .login h1 a {
+			background-image:url("'. get_template_directory_uri() . '/img/bg-test.jpg'.'") !important;
+			height: 80px;
+			width: 80px;
+			border-radius: 50%;
+			-webkit-background-size: 160px;
+			background-size: 160px;
+			background-position: center center;
+        }
+    </style>';
+}
+add_action('login_head', 'my_custom_login_logo');
+
 
 
 add_action('wp_ajax_list_rec', 'list_rec_callback');
@@ -452,36 +498,6 @@ function load_post() {
 		die(); 
 	} 
 } 
-
-
-function my_styles_scripts() {
-    if( ! is_admin() ) { // 前台加载的脚本与样式表
-        // 去除已注册的 jquery 脚本
-        wp_deregister_script( 'jquery' );
-        // 注册 jquery 脚本
-        wp_register_script( 'jquery', '//code.jquery.com/jquery.min.js', array(), 'lastest', false );
-        // 提交加载 jquery 脚本
-		wp_enqueue_script( 'jquery' );
-		if( is_mobile() == true ){
-			wp_enqueue_script( 'util', get_template_directory_uri() . '/js/util.js', array(), 'lastet', false );
-		}
-
-    } else { // 后台加载的脚本与样式表
-        // 取消加载 jquery 脚本
-        wp_dequeue_script( 'jquery' );
-        // 注册并加载 jquery 脚本
-        wp_enqueue_script( 'jquery', '//code.jquery.com/jquery.min.js', array(), 'lastest', false );
-    }
-}
-// 添加回调函数到 init 动作上
-add_action('init', 'my_styles_scripts');
-add_action('wp_footer', 'footer_script'); 
-add_action('wp_enqueue_scripts', 'normal_style_script'); 
-
-
-
-
-
 
 // 清除无用资源
 remove_action( 'wp_head', 'feed_links_extra', 3 ); //去除评论feed
@@ -548,7 +564,7 @@ function get_the_link_items($id = null){
     $output = '';
     if ( !empty($bookmarks) ) {
 		
-        $output .= '<ul class="link-items klaus-links">';
+        $output .= '<ul class="link-items klaus-links flex-hl-vl flex-hw">';
         foreach ($bookmarks as $bookmark) {
 
 			$arr_col = array("qs","lvs","ls","zs","lh","hs","cs","hos");
@@ -556,15 +572,31 @@ function get_the_link_items($id = null){
 			$arr_num = array("1","2");
 			shuffle($arr_num);			
 			
-			$email = $bookmark->link_notes;
-			// $imgUrl = '';
-			if( $email != ''){
-				$imgUrl = '<img src="'.getGravatar($email).'"></img>';
+			$link_notes = $bookmark->link_notes;
+			$link_rss = $bookmark->link_rss;
+			$link_image = $bookmark->link_image;
+
+			if( $link_rss == '' and  $link_notes == '' and  $link_image != ''){
+				$imgUrl = '<img src="'. $link_image .'"></img>';				
+			}elseif( $link_image == '' and  $link_rss == '' and  $link_notes != ''){
+				// $imgUrl = '<img src="'.getGravatar($link_notes).'"></img>';
+				$imgUrl = '<img src="//statics.dnspod.cn/proxy_favicon/_/favicon?domain=' . $link_notes . '"/>' ;
+			}elseif( $link_image == '' and  $link_notes == '' and  $link_rss != '' ){
+				$imgUrl  = '<img src="'.getGravatar(str_replace("http://","",$link_rss)).'"/>';
 			}else{
-				$imgUrl = get_avatar($email,64);
-			}
+				$imgUrl = '';
+			}			
 			
-            $output .=  '<li class="col-md-4 mt-15 mb-15 p-10"> <div class="p-0 borderr-main-4"> <div class="link-1 p-20 bgc-' . $arr_col[0] . $arr_num[0] . '"> <div class="col-md-12 p-0"> <strong><a title="'. $bookmark->link_name . '" href="' . $bookmark->link_url . '" target="_blank" class="w-100 f14 col-fff link-name">'. $bookmark->link_name .'</a></strong> <p class="f12 col-fff text-overflow">' . $bookmark->link_url . '</p> </div> </div> <div class="p-20 pt-10 pb-10 col-primary clearfix link-2"> <p class="col-aaa text-overflow">' . $bookmark->link_description . '</p> </div> <div class="link-3 p-20 pt-10 pb-20 col-primary flex-hb-vc"><span class=" col-aaa"><i class="yuaoicon icon-category"></i>&nbsp;友人链接</span> <span><a title="'. $bookmark->link_name .'" href="' . $bookmark->link_url . '" target="_blank" class="link-avatar f14 col-aaa"> '. $imgUrl . '</a> </span> </div> </div> </li>';
+			$output .=  '<li class="col-md-4 mt-15 mb-15 p-10"> <div class="p-0 borderr-main-4"> <div class="flex-hb-vc link-1 p-20 bgc-' 
+			. $arr_col[0] . $arr_num[0] . '"> <div class="w-85 p-0"> <strong><a title="'
+			. $bookmark->link_name . '" href="' 
+			. $bookmark->link_url . '" target="_blank" class="col-fff link-name">'
+			. $bookmark->link_name .'</a></strong> <p class="f12 col-fff text-overflow">' 
+			. $bookmark->link_url . '</p> </div> <div class="w-15 flex-hr-vc"><a title="'
+			. $bookmark->link_name .'" href="' 
+			. $bookmark->link_url . '" target="_blank" class="link-avatar col-aaa"> '
+			. $imgUrl . '</a> </div></div> <div class="p-20 pt-10 pb-10 col-primary clearfix link-2"> <p class="col-aaa text-overflow">' 
+			. $bookmark->link_description . '</p> </div>  </div> </li>';
         }
         $output .= '</ul>';
     }
@@ -708,6 +740,32 @@ function is_mobile() {
 	return $is_mobile;
 }
 
+function is_icon($id,$name) { 
+	switch ($name) {
+		case "date":
+		$dom = get_the_time( get_option( 'date_format' ) );
+		break;
+		case "category":
+		$dom = get_the_category_list(' ') ;
+		break;
+		case "tag":
+		$dom = get_the_tag_list(' ');
+		break;
+		case "view":
+		$dom = getPostViews(get_the_ID());
+		break;
+		case "reply":
+		$dom = get_comments_number();
+		break;
+		case "author":
+		$dom = get_the_author();
+		break;
+		default:
+		echo "No number between 1 and 3";
+	}
+	echo '<i class="lalaksks lalaksks-ic-'. $name .'"></i>'.'<span> '. $dom . ' </span>';
+}
+
 
 // 开启特色图并设置默认大小
 add_theme_support ( 'post-thumbnails' );
@@ -754,6 +812,126 @@ function get_author_class($comment_author_email, $user_id){
         echo '<span class="vip level_7">LV.7</span>';
 }
 
+//custom_excerpt_length
+function custom_excerpt_length( $length ){
+	if(!is_mobile()){
+		return 120;
+	} else if(is_mobile()){
+		return 30;
+	}
+}
+add_filter( 'excerpt_length', 'custom_excerpt_length');
+
+
+// Customize your functions
+function mail_smtp( $phpmailer ){
+	$phpmailer->From = "xing930629@163.com"; //发件人
+	$phpmailer->FromName = "测试";   //发件人昵称
+	$phpmailer->Host = "smtp.163.com"; //SMTP服务器地址(比如QQ是smtp.qq.com,腾讯企业邮箱是smtp.exmail.qq.com,阿里云是smtp.域名,其他自行咨询邮件服务商)
+	$phpmailer->Port = 465;    //SMTP端口，常用的有25、465、587，SSL加密连接端口：465或587,qq是25,qq企业邮箱是465
+	$phpmailer->SMTPSecure = "SSL"; //SMTP加密方式，常用的有ssl/tls,一般25端口不填，端口465天ssl
+	$phpmailer->Username = "xing930629@qq.com";  //邮箱帐号，一般和发件人相同
+	$phpmailer->Password = 'xurvgirfzblvcbbi';  //邮箱授权码
+	$phpmailer->IsSMTP(); //使用SMTP发送
+	$phpmailer->SMTPAuth = true; //启用SMTPAuth服务
+}
+add_action('phpmailer_init','mail_smtp');
+
+
+/* 删除文章时删除图片附件
+/* ------------------------ */
+function delete_post_and_attachments($post_ID) {
+	global $wpdb;
+	//删除特色图片
+	$thumbnails = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key = '_thumbnail_id' AND post_id = $post_ID" );  
+	foreach ( $thumbnails as $thumbnail ) {
+    	wp_delete_attachment( $thumbnail->meta_value, true );  
+	}
+	//删除图片附件
+	$attachments = $wpdb->get_results( "SELECT * FROM $wpdb->posts WHERE post_parent = $post_ID AND post_type = 'attachment'" );
+	foreach ( $attachments as $attachment ) {
+    	wp_delete_attachment( $attachment->ID, true );  
+	}  
+	$wpdb->query( "DELETE FROM $wpdb->postmeta WHERE meta_key = '_thumbnail_id' AND post_id = $post_ID" ); 
+}
+add_action('before_delete_post', 'delete_post_and_attachments');
+
+
+
+//点赞功能
+function inlo_like(){
+    global $wpdb,$post;
+    $id = $_POST["um_id"];
+    $action = $_POST["um_action"];
+    if ( $action == 'ding'){
+    $inlo_raters = get_post_meta($id,'inlo_ding',true);
+    $expire = time() + 99999999;
+    $domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false; // make cookies work with localhost
+    setcookie('inlo_ding_'.$id,$id,$expire,'/',$domain,false);
+    if (!$inlo_raters || !is_numeric($inlo_raters)) {
+        update_post_meta($id, 'inlo_ding', 1);
+    } 
+    else {
+            update_post_meta($id, 'inlo_ding', ($inlo_raters + 1));
+        }   
+    echo get_post_meta($id,'inlo_ding',true);    
+    }     
+    die;
+}
+
+add_action('wp_ajax_nopriv_inlo_like', 'inlo_like');
+add_action('wp_ajax_inlo_like', 'inlo_like');
+
+//点赞最多文章
+function get_like_most($mode = '', $limit = 10, $days = 7, $display = true) {
+	global $wpdb, $post;
+	$limit_date = current_time('timestamp') - ($days*86400);
+	$limit_date = date("Y-m-d H:i:s",$limit_date);	
+	$where = '';
+	$temp = '';
+	if(!empty($mode) && $mode != 'both') {
+		$where = "post_type = '$mode'";
+	} else {
+		$where = '1=1';
+	}
+	$most_viewed = $wpdb->get_results("SELECT $wpdb->posts.*, (meta_value+0) AS md_like FROM $wpdb->posts LEFT JOIN $wpdb->postmeta ON $wpdb->postmeta.post_id = $wpdb->posts.ID WHERE post_date < '".current_time('mysql')."' AND post_date > '".$limit_date."' AND $where AND post_status = 'publish' AND meta_key = 'md_like' AND post_password = '' ORDER  BY md_like DESC LIMIT $limit");
+	if($most_viewed) {
+		$i = 1;
+		foreach ($most_viewed as $post) {
+			$post_title = get_the_title();
+			$post_like = intval($post->like);
+			$post_like = number_format($post_like);
+			$temp .= "<li><span class='li-icon li-icon-$i'>$i</span><a href=\"".get_permalink()."\">$post_title</a></li>";
+			$i++;
+		}
+	} else {
+		$temp = '<li>暂无文章</li>';
+	}
+	if($display) {
+		echo $temp;
+	} else {
+		return $temp;
+	}
+}
+
+
+
+
+//WordPress非插件发邮件
+// function mail_smtp( $phpmailer ){
+// 	$phpmailer->FromName   = '发件名';
+// 	$phpmailer->Host       = 'smtp.qq.com';//以QQ的SMTP为例
+// 	$phpmailer->Port       = 26;//SMTP服务器端口
+// 	$phpmailer->Username   = '发件邮箱';
+// 	$phpmailer->Password   = '授权码';//注意是授权码
+// 	$phpmailer->From       = '显示邮箱';
+// 	$phpmailer->SMTPAuth   = true; //SMTP认证（true/flase）
+// 	$phpmailer->SMTPSecure = 'tsl'; //SMTP加密方式tls/ssl/no（port=25留空，465为ssl）
+// 	$phpmailer->IsSMTP();
+// }
+// add_action( 'phpmailer_init','mail_smtp' );
+
+//WordPress非插件发邮件 end
 
 // function hide_adminbar() {  
 //     $hide_adminbar = '<script type="text/javascript">  
