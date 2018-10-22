@@ -326,14 +326,7 @@ caption {
 /*--------------------------------------------------------------
 # Forms
 --------------------------------------------------------------*/
-button.menu-toggle,
-button.menu-toggle:hover,
-button.menu-toggle:focus {
-	background-color: #fff;
-	font-weight: 400;
-	font-size: 13px;
-	letter-spacing: 2.5px;
-}
+
 
 button,
 input[type="button"],
@@ -527,33 +520,6 @@ a:hover, a:active {
 }
 
 /* Small menu. */
-.menu-toggle,
-.main-navigation.toggled ul,
-.main-navigation.toggled .social-links {
-	display: block;
-	margin: 0 auto;
-	width: 100%;
-}
-
-.menu-toggle {
-	font-size: 18px;
-}
-
-.menu-toggle:before {
-	content: "\f0c9";
-	display: inline-block;
-	font-family: FontAwesome;
-	font-size: 14px;
-	font-weight: normal;
-	line-height: 1;
-	margin-top: -2px;
-	margin-right: 5px;
-	position: relative;
-	/* top: -1px; */
-	text-decoration: none;
-	vertical-align: baseline;
-	-webkit-font-smoothing: antialiased;
-}
 
 .site-main .comment-navigation,
 .site-main .posts-navigation,
@@ -658,16 +624,6 @@ a:hover, a:active {
 --------------------------------------------------------------*/
 .clear:before,
 .clear:after,
-.entry-content:before,
-.entry-content:after,
-.comment-content:before,
-.comment-content:after,
-.site-header:before,
-.site-header:after,
-.site-content:before,
-.site-content:after,
-.site-footer:before,
-.site-footer:after,
 .hentry:before,
 .hentry:after {
 	content: "";

@@ -41,7 +41,7 @@
 			<?php wp_nav_menu( array( 
 				'theme_location' => 'primary', 
 				'menu_id' => 'primary-menu' ,
-				'after'  => '<span class="nm-menu-toggle hide"><i class="lalaksks lalaksks-ic-add add"></i><i class="lalaksks lalaksks-ic-minus minus"></i></span>',
+				'after'  => '<span class="nm-menu-toggle"><i class="lalaksks lalaksks-ic-add add"></i><i class="lalaksks lalaksks-ic-minus minus hide"></i></span>',
 				) ); 
 			?>		
 		</nav><!-- #site-navigation -->

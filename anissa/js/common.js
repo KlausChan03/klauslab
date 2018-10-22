@@ -1,6 +1,7 @@
 'use strict';
 
 
+
 //config的设置是全局的
 layui.config({
   base: './wp-content/themes/anissa/js/' //假设这是你存放拓展模块的根目录
