@@ -419,8 +419,8 @@ function normal_style_script() {
 
 function footer_script(){
 	wp_enqueue_script( 'layui', get_template_directory_uri() . '/frameworks/layui/layui.js', array(), 'lastet', false );	
-	wp_enqueue_script( 'common', get_template_directory_uri() . '/js/common.js', array(), '1.0', false );
-	wp_enqueue_script( 'canvas', get_template_directory_uri() . '/js/canvas.js', array(), '1.0', false );
+	wp_enqueue_script( 'common_func', get_template_directory_uri() . '/js/common.js', array(), '1.0', false );
+	wp_enqueue_script( 'canvas_func', get_template_directory_uri() . '/js/canvas.js', array(), '1.0', false );
 	wp_enqueue_script( 'fixed-plugins', get_template_directory_uri() . '/js/fixed-plugins.js', array(), '1.0', false );
 	wp_localize_script( 'canvas', 'my_ajax_obj', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) ); // 先将ajaxurl变数设定好
 }
@@ -580,26 +580,13 @@ function get_the_link_items($id = null){
 				$imgUrl = '<img src="'. $link_image .'"></img>';				
 			}elseif( $link_image == '' and  $link_rss == '' and  $link_notes != ''){
 				// $imgUrl = '<img src="'.getGravatar($link_notes).'"></img>';
-<<<<<<< HEAD
 				$imgUrl = '<img src="//statics.dnspod.cn/proxy_favicon/_/favicon?domain=' . $link_notes . '"/>' ;
-=======
-				$imgUrl = '<img src="http://statics.dnspod.cn/proxy_favicon/_/favicon?domain=' . $link_notes . '"/>' ;
->>>>>>> 054bcf6a206c6d480948c5cb9c59b083c5875737
 			}elseif( $link_image == '' and  $link_notes == '' and  $link_rss != '' ){
 				$imgUrl  = '<img src="'.getGravatar(str_replace("http://","",$link_rss)).'"/>';
 			}else{
 				$imgUrl = '';
-<<<<<<< HEAD
 			}			
 			
-=======
-			}
-			
-			
-
-			
-			
->>>>>>> 054bcf6a206c6d480948c5cb9c59b083c5875737
 			$output .=  '<li class="col-md-4 mt-15 mb-15 p-10"> <div class="p-0 borderr-main-4"> <div class="flex-hb-vc link-1 p-20 bgc-' 
 			. $arr_col[0] . $arr_num[0] . '"> <div class="w-85 p-0"> <strong><a title="'
 			. $bookmark->link_name . '" href="' 
@@ -756,7 +743,7 @@ function is_mobile() {
 function is_icon($id,$name) { 
 	switch ($name) {
 		case "date":
-		$dom = get_the_time( get_option( 'date_format' ) );
+		$dom = '<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' .get_the_time( get_option( 'date_format' ) ). '</a>';
 		break;
 		case "category":
 		$dom = get_the_category_list(' ') ;
@@ -771,12 +758,14 @@ function is_icon($id,$name) {
 		$dom = get_comments_number();
 		break;
 		case "author":
-		$dom = get_the_author();
+		$dom = '<a href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>';		
 		break;
 		default:
 		echo "No number between 1 and 3";
 	}
-	echo '<i class="lalaksks lalaksks-ic-'. $name .'"></i>'.'<span> '. $dom . ' </span>';
+	if( $dom ){
+		echo '<i class="lalaksks lalaksks-ic-'. $name .'"></i>'.'<span> '. $dom . ' </span>';
+	}
 }
 
 
@@ -929,55 +918,6 @@ function get_like_most($mode = '', $limit = 10, $days = 7, $display = true) {
 
 
 
-
-//WordPress非插件发邮件
-// function mail_smtp( $phpmailer ){
-// 	$phpmailer->FromName   = '发件名';
-// 	$phpmailer->Host       = 'smtp.qq.com';//以QQ的SMTP为例
-// 	$phpmailer->Port       = 26;//SMTP服务器端口
-// 	$phpmailer->Username   = '发件邮箱';
-// 	$phpmailer->Password   = '授权码';//注意是授权码
-// 	$phpmailer->From       = '显示邮箱';
-// 	$phpmailer->SMTPAuth   = true; //SMTP认证（true/flase）
-// 	$phpmailer->SMTPSecure = 'tsl'; //SMTP加密方式tls/ssl/no（port=25留空，465为ssl）
-// 	$phpmailer->IsSMTP();
-// }
-// add_action( 'phpmailer_init','mail_smtp' );
-
-//WordPress非插件发邮件 end
-
-// Customize your functions
-function mail_smtp( $phpmailer ){
-	$phpmailer->From = "xing930629@163.com"; //发件人
-	$phpmailer->FromName = "测试";   //发件人昵称
-	$phpmailer->Host = "smtp.163.com"; //SMTP服务器地址(比如QQ是smtp.qq.com,腾讯企业邮箱是smtp.exmail.qq.com,阿里云是smtp.域名,其他自行咨询邮件服务商)
-	$phpmailer->Port = 465;    //SMTP端口，常用的有25、465、587，SSL加密连接端口：465或587,qq是25,qq企业邮箱是465
-	$phpmailer->SMTPSecure = "SSL"; //SMTP加密方式，常用的有ssl/tls,一般25端口不填，端口465天ssl
-	$phpmailer->Username = "xing930629@qq.com";  //邮箱帐号，一般和发件人相同
-	$phpmailer->Password = 'xurvgirfzblvcbbi';  //邮箱授权码
-	$phpmailer->IsSMTP(); //使用SMTP发送
-	$phpmailer->SMTPAuth = true; //启用SMTPAuth服务
-}
-add_action('phpmailer_init','mail_smtp');
-
-
-/* 删除文章时删除图片附件
-/* ------------------------ */
-function delete_post_and_attachments($post_ID) {
-	global $wpdb;
-	//删除特色图片
-	$thumbnails = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key = '_thumbnail_id' AND post_id = $post_ID" );  
-	foreach ( $thumbnails as $thumbnail ) {
-    	wp_delete_attachment( $thumbnail->meta_value, true );  
-	}
-	//删除图片附件
-	$attachments = $wpdb->get_results( "SELECT * FROM $wpdb->posts WHERE post_parent = $post_ID AND post_type = 'attachment'" );
-	foreach ( $attachments as $attachment ) {
-    	wp_delete_attachment( $attachment->ID, true );  
-	}  
-	$wpdb->query( "DELETE FROM $wpdb->postmeta WHERE meta_key = '_thumbnail_id' AND post_id = $post_ID" ); 
-}
-add_action('before_delete_post', 'delete_post_and_attachments');
 
 //WordPress非插件发邮件
 // function mail_smtp( $phpmailer ){

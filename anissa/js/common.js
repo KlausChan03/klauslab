@@ -1,10 +1,9 @@
 'use strict';
 
 
-
 //config的设置是全局的
 layui.config({
-  base: './wp-content/themes/anissa/js/' //假设这是你存放拓展模块的根目录
+  base: '/wp-content/themes/anissa/js/' //假设这是你存放拓展模块的根目录
 }).extend({ //设定模块别名
   canvas: 'canvas'
 });
@@ -44,13 +43,9 @@ layui.use(['flow', 'jquery', 'canvas', 'form', 'element'], function () {
       return true;
     }
   }
-  if (browserRedirect() == true) {
-    canvas.animateCss();
-    canvas.canvas_bg();
-  }
-  
-
-
+  console.log(canvas)
+  canvas.canvas_header();
+  canvas.canvas_bg();
 
 });
 

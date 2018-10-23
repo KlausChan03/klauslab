@@ -477,7 +477,7 @@
 
 
 @media screen and (min-width: 1000px) {	
-	.menu-touch{display: none!important;}
+	.menu-touch{visibility: hidden; opacity: 0; display: none; }
 	.site-header .main-navigation{height:60px;line-height: 60px;}
 	.site-header .nav-menu { position: fixed; z-index: 1314;width:100%; background: #fff; width:100%; display:flex;justify-content: center; height:60px;line-height: 60px;}
 	.site-header .nav-menu > li { position: relative; height:60px;line-height: 60px; margin-right: 1.6em;height: 60px; line-height: 60px; min-width: 60px; width: auto }
@@ -494,11 +494,11 @@
 
 
 @media screen and (max-width: 1000px) {	
-	.menu-touch {padding: 0; height: 45px; line-height: 45px; }
+	.menu-touch {visibility: visible; opacity: 1; display:flex;justify-content: space-between;align-items: center;padding: 0 2.5%; height: 45px; line-height: 45px; }
 	.menu-touch.toggled{-webkit-transform: translate3D(300px,0,0); transform: translate3D(300px,0,0); }
-	.menu-touch div:first-child {width:15%;}
-	.menu-touch div:nth-child(2) {width:70%;}
-	.menu-touch div:last-child {width:15%;}
+	.menu-touch div:first-child {width:5%;}
+	.menu-touch div:nth-child(2) {width:90%;}
+	.menu-touch div:last-child {width:5%;}
 	.site-header .main-navigation{ display: block; position: fixed; top: 0; left: -300px; width: 300px; height: 100%; z-index: 997; -webkit-box-shadow: rgba(0,0,0,.2) 0 0 5px 0; box-shadow: rgba(0,0,0,.2) 0 0 5px 0; overflow: hidden; }
 	.site-header .main-navigation.toggled{ -webkit-transform: translate3D(300px,0,0); transform: translate3D(300px,0,0); }
 	.site-header .main-navigation div > ul { position: absolute; top: 50%; transform: translate(0,-50%);margin:0 }

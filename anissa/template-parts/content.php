@@ -7,7 +7,7 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class('style-18'); ?>>	
+<article id="post-<?php the_ID(); ?>" <?php post_class('article-list style-18'); ?>>	
 	<div class="entry-header flex-hl-vc">
 		<?php the_title( sprintf( '<h1 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h1>' ); ?>	
 	</div>
@@ -29,19 +29,16 @@
 	<div class="entry-footer flex-hb-vc flex-hw">				
 			<?php if ( !is_mobile() ) : ?>
 				<div class="entry-action flex-hl-vc">
-					<div class="entry-date m-0 mr-10">
+					<div class="entry-date m-0 mr-15">
 						<?php is_icon( get_the_ID() ,"date"); ?>
-					</div>
-					<div class="entry-author m-0 mr-10">
-						<?php is_icon( get_the_ID() ,"author"); ?>
-					</div>
-					<div class="entry-view m-0 mr-10">
+					</div>					
+					<div class="entry-view m-0 mr-15">
 						<?php is_icon( get_the_ID() , "view"); ?>
 					</div>
-					<div class="entry-comment m-0 mr-10">
+					<div class="entry-comment m-0 mr-15">
 						<?php is_icon( get_the_ID() , "reply"); ?>
 					</div>
-					<div class="entry-zan m-0 mr-10">
+					<div class="entry-zan m-0 mr-15">
 						<span class="zan">
 							<a href="#" data-action="ding" data-id="<?php the_ID(); ?>" id="Addlike" class="action flex-hb-vc <?php if(isset($_COOKIE['inlo_ding_'.$post->ID])) echo 'actived';?> <?php $category = get_the_category();  echo $category[0]->category_nicename;?>">
 								<i class="lalaksks lalaksks-ic-zan"></i>
@@ -52,10 +49,13 @@
 				</div>
 			<?php else: ?>
 				<div class="entry-action flex-v flex-hc-vl">
-					<div class="entry-date m-0 mr-10">
+					<div class="entry-date m-0 mr-15">
 						<?php is_icon( get_the_ID() ,"date"); ?>
 					</div>
-					<div class="entry-zan m-0 mr-10">
+					<div class="entry-author m-0 mr-15">
+						<?php is_icon( get_the_ID() ,"author"); ?>
+					</div>
+					<div class="entry-zan m-0 mr-15">
 						<span class="zan">
 							<a href="#" data-action="ding" data-id="<?php the_ID(); ?>" id="Addlike" class="action flex-hb-vc <?php if(isset($_COOKIE['inlo_ding_'.$post->ID])) echo 'actived';?> <?php $category = get_the_category();  echo $category[0]->category_nicename;?>">
 								<i class="lalaksks lalaksks-ic-zan"></i>

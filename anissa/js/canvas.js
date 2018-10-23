@@ -2,21 +2,6 @@ layui.define(function (exports) {
     layui.use(['jquery','layer'], function () {
         let [$,layer] = [layui.$,layui.layer];
         let Animation = {};
-        Animation.animateCss = function () {
-            // $(".home article:even").hover(
-            //     function () {
-            //         $(this).animateCss('bounceInLeft')
-            //     },
-            //     function () {}
-            // )
-
-            // $(".home article:odd").hover(
-            //     function () {
-            //         $(this).animateCss('bounceInRight')
-            //     },
-            //     function () {}
-            // )
-        }
 
         Animation.canvas_bg = function () {
             function get_attribute(node, attr, default_value) {
@@ -114,6 +99,9 @@ layui.define(function (exports) {
             setTimeout(function () {
                 draw_canvas();
             }, 100);
+        }
+        Animation.canvas_header = function () {
+            
         }
 
         $("#categories-2 ul ul").addClass("animated zoomOut outsight").hide(200);
@@ -230,10 +218,10 @@ layui.define(function (exports) {
                      event = event || window.event;
                      direction = event.wheelDelta && (event.wheelDelta > 0 ? "mouseup" : "mousedown");
                      if (direction == "mouseup" || $scrollTop == 0) {
-                         $(".main-navigation").removeClass("slideOutUp outsight")
+                         $(".main-navigation").removeClass("slideOutUp outsight").addClass("slideInDown onsight")
 
                      } else {
-                         $(".main-navigation").addClass("slideOutUp outsight");
+                         $(".main-navigation").removeClass("slideInDown onsight").addClass("slideOutUp outsight");
 
                      }
                  };
