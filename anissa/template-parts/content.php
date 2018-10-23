@@ -31,7 +31,10 @@
 				<div class="entry-action flex-hl-vc">
 					<div class="entry-date m-0 mr-15">
 						<?php is_icon( get_the_ID() ,"date"); ?>
-					</div>					
+					</div>		
+					<div class="entry-author m-0 mr-15">
+						<?php is_icon( get_the_ID() ,"author"); ?>
+					</div>			
 					<div class="entry-view m-0 mr-15">
 						<?php is_icon( get_the_ID() , "view"); ?>
 					</div>
@@ -66,7 +69,7 @@
 				</div>
 			<?php endif ?>		
 		<div class="entry-extra">
-			<button class="expand-btn klaus-btn sm-btn gradient-blue-red show">展开全文</button>
+			<button class="expand-btn klaus-btn sm-btn gradient-blue-red show">预览全文</button>
 			<button class="collapse-btn klaus-btn sm-btn gradient-red-blue hide">收起全文</button>
 		</div>
 	</div>

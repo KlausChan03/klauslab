@@ -917,6 +917,35 @@ function get_like_most($mode = '', $limit = 10, $days = 7, $display = true) {
 }
 
 
+// 七牛CDN
+// if ( !is_admin() ) {
+//     add_action('wp_loaded','cdn_ob_start');
+ 
+//     function cdn_ob_start() {
+//         ob_start('qiniu_cdn_replace');
+//     }
+ 
+//     // 修改自七牛镜像存储 WordPress 插件
+//     function qiniu_cdn_replace($html){
+//         $local_host = 'https://www.klauslaura.com'; //博客域名
+//         $qiniu_host = 'http://cdn.klauslaura.com'; //七牛域名
+//         $cdn_exts   = 'png|jpg|jpeg|gif|ico|webp'; //扩展名（使用|分隔）
+//         $cdn_dirs   = 'wp-content|wp-includes'; //目录（使用|分隔）
+ 
+//         $cdn_dirs   = str_replace('-', '\-', $cdn_dirs);
+ 
+//         if ($cdn_dirs) {
+//             $regex  =  '/' . str_replace('/', '\/', $local_host) . '\/((' . $cdn_dirs . ')\/[^\s\?\\\'\"\;\>\<]{1,}.(' . $cdn_exts . '))([\"\\\'\s\?]{1})/';
+//             $html =  preg_replace($regex, $qiniu_host . '/$1$4', $html);
+//         } else {
+//             $regex  = '/' . str_replace('/', '\/', $local_host) . '\/([^\s\?\\\'\"\;\>\<]{1,}.(' . $cdn_exts . '))([\"\\\'\s\?]{1})/';
+//             $html =  preg_replace($regex, $qiniu_host . '/$1$3', $html);
+//         }
+//         return $html;
+//     }
+// }
+
+
 
 
 //WordPress非插件发邮件

@@ -436,7 +436,7 @@
 
 @media screen and (min-width: 1201px) {
 	.content-area {
-		width: 75%;
+		width: 70%;
 	}
 
 	.comment-respond {
@@ -463,7 +463,7 @@
 
 @media screen and (min-width: 1001px) and (max-width: 1200px) {
 	.content-area {
-		width: 70%;
+		width: 66%;
 	}
 
 	.site-main {
@@ -471,7 +471,7 @@
 	}
 
 	.sidebar {
-		width: 28%;
+		width: 32%;
 	}
 }
 

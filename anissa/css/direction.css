@@ -33,7 +33,7 @@ h1, h2, h3, h4 { line-height: 2.2; }
 h5 { line-height: 1.5; }
 /* header,footer{opacity: 0.8;z-index: 1314520;} */
 header{position: relative;}
-header,footer{ background-color: #fff;z-index:1314520;}
+header,footer{ background-color: #fff;z-index:1314;}
 header,footer, article, aside, section, input, textarea, button { -webkit-box-shadow: 0 5px 10px 0 rgba(160, 160, 160, .1); -moz-box-shadow: 0 5px 10px 0 rgba(160, 160, 160, .1); box-shadow: 0 5px 10px 0 rgba(160, 160, 160, .1); }
 article, aside{ border:none; }
 article, aside,nav, section, input, textarea, button{ background-color:rgb(255,255,255,0.8); border-radius: 3px; }
@@ -448,8 +448,9 @@ body.color { background: url(../img/bg-6.jpg); background-repeat: no-repeat; bac
     float: left;
 }
 
+
 .widget-area {
-    width: 280px;
+    width: 340px;
     margin: 0;
     /*margin-left: 40px;*/
     position: relative;
@@ -459,7 +460,7 @@ body.color { background: url(../img/bg-6.jpg); background-repeat: no-repeat; bac
 }
 
 .sidebar-content {
-    width: 280px;
+    width: 340px;
     box-sizing: border-box;
 }
 
