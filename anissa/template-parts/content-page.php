@@ -7,7 +7,7 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class('style-18'); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class('article-list style-18'); ?>>
 	<div class="entry-header">
 		<?php the_title( '<h1 class="entry-title flex-hc-vc">', '</h1>' ); ?>
 	</div><!-- .entry-header -->

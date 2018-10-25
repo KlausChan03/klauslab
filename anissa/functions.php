@@ -420,7 +420,7 @@ function normal_style_script() {
 function footer_script(){
 	wp_enqueue_script( 'layui', get_template_directory_uri() . '/frameworks/layui/layui.js', array(), 'lastet', false );	
 	wp_enqueue_script( 'common_func', get_template_directory_uri() . '/js/common.js', array(), '1.0', false );
-	wp_enqueue_script( 'canvas_func', get_template_directory_uri() . '/js/canvas.js', array(), '1.0', false );
+	// wp_enqueue_script( 'canvas_func', get_template_directory_uri() . '/js/canvas.js', array(), '1.0', false );
 	wp_enqueue_script( 'fixed-plugins', get_template_directory_uri() . '/js/fixed-plugins.js', array(), '1.0', false );
 	wp_localize_script( 'canvas', 'my_ajax_obj', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) ); // 先将ajaxurl变数设定好
 }
@@ -763,9 +763,9 @@ function is_icon($id,$name) {
 		default:
 		echo "No number between 1 and 3";
 	}
-	if( $dom ){
+	if( $dom != ""){
 		echo '<i class="lalaksks lalaksks-ic-'. $name .'"></i>'.'<span> '. $dom . ' </span>';
-	}
+	} 
 }
 
 
@@ -858,6 +858,40 @@ function delete_post_and_attachments($post_ID) {
 }
 add_action('before_delete_post', 'delete_post_and_attachments');
 
+//预览全文功能
+function preview_post(){
+    global $wpdb,$post;
+    $id = $_POST["um_id"];
+	$action = $_POST["um_action"];
+	
+    // if ( $action == 'expand'){
+	// 	$content = get_the_content();
+    // } else if ( $action == 'collapse'){
+	// 	$content = get_the_content();
+	// }   
+	// echo $content; 
+
+	// $output = '';
+  
+	// 获取文章对象
+	global $wpdb, $post;
+	$post = $wpdb->get_row($wpdb->prepare("SELECT * FROM $wpdb->posts WHERE ID = %d LIMIT 1", $id));
+	
+	// 如果指定 ID 的文章存在, 则对他进行格式化
+	if($post) {
+		$content = $post->post_content;
+		$output = balanceTags($content);
+		$output = wpautop($output);
+	}
+	
+	// 打印文章内容并中断后面的处理
+	echo $output;
+    
+    die;
+}
+
+add_action('wp_ajax_nopriv_preview_post', 'preview_post');
+add_action('wp_ajax_preview_post', 'preview_post');
 
 
 //点赞功能
@@ -918,32 +952,32 @@ function get_like_most($mode = '', $limit = 10, $days = 7, $display = true) {
 
 
 // 七牛CDN
-// if ( !is_admin() ) {
-//     add_action('wp_loaded','cdn_ob_start');
+if ( !is_admin() ) {
+    add_action('wp_loaded','cdn_ob_start');
  
-//     function cdn_ob_start() {
-//         ob_start('qiniu_cdn_replace');
-//     }
+    function cdn_ob_start() {
+        ob_start('qiniu_cdn_replace');
+    }
  
-//     // 修改自七牛镜像存储 WordPress 插件
-//     function qiniu_cdn_replace($html){
-//         $local_host = 'https://www.klauslaura.com'; //博客域名
-//         $qiniu_host = 'http://cdn.klauslaura.com'; //七牛域名
-//         $cdn_exts   = 'png|jpg|jpeg|gif|ico|webp'; //扩展名（使用|分隔）
-//         $cdn_dirs   = 'wp-content|wp-includes'; //目录（使用|分隔）
+    // 修改自七牛镜像存储 WordPress 插件
+    function qiniu_cdn_replace($html){
+        $local_host = 'https://www.klauslaura.com'; //博客域名
+        $qiniu_host = 'https://cdn.klauslaura.com'; //七牛域名
+        $cdn_exts   = 'png|jpg|jpeg|gif|ico|webp'; //扩展名（使用|分隔）
+        $cdn_dirs   = 'wp-content|wp-includes'; //目录（使用|分隔）
  
-//         $cdn_dirs   = str_replace('-', '\-', $cdn_dirs);
+        $cdn_dirs   = str_replace('-', '\-', $cdn_dirs);
  
-//         if ($cdn_dirs) {
-//             $regex  =  '/' . str_replace('/', '\/', $local_host) . '\/((' . $cdn_dirs . ')\/[^\s\?\\\'\"\;\>\<]{1,}.(' . $cdn_exts . '))([\"\\\'\s\?]{1})/';
-//             $html =  preg_replace($regex, $qiniu_host . '/$1$4', $html);
-//         } else {
-//             $regex  = '/' . str_replace('/', '\/', $local_host) . '\/([^\s\?\\\'\"\;\>\<]{1,}.(' . $cdn_exts . '))([\"\\\'\s\?]{1})/';
-//             $html =  preg_replace($regex, $qiniu_host . '/$1$3', $html);
-//         }
-//         return $html;
-//     }
-// }
+        if ($cdn_dirs) {
+            $regex  =  '/' . str_replace('/', '\/', $local_host) . '\/((' . $cdn_dirs . ')\/[^\s\?\\\'\"\;\>\<]{1,}.(' . $cdn_exts . '))([\"\\\'\s\?]{1})/';
+            $html =  preg_replace($regex, $qiniu_host . '/$1$4', $html);
+        } else {
+            $regex  = '/' . str_replace('/', '\/', $local_host) . '\/([^\s\?\\\'\"\;\>\<]{1,}.(' . $cdn_exts . '))([\"\\\'\s\?]{1})/';
+            $html =  preg_replace($regex, $qiniu_host . '/$1$3', $html);
+        }
+        return $html;
+    }
+}
 
 
 

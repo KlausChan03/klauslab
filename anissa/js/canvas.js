@@ -1,6 +1,6 @@
 layui.define(function (exports) {
-    layui.use(['jquery','layer'], function () {
-        let [$,layer] = [layui.$,layui.layer];
+    layui.use(['jquery', 'layer'], function () {
+        let [$, layer] = [layui.$, layui.layer];
         let Animation = {};
 
         Animation.canvas_bg = function () {
@@ -101,7 +101,7 @@ layui.define(function (exports) {
             }, 100);
         }
         Animation.canvas_header = function () {
-            
+
         }
 
         $("#categories-2 ul ul").addClass("animated zoomOut outsight").hide(200);
@@ -111,71 +111,63 @@ layui.define(function (exports) {
             $(this).find("ul").removeClass("zoomIn onsight").addClass("zoomOut outsight").hide(500)
         })
 
-        $(document).ready(function () {
 
-            $('.expand-btn').click(function (e) {
-                e.preventDefault();
-                $(this).siblings().removeClass("hide").addClass("show");
-                $(this).removeClass("show").addClass("hide");
-                $(this).parent().parent().siblings(".entry-main").find(".entry-main-excerpt").addClass("hide");
-                $(this).parent().parent().siblings(".entry-main").find(".entry-main-detail").removeClass("hide");               
+
+        // $('.expand-btn').click(function (e) {
+
+        // });
+
+        $('.collapse-btn').click(function (e) {
+            e.preventDefault();
+            $(this).siblings().removeClass("hide").addClass("show");
+            $(this).removeClass("show").addClass("hide");
+            $(this).parent().parent().siblings(".entry-main").find(".entry-main-excerpt").removeClass("hide");
+            $(this).parent().parent().siblings(".entry-main").find(".entry-main-detail").addClass("hide");
+        });
+
+        $(document).on("click", ".expand-btn", function () {
+            var z = $(this).data("id"),
+                y = $(this).data("action"),
+                x = $(this).parent().parent().siblings(".entry-main").find(".entry-main-detail");
+            var w = {
+                action: "preview_post",
+                um_id: z,
+                um_action: y
+            };
+            $.post("/wp-admin/admin-ajax.php", w, function (res) {
+                var content = res;
+                $(x).removeClass("hide").html(content);
+                $(x).siblings().addClass("hide");
+
             });
-
-            $('.collapse-btn').click(function (e) {
-                e.preventDefault();
-                $(this).siblings().removeClass("hide").addClass("show");
-                $(this).removeClass("show").addClass("hide");
-                $(this).parent().parent().siblings(".entry-main").find(".entry-main-excerpt").removeClass("hide");
-                $(this).parent().parent().siblings(".entry-main").find(".entry-main-detail").addClass("hide");               
-            });
-
-
-            $(document).on("click", "#Addlike", function() {
-                console.log("...")
-                if ($(this).hasClass("actived")) {
-                    return layer.msg("您已经赞过啦！");
-                } else {
-                    $(this).addClass("actived");
-                    var z = $(this).data("id"), y = $(this).data("action"), x = $(this).children(".count");
-                    var w = {
-                        action: "inlo_like",
-                        um_id: z,
-                        um_action: y
-                    };
-                    $.post("/wp-admin/admin-ajax.php", w, function(A) {
-                        $(x).html(A);
-                    });
-                    return false;
-                }
-            });
-        
-
-             //  var data = {
-                //      action: 'list_rec',
-                //  };
-                // $.ajax({
-                //     type: "POST",
-                //     async: true,
-                //     data: data,
-                //     url: my_ajax_obj.ajaxurl,
-                //     success: function success(res) {
-                //         console.log(res);
-                //         return false;
-                //     }
-                // });
-
+            // return false;
+            // $(this).siblings().removeClass("hide").addClass("show");
+            // $(this).removeClass("show").addClass("hide");
+            // $(this).parent().parent().siblings(".entry-main").find(".entry-main-excerpt").addClass("hide");
+            // $(this).parent().parent().siblings(".entry-main").find(".entry-main-detail").removeClass("hide");
         })
 
-        // $(".nm-menu-toggle").click(function(){
-        //     if($(this).hasClass("close")){
-        //          $(this).children().find("show").addClass("hide").removeClass("show")
-        //          $(this).children().find("hide").addClass("show").removeClass("hide")
-        //     }else{
+        $(document).on("click", "#Addlike", function () {
+            if ($(this).hasClass("actived")) {
+                return layer.msg("您已经赞过啦！");
+            } else {
+                $(this).addClass("actived");
+                var z = $(this).data("id"),
+                    y = $(this).data("action"),
+                    x = $(this).children(".count");
+                var w = {
+                    action: "inlo_like",
+                    um_id: z,
+                    um_action: y
+                };
+                $.post("/wp-admin/admin-ajax.php", w, function (res) {
+                    $(x).html(res);
+                    console.log(res)
 
-        //     }
-        
-        // })
-
+                });
+                return false;
+            }
+        });
 
         // 滚动触发事件
         $(window).scroll(function () {
@@ -184,17 +176,17 @@ layui.define(function (exports) {
                 $scrollBottom = $(doc).height() - $(win).height() - $(win).scrollTop(),
                 $scrollTop = $(win).scrollTop();
             if ($(window).width() > 1000 && $(document).height() > 1500) {
-                $(".sidebar .sidebar-content > aside").addClass("animated");              
+                $(".sidebar .sidebar-content > aside").addClass("animated");
                 if ($(this).scrollTop() > 200) {
                     $(".sidebar .sidebar-content").addClass("is-fixed");
                     $(".widget_custom_html").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")
                     $(".widget_categories").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                     $(".widget_recent_comments").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
-                    $(".widget_tag_cloud").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")                    
+                    $(".widget_tag_cloud").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                 } else {
                     $(".sidebar .sidebar-content").removeClass("is-fixed");
                     $(".widget_custom_html").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
-                    $(".widget_tag_cloud").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")                    
+                    $(".widget_tag_cloud").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                     $(".widget_categories").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                     $(".widget_recent_comments").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                 }
@@ -204,32 +196,32 @@ layui.define(function (exports) {
                     $(".sidebar .sidebar-content").removeClass("is-bottom");
                 }
 
-                 /*滚轮事件只有firefox比较特殊，使用DOMMouseScroll; 其他浏览器使用mousewheel;*/
-                 // firefox
-                 var direction;
-                 document.body.addEventListener("DOMMouseScroll", function (event) {
-                     direction = event.detail && (event.detail > 0 ? "mousedown" : "mouseup");
-                 });
+                /*滚轮事件只有firefox比较特殊，使用DOMMouseScroll; 其他浏览器使用mousewheel;*/
+                // firefox
+                var direction;
+                document.body.addEventListener("DOMMouseScroll", function (event) {
+                    direction = event.detail && (event.detail > 0 ? "mousedown" : "mouseup");
+                });
 
-                 // chrome and ie
-                 $(".main-navigation").addClass("animated");
+                // chrome and ie
+                $(".main-navigation").addClass("animated");
 
-                 document.body.onmousewheel = function (event) {
-                     event = event || window.event;
-                     direction = event.wheelDelta && (event.wheelDelta > 0 ? "mouseup" : "mousedown");
-                     if (direction == "mouseup" || $scrollTop == 0) {
-                         $(".main-navigation").removeClass("slideOutUp outsight").addClass("slideInDown onsight")
+                document.body.onmousewheel = function (event) {
+                    event = event || window.event;
+                    direction = event.wheelDelta && (event.wheelDelta > 0 ? "mouseup" : "mousedown");
+                    if (direction == "mouseup" || $scrollTop == 0) {
+                        $(".main-navigation").removeClass("slideOutUp outsight").addClass("slideInDown onsight")
 
-                     } else {
-                         $(".main-navigation").removeClass("slideInDown onsight").addClass("slideOutUp outsight");
+                    } else {
+                        $(".main-navigation").removeClass("slideInDown onsight").addClass("slideOutUp outsight");
 
-                     }
-                 };
+                    }
+                };
             } else {
                 $(".sidebar .sidebar-content").removeClass("is-fixed animated");
             }
 
-           
+
 
         })
         exports('canvas', Animation)

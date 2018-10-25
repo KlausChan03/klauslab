@@ -23,7 +23,7 @@
 			</div>
 		</div>
 		<div class="entry-main-detail hide pos-r">
-			<?php the_content(); ?>			
+
 		</div>
 	</div>
 	<div class="entry-footer flex-hb-vc flex-hw">				
@@ -69,8 +69,8 @@
 				</div>
 			<?php endif ?>		
 		<div class="entry-extra">
-			<button class="expand-btn klaus-btn sm-btn gradient-blue-red show">预览全文</button>
-			<button class="collapse-btn klaus-btn sm-btn gradient-red-blue hide">收起全文</button>
+			<button data-action="expand" data-id="<?php the_ID(); ?>" class="expand-btn klaus-btn sm-btn gradient-blue-red show">预览全文</button>
+			<button data-action="collapse" data-id="<?php the_ID(); ?>" class="collapse-btn klaus-btn sm-btn gradient-red-blue hide">收起全文</button>
 		</div>
 	</div>
 </article><!-- #post-## -->
