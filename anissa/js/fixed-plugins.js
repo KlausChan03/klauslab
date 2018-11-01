@@ -27,7 +27,7 @@ function ctrlClass(opts) {
     // console.log(opts.c)
     var c = null;
     typeof (opts.c) === 'string' ?
-    c = opts.c.trim().replace(/\s+/g, ' ').split(' '):
+        c = opts.c.trim().replace(/\s+/g, ' ').split(' ') :
         c = opts.c; //修复不规范传参
 
     return opts.fun({
@@ -121,7 +121,7 @@ function hover(ele, over, out) {
 
 
 // 返回顶部
-var backTop = document.getElementsByClassName("fixed-plugins-gototop")[0];
+var backTop = document.getElementsByClassName("fp-gototop")[0];
 
 if (window.attachEvent) {
     window.attachEvent("onload", __checkDisplay)
@@ -272,12 +272,12 @@ function Simplized(cc) {
 }
 
 
-var lang_Obj = document.getElementById("fixed-plugins-change-lang")
+var lang_Obj = document.getElementById("fp-change-lang")
 if (lang_Obj) {
     var JF_cn = "ft" + self.location.hostname.toString().replace(/\./g, "")
     var BodyIsFt = getCookie(JF_cn)
     if (BodyIsFt != "1") BodyIsFt = Default_isFT
-    with(lang_Obj) {
+    with (lang_Obj) {
         if (typeof (document.all) != "object") {
             href = "javascript:StranBody()"
         } else {
@@ -304,9 +304,9 @@ function FTPYStr() {
 
 // 登录和登出
 var plugins_ = document.querySelector(".fixed-plugins");
-var login_ = document.querySelector(".fixed-plugins-login");
-var logout_ = document.querySelector(".fixed-plugins-logout");
-var register_ = document.getElementsByClassName("fixed-plugins-register")[0];
+var login_ = document.querySelector(".fp-login");
+var logout_ = document.querySelector(".fp-logout");
+var register_ = document.getElementsByClassName("fp-register")[0];
 if (login_ || logout_) {
     hover(plugins_, function () {
         toggleClass(register_, "show")
@@ -317,53 +317,42 @@ if (login_ || logout_) {
 
 
 // 搜索功能
-var search_ = document.querySelector('.fixed-plugins-search');
-var search_in = document.querySelector('.fixed-plugins-search-in');
-var search_out = document.querySelector('.fixed-plugins-search-out');
-var search_form = document.querySelector('.fixed-plugins-search-out .search-form');
+var search_ = document.querySelector('.fp-search');
+var search_in = document.querySelector('.fp-search-in');
+var search_out = document.querySelector('.fp-search-out');
+var search_form = document.querySelector('.fp-search-out .search-form');
 addClass(search_form, 'flex-hc-vc');
-hover(search_, function () {
+search_.addEventListener('mouseover', function (event) {
     removeClass(search_out, 'hide');
     addClass(search_out, 'show');
-}, function () {
+})
+search_.addEventListener('mouseout', function (event) {
     removeClass(search_out, 'show');
     addClass(search_out, 'hide');
 })
 
 
-
 // 切换背景功能
-var background_obj = document.getElementById("fixed-plugins-change-background");
-var body_dom = document.getElementsByTagName("body")[0];
-var body_class = "body_class";
-background_obj.onclick = function () {
-    var bg_class = getCookie(body_class);
-    if(bg_class != ""){
-        setCookie(body_class, "")
-        removeClass(body_dom,"color")
-    }else{
-        setCookie(body_class, "color")
-        addClass(body_dom, getCookie(body_class))
+let [background_, background_in, background_out] = [document.querySelector('.fp-background'), document.querySelector('.fp-background-in'), document.querySelector('.fp-background-out')];
+let [body_dom, body_bg, random_] = [document.getElementsByTagName("body")[0]];
+background_.addEventListener('mouseover', function (event) {
+    removeClass(background_out, 'hide');
+    addClass(background_out, 'show');
+    background_out.querySelectorAll('li')[0].onclick = function (event) {
+        random_ = Math.floor(Math.random() * 6 + 1);
+        setCookie("body_class", `color color-${random_}`);
+        addClass(body_dom, getCookie("body_class"));
     }
-}
-addClass(body_dom, getCookie(body_class))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    background_out.querySelectorAll('li')[1].onclick = function (event) {
+        setCookie("body_class", "");
+        removeClass(body_dom, "color");
+    }
+})
+background_.addEventListener('mouseout', function (event) {
+    removeClass(background_out, 'show');
+    addClass(background_out, 'hide');
+})
+addClass(body_dom, getCookie("body_class"))
 
 
 // var img = document.getElementsByTagName("img")

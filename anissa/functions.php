@@ -413,7 +413,7 @@ function normal_style_script() {
 	wp_enqueue_style( 'flex', get_template_directory_uri() . '/css/flex.css', array(), '1.0', false );
 	// 动画库样式
 	wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.min.css', array(), '3.5.1', false );
-	wp_enqueue_script( 'vue', get_template_directory_uri() . '/js/vue.js', array(), '2.5.17', false );
+	// wp_enqueue_script( 'vue', get_template_directory_uri() . '/js/vue.js', array(), '2.5.17', false );
 } 
 
 
