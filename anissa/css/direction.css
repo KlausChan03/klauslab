@@ -232,10 +232,10 @@ code { padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2
 .throb:before { font-style: normal; font-weight: normal; display: inline-block; text-decoration: inherit; width: 1em; margin-right: .2em; text-align: center; font-variant: normal; text-transform: none; line-height: 1em; margin-left: .2em; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; -webkit-animation: xintiao 1.33s ease-in-out infinite; animation: xintiao 1.33s ease-in-out infinite; }
 
 /* 背景&皮肤 */
-body.color article, body.color aside, body.color nav, body.color section, body.color input, body.color textarea, body.color button { background-color: rgb(255, 255, 255, 0.85) }
+body.color article, body.color aside, body.color nav, body.color section, body.color input, body.color textarea, body.color button { background-color: rgb(255, 255, 255, 0.75) }
 article, aside,nav, section, input, textarea, button{ background-color:rgb(255,255,255,1);background: #fff;opacity: 1;  }
 body { background-color: #f0f0f0 }
-body.color { background: url(../img/bg-6.jpg); background-repeat: no-repeat; background-attachment: fixed; background-size: cover; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+body.color {  background-repeat: no-repeat; background-attachment: fixed; background-size: cover; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
 
 /*头部区域*/
@@ -280,16 +280,17 @@ body.color { background: url(../img/bg-6.jpg); background-repeat: no-repeat; bac
 
  /* 固定插件 - 回到顶部 */
 .fixed-plugins { position: fixed; right: 15px; bottom: 15px; text-align: center; cursor: pointer; z-index:1314520; }
-.fixed-plugins .fixed-plugins-items { width: 40px; height: 40px; line-height: 40px; margin-bottom: 1px; text-align: center; cursor: pointer; background-color: #1a1a1a; border-radius: 2px; opacity: .95; }
-.fixed-plugins .fixed-plugins-items a i { color: #fff; font-size: 28px; font-style: normal; }
-.fixed-plugins .fixed-plugins-change a i { font-size: 24px; }
+.fixed-plugins .fp-items { width: 40px; height: 40px; line-height: 40px; margin-bottom: 1px; text-align: center; cursor: pointer; background-color: #1a1a1a; border-radius: 2px; opacity: .95; }
+.fixed-plugins .fp-items a i { color: #fff; font-size: 28px; font-style: normal; }
+.fixed-plugins .fp-change a i { font-size: 24px; }
+.fixed-plugins  ul li { width: 40px; height: 40px; line-height: 40px; margin-bottom: 1px; text-align: center; cursor: pointer; background-color: #1a1a1a; border-radius: 2px; opacity: .95; }
 
-.fixed-plugins .fixed-plugins-search .search-form label{width:220px;}
-.fixed-plugins .fixed-plugins-search .search-form .search-field{width:100%;}
-.fixed-plugins .fixed-plugins-search .search-form .search-submit{display: none}
+.fixed-plugins .fp-search .search-form label{width:220px;}
+.fixed-plugins .fp-search .search-form .search-field{width:100%;}
+.fixed-plugins .fp-search .search-form .search-submit{display: none}
 
 /* 文章详情页 */
-.post { padding: 0;}
+.post { padding: 0; border: none;}
 .entry-cat { margin-bottom: 0; }
 .entry-summary p{ font-size:15px; }
 .entry-summary .article-main .more-link { margin: 10px auto; }

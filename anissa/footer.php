@@ -61,36 +61,49 @@
 
 <div id="fixed-plugins" class="fixed-plugins flex-v flex-hl-vc">
   <?php  if ( is_user_logged_in() ) : global $current_user; ?>
-    <div class="fixed-plugins-items fixed-plugins-logout">
+    <div class="fp-items fp-logout">
       <a title="登出" href="<?php echo wp_logout_url()?>" class="logout-btn"><i class="lalaksks lalaksks-ic-logout"></i></a>
     </div>
   <?php else: ?>  
-    <div class="fixed-plugins-items fixed-plugins-register hide">
+    <div class="fp-items fp-register hide">
       <a title="注册" href="<?php echo wp_registration_url()?>" class="register-btn"><i class="lalaksks lalaksks-ic-register"></i></a>
     </div>
-      <div class="fixed-plugins-items fixed-plugins-login">
+      <div class="fp-items fp-login">
       <a title="登录" href="<?php echo wp_login_url()?>" class="login-btn"><i class="lalaksks lalaksks-ic-login"></i></a>	 
     </div>
 
   <?php endif ?>
-  <div class="flex-hl-vc fixed-plugins-search pos-r">
-    <div class="fixed-plugins-items fixed-plugins-search-in">
-      <a class="flex-hc-vc" title="站内搜索"><i class="lalaksks lalaksks-ic-search"></i></a>
-    
+
+  <div class="flex-hl-vc fp-search pos-r">
+    <div class="fp-items fp-search-in">
+      <a class="flex-hc-vc" title="站内搜索"><i class="lalaksks lalaksks-ic-search"></i></a>    
     </div>
-   <div class="pos-a hide fixed-plugins-search-out" style="right:40px;">
+    <div class="pos-a hide fp-search-out" style="right:40px;">
       <?php get_search_form(); ?>
     </div>
   </div>
-  <div class="fixed-plugins-items fixed-plugins-gototop">
+
+  <div class="fp-items fp-gototop">
     <a title="返回顶部"><i class="lalaksks lalaksks-ic-backtotop"></i></a>
   </div>
-  <div class="fixed-plugins-items fixed-plugins-change-lang">
-    <a id="fixed-plugins-change-lang"  title="繁简切换" href="javascript:StranBody()" title="繁體"><i>繁</i></a>
+
+  <div class="fp-items fp-change-lang">
+    <a id="fp-change-lang"  title="繁简切换" href="javascript:StranBody()" title="繁體"><i>繁</i></a>
   </div>
-  <div class="fixed-plugins-items fixed-plugins-change-background">
-    <a id="fixed-plugins-change-background" title="切换背景"><i class="lalaksks lalaksks-ic-background"></i></a>
+
+  <div class="flex-hl-vc fp-background pos-r">
+    <div class="fp-items fp-background-in">
+      <a  class="flex-hc-vc" title="切换背景"><i class="lalaksks lalaksks-ic-background"></i></a>
+    </div>
+    <div class="pos-a hide fp-background-out" style="right:40px;">
+      <ul class="flex-hr-vc">
+        <li data-type="origin" class="col-fff mr-5">随机</li>
+        <li data-type="random" class="col-fff mr-5">原始</li>
+      </ul>
+    </div>
+
   </div>
+
 </div>
 
 <?php wp_footer(); ?>
