@@ -334,22 +334,18 @@ search_.addEventListener('mouseout', function (event) {
 
 // 切换背景功能
 let [background_, background_in, background_out] = [document.querySelector('.fp-background'), document.querySelector('.fp-background-in'), document.querySelector('.fp-background-out')];
-let [body_dom,  random_] = [document.getElementsByTagName("body")[0]];
+let [body_dom, body_bg, random_] = [document.getElementsByTagName("body")[0]];
 background_.addEventListener('mouseover', function (event) {
     removeClass(background_out, 'hide');
     addClass(background_out, 'show');
     background_out.querySelectorAll('li')[0].onclick = function (event) {
-        bg_class = getCookie("body_class");
-        random_ = Math.floor(Math.random() * 15 + 1);
-        setCookie("body_class", "color");
+        random_ = Math.floor(Math.random() * 6 + 1);
+        setCookie("body_class", `color color-${random_}`);
         addClass(body_dom, getCookie("body_class"));
-        body_dom.style.backgroundImage = `url(/wp-content/themes/anissa/img/bg-${random_}.jpg)`;
     }
     background_out.querySelectorAll('li')[1].onclick = function (event) {
-        bg_class = getCookie("body_class");
         setCookie("body_class", "");
         removeClass(body_dom, "color");
-        body_dom.style.backgroundImage = ``;
     }
 })
 background_.addEventListener('mouseout', function (event) {
