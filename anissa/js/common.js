@@ -43,10 +43,7 @@ layui.use(['flow', 'jquery', 'canvas', 'form', 'element'], function () {
       return true;
     }
   }
-  console.log(canvas)
-  canvas.canvas_header();
   canvas.canvas_bg();
-
 });
 
 

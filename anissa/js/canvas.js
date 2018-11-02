@@ -1,7 +1,6 @@
 layui.define(function (exports) {
     layui.use(['jquery', 'layer'], function () {
-        let [$, layer] = [layui.$, layui.layer];
-        let Animation = {};
+        let [$, layer, Animation] = [layui.$, layui.layer, {}];
 
         Animation.canvas_bg = function () {
             function get_attribute(node, attr, default_value) {
@@ -100,9 +99,6 @@ layui.define(function (exports) {
                 draw_canvas();
             }, 100);
         }
-        Animation.canvas_header = function () {
-
-        }
 
         $("#categories-2 ul ul").addClass("animated zoomOut outsight").hide(200);
         $("#categories-2 ul li").hover(function () {
@@ -111,45 +107,42 @@ layui.define(function (exports) {
             $(this).find("ul").removeClass("zoomIn onsight").addClass("zoomOut outsight").hide(500)
         })
 
+        $(document).on("click", ".collapse-btn", function () {
+            var this_ = $(this),
+                this_dom = $(this).parent().parent().siblings(".entry-main").find(".entry-main-excerpt");
 
+            this_dom.removeClass("hide");
+            this_dom.siblings().addClass("hide");
 
-        // $('.expand-btn').click(function (e) {
-
-        // });
-
-        $('.collapse-btn').click(function (e) {
-            e.preventDefault();
-            $(this).siblings().removeClass("hide").addClass("show");
-            $(this).removeClass("show").addClass("hide");
-            $(this).parent().parent().siblings(".entry-main").find(".entry-main-excerpt").removeClass("hide");
-            $(this).parent().parent().siblings(".entry-main").find(".entry-main-detail").addClass("hide");
-        });
+            this_.siblings().removeClass("hide").addClass("show");
+            this_.removeClass("show").addClass("hide");
+        })
 
         $(document).on("click", ".expand-btn", function () {
-            var z = $(this).data("id"),
-                y = $(this).data("action"),
-                x = $(this).parent().parent().siblings(".entry-main").find(".entry-main-detail");
-            var w = {
+            var this_ = $(this),
+                this_id = $(this).data("id"),
+                this_action = $(this).data("action"),
+                this_dom = $(this).parent().parent().siblings(".entry-main").find(".entry-main-detail");
+
+            var req = {
                 action: "preview_post",
-                um_id: z,
-                um_action: y
+                um_id: this_id,
+                um_action: this_action
             };
-            $.post("/wp-admin/admin-ajax.php", w, function (res) {
+            $.post("/wp-admin/admin-ajax.php", req, function (res) {
                 var content = res;
-                $(x).removeClass("hide").html(content);
-                $(x).siblings().addClass("hide");
+                this_dom.removeClass("hide").html(content);
+                this_dom.siblings().addClass("hide");
+
+                this_.siblings().removeClass("hide").addClass("show");
+                this_.removeClass("show").addClass("hide");
 
             });
-            // return false;
-            // $(this).siblings().removeClass("hide").addClass("show");
-            // $(this).removeClass("show").addClass("hide");
-            // $(this).parent().parent().siblings(".entry-main").find(".entry-main-excerpt").addClass("hide");
-            // $(this).parent().parent().siblings(".entry-main").find(".entry-main-detail").removeClass("hide");
         })
 
         $(document).on("click", "#Addlike", function () {
             if ($(this).hasClass("actived")) {
-                return layer.msg("您已经赞过啦！");
+                layer.msg("您已经赞过啦~");
             } else {
                 $(this).addClass("actived");
                 var z = $(this).data("id"),
@@ -175,6 +168,9 @@ layui.define(function (exports) {
                 win = window,
                 $scrollBottom = $(doc).height() - $(win).height() - $(win).scrollTop(),
                 $scrollTop = $(win).scrollTop();
+
+            var direction, header = $(".site-header");
+
             if ($(window).width() > 1000 && $(document).height() > 1500) {
                 $(".sidebar .sidebar-content > aside").addClass("animated");
                 if ($(this).scrollTop() > 200) {
@@ -197,31 +193,28 @@ layui.define(function (exports) {
                 }
 
                 /*滚轮事件只有firefox比较特殊，使用DOMMouseScroll; 其他浏览器使用mousewheel;*/
-                // firefox
-                var direction;
                 document.body.addEventListener("DOMMouseScroll", function (event) {
                     direction = event.detail && (event.detail > 0 ? "mousedown" : "mouseup");
+                    if (direction == "mouseup" || $scrollTop == 0) {
+                        header.removeClass("slideOutUp outsight").addClass("slideInDown onsight");
+                    } else {
+                        header.removeClass("slideInDown onsight").addClass("slideOutUp outsight");
+                    }
                 });
-
-                // chrome and ie
-                $(".main-navigation").addClass("animated");
 
                 document.body.onmousewheel = function (event) {
                     event = event || window.event;
                     direction = event.wheelDelta && (event.wheelDelta > 0 ? "mouseup" : "mousedown");
                     if (direction == "mouseup" || $scrollTop == 0) {
-                        $(".main-navigation").removeClass("slideOutUp outsight").addClass("slideInDown onsight")
-
+                        header.removeClass("slideOutUp outsight").addClass("slideInDown onsight");
                     } else {
-                        $(".main-navigation").removeClass("slideInDown onsight").addClass("slideOutUp outsight");
-
+                        header.removeClass("slideInDown onsight").addClass("slideOutUp outsight");
                     }
                 };
+
             } else {
                 $(".sidebar .sidebar-content").removeClass("is-fixed animated");
             }
-
-
 
         })
         exports('canvas', Animation)

@@ -15,7 +15,7 @@
 <footer id="colophon" class="site-footer flex-hc-vc" role="contentinfo">
     <div class="site-info">
     <p><span>一个秀恩爱的博客，</span><span id="createtime"></span></p>
-    <p><a href="http://www.miitbeian.gov.cn/" rel="nofollow noopener noreferrer" target="_blank" class="font-microsoft no-visited hover col-495">版权所有 © 2016-2018 粤&nbsp;ICP&nbsp;备17095567号</a></p>
+    <p><a href="http://www.miitbeian.gov.cn/" rel="nofollow noopener noreferrer" target="_blank" >版权所有 © 2016-2018 粤&nbsp;ICP&nbsp;备17095567号</a></p>
     </div>
   <!-- .site-info --> 
 </footer>
