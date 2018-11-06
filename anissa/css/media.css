@@ -1,13 +1,4 @@
-﻿@media screen and (min-width: 1001px) {
-	.menu-toggle {
-		display: none;
-	}
-
-	.main-navigation ul,
-	.social-links {
-		display: block;
-	}
-}
+﻿
 
 @media screen and (max-width: 1000px) {
 	.site-branding {
@@ -480,9 +471,9 @@
 	.menu-touch{visibility: hidden; opacity: 0; display: none; }
 	.site-header .main-navigation{height:60px;line-height: 60px;}
 	.site-header .nav-menu { position: fixed; z-index: 1314;width:100%; background: #fff; width:100%; display:flex;justify-content: center; height:60px;line-height: 60px;}
-	.site-header .nav-menu > li { position: relative; height:60px;line-height: 60px; margin-right: 1.6em;height: 60px; line-height: 60px; min-width: 60px; width: auto }
+	.site-header .nav-menu > li { position: relative; margin-right: 1.6em;height: 60px; line-height: 60px; min-width: 60px; width: auto }
 	.site-header .nav-menu > li a{ padding:0 8px; }
-	.site-header .nav-menu .sub-menu { position: absolute; top: 63px; left: 0;width: 100%; min-width: 100px;z-index: 1314520; visibility: hidden; float: left; padding: 10px; width: 13em; border-bottom: 4px solid #0bf; background: #fff; opacity: 0; transition: all .2s; }
+	.site-header .nav-menu .sub-menu { position: absolute; top: 63px; left: 0;width: 100%; min-width: 100px;z-index: 1314520; visibility: hidden; float: left; padding: 10px; width: 13em; border-bottom: 4px solid #0bf; background: #fff; opacity: 0;  }
 	.site-header .nav-menu .sub-menu > li {  height: 36px; line-height: 36px; width: 100%; text-align: center; margin: 0; height: auto; float: left; text-align: left; }
 	.site-header .nav-menu .sub-menu > li a { min-width: auto; width: 100%; display: inline-block;padding: 0 0 0 .5em; height: 2.5em; line-height: 2.5em; border-bottom: 0; -webkit-transition: none; -moz-transition: none; transition: none; }
 	.site-header .nav-menu > li:hover>ul, .site-header .main-navigation ul li.focus>ul { left: -32px;  visibility: visible; opacity: 1;  }
