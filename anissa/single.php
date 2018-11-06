@@ -11,7 +11,7 @@ get_header(); ?>
   <main id="main" class="site-main" role="main">
     <?php while ( have_posts() ) : the_post(); ?>
     <?php setPostViews(get_the_ID()); ?>
-    <?php get_template_part( 'template-parts/content', 'single' ); echo orwei_ds_alipay_wechat(); ?>
+    <?php get_template_part( 'template-parts/content', 'single' );  ?>
 	
     <?php
 				// If comments are open or we have at least one comment, load up the comment template.

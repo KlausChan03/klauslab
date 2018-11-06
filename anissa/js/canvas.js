@@ -1,6 +1,6 @@
 layui.define(function (exports) {
     layui.use(['jquery', 'layer'], function () {
-        let [$, layer, Animation] = [layui.$, layui.layer, {}];
+        let [$, layer, Animation] = [layui.$, layui.layer,{}];
 
         Animation.canvas_bg = function () {
             function get_attribute(node, attr, default_value) {
@@ -100,29 +100,29 @@ layui.define(function (exports) {
             }, 100);
         }
 
-        $("#categories-2 ul ul").addClass("animated zoomOut outsight").hide(200);
-        $("#categories-2 ul li").hover(function () {
-            $(this).find("ul").removeClass("zoomOut outsight").addClass("zoomIn onsight").show(500)
-        }, function () {
-            $(this).find("ul").removeClass("zoomIn onsight").addClass("zoomOut outsight").hide(500)
-        })
+        // $("#categories-2 ul ul").addClass("animated zoomOut outsight").hide(200);
+        // $("#categories-2 ul li").hover(function () {
+        //     $(this).find("ul").removeClass("zoomOut outsight").addClass("zoomIn onsight").show(500)
+        // }, function () {
+        //     $(this).find("ul").removeClass("zoomIn onsight").addClass("zoomOut outsight").hide(500)
+        // })
 
         $(document).on("click", ".collapse-btn", function () {
             var this_ = $(this),
                 this_dom = $(this).parent().parent().siblings(".entry-main").find(".entry-main-excerpt");
 
-            this_dom.removeClass("hide");
-            this_dom.siblings().addClass("hide");
+                this_dom.removeClass("hide");
+                this_dom.siblings().addClass("hide");
 
-            this_.siblings().removeClass("hide").addClass("show");
-            this_.removeClass("show").addClass("hide");
+                this_.siblings().removeClass("hide").addClass("show");
+                this_.removeClass("show").addClass("hide");
         })
 
         $(document).on("click", ".expand-btn", function () {
             var this_ = $(this),
                 this_id = $(this).data("id"),
                 this_action = $(this).data("action"),
-                this_dom = $(this).parent().parent().siblings(".entry-main").find(".entry-main-detail");
+                this_dom = $(this).parent().parent().siblings(".entry-main").find(".entry-main-detail");          
 
             var req = {
                 action: "preview_post",
@@ -168,8 +168,8 @@ layui.define(function (exports) {
                 win = window,
                 $scrollBottom = $(doc).height() - $(win).height() - $(win).scrollTop(),
                 $scrollTop = $(win).scrollTop();
-
-            var direction, header = $(".site-header");
+                
+                var direction,header = $(".site-header");                
 
             if ($(window).width() > 1000 && $(document).height() > 1500) {
                 $(".sidebar .sidebar-content > aside").addClass("animated");
@@ -193,13 +193,8 @@ layui.define(function (exports) {
                 }
 
                 /*滚轮事件只有firefox比较特殊，使用DOMMouseScroll; 其他浏览器使用mousewheel;*/
-                document.body.addEventListener("DOMMouseScroll", function (event) {
+                document.body.addEventListener("DOMMouseScroll", function (event) {                
                     direction = event.detail && (event.detail > 0 ? "mousedown" : "mouseup");
-                    if (direction == "mouseup" || $scrollTop == 0) {
-                        header.removeClass("slideOutUp outsight").addClass("slideInDown onsight");
-                    } else {
-                        header.removeClass("slideInDown onsight").addClass("slideOutUp outsight");
-                    }
                 });
 
                 document.body.onmousewheel = function (event) {
