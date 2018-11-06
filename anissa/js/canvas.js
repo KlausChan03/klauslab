@@ -100,12 +100,12 @@ layui.define(function (exports) {
             }, 100);
         }
 
-        $("#categories-2 ul ul").addClass("animated zoomOut outsight").hide(200);
-        $("#categories-2 ul li").hover(function () {
-            $(this).find("ul").removeClass("zoomOut outsight").addClass("zoomIn onsight").show(500)
-        }, function () {
-            $(this).find("ul").removeClass("zoomIn onsight").addClass("zoomOut outsight").hide(500)
-        })
+        // $("#categories-2 ul ul").addClass("animated zoomOut outsight").hide(200);
+        // $("#categories-2 ul li").hover(function () {
+        //     $(this).find("ul").removeClass("zoomOut outsight").addClass("zoomIn onsight").show(500)
+        // }, function () {
+        //     $(this).find("ul").removeClass("zoomIn onsight").addClass("zoomOut outsight").hide(500)
+        // })
 
         $(document).on("click", ".collapse-btn", function () {
             var this_ = $(this),

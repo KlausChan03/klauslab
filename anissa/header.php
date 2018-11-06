@@ -20,7 +20,7 @@
 
 
 <div id="page" class="hfeed site">
-	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'anissa' ); ?></a>
+	<!-- <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'anissa' ); ?></a> -->
 	<header id="masthead" class="site-header" role="banner">
 		<div id="menu-touch" class="menu-touch">
 
@@ -32,15 +32,28 @@
 			</div>
 			<div class="flex-hc-vc">
 				<i class="lalaksks lalaksks-ic-search"></i>
-			</div>
-			
+			</div>			
 		</div>
-		<nav id="site-navigation" class="main-navigation hide" role="navigation">		   
-			<?php wp_nav_menu( array( 
-				'theme_location' => 'primary', 
-				'menu_id' => 'primary-menu' ,
-				'after'  => '<span class="nm-menu-toggle hide"><i class="lalaksks lalaksks-ic-add add"></i><i class="lalaksks lalaksks-ic-minus minus"></i></span>',
-				) ); 
+
+		<nav id="site-navigation" class="main-navigation" role="navigation">	
+			<div id="menu-pc" class="menu-pc">
+				<div class="flex-hc-vc">
+					<div>
+						<?php global $current_user;get_currentuserinfo();echo get_avatar( $current_user->user_email, 45); ?>						
+					</div>
+					<div class="m-lr-15">
+						<?php echo get_bloginfo('name'); ?>
+					</div>
+				</div>
+			</div>	   
+			<?php 
+				wp_nav_menu( 
+					array( 
+					'theme_location' => 'primary', 
+					'menu_id' => 'primary-menu' ,
+					'after'  => '<span class="nm-menu-toggle hide"><i class="lalaksks lalaksks-ic-add add"></i><i class="lalaksks lalaksks-ic-minus minus"></i></span>',
+					) 
+				); 
 			?>		
 		</nav><!-- #site-navigation -->
 	</header><!-- #masthead -->

@@ -30,7 +30,7 @@ get_header();
 /* The date/time */
 .kl_tmtimeline .kl_tmtime {
     display: block;
-    width: 30%;
+    width: 35%;
     padding-right: 100px;
     position: absolute;
     color: #AAA;
@@ -53,7 +53,7 @@ get_header();
 }
 /* Right content */
 li .kl_tmlabel {
-    margin: 0 0 15px 25%;
+    margin: 0 0 40px 25%;
     padding: 0 1em;
     font-size: 1.2em;
     font-weight: 300;

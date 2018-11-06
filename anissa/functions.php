@@ -145,7 +145,6 @@ function anissa_scripts() {
 	wp_enqueue_style( 'anissa-fonts', anissa_fonts_url(), array(), null );
 	wp_enqueue_style( 'anissa-fontawesome', get_template_directory_uri() . '/fonts/font-awesome.css', array(), '4.3.0' );
 	
-	wp_enqueue_script( 'anissa-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20120206', true );
 
 	wp_enqueue_script( 'anissa-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20130115', true );
 
@@ -376,41 +375,18 @@ require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/jetpack.php';
 
 
-//引入付款二维码
-function orwei_ds_alipay_wechat(){ //注意更换为你的支付宝或微信收款二维码，二维码获取请自行百度
-	echo 
-	'<section class="to-tip">
-		<div class="inner">
-			<div class="top-tip-shap" >
-				<a>赏
-					<span class="code">
-						<div class="flex-hb-vc">
-							<div class="flex-v flex-hc-vc">
-								<img alt="" src="'. get_template_directory_uri() .'/img/pay_for_me_wechat.png">
-								<b>微信 扫一扫</b>
-							</div>
-							<div class="flex-v flex-hc-vc">
-								<img alt="" src="'. get_template_directory_uri() .'/img/pay_for_me_alipay.png">
-								<b>支付宝 扫一扫</b>
-							</div>
-						</div>
-					</span>
-				</a>
-			</div>
-		</div>
-	</section>';
-}
-
-
 function normal_style_script() { 
+	// 弹性布局样式
+	wp_enqueue_style( 'flex', get_template_directory_uri() . '/css/flex.css', array(), '1.0', false );
+
+	wp_enqueue_script( 'anissa-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20120206', true );
+
 	// layui框架样式
 	wp_enqueue_style( 'layuiCss', get_template_directory_uri() . '/frameworks/layui/css/layui.css', array(), '1.0', false );
 	// 自定义样式
 	wp_enqueue_style( 'direction', get_template_directory_uri() . '/css/direction.css', array(), '1.0', false );
 	// 媒体查询样式
 	wp_enqueue_style( 'mediaCss', get_template_directory_uri() . '/css/media.css', array(), '1.0', false );
-	// 弹性布局样式
-	wp_enqueue_style( 'flex', get_template_directory_uri() . '/css/flex.css', array(), '1.0', false );
 	// 动画库样式
 	wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.min.css', array(), '3.5.1', false );
 	// wp_enqueue_script( 'vue', get_template_directory_uri() . '/js/vue.js', array(), '2.5.17', false );
