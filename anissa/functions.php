@@ -529,7 +529,7 @@ function my_custom_init() {
 		'has_archive' => true, 
 		'hierarchical' => false, 
 		'menu_position' => null, 
-		'supports' => array('title','editor','author') 
+		'supports' => array('title','editor','author','comments') 
 	); 
 	register_post_type('shuoshuo',$args); 
 }
@@ -719,28 +719,28 @@ function is_mobile() {
 function is_icon($id,$name) { 
 	switch ($name) {
 		case "date":
-		$dom = '<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' .get_the_time( get_option( 'date_format' ) ). '</a>';
+		$dom = '<a href="' . esc_url( get_permalink() ) . '" rel="bookmark"><i class="lalaksks lalaksks-ic-'. $name .'"></i>' .get_the_time( get_option( 'date_format' ) ). '</a>';
 		break;
 		case "category":
-		$dom = get_the_category_list(' ') ;
+		$dom = '<span><i class="lalaksks lalaksks-ic-'. $name .'"></i>' . get_the_category_list(' ') . ' </span>' ;
 		break;
 		case "tag":
-		$dom = get_the_tag_list(' ');
+		$dom = '<span><i class="lalaksks lalaksks-ic-'. $name .'"></i>' . get_the_tag_list(' '). ' </span>' ;
 		break;
 		case "view":
-		$dom = getPostViews(get_the_ID());
+		$dom = '<span><i class="lalaksks lalaksks-ic-'. $name .'"></i>' . getPostViews(get_the_ID()) . ' </span>' ;
 		break;
 		case "reply":
-		$dom = get_comments_number();
+		$dom = '<a href="'. esc_url( get_permalink() ) .'#comments" rel="bookmark"><i class="lalaksks lalaksks-ic-'. $name .'"></i>'. get_comments_number() .'</a>';
 		break;
 		case "author":
-		$dom = '<a href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>';		
+		$dom = '<a href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '"><i class="lalaksks lalaksks-ic-'. $name .'"></i>' . esc_html( get_the_author() ) . '</a></span>';		
 		break;
 		default:
-		echo "No number between 1 and 3";
+		echo "No Icon";
 	}
 	if( $dom != ""){
-		echo '<i class="lalaksks lalaksks-ic-'. $name .'"></i>'.'<span> '. $dom . ' </span>';
+		echo $dom;
 	} 
 }
 

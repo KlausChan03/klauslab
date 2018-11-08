@@ -209,19 +209,27 @@ li:nth-child(odd) .kl_tmlabel:after {
                         <div class="kl_tmlabel_content">
                             <p><?php the_content(); ?></p>
                         </div>
-                        <div  class="kl_tmlabel_others flex-hb-vc">
-                            <span><?php the_title(); ?></span>
-                            <span class="zan">
-                                <a href="#" data-action="ding" data-id="<?php the_ID(); ?>" id="Addlike" class="action flex-hb-vc <?php if(isset($_COOKIE['inlo_ding_'.$post->ID])) echo 'actived';?> <?php $category = get_the_category();  echo $category[0]->category_nicename;?>">
-                                    <i class="lalaksks lalaksks-ic-zan"></i>
-                                    <span class="count"><?php if( get_post_meta($post->ID,'inlo_ding',true) ){ echo get_post_meta($post->ID,'inlo_ding',true); } else {echo '0';}?></span>
-                                </a>
-                            </span>
+
+                        <div class="kl_tmlabel_others flex-hb-vc">
+                            <div>
+                                <span><?php the_title(); ?></span>
+                            </div>
+                            <div class="flex-hl-vc">
+                                <div class="entry-comment m-0 mr-15">
+                                    <?php is_icon( get_the_ID() , "reply"); ?>
+                                </div>
+                                <div class="zan">
+                                    <a href="#" data-action="ding" data-id="<?php the_ID(); ?>" id="Addlike" class="action flex-hb-vc <?php if(isset($_COOKIE['inlo_ding_'.$post->ID])) echo 'actived';?> <?php $category = get_the_category();  echo $category[0]->category_nicename;?>">
+                                        <i class="lalaksks lalaksks-ic-zan"></i>
+                                        <span class="count"><?php if( get_post_meta($post->ID,'inlo_ding',true) ){ echo get_post_meta($post->ID,'inlo_ding',true); } else {echo '0';}?></span>
+                                    </a>
+                                </div>
+                            </div>                           
                         </div>
                     </div>
                 </li>
             <?php }
-            global $withcomments; $withcomments = true;
+            comments_template();
 
             } ?>
             </ul>

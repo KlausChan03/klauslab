@@ -11,12 +11,12 @@
 
 /* 图标字体定义 */
 @font-face {
-    font-family: 'lalaksks';  /* project id 765116 */
-    src: url('//at.alicdn.com/t/font_765116_uri8c6znz.eot');
-    src: url('//at.alicdn.com/t/font_765116_uri8c6znz.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_765116_uri8c6znz.woff') format('woff'),
-    url('//at.alicdn.com/t/font_765116_uri8c6znz.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_765116_uri8c6znz.svg#lalaksks') format('svg');
+  font-family: 'lalaksks';  /* project id 765116 */
+  src: url('//at.alicdn.com/t/font_765116_h9j3lckgqrf.eot');
+  src: url('//at.alicdn.com/t/font_765116_h9j3lckgqrf.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_765116_h9j3lckgqrf.woff') format('woff'),
+  url('//at.alicdn.com/t/font_765116_h9j3lckgqrf.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_765116_h9j3lckgqrf.svg#lalaksks') format('svg');
 }
 
 /*主要标签元素自定义设置*/
@@ -188,18 +188,22 @@ code { padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2
 .lalaksks-ic-login:before { content: "\e600"; }
 .lalaksks-ic-register:before { content: "\e696"; }
 .lalaksks-ic-logout:before { content: "\e846"; }
-.lalaksks-ic-date:before { content: "\e610"; }
-.lalaksks-ic-category:before { content: "\e630"; }
+
+.lalaksks-ic-date:before { content: "\e657"; }
+.lalaksks-ic-category:before { content: "\e7f9"; }
 .lalaksks-ic-tag:before { content: "\e611"; }
-.lalaksks-ic-search:before { content: "\e704"; }
+.lalaksks-ic-search:before { content: "\e618"; }
 .lalaksks-ic-edit:before { content: "\e845"; }
-.lalaksks-ic-reply:before { content: "\e7ac"; }
+.lalaksks-ic-reply:before { content: "\e61e"; }
 .lalaksks-ic-author:before { content: "\e6bc"; }
-.lalaksks-ic-zan:before { content: "\e62a"; }
+.lalaksks-ic-zan:before { content: "\e612"; }
+.lalaksks-ic-view:before { content: "\e72d"; }
+
+
 
 .lalaksks:hover{color:#0bf}
-.lalaksks.lalaksks-ic-zan:hober{color:#ff0!important}
-.actived .lalaksks-ic-zan{ color:#ff0!important }
+.lalaksks.lalaksks-ic-zan:hover{color:#d42!important}
+.actived .lalaksks-ic-zan{ color:#d42!important }
 
 
 /* .lalaksks-ic-login:before { content: "\e60e"; }
@@ -213,10 +217,13 @@ code { padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2
 
 .lalaksks-ic-backtotop:before { content: "\e88d"; }
 .lalaksks-ic-background:before { content: "\e60a"; }
-.lalaksks-ic-view:before { content: "\e806"; }
 
 .lalaksks-ic-add:before { content: "\e62c"; }
 .lalaksks-ic-minus:before { content: "\e62d"; }
+
+
+#nep_call_panel{background:none!important;bottom:10px!important;right:5px!important;}
+#nep_call_panel::before{ font-family:"lalaksks" !important; font-size:18px; bottom:5px; right:3px; font-style:normal; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; color:#666; padding:0; content: "\e628"; }
 
 /* 
 .lalaksks-ic-background::before:hover {
