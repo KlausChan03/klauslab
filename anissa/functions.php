@@ -616,10 +616,8 @@ function shortcode_link(){
     return get_link_items();
 }
 add_shortcode('bigfalink', 'shortcode_link');
-
 add_filter('pre_option_link_manager_enabled','__return_true');
 
-// 2018-7-23 引入
 
 // 评论添加@ 
 add_filter( 'get_comment_text' , 'comment_add_at', 20, 2); // 添加过滤器，加入以下值
@@ -692,9 +690,6 @@ function getGravatar( $email, $s = 96, $d = 'mp', $r = 'g', $img = false, $atts 
 }
 
 
-
-
-
 // 判断是否移动端
 function is_mobile() {
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
@@ -749,7 +744,6 @@ function is_icon($id,$name) {
 add_theme_support ( 'post-thumbnails' );
 set_post_thumbnail_size ( 160 );
 
-
 function autoset_featured() {
     global $post;
     $already_has_thumb = has_post_thumbnail($post->ID);
@@ -770,6 +764,7 @@ add_action('pending_to_publish', 'autoset_featured');
 add_action('future_to_publish', 'autoset_featured');
 
 
+// 开启用户等级-评论模块
 function get_author_class($comment_author_email, $user_id){
     global $wpdb;
     $author_count = count($wpdb->get_results(
@@ -790,7 +785,7 @@ function get_author_class($comment_author_email, $user_id){
         echo '<span class="vip level_7">LV.7</span>';
 }
 
-//custom_excerpt_length
+// 根据设备类型自定义文章摘要长度
 function custom_excerpt_length( $length ){
 	if(!is_mobile()){
 		return 120;
@@ -801,7 +796,7 @@ function custom_excerpt_length( $length ){
 add_filter( 'excerpt_length', 'custom_excerpt_length');
 
 
-// Customize your functions
+// 邮件发送模块
 function mail_smtp( $phpmailer ){
 	$phpmailer->From = "xing930629@163.com"; //发件人
 	$phpmailer->FromName = "测试";   //发件人昵称
@@ -834,20 +829,12 @@ function delete_post_and_attachments($post_ID) {
 }
 add_action('before_delete_post', 'delete_post_and_attachments');
 
+
 //预览全文功能
 function preview_post(){
     global $wpdb,$post;
     $id = $_POST["um_id"];
 	$action = $_POST["um_action"];
-	
-    // if ( $action == 'expand'){
-	// 	$content = get_the_content();
-    // } else if ( $action == 'collapse'){
-	// 	$content = get_the_content();
-	// }   
-	// echo $content; 
-
-	// $output = '';
   
 	// 获取文章对象
 	global $wpdb, $post;
@@ -858,11 +845,9 @@ function preview_post(){
 		$content = $post->post_content;
 		$output = balanceTags($content);
 		$output = wpautop($output);
-	}
-	
+	}	
 	// 打印文章内容并中断后面的处理
-	echo $output;
-    
+	echo $output;    
     die;
 }
 
@@ -957,9 +942,12 @@ if ( !is_admin() ) {
 
 
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> d91fb1fe12f6ab3476867fd29ebaf963d89b238a
 //WordPress非插件发邮件
 // function mail_smtp( $phpmailer ){
 // 	$phpmailer->FromName   = '发件名';

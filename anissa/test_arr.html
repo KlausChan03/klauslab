@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button v-on:click='list_arr'>改变</button>
+        {{arr_new}}
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                arr_new: [{
+                        key: 1,
+                        value: "正在生效"
+                    },
+                    {
+                        key: 3,
+                        value: "已退-即将失效"
+                    },
+                    {
+                        key: 2,
+                        value: "即将生效"
+                    },
+                    {
+                        key: 4,
+                        value: "已退-已经失效"
+                    },
+                    {
+                        key: 6,
+                        value: "已经失效"
+                    },
+                    {
+                        key: 5,
+                        value: "已退-未生效"
+                    }
+
+                ]
+            },
+            methods: {
+                list_arr: function () {
+                    app.$data.arr_new.sort(function (a, b) {
+                        return a.key > b.key ? 1 : -1
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
