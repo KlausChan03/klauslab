@@ -314,7 +314,7 @@ body.color.color-5 {  background-image: url(/wp-content/themes/anissa/img/bg-5.j
 .article-main .entry-header .entry-title, .article-main .entry-header .entry-title>* { position: absolute; font-size: 28px; margin: 0; color: #222222; word-break: break-all; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 10px 20px; background-color: rgba(0, 0, 0, .4); border-radius: 4px }
 .article-main .entry-header .featured-header-image { height: 300px; width:100%;}
 .article-main .entry-header .featured-header-image img { height: 300px; object-fit: cover; }
-.article-main .entry-content { word-break: break-word; line-height: 1.75; font-weight: 400; font-size: 15px; }
+.article-main .entry-content { word-break: break-word; line-height: 1.75; font-weight: 400; font-size: 15px; margin:50px 5%}
 .article-main .entry-content * { color: #444444; }
 .article-main .entry-content p, .article-main .entry-content p>*, .article-main .entry-content ol, .article-main .entry-content ul, .article-main .entry-content li>* { font-size: inherit; line-height: inherit; text-align: justify; }
 .article-main .entry-content p { margin: 16px 0; text-indent: 2em; }

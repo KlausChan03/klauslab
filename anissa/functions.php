@@ -958,6 +958,8 @@ if ( !is_admin() ) {
 
 
 
+
+
 //WordPress非插件发邮件
 // function mail_smtp( $phpmailer ){
 // 	$phpmailer->FromName   = '发件名';
