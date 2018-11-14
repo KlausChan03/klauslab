@@ -353,11 +353,3 @@ background_.addEventListener('mouseout', function (event) {
     addClass(background_out, 'hide');
 })
 addClass(body_dom, getCookie("body_class"))
-
-
-// var img = document.getElementsByTagName("img")
-// for(let i=0;i++;i<img.length){
-//     var imgSrc = img[i].getAttribute("src");
-//     console.log(imgSrc)
-//     imgSrc = img[i].getAttribute("src").replace(/https:/g, "");
-// }

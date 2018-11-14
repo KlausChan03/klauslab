@@ -54,6 +54,51 @@
 
 
 
+/*媒体查询→响应式布局优化体验*/
+
+@media screen and (min-width: 1201px) {
+	.content-area {
+		width: 70%;
+	}
+
+	.comment-respond {
+		padding: 10px 20px;
+	}
+
+	.form-submit {
+		display: inline-block;
+	}
+
+	.wrap {
+		position: relative;
+	}
+
+	.site-main {
+		min-width: 700px;
+	}
+
+	.comment-list .children {
+		margin: 5px 0;
+		margin-left: 3em;
+	}
+}
+
+@media screen and (min-width: 1001px) and (max-width: 1200px) {
+	.content-area {
+		width: 68%;
+	}
+
+	.site-main {
+		width: 100%;
+	}
+
+	.sidebar {
+		width: 30%;
+	}
+}
+
+
+
 @media screen and (max-width: 1000px) {
 	.site-branding {
 		padding-top: 50px;
@@ -453,51 +498,6 @@
 		font-size: 14px
 	}
 }
-
-/*媒体查询→响应式布局优化体验*/
-
-@media screen and (min-width: 1201px) {
-	.content-area {
-		width: 70%;
-	}
-
-	.comment-respond {
-		padding: 10px 20px;
-	}
-
-	.form-submit {
-		display: inline-block;
-	}
-
-	.wrap {
-		position: relative;
-	}
-
-	.site-main {
-		min-width: 700px;
-	}
-
-	.comment-list .children {
-		margin: 5px 0;
-		margin-left: 3em;
-	}
-}
-
-@media screen and (min-width: 1001px) and (max-width: 1200px) {
-	.content-area {
-		width: 66%;
-	}
-
-	.site-main {
-		width: 100%;
-	}
-
-	.sidebar {
-		width: 32%;
-	}
-}
-
-
 
 /* 判断ipad */
 

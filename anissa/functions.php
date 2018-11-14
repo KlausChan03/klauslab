@@ -942,12 +942,6 @@ if ( !is_admin() ) {
 
 
 
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> d91fb1fe12f6ab3476867fd29ebaf963d89b238a
 //WordPress非插件发邮件
 // function mail_smtp( $phpmailer ){
 // 	$phpmailer->FromName   = '发件名';

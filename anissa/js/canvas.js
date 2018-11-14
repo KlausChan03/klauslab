@@ -1,6 +1,6 @@
 layui.define(function (exports) {
     layui.use(['jquery', 'layer'], function () {
-        let [$, layer, Animation] = [layui.$, layui.layer,{}];
+        let [$, layer, Animation] = [layui.$, layui.layer, {}];
 
         Animation.canvas_bg = function () {
             function get_attribute(node, attr, default_value) {
@@ -111,18 +111,18 @@ layui.define(function (exports) {
             var this_ = $(this),
                 this_dom = $(this).parent().parent().siblings(".entry-main").find(".entry-main-excerpt");
 
-                this_dom.removeClass("hide");
-                this_dom.siblings().addClass("hide");
+            this_dom.removeClass("hide");
+            this_dom.siblings().addClass("hide");
 
-                this_.siblings().removeClass("hide").addClass("show");
-                this_.removeClass("show").addClass("hide");
+            this_.siblings().removeClass("hide").addClass("show");
+            this_.removeClass("show").addClass("hide");
         })
 
         $(document).on("click", ".expand-btn", function () {
             var this_ = $(this),
                 this_id = $(this).data("id"),
                 this_action = $(this).data("action"),
-                this_dom = $(this).parent().parent().siblings(".entry-main").find(".entry-main-detail");          
+                this_dom = $(this).parent().parent().siblings(".entry-main").find(".entry-main-detail");
 
             var req = {
                 action: "preview_post",
@@ -162,14 +162,28 @@ layui.define(function (exports) {
             }
         });
 
+        $(document).on("mouseover mouseout", "img", function (event) {
+            var _this = $(this);
+            var _this_parent = $(this).parent();
+            if (event.type == "mouseover") {
+                _this_parent.css({"width":_this.css("width"),"height":_this.css("height"),"overflow":"hidden"})
+                _this.addClass("extend-img");
+
+            } else {
+                _this_parent.css({"width":"100%","height":"auto","overflow":"visible"})
+                _this.removeClass("extend-img");
+            }
+
+        })
+
         // 滚动触发事件
         $(window).scroll(function () {
             var doc = document,
                 win = window,
                 $scrollBottom = $(doc).height() - $(win).height() - $(win).scrollTop(),
                 $scrollTop = $(win).scrollTop();
-                
-                var direction,header = $(".site-header");                
+
+            var direction, header = $(".site-header");
 
             if ($(window).width() > 1000 && $(document).height() > 1500) {
                 $(".sidebar .sidebar-content > aside").addClass("animated");
@@ -193,7 +207,7 @@ layui.define(function (exports) {
                 }
 
                 /*滚轮事件只有firefox比较特殊，使用DOMMouseScroll; 其他浏览器使用mousewheel;*/
-                document.body.addEventListener("DOMMouseScroll", function (event) {                
+                document.body.addEventListener("DOMMouseScroll", function (event) {
                     direction = event.detail && (event.detail > 0 ? "mousedown" : "mouseup");
                 });
 
