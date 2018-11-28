@@ -118,6 +118,15 @@ layui.define(function (exports) {
             this_.removeClass("show").addClass("hide");
         })
 
+        $(document).on("click", ".menu-pc",function(e) {
+            var theEvent = window.event || e;
+            theEvent.stopPropagation();
+            $('#personal-menu').fadeToggle(250);
+        });
+        // $(document).on("click", "body",function() {
+        //     $('#personal-menu').fadeOut(250);
+        // });
+
         $(document).on("click", ".expand-btn", function () {
             var this_ = $(this),
                 this_id = $(this).data("id"),
@@ -162,19 +171,20 @@ layui.define(function (exports) {
             }
         });
 
-        $(document).on("mouseover mouseout", "img", function (event) {
-            var _this = $(this);
-            var _this_parent = $(this).parent();
-            if (event.type == "mouseover") {
-                _this_parent.css({"width":_this.css("width"),"height":_this.css("height"),"overflow":"hidden"})
-                _this.addClass("extend-img");
+        // $(document).on("mouseover mouseout", "img", function (event) {
+        //     var _this = $(this);
+        //     console.log(_this.css("width"), $(this).css("width"))
+        //     var _this_parent = $(this).parent();
+        //     if (event.type == "mouseover") {
+        //         _this_parent.css({"width":_this.css("width"),"height":_this.css("height"),"overflow":"hidden","display":"inline-block"})
+        //         _this.addClass("extend-img");
 
-            } else {
-                _this_parent.css({"width":"100%","height":"auto","overflow":"visible"})
-                _this.removeClass("extend-img");
-            }
+        //     } else {
+        //         _this_parent.css({"width":"auto","height":"auto","overflow":"visible"})
+        //         _this.removeClass("extend-img");
+        //     }
 
-        })
+        // })
 
         // 滚动触发事件
         $(window).scroll(function () {

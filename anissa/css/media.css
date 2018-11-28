@@ -6,7 +6,7 @@
 	.site-header .main-navigation { float: none; height: 60px; line-height: 60px; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; }
 	.site-header .main-navigation *{font-size:16px;}
 	.site-header .nav-menu { z-index: 1314; background: #fff; width: auto; height: 60px; line-height: 60px;  }
-	.site-header .nav-menu > li { position: relative;display: inline-block; margin-left: 2.5em;height: 60px; line-height: 60px; width: auto }
+	.site-header .nav-menu > li { position: relative;display: inline-block; margin:0 1em;height: 60px; line-height: 60px; width: auto }
 	.site-header .nav-menu > li a{ padding:0 5px; }
 	.site-header .nav-menu .sub-menu { position: absolute; top: 61px; left: 0;width: 100%; width: 10em; z-index: 1314520; visibility: hidden; float: left; padding: 10px;  border-bottom: 4px solid #0bf; background: #fff; opacity: 0;  }
 	.site-header .nav-menu .sub-menu > li {  height: 36px; line-height: 36px; width: 100%; text-align: center; margin: 0; height: auto; float: left; text-align: left; }

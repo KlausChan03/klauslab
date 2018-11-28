@@ -11,12 +11,12 @@
 
 /* 图标字体定义 */
 @font-face {
-  font-family: 'lalaksks';  /* project id 765116 */
-  src: url('//at.alicdn.com/t/font_765116_h9j3lckgqrf.eot');
-  src: url('//at.alicdn.com/t/font_765116_h9j3lckgqrf.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_765116_h9j3lckgqrf.woff') format('woff'),
-  url('//at.alicdn.com/t/font_765116_h9j3lckgqrf.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_765116_h9j3lckgqrf.svg#lalaksks') format('svg');
+    font-family: 'lalaksks';  /* project id 765116 */
+    src: url('//at.alicdn.com/t/font_765116_dm5m0xv6wsu.eot');
+    src: url('//at.alicdn.com/t/font_765116_dm5m0xv6wsu.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_765116_dm5m0xv6wsu.woff') format('woff'),
+    url('//at.alicdn.com/t/font_765116_dm5m0xv6wsu.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_765116_dm5m0xv6wsu.svg#lalaksks') format('svg');
 }
 
 /*主要标签元素自定义设置*/
@@ -33,9 +33,13 @@ p { color: #444;margin-bottom: 12px; word-wrap:break-word;}
 h1, h2, h3, h4 { line-height: 2.2; }
 h5 { line-height: 1.5; }
 /* header,footer{opacity: 0.8;z-index: 1314520;} */
-header{position: relative;background-color: #fff;}
+header{ position: relative; height:120px; background:url(../img/bg-test.jpg); background-position: center; background-repeat: no-repeat;}
 header,footer{ z-index:1314;}
-header,footer, article, aside, section, input, textarea, button { -webkit-box-shadow: 0 5px 10px 0 rgba(160, 160, 160, .1); -moz-box-shadow: 0 5px 10px 0 rgba(160, 160, 160, .1); box-shadow: 0 5px 10px 0 rgba(160, 160, 160, .1); }
+header,footer,nav, article, aside, section, input, textarea, button { 
+    -webkit-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, .2); 
+    -moz-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, .2); 
+    box-shadow: 0 10px 20px 0 rgba(160, 160, 160, .2); 
+}
 article, aside{ border:none; }
 article, aside, nav, section, input, textarea, button,img{ background-color:rgb(255,255,255,0.8); border-radius: 4px; }
 textarea, input{ background-color: #fff; border: 1px solid #eee; }
@@ -191,6 +195,7 @@ code { padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2
 .lalaksks-ic-login:before { content: "\e600"; }
 .lalaksks-ic-register:before { content: "\e696"; }
 .lalaksks-ic-logout:before { content: "\e846"; }
+.lalaksks-ic-dashboard:before { content: "\e61a"; }
 
 .lalaksks-ic-date:before { content: "\e657"; }
 .lalaksks-ic-category:before { content: "\e7f9"; }
@@ -258,15 +263,22 @@ body.color.color-5 {  background-image: url(/wp-content/themes/anissa/img/bg-5.j
 
 
 /*头部区域*/
+.nav-menu{margin:0 5px;}
 .main-navigation>div:first-of-type { float: none; }
 .nav-menu>.menu-item-has-children>a:hover::before { content: ''; position: absolute; }
 .main-navigation>div:first-of-type a { display: inline-block; }
 .main-navigation li a{color:#222}
 
 .site-main .navigation { margin: 0; }
-.nav-previous { margin-left: 15px; }
-.nav-next { margin-left: -15px; margin-right: 15px; }
-.nav-next a, .nav-previous a { font-size: 20px; }
+.site-main .nav-previous { margin-left: 15px; }
+.site-main .nav-next { margin-left: -15px; margin-right: 15px; }
+.site-main .nav-next a, .nav-previous a { font-size: 20px; }
+
+#menu-pc #menu-user-avatar{cursor: pointer;}
+#menu-pc #personal-menu { display: none; max-width: 100%; position: absolute; left: 0; top: 63px; background:#FFF; padding: 0;z-index: 1314; -webkit-box-shadow: 0 0 5px rgba(0,0,0,.2); box-shadow: 0 0 5px rgba(0,0,0,.2); }
+#menu-pc #personal-menu li { display: block; line-height: 42px; text-shadow: none; padding: 0 16px; }
+#menu-pc #personal-menu:before { position: absolute; top: -7px; left: 50%; transform:translateX(-50%); width: 0; height: 0; content: ''; border-style: solid; border-width: 0px 7px 7px 7px; z-index: 1; border-color: #fff transparent; }
+#menu-pc #personal-menu:after { position: absolute; top: -8px; left: 50%; transform:translateX(-50%); width: 0; height: 0; content: ''; border-style: solid; border-width: 0px 8px 8px 8px; z-index: 0; border-color: #ded8d8 transparent; }
 
 /* 底部区域 */
 .site-footer { width: 100%; border-radius: 2px; min-height: 80px; }
@@ -390,8 +402,7 @@ body.color.color-5 {  background-image: url(/wp-content/themes/anissa/img/bg-5.j
 .sitename{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
 .effect-apollo::before{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,0.5);content:'';-webkit-transition:-webkit-transform 0.6s;transition:transform 0.6s;-webkit-transform:scale3d(1.9,1.4,1) rotate3d(0,0,1,45deg) translate3d(0,-100%,0);transform:scale3d(1.9,1.4,1) rotate3d(0,0,1,45deg) translate3d(0,-100%,0)}
 .effect-apollo:hover::before{-webkit-transform:scale3d(1.9,1.4,1) rotate3d(0,0,1,45deg) translate3d(0,100%,0);transform:scale3d(1.9,1.4,1) rotate3d(0,0,1,45deg) translate3d(0,100%,0)}
-.klaus-links .borderr-main-4:hover { -webkit-box-shadow: 0 15px 10px -10px rgba(110, 110, 110, 0.5), 0 1px 4px rgba(110, 110, 110, 0.3), 0 0 60px rgba(110, 110, 110, 0.1) inset; -moz-box-shadow: 0 15px 10px -10px rgba(110, 110, 110, 0.5), 0 1px 4px rgba(110, 110, 110, 0.3), 0 0 40px rgba(110, 110, 110, 0.1) inset; box-shadow: 0 15px 10px -10px rgba(110, 110, 110, 0.5), 0 1px 4px rgba(110, 110, 110, 0.3), 0 0 40px rgba(110, 110, 110, 0.1) inset; }
-.klaus-links .borderr-main-4 { background-color: #f5f5f5; border-bottom: 1px solid #eee; }
+.klaus-links .borderr-main-4 { background-color: #f5f5f5; border-bottom: 1px solid #eee;  -webkit-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, .2); -moz-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, .2); box-shadow: 0 10px 20px 0 rgba(160, 160, 160, .2);}
 .klaus-links .link-1 { border-radius: 4px 4px 0 0; }
 .klaus-links .link-2 { border-bottom: 1px solid #eee; }
 .klaus-links .link-avatar img{ position: relative; width: 24px; height: 24px; }
@@ -401,7 +412,7 @@ body.color.color-5 {  background-image: url(/wp-content/themes/anissa/img/bg-5.j
 .gallery { display: flex; flex-wrap: wrap; }
 .gallery:after { content: ''; flex-grow: 999999999; }
 .gallery .gallery-item { position: relative; width: auto; height: 230px; max-width: none; /*width:168px;*/ flex-grow: 1; margin: 5px; }
-.gallery .gallery-item img { width:100%; height: 230px; min-width: 100%; object-fit: cover; vertical-align: bottom; border-radius: 4px; border:6px solid #0bf}
+.gallery .gallery-item img { width:100%; height: 230px; min-width: 100%; object-fit: cover; vertical-align: bottom; border-radius: 4px;}
 .gallery .gallery-item a { display:inline-block; border:0; width:100%;}
 
 /* 归档页 */

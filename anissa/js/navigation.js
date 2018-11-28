@@ -22,7 +22,7 @@
 		return;
 	}
 
-	menu = container.getElementsByTagName( 'ul' )[0];
+	menu = container.getElementsByClassName( 'menu' )[0];
 	socialMenu = container.getElementsByTagName( 'ul' )[1];
 
 	// Hide menu toggle button if both menus are empty and return early.

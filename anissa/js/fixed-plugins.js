@@ -334,7 +334,7 @@ search_.addEventListener('mouseout', function (event) {
 
 // 切换背景功能
 let [background_, background_in, background_out] = [document.querySelector('.fp-background'), document.querySelector('.fp-background-in'), document.querySelector('.fp-background-out')];
-let [body_dom, body_bg, random_] = [document.getElementsByTagName("body")[0],'',''];
+let [body_dom, body_bg, random_] = [document.getElementsByTagName("body")[0]];
 background_.addEventListener('mouseover', function (event) {
     removeClass(background_out, 'hide');
     addClass(background_out, 'show');
@@ -353,3 +353,11 @@ background_.addEventListener('mouseout', function (event) {
     addClass(background_out, 'hide');
 })
 addClass(body_dom, getCookie("body_class"))
+
+
+// var img = document.getElementsByTagName("img")
+// for(let i=0;i++;i<img.length){
+//     var imgSrc = img[i].getAttribute("src");
+//     console.log(imgSrc)
+//     imgSrc = img[i].getAttribute("src").replace(/https:/g, "");
+// }
