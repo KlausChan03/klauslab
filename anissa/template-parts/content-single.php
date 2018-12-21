@@ -16,8 +16,8 @@
 					<?php the_post_thumbnail( 'anissa-home' ); ?>
 			</div><!-- .featured-header-image -->
 		<?php endif; ?> 
-		<!-- <canvas id="paopao" class="pos-a" width="1000" height="300"></canvas>   -->
 	</div><!-- .entry-header --> 
+	
 	<div class="entry-content">
 		<?php the_content(); ?>
 		<?php

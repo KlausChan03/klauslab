@@ -118,14 +118,12 @@ layui.define(function (exports) {
             this_.removeClass("show").addClass("hide");
         })
 
-        $(document).on("click", ".menu-pc",function(e) {
+        $(document).on("click", "#menu-avatar",function(e) {
             var theEvent = window.event || e;
             theEvent.stopPropagation();
             $('#personal-menu').fadeToggle(250);
         });
-        // $(document).on("click", "body",function() {
-        //     $('#personal-menu').fadeOut(250);
-        // });
+
 
         $(document).on("click", ".expand-btn", function () {
             var this_ = $(this),
@@ -196,24 +194,29 @@ layui.define(function (exports) {
             var direction, header = $(".site-header");
 
             if ($(window).width() > 1000 && $(document).height() > 1500) {
-                $(".sidebar .sidebar-content > aside").addClass("animated");
-                if ($(this).scrollTop() > 200) {
-                    $(".sidebar .sidebar-content").addClass("is-fixed");
+                $(".widget-area .widget-content > aside").addClass("animated");
+                $(window).resize(function() { $(".widget-area .widget-content").width($(".widget-area").width()); });
+
+                if ($(this).scrollTop() > 800) {
+                    $(".widget-area .widget-content").addClass("is-fixed");
+                    $(".widget-area .widget-content").width($(".widget-area").width());             
                     $(".widget_custom_html").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")
+                    $(".widget_wp_statistics_widget").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")
                     $(".widget_categories").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                     $(".widget_recent_comments").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                     $(".widget_tag_cloud").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                 } else {
-                    $(".sidebar .sidebar-content").removeClass("is-fixed");
+                    $(".widget-area .widget-content").removeClass("is-fixed");
                     $(".widget_custom_html").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
+                    $(".widget_wp_statistics_widget").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                     $(".widget_tag_cloud").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                     $(".widget_categories").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                     $(".widget_recent_comments").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                 }
                 if ($scrollBottom < 80) {
-                    $(".sidebar .sidebar-content").addClass("is-bottom")
+                    $(".widget-area .widget-content").addClass("is-bottom")
                 } else {
-                    $(".sidebar .sidebar-content").removeClass("is-bottom");
+                    $(".widget-area .widget-content").removeClass("is-bottom");
                 }
 
                 /*滚轮事件只有firefox比较特殊，使用DOMMouseScroll; 其他浏览器使用mousewheel;*/
@@ -232,7 +235,7 @@ layui.define(function (exports) {
                 };
 
             } else {
-                $(".sidebar .sidebar-content").removeClass("is-fixed animated");
+                $(".widget-area .widget-content").removeClass("is-fixed animated");
             }
 
         })

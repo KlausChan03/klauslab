@@ -377,8 +377,6 @@ require get_template_directory() . '/inc/customizer.php';
 
 function normal_style_script() { 
 	wp_enqueue_script( 'anissa-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20120206', true );
-	// 弹性布局样式
-	wp_enqueue_style( 'flex', get_template_directory_uri() . '/css/flex.css', array(), '1.0', false );
 	// layui.css
 	wp_enqueue_style( 'layuiCss', get_template_directory_uri() . '/frameworks/layui/css/layui.css', array(), '1.0', false );
 	// 自定义样式
@@ -499,123 +497,6 @@ if (!function_exists('remove_wp_open_sans')) :
 // 后台删除Google字体CSS   
 	add_action('admin_enqueue_scripts', 'remove_wp_open_sans'); 
 	endif;
-
-
-//说说
-add_action('init', 'my_custom_init');
-function my_custom_init() { 
-	$labels = array( 
-		'name' => '说说',
-		'singular_name' => '说说',
-		'add_new' => '发表说说', 
-		'add_new_item' => '发表说说', 
-		'edit_item' => '编辑说说', 
-		'new_item' => '新说说', 
-		'view_item' => '查看说说', 
-		'search_items' => '搜索说说', 
-		'not_found' => '暂无说说', 
-		'not_found_in_trash' => '没有已遗弃的说说', 
-		'parent_item_colon' => '', 'menu_name' => '说说' 
-	); 
-	$args = array( 
-		'labels' => $labels, 
-		'public' => true, 
-		'publicly_queryable' => true, 
-		'show_ui' => true, 
-		'show_in_menu' => true, 
-		'query_var' => true, 'rewrite' => true, 
-		'capability_type' => 'post', 
-		'has_archive' => true, 
-		'hierarchical' => false, 
-		'menu_position' => null, 
-		'supports' => array('title','editor','author','comments') 
-	); 
-	register_post_type('shuoshuo',$args); 
-}
-
-//友情链接
-function get_the_link_items($id = null){
-    $bookmarks = get_bookmarks('orderby=date&category=' .$id );
-    $output = '';
-    if ( !empty($bookmarks) ) {
-		
-        $output .= '<ul class="link-items klaus-links flex-hl-vl flex-hw">';
-        foreach ($bookmarks as $bookmark) {
-
-			$arr_col = array("qs","lvs","ls","zs","lh","hs","cs","hos");
-			shuffle($arr_col);
-			$arr_num = array("1","2");
-			shuffle($arr_num);			
-			
-			$link_notes = $bookmark->link_notes;
-			$link_rss = $bookmark->link_rss;
-			$link_image = $bookmark->link_image;
-
-			if( $link_rss == '' and  $link_notes == '' and  $link_image != ''){
-				$imgUrl = '<img src="'. $link_image .'"></img>';				
-			}elseif( $link_image == '' and  $link_rss == '' and  $link_notes != ''){
-				// $imgUrl = '<img src="'.getGravatar($link_notes).'"></img>';
-				$imgUrl = '<img src="//statics.dnspod.cn/proxy_favicon/_/favicon?domain=' . $link_notes . '"/>' ;
-			}elseif( $link_image == '' and  $link_notes == '' and  $link_rss != '' ){
-				$imgUrl  = '<img src="'.getGravatar(str_replace("http://","",$link_rss)).'"/>';
-			}else{
-				$imgUrl = '';
-			}			
-			
-			$output .=  '<li class="col-md-4 mt-15 mb-15 p-10"> <div class="p-0 borderr-main-4"> <div class="flex-hb-vc link-1 p-20 bgc-' 
-			. $arr_col[0] . $arr_num[0] . '"> <div class="w-85 p-0"> <strong><a title="'
-			. $bookmark->link_name . '" href="' 
-			. $bookmark->link_url . '" target="_blank" class="col-fff link-name">'
-			. $bookmark->link_name .'</a></strong> <p class="f12 col-fff text-overflow">' 
-			. $bookmark->link_url . '</p> </div> <div class="w-15 flex-hr-vc"><a title="'
-			. $bookmark->link_name .'" href="' 
-			. $bookmark->link_url . '" target="_blank" class="link-avatar col-aaa"> '
-			. $imgUrl . '</a> </div></div> <div class="p-20 pt-10 pb-10 col-primary clearfix link-2"> <p class="col-aaa text-overflow">' 
-			. $bookmark->link_description . '</p> </div>  </div> </li>';
-        }
-        $output .= '</ul>';
-    }
-    return $output;
-}
-
-// 友链判断-二维数组经过判断赋值给另一二维数组
-function bookmarks($rel){
-    $bms = array();
-    $bookmarks = get_bookmarks('hide_invisible=0'); // 这个也是二维数组
-    if( $rel == 'nonhome'){ //若非首页
-        foreach( $bookmarks as $bs ){
-            if ( $bs->link_rel ==  'contact' ||  $bs->link_rel == 'acquaintance' ) { continue;} // 若是contact或acquaintance则终止循环输出，意思是排除这两类关系输出
-                $bms[] = array( 'link_rel'=>$bs->link_rel,'link_visible'=>$bs->link_visible,'link_url'=>$bs->link_url,'link_description'=>$bs->link_description,'link_target'=>'','link_name'=>$bs->link_name);
-        }
-    }
-    if( $rel == 'home'){ //若是首页
-        foreach( $bookmarks as $bs ){
-            if ( $bs->link_rel ==  'contact' )  { continue;} // 若是contact则终止循环输出，意思是排除这类关系输出
-                $bms[] = array( 'link_rel'=>$bs->link_rel,'link_visible'=>$bs->link_visible,'link_url'=>$bs->link_url,'link_description'=>$bs->link_description,'link_target'=>'','link_name'=>$bs->link_name);
-        }
-    }
-    return $bms; // 返回二维数组
-}
-
-function get_link_items(){
-    $linkcats = get_terms( 'link_category' );
-    if ( !empty($linkcats) ) {
-        foreach( $linkcats as $linkcat){            
-            $result .=  '<blockquote class="link-title">'.$linkcat->name.'</blockquote>';
-            if( $linkcat->description ) $result .= '<div class="link-description">' . $linkcat->description . '</div>';
-            $result .=  get_the_link_items($linkcat->term_id);
-        }
-    } else {
-        $result = get_the_link_items();
-    }
-    return $result;
-}
-
-function shortcode_link(){
-    return get_link_items();
-}
-add_shortcode('bigfalink', 'shortcode_link');
-add_filter('pre_option_link_manager_enabled','__return_true');
 
 
 // 评论添加@ 
@@ -859,6 +740,13 @@ add_action('wp_ajax_nopriv_preview_post', 'preview_post');
 add_action('wp_ajax_preview_post', 'preview_post');
 
 
+add_filter('upload_mimes', 'svg_upload_mimes');
+function svg_upload_mimes($mimes = array()) {
+    $mimes['svg'] = 'image/svg+xml';
+    return $mimes;
+}
+
+
 //点赞功能
 function inlo_like(){
     global $wpdb,$post;
@@ -916,6 +804,7 @@ function get_like_most($mode = '', $limit = 10, $days = 7, $display = true) {
 }
 
 
+
 // 七牛CDN
 if ( !is_admin() ) {
     add_action('wp_loaded','cdn_ob_start');
@@ -943,64 +832,6 @@ if ( !is_admin() ) {
         return $html;
     }
 }
-
-
-
-//WordPress非插件发邮件
-// function mail_smtp( $phpmailer ){
-// 	$phpmailer->FromName   = '发件名';
-// 	$phpmailer->Host       = 'smtp.qq.com';//以QQ的SMTP为例
-// 	$phpmailer->Port       = 26;//SMTP服务器端口
-// 	$phpmailer->Username   = '发件邮箱';
-// 	$phpmailer->Password   = '授权码';//注意是授权码
-// 	$phpmailer->From       = '显示邮箱';
-// 	$phpmailer->SMTPAuth   = true; //SMTP认证（true/flase）
-// 	$phpmailer->SMTPSecure = 'tsl'; //SMTP加密方式tls/ssl/no（port=25留空，465为ssl）
-// 	$phpmailer->IsSMTP();
-// }
-// add_action( 'phpmailer_init','mail_smtp' );
-
-//WordPress非插件发邮件 end
-
-// function hide_adminbar() {  
-//     $hide_adminbar = '<script type="text/javascript">  
-//         $(document).ready( function() {  
-//             $("#wpadminbar").fadeTo( "slow", 0 );  
-//             $("#wpadminbar").hover(function() {  
-//                 $("#wpadminbar").fadeTo( "slow", 1 );  
-//             }, function() {  
-//                 $("#wpadminbar").fadeTo( "slow", 0 );  
-//             });  
-//         });  
-//     </script>  
-//     <style type="text/css">  
-//         html { margin-top: -28px !important; }  
-//         * html body { margin-top: -28px !important; }  
-//         #wpadminbar {  
-//             -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";  
-//             filter: alpha(opacity=0);  
-//             -moz-opacity:0;  
-//             -khtml-opacity:0;  
-//             opacity:0;  
-//         }  
-//         #wpadminbar:hover, #wpadminbar:focus {  
-//             -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";  
-//             filter: alpha(opacity=100);  
-//             -moz-opacity:1;  
-//             -khtml-opacity:1;  
-//             opacity:1;  
-//         }  
-//     </style>';  
-//     echo $hide_adminbar;  
-// }  
-// /* wp-admin area */  
-// if ( is_admin() ) {  
-//     add_action( 'admin_head', 'hide_adminbar' );  
-// }  
-// /* websites */  
-// if ( !is_admin() ) {  
-//     add_action( 'wp_head', 'hide_adminbar' );  
-// }
 
 
 // 2018-8-14 引入

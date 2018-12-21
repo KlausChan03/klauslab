@@ -7,7 +7,7 @@
 ?>
 
 <div id="secondary" class="widget-area sidebar" role="complementary">
-	<div class="sidebar-content">
+	<div class="widget-content">
   		<?php dynamic_sidebar( 'sidebar-1' ); ?>
   	</div>
 </div>

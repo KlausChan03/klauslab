@@ -521,9 +521,9 @@ a:hover, a:active {
 
 /* Small menu. */
 
-.site-main .comment-navigation,
-.site-main .posts-navigation,
-.site-main .post-navigation {
+.main-content .comment-navigation,
+.main-content .posts-navigation,
+.main-content .post-navigation {
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #eee;
 	color: #495762;
@@ -559,9 +559,9 @@ a:hover, a:active {
 	width: 50%;
 }
 
-.site-main .comment-navigation a,
-.site-main .posts-navigation a,
-.site-main .post-navigation a {
+.main-content .comment-navigation a,
+.main-content .posts-navigation a,
+.main-content .post-navigation a {
 	color: #495762;
 }
 
@@ -881,11 +881,11 @@ a:hover, a:active {
 	display: block;
 }
 
-.site-main .hentry {
+.main-content .hentry {
 	margin-top: 1.2em;
 }
 
-.site-main article:first-of-type {
+.main-content article:first-of-type {
 	margin-top: 0;
 }
 
@@ -1114,7 +1114,7 @@ a:hover, a:active {
 	/* background-color: #fff; */
 }
 
-/* .site-main>.page-header {
+/* .main-content>.page-header {
 		-webkit-box-shadow: 5px 5px 10px rgba(0,0,0,.1);
 		box-shadow: 5px 5px 10px rgba(0,0,0,.1);
 	} */
@@ -1336,17 +1336,17 @@ object {
 
 
 /* 修正 2018.7.19*/
-.site-main {
+.main-content {
 	width: 100%;
 	margin-top: 25px;
 }
 
-.page-template-nosidebar-page-php .site-main {
+.page-template-nosidebar-page-php .main-content {
 	float: none;
 	width: 100%
 }
 
-.page-template-nosidebar-page-php .site-main {
+.page-template-nosidebar-page-php .main-content {
 	float: none;
 	margin-left: auto;
 	margin-right: auto;
@@ -1694,8 +1694,8 @@ div[itemprop="description"] {
 	display: none
 }
 
-.woocommerce-checkout .site-main,
-.woocommerce-cart .site-main {
+.woocommerce-checkout .main-content,
+.woocommerce-cart .main-content {
 	float: none;
 	width: 100%;
 }

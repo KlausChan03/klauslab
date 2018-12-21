@@ -22,7 +22,7 @@
 <div id="page" class="hfeed site">
 	<!-- <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'anissa' ); ?></a> -->
 	<header id="masthead" class="site-header" role="banner">
-		<div id="menu-touch" class="menu-touch">
+		<div id="site-touch-header" class="menu-touch">
 			<div class="menu-toggle flex-hc-vc" aria-controls="primary-menu" aria-expanded="">
 				<i class="lalaksks lalaksks-ic-menu"></i>
 			</div>
@@ -33,26 +33,12 @@
 				<i class="lalaksks lalaksks-ic-search"></i>
 			</div>			
 		</div>
-
-		<nav id="site-navigation" class="main-navigation" role="navigation">	
-			<div id="menu-pc" class="menu-pc">
-				<div class="flex-hc-vc pos-r">
-					<div id="menu-user-avatar"  class="m-lr-15 <?php if ( is_user_logged_in() ) { echo 'have-login'; } ?>">
-						<?php global $current_user;get_currentuserinfo();echo get_avatar( $current_user->user_email, 45); ?>										
-					</div>
-					<div id="menu-blog-name" class="m-lr-15"> <?php echo get_bloginfo('name'); ?> </div>
-					<div id="personal-menu">
-						<ul>
-							<?php if ( is_user_logged_in() ) { ?>							
-								<li><a href="<?php echo get_option('home'); ?>/wp-admin"><i class="lalaksks lalaksks-ic-dashboard m-lr-5"></i>后台</a></li>
-								<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=logout"><i class="lalaksks lalaksks-ic-logout m-lr-5"></i>登出</a></li>												
-							<?php } else { ?>					
-								<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=login"><i class="lalaksks lalaksks-ic-login m-lr-5"></i>登录</a></li>													
-							<?php } ?>		
-						</ul>
-					</div>		
-				</div>
-			</div>	   
+		<nav id="site-navigation" class="menu-pc main-navigation flex-hb-vc" role="navigation">
+			
+			<div class="menu-logo flex-hc-vc m-lr-15">
+				<?php echo the_custom_logo(); ?>
+			</div>			
+			<!-- <div id="menu-blog-name" class="m-lr-15"> <?php echo get_bloginfo('name'); ?> </div> -->	   
 			<?php 
 				wp_nav_menu( 
 					array( 
@@ -61,7 +47,23 @@
 					'after'  => '<span class="nm-menu-toggle hide"><i class="lalaksks lalaksks-ic-add add"></i><i class="lalaksks lalaksks-ic-minus minus"></i></span>',
 					) 
 				); 
-			?>		
+			?>	
+			<div id="menu-avatar"  class="menu-avatar pos-r m-lr-15 <?php if ( is_user_logged_in() ) { echo 'have-login'; } ?>">
+				<?php global $current_user;get_currentuserinfo();
+					echo get_avatar( $current_user->user_email, 42);
+				?>	
+				<div id="personal-menu">
+					<ul>
+						<?php if ( is_user_logged_in() ) { ?>							
+							<li><a href="<?php echo get_option('home'); ?>/wp-admin"><i class="lalaksks lalaksks-ic-dashboard m-lr-5"></i>后台</a></li>
+							<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=logout"><i class="lalaksks lalaksks-ic-logout m-lr-5"></i>登出</a></li>												
+						<?php } else { ?>					
+							<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=login"><i class="lalaksks lalaksks-ic-login m-lr-5"></i>登录</a></li>													
+						<?php } ?>		
+					</ul>
+				</div>										
+			</div>
+					
 		</nav><!-- #site-navigation -->
 	</header><!-- #masthead -->
 

@@ -7,10 +7,16 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class('article-list style-18'); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class('page-main style-18'); ?>>
+
 	<div class="entry-header">
-		<?php the_title( '<h1 class="entry-title flex-hc-vc">', '</h1>' ); ?>
-	</div><!-- .entry-header -->
+		<?php the_title( '<h1 class="entry-title flex-hc-vc col-fff">', '</h1>' ); ?>     
+		<?php if ( is_single() || is_page() && has_post_thumbnail() ) : ?>
+			<div id="banner-bg" class="featured-header-image">
+					<?php the_post_thumbnail( 'anissa-home' ); ?>
+			</div><!-- .featured-header-image -->
+		<?php endif; ?> 
+	</div><!-- .entry-header --> 
 
 	<div class="entry-content page-content">
 		<?php the_content(); ?>
