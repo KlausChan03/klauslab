@@ -19,9 +19,14 @@
     </div>
   <!-- .site-info --> 
 </footer>
+
+
 <!-- #colophon -->
 </div>
 <!-- #page -->
+
+<div class="Snow"></div>
+
 <script>
   <?php $user_first = $wpdb->get_row("SELECT user_nicename,user_registered FROM $wpdb->users WHERE ID=1"); ?>  
   <?php $user_hero = $wpdb->get_row("SELECT nickname,img FROM {$wpdb->prefix}xh_social_channel_wechat WHERE ID=1"); ?>  

@@ -229,7 +229,7 @@ add_action( 'admin_print_styles-appearance_page_custom-header', 'anissa_admin_sc
 //  * Returns an ellipsis and "Continue reading" plus off-screen title link for excerpts
 //  */
 // function anissa_continue_reading_link() {
-// 	return '&hellip; <div class="flex-hr-vc"><button class="expand-btn klaus-btn sm-btn gradient-blue-red" data-link ='. esc_url( get_permalink() ) . '">' . sprintf( __( '展开更多 <span class="screen-reader-text">%1$s</span>', 'anissa' ), esc_attr( strip_tags( get_the_title() ) ) ) . '</button></div>';
+// 	return '&hellip; <div class="flex-hr-vc"><button class="expand-btn kl-btn kl-btn-primary kl-btn-sm gradient-blue-red" data-link ='. esc_url( get_permalink() ) . '">' . sprintf( __( '展开更多 <span class="screen-reader-text">%1$s</span>', 'anissa' ), esc_attr( strip_tags( get_the_title() ) ) ) . '</button></div>';
 // }
 // endif; // anissa_continue_reading_link
 
@@ -394,6 +394,7 @@ function footer_script(){
 	wp_enqueue_script( 'layui', get_template_directory_uri() . '/frameworks/layui/layui.js', array(), 'lastet', false );	
 	wp_enqueue_script( 'common_func', get_template_directory_uri() . '/js/common.js', array(), '1.0', false );
 	wp_enqueue_script( 'fixed-plugins', get_template_directory_uri() . '/js/fixed-plugins.js', array(), '1.0', false );
+	wp_enqueue_script( 'snow', get_template_directory_uri() . '/js/snow.js', array(), '1.0', false );
 	wp_localize_script( 'canvas', 'my_ajax_obj', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) ); 
 	// 先将ajaxurl变数设定好
 }

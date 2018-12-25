@@ -68,8 +68,8 @@
 				</div>
 			<?php endif ?>		
 		<div class="entry-extra">
-			<button class="expand-btn klaus-btn sm-btn gradient-blue-red show">预览全文</button>
-			<button class="collapse-btn klaus-btn sm-btn gradient-red-blue hide">收起全文</button>
+			<button class="expand-btn kl-btn kl-btn-primary kl-btn-sm gradient-blue-red show">预览全文</button>
+			<button class="collapse-btn kl-btn kl-btn-primary kl-btn-sm gradient-red-blue hide">收起全文</button>
 		</div>
 	</div>
 </article><!-- #post-## -->

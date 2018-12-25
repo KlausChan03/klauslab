@@ -901,7 +901,7 @@
   opacity: 0;
 }
 .cs-field-switcher label input:checked ~ em {
-  background: #0bf;
+  background: #48e;
 }
 .cs-field-switcher label input:checked ~ span {
   left: 20px;
