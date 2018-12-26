@@ -349,7 +349,7 @@ input[type="button"]:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover {
 	background-color: #ccd4db;
-	border-bottom: 0px !important;
+	/* border-bottom: 0px !important; */
 }
 
 button:focus,

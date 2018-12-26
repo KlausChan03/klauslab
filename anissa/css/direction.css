@@ -12,12 +12,12 @@
 /* 图标字体定义 */
 @font-face {
     font-family: 'lalaksks';  /* project id 765116 */
-    src: url('//at.alicdn.com/t/font_765116_dm5m0xv6wsu.eot');
-    src: url('//at.alicdn.com/t/font_765116_dm5m0xv6wsu.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_765116_dm5m0xv6wsu.woff') format('woff'),
-    url('//at.alicdn.com/t/font_765116_dm5m0xv6wsu.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_765116_dm5m0xv6wsu.svg#lalaksks') format('svg');
-}
+    src: url('//at.alicdn.com/t/font_765116_i9xeiguuy8.eot');
+    src: url('//at.alicdn.com/t/font_765116_i9xeiguuy8.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_765116_i9xeiguuy8.woff') format('woff'),
+    url('//at.alicdn.com/t/font_765116_i9xeiguuy8.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_765116_i9xeiguuy8.svg#lalaksks') format('svg');
+  }
 
 /*主要标签元素自定义设置*/
 *{font-size: 14px;}
@@ -35,7 +35,8 @@ h5 { line-height: 1.5; }
 /* header,footer{opacity: 0.8;z-index: 1314520;} */
 header{ position: relative; }
 header,footer{ z-index:1314;}
-nav, article, aside, section, input, textarea, button { -webkit-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, .2); -moz-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, .2); box-shadow: 0 10px 20px 0 rgba(160, 160, 160, .2); }
+nav, article, aside, section, input, textarea { -webkit-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, .2); -moz-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, .2); box-shadow: 0 10px 20px 0 rgba(160, 160, 160, .2); }
+button{ -webkit-box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);}
 article, aside{ border:none; }
 article, aside, nav, section, input, textarea, button,img{ background-color:rgb(255,255,255,0.8); border-radius: 4px; }
 textarea, input{ background-color: #fff; border: 1px solid #eee; }
@@ -162,7 +163,7 @@ code { padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2
 .i-vertical-middle { position: absolute; top: 50%; -webkit-transform: translateY(-50%); -moz-transform: translateY(-50%); -ms-transform: translateY(-50%); -o-transform: translateY(-50%); transform: translateY(-50%) }
 .font-microsoft { font-family: "微软雅黑"; }
 
-.kl-btn{outline: none; -webkit-appearance: none; transition: all .3s; -webkit-transition: all .3s; box-sizing: border-box; line-height: 30px; height: 30px; border-radius: 2px; border:none; letter-spacing:2px; padding:0;padding-left: 10px;padding-right: 8px}
+.kl-btn{outline: none; -webkit-appearance: none; transition: all .3s; -webkit-transition: all .3s; line-height: 30px; height: 30px; border-radius: 2px; border-style:solid;border-width: 1px;border-color:#ddd; letter-spacing:2px; padding:0;padding-left: 10px;padding-right: 8px}
 .kl-btn.kl-btn-primary{border-color: #48e;}
 
 .kl-btn-sm{height: 24px; min-height: 24px;line-height: 24px; padding: 0 5px; font-size: 12px;}
@@ -205,6 +206,13 @@ code { padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2
 .lalaksks-ic-author:before { content: "\e6bc"; }
 .lalaksks-ic-zan:before { content: "\e612"; }
 .lalaksks-ic-view:before { content: "\e72d"; }
+
+/* 社交平台icon */
+.lalaksks-ic-zhihu:before { content: "\e8de"; }
+.lalaksks-ic-github:before { content: "\e692"; }
+.lalaksks-ic-douban:before { content: "\e688"; }
+.lalaksks-ic-weibo:before { content: "\e69e"; }
+
 
 
 
@@ -412,7 +420,7 @@ body.color.color-5 {  background-image: url(/wp-content/themes/anissa/img/bg-5.j
 .effect-apollo:hover::before{-webkit-transform:scale3d(1.9,1.4,1) rotate3d(0,0,1,45deg) translate3d(0,100%,0);transform:scale3d(1.9,1.4,1) rotate3d(0,0,1,45deg) translate3d(0,100%,0)}
 .klaus-links .borderr-main-4 { background-color: #f5f5f5; border-bottom: 1px solid #eee;  -webkit-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, .2); -moz-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, .2); box-shadow: 0 10px 20px 0 rgba(160, 160, 160, .2);}
 .klaus-links .link-1 { border-radius: 4px 4px 0 0; }
-.klaus-links .link-2 { border-bottom: 1px solid #eee; }
+.klaus-links .link-2 { min-height:80px; border-bottom: 1px solid #eee; }
 .klaus-links .link-avatar img{ position: relative; width: 24px; height: 24px; }
 
 
