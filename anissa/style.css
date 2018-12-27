@@ -713,7 +713,7 @@ a:hover, a:active {
 	text-transform: uppercase;
 	transition: 0.2s;
 	margin: 5px;
-	display: inline-block;
+	/* display: inline-block; */
 }
 
 .tagcloud a:hover {

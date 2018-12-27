@@ -111,7 +111,7 @@ layui.define(function (exports) {
             this_.removeClass("show").addClass("hide");
         })
 
-        $(document).on("click", "#menu-avatar",function(e) {
+        $(document).on("click", "#menu-avatar", function (e) {
             var theEvent = window.event || e;
             theEvent.stopPropagation();
             $('#personal-menu').fadeToggle(250);
@@ -188,31 +188,31 @@ layui.define(function (exports) {
             var direction, header = $(".site-header");
 
             if ($(window).width() > 1000 && $(document).height() > 1500) {
-                $(window).resize(function() { $(".widget-area .widget-content").width($(".widget-area").width()); });
+                $(window).resize(function () { $(".widget-area .widget-content").width($(".widget-area").width()); });
 
                 if ($(this).scrollTop() >= 2000) {
                     $(".widget-area .widget-content").addClass("is-fixed");
-                    $(".widget-area .widget-content").width($(".widget-area").width());             
-                    $(".widget_custom_html").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")
-                    $(".widget_wp_statistics_widget").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")
-                    $(".widget_categories").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
-                    $(".widget_recent_comments").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
-                    $(".widget_tag_cloud").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
+                    $(".widget-area .widget-content").width($(".widget-area").width());
+                    $(".widget_custom_html").removeClass("f_i_r onsight").addClass("f_o_r outsight h-0")
+                    $(".widget_wp_statistics_widget").removeClass("f_i_r onsight").addClass("f_o_r outsight h-0")
+                    $(".widget_categories").removeClass("f_o_r outsight h-0").addClass("f_i_r onsight")
+                    $(".widget_recent_comments").removeClass("f_o_r outsight h-0").addClass("f_i_r onsight")
+                    $(".widget_tag_cloud").removeClass("f_o_r outsight h-0").addClass("f_i_r onsight")
                 } else if ($(this).scrollTop() < 2000 && $(this).scrollTop() > 800) {
                     $(".widget-area .widget-content").addClass("is-fixed");
-                    $(".widget-area .widget-content").width($(".widget-area").width());             
-                    $(".widget_custom_html").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
-                    $(".widget_wp_statistics_widget").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
-                    $(".widget_categories").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")
-                    $(".widget_recent_comments").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")
-                    $(".widget_tag_cloud").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")
-                }else if ( $(this).scrollTop() >= 0 && $(this).scrollTop() < 800) {
+                    $(".widget-area .widget-content").width($(".widget-area").width());
+                    $(".widget_custom_html").removeClass("f_o_r outsight h-0").addClass("f_i_r onsight")
+                    $(".widget_wp_statistics_widget").removeClass("f_o_r outsight h-0").addClass("f_i_r onsight")
+                    $(".widget_categories").removeClass("f_i_r onsight").addClass("f_o_r outsight h-0")
+                    $(".widget_recent_comments").removeClass("f_i_r onsight").addClass("f_o_r outsight h-0")
+                    $(".widget_tag_cloud").removeClass("f_i_r onsight").addClass("f_o_r outsight h-0")
+                } else if ($(this).scrollTop() >= 0 && $(this).scrollTop() < 800) {
                     $(".widget-area .widget-content").removeClass("is-fixed");
-                    $(".widget_custom_html").removeClass("fadeOutRight outsight h-0").addClass("onsight")
-                    $(".widget_wp_statistics_widget").removeClass("fadeOutRight outsight h-0").addClass("onsight")
-                    $(".widget_tag_cloud").removeClass("fadeOutRight outsight h-0").addClass("onsight")
-                    $(".widget_categories").removeClass("fadeOutRight outsight h-0").addClass("onsight")
-                    $(".widget_recent_comments").removeClass("fadeOutRight outsight h-0").addClass("onsight")
+                    $(".widget_custom_html").removeClass("f_o_r outsight h-0").addClass("onsight")
+                    $(".widget_wp_statistics_widget").removeClass("f_o_r outsight h-0").addClass("onsight")
+                    $(".widget_tag_cloud").removeClass("f_o_r outsight h-0").addClass("onsight")
+                    $(".widget_categories").removeClass("f_o_r outsight h-0").addClass("onsight")
+                    $(".widget_recent_comments").removeClass("f_o_r outsight h-0").addClass("onsight")
                 }
 
 

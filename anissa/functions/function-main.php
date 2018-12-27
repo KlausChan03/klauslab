@@ -395,6 +395,7 @@ function footer_script(){
 	wp_enqueue_script( 'common_func', get_template_directory_uri() . '/js/common.js', array(), '1.0', false );
 	wp_enqueue_script( 'fixed-plugins', get_template_directory_uri() . '/js/fixed-plugins.js', array(), '1.0', false );
 	wp_enqueue_script( 'snow', get_template_directory_uri() . '/js/snow.js', array(), '1.0', false );
+	// wp_enqueue_script( '3d-cloud', get_template_directory_uri() . '/js/3d-cloud.js', array(), '1.0', false );
 	wp_localize_script( 'canvas', 'my_ajax_obj', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) ); 
 	// 先将ajaxurl变数设定好
 }

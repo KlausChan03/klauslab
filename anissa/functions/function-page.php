@@ -89,8 +89,8 @@ function bookmarks($rel){
     return $bms; // 返回二维数组
 }
 
-function get_the_link_items($id = null){
-    $bookmarks = get_bookmarks('orderby=date&category=' .$id );
+function get_the_link_items($id = null,$cat){
+    $bookmarks = get_bookmarks('orderby=date&category='.$id );
     $output = '';
     if ( !empty($bookmarks) ) {		
         $output .= '<ul class="link-items klaus-links flex-hl-vl flex-hw">';
@@ -106,7 +106,7 @@ function get_the_link_items($id = null){
 				$imgUrl = '<img src="'. $link_image .'"></img>';				
 			}elseif( $link_image == '' and  $link_rss == '' and  $link_notes != ''){
 				// $imgUrl = '<img src="'.getGravatar($link_notes).'"></img>';
-				$imgUrl = '<img src="//statics.dnspod.cn/proxy_favicon/_/favicon?domain=' . $link_notes . '"/>' ;
+				$imgUrl = '<img src="//www.google.com/s2/favicons?domain=' . $link_notes . '"/>' ;
 			}elseif( $link_image == '' and  $link_notes == '' and  $link_rss != '' ){
 				$imgUrl  = '<img src="'.getGravatar(str_replace("http://","",$link_rss)).'"/>';
 			}else{
@@ -121,7 +121,8 @@ function get_the_link_items($id = null){
 			. $bookmark->link_url . '</p> </div> <div class="w-15 flex-hr-vc"><a title="'
 			. $bookmark->link_name .'" href="' 
 			. $bookmark->link_url . '" target="_blank" class="link-avatar col-aaa"> '
-			. $imgUrl . '</a> </div></div> <div class="p-20 pt-10 pb-10 col-primary clearfix link-2"> <p class="col-aaa text-overflow">' 
+			. $imgUrl . '</a> </div></div> <div class="p-20 pt-10 pb-10 col-primary clearfix link-2"><h5 class="col-222"> '
+			. $cat .'</h5><p class="col-aaa text-overflow">' 
 			. $bookmark->link_description . '</p> </div>  </div> </li>';
         }
         $output .= '</ul>';
@@ -137,7 +138,7 @@ function get_link_items(){
         foreach( $linkcats as $linkcat){            
             $result .=  '<blockquote class="link-title">'.$linkcat->name.'</blockquote>';
             if( $linkcat->description ) $result .= '<div class="link-description">' . $linkcat->description . '</div>';
-            $result .=  get_the_link_items($linkcat->term_id);
+            $result .=  get_the_link_items($linkcat->term_id,$linkcat->name);
         }
     } else {
         $result = get_the_link_items();
