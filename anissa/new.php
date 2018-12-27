@@ -6,7 +6,7 @@
   <main id="main" class="main-content" role="main">
   <?php if (have_posts()) : the_post(); update_post_caches($posts); ?>    
       <article class="post-<?php the_ID(); ?> page-main style-18">
-          <div class="entry-header">
+          <div class="entry-header flex-hc-vc">
             <?php the_title( '<h1 class="entry-title flex-hc-vc col-fff">', '</h1>' ); ?>     
             <?php if ( is_single() || is_page() && has_post_thumbnail() ) : ?>
               <div id="banner-bg" class="featured-header-image">

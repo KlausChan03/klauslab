@@ -178,6 +178,7 @@ layui.define(function (exports) {
         // })
 
         // 滚动触发事件
+        $(".widget-area .widget-content > aside").addClass("animated");
         $(window).scroll(function () {
             var doc = document,
                 win = window,
@@ -187,10 +188,9 @@ layui.define(function (exports) {
             var direction, header = $(".site-header");
 
             if ($(window).width() > 1000 && $(document).height() > 1500) {
-                $(".widget-area .widget-content > aside").addClass("animated");
                 $(window).resize(function() { $(".widget-area .widget-content").width($(".widget-area").width()); });
 
-                if ($(this).scrollTop() > 800) {
+                if ($(this).scrollTop() >= 2000) {
                     $(".widget-area .widget-content").addClass("is-fixed");
                     $(".widget-area .widget-content").width($(".widget-area").width());             
                     $(".widget_custom_html").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")
@@ -198,14 +198,24 @@ layui.define(function (exports) {
                     $(".widget_categories").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                     $(".widget_recent_comments").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                     $(".widget_tag_cloud").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
-                } else {
-                    $(".widget-area .widget-content").removeClass("is-fixed");
+                } else if ($(this).scrollTop() < 2000 && $(this).scrollTop() > 800) {
+                    $(".widget-area .widget-content").addClass("is-fixed");
+                    $(".widget-area .widget-content").width($(".widget-area").width());             
                     $(".widget_custom_html").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
                     $(".widget_wp_statistics_widget").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
-                    $(".widget_tag_cloud").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
-                    $(".widget_categories").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
-                    $(".widget_recent_comments").removeClass("fadeOutRight outsight h-0").addClass("fadeInRight onsight")
+                    $(".widget_categories").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")
+                    $(".widget_recent_comments").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")
+                    $(".widget_tag_cloud").removeClass("fadeInRight onsight").addClass("fadeOutRight outsight h-0")
+                }else if ( $(this).scrollTop() >= 0 && $(this).scrollTop() < 800) {
+                    $(".widget-area .widget-content").removeClass("is-fixed");
+                    $(".widget_custom_html").removeClass("fadeOutRight outsight h-0").addClass("onsight")
+                    $(".widget_wp_statistics_widget").removeClass("fadeOutRight outsight h-0").addClass("onsight")
+                    $(".widget_tag_cloud").removeClass("fadeOutRight outsight h-0").addClass("onsight")
+                    $(".widget_categories").removeClass("fadeOutRight outsight h-0").addClass("onsight")
+                    $(".widget_recent_comments").removeClass("fadeOutRight outsight h-0").addClass("onsight")
                 }
+
+
                 if ($scrollBottom < 80) {
                     $(".widget-area .widget-content").addClass("is-bottom")
                 } else {

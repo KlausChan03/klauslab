@@ -69,8 +69,8 @@
 				</div>
 			<?php endif ?>		
 		<div class="entry-extra">
-			<button data-action="expand" data-id="<?php the_ID(); ?>" class="expand-btn kl-btn kl-btn-sm gradient-blue-red show">预览全文</button>
-			<button data-action="collapse" data-id="<?php the_ID(); ?>" class="collapse-btn kl-btn kl-btn-sm gradient-red-blue hide">收起全文</button>
+			<button data-action="expand" data-id="<?php the_ID(); ?>" class="expand-btn kl-btn kl-btn-sm gradient-blue-red border-n show">预览全文</button>
+			<button data-action="collapse" data-id="<?php the_ID(); ?>" class="collapse-btn kl-btn kl-btn-sm gradient-red-blue border-n hide">收起全文</button>
 		</div>
 	</div>
 </article><!-- #post-## -->

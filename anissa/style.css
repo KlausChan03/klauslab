@@ -332,8 +332,6 @@ button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-	border: 0;
-	background: #eee;
 	font-weight: 400;
 	font-size: 13px;
 	letter-spacing: 2.5px;
@@ -349,7 +347,6 @@ input[type="button"]:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover {
 	background-color: #ccd4db;
-	/* border-bottom: 0px !important; */
 }
 
 button:focus,
@@ -371,7 +368,6 @@ input[type="password"],
 input[type="search"],
 textarea {
 	padding: 15px;
-	border: 1px solid #eee;
 	background: #fff;
 	max-width: 100%;
 	transition: 0.1s;
@@ -384,7 +380,6 @@ input[type="tel"]:focus,
 input[type="password"]:focus,
 input[type="search"]:focus,
 textarea:focus {
-	border-color: #ccc;
 	color: #111;
 	outline: none;
 }
