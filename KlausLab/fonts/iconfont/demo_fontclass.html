@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>IconFont</title>
+    <link rel="stylesheet" href="demo.css">
+    <link rel="stylesheet" href="iconfont.css">
+</head>
+<body>
+    <div class="main markdown">
+        <h1>IconFont 图标</h1>
+        <ul class="icon_lists clear">
+            
+                <li>
+                <i class="icon kl-font wp-ic-denglu"></i>
+                    <div class="name">登录</div>
+                    <div class="fontclass">.wp-ic-denglu</div>
+                </li>
+            
+                <li>
+                <i class="icon kl-font wp-ic-yuedu"></i>
+                    <div class="name">阅读</div>
+                    <div class="fontclass">.wp-ic-yuedu</div>
+                </li>
+            
+                <li>
+                <i class="icon kl-font wp-ic-tianjiayuzhuceqiye"></i>
+                    <div class="name">添加预注册企业</div>
+                    <div class="fontclass">.wp-ic-tianjiayuzhuceqiye</div>
+                </li>
+            
+                <li>
+                <i class="icon kl-font wp-ic-dengchutuichuguanbi"></i>
+                    <div class="name">登出 退出 关闭</div>
+                    <div class="fontclass">.wp-ic-dengchutuichuguanbi</div>
+                </li>
+            
+                <li>
+                <i class="icon kl-font wp-ic-yuedu1"></i>
+                    <div class="name">i-阅读</div>
+                    <div class="fontclass">.wp-ic-yuedu1</div>
+                </li>
+            
+                <li>
+                <i class="icon kl-font wp-ic-kinds"></i>
+                    <div class="name">分类</div>
+                    <div class="fontclass">.wp-ic-kinds</div>
+                </li>
+            
+                <li>
+                <i class="icon kl-font wp-ic-fenlei"></i>
+                    <div class="name">分类</div>
+                    <div class="fontclass">.wp-ic-fenlei</div>
+                </li>
+            
+                <li>
+                <i class="icon kl-font wp-ic-fenlei1"></i>
+                    <div class="name">分类</div>
+                    <div class="fontclass">.wp-ic-fenlei1</div>
+                </li>
+            
+                <li>
+                <i class="icon kl-font wp-ic-riqi"></i>
+                    <div class="name">日期</div>
+                    <div class="fontclass">.wp-ic-riqi</div>
+                </li>
+            
+                <li>
+                <i class="icon kl-font wp-ic-tubiaozhizuomoban-"></i>
+                    <div class="name">阅读</div>
+                    <div class="fontclass">.wp-ic-tubiaozhizuomoban-</div>
+                </li>
+            
+                <li>
+                <i class="icon kl-font wp-ic-techreport-"></i>
+                    <div class="name">阅读</div>
+                    <div class="fontclass">.wp-ic-techreport-</div>
+                </li>
+            
+                <li>
+                <i class="icon kl-font wp-ic-techreport-1"></i>
+                    <div class="name">日期</div>
+                    <div class="fontclass">.wp-ic-techreport-1</div>
+                </li>
+            
+                <li>
+                <i class="icon kl-font wp-ic-tubiaozhizuomoban"></i>
+                    <div class="name">阅读</div>
+                    <div class="fontclass">.wp-ic-tubiaozhizuomoban</div>
+                </li>
+            
+        </ul>
+
+        <h2 id="font-class-">font-class引用</h2>
+        <hr>
+
+        <p>font-class是unicode使用方式的一种变种，主要是解决unicode书写不直观，语意不明确的问题。</p>
+        <p>与unicode使用方式相比，具有如下特点：</p>
+        <ul>
+        <li>兼容性良好，支持ie8+，及所有现代浏览器。</li>
+        <li>相比于unicode语意明确，书写更直观。可以很容易分辨这个icon是什么。</li>
+        <li>因为使用class来定义图标，所以当要替换图标时，只需要修改class里面的unicode引用。</li>
+        <li>不过因为本质上还是使用的字体，所以多色图标还是不支持的。</li>
+        </ul>
+        <p>使用步骤如下：</p>
+        <h3 id="-fontclass-">第一步：引入项目下面生成的fontclass代码：</h3>
+
+
+        <pre><code class="lang-js hljs javascript"><span class="hljs-comment">&lt;link rel="stylesheet" type="text/css" href="./iconfont.css"&gt;</span></code></pre>
+        <h3 id="-">第二步：挑选相应图标并获取类名，应用于页面：</h3>
+        <pre><code class="lang-css hljs">&lt;<span class="hljs-selector-tag">i</span> <span class="hljs-selector-tag">class</span>="<span class="hljs-selector-tag">kl-font</span> <span class="hljs-selector-tag">wp-ic-xxx</span>"&gt;&lt;/<span class="hljs-selector-tag">i</span>&gt;</code></pre>
+        <blockquote>
+        <p>"kl-font"是你项目下的font-family。可以通过编辑项目查看，默认是"iconfont"。</p>
+        </blockquote>
+    </div>
+</body>
+</html>

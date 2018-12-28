@@ -316,7 +316,7 @@ body.color.color-5 {  background-image: url(/wp-content/themes/anissa/img/bg-5.j
 .widget-area .is-bottom { bottom: 120px; top: auto; transform: none; }
 .widget-area .widget { padding: 10px 15px; margin-bottom: 8px; }
 .widget-area .widget:last-child { margin-bottom: 0; }
-.widget-area .widget .widget-title { padding: 0; padding-top: 5px; padding-bottom: 15px;font-weight: bolder; border-bottom: 2px solid #eee; text-align: center;}
+.widget-area .widget .widget-title { padding: 0; padding-top: 5px; padding-bottom: 15px; line-height:1; font-weight: bolder; border-bottom: 2px solid #eee; text-align: center;}
 .widget-area .widget ul { margin: 0; margin-top: 10px;}
 .widget-area .widget ul li { margin: 0; padding:.5em 0;}
 .widget-area .widget ul li:first-child { border-top:none}
@@ -424,7 +424,10 @@ body.color.color-5 {  background-image: url(/wp-content/themes/anissa/img/bg-5.j
 .comment-metadata{ width:100%; }
 .comment-reply-title { font-size: 20px; }
 .comment-form p{margin-bottom: 10px}
-.vip{ width:auto; padding: 0 4px; border-radius: 3px; color: white; } .vip.level_Max { background: #48e; } .vip.level_1 { background: pink; } .vip.level_2 { background: rgb(255, 102, 97); }
+.vip{ width:auto; padding: 1px 4px; border-radius: 3px; color: white;font-size:12px; }
+.vip.level_Max { background: #48e; } 
+.vip.level_1 { background: pink; } 
+.vip.level_2 { background: rgb(255, 102, 97); }
 
 /* 友链页 */
 .link-title{font-size:16px;color:rgba(0,0,0,0.44);margin:40px 0 10px;background:#eee;}
