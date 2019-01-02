@@ -1,15 +1,11 @@
 <?php 
 /**
- *
- * @package WordPress
- * @Theme K&L
- *
- * @author xing930629@163.com
- * @link https://www.klauslaura.com
- * Template Name: 归档
- * Template Post Type: page
- */
+*  @package KlausLab
+*  Template Name: 归档
+*  author: Klaus
+*/
 get_header();
+
 setPostViews(get_the_ID()); ?>
 <div id="primary" class="main-area w-1">
   <main id="main" class="main-content" role="main">
@@ -23,12 +19,69 @@ setPostViews(get_the_ID()); ?>
               </div><!-- .featured-header-image -->
             <?php endif; ?> 
           </div><!-- .entry-header --> 
-          <div class="entry-content page-content">
-            <div class="entry-content-list"><?php archives_list(); the_content(); ?></div>
+          <div class="entry-content page-content">  
+            <div class="entry-content-filter p-lr-01">
+              <div class="filter-author flex-hl-vc">
+                <label>作者：</label>
+                <ul class="flex-hl-vc">
+                  <li class="m-tb-5">
+                    <button class="kl-btn kl-btn-sm">Klaus</button>                  
+                  </li>
+                  <li class="m-tb-5">
+                    <button class="kl-btn kl-btn-sm">Laura</button>                  
+                  </li>
+                </ul>
+              </div>
+              <div class="filter-type flex-hl-vc">
+                <label>类型：</label>
+                <ul class="flex-hl-vc">
+                  <li class="m-tb-5">
+                    <button class="kl-btn kl-btn-sm" data-type="post">文章</button>                  
+                  </li>
+                  <li class="m-tb-5">
+                    <button class="kl-btn kl-btn-sm" data-type="shuoshuo">说说</button>                  
+                  </li>
+                </ul>
+              </div>
+            </div>          
+            <div class="entry-content-list p-lr-01">              
+              
+            </div>
           </div> 
           <?php edit_post_link( esc_html__( 'Edit', 'KlausLab' ), '<footer class="entry-footer clear"><span class="edit-link">', '</span></footer><!-- .entry-footer -->' ); ?>                          
       </article>
     <?php endif; ?>
   </main>
 </div>
+<script>
+  $(document).on("click", ".filter-type button", function () {
+      var this_ = $(this),
+          this_type = $(this).data("type"),
+          content_dom = $(".entry-content-list");
+      if(this_type == "post"){
+        console.log(this_type)
+        content_dom.html(`<?php archives_list("post"); get_the_content(); ?>`)
+      }else if(this_type == "shuoshuo"){
+        console.log(this_type)
+        content_dom.html(`<?php archives_list("shuoshuo"); get_the_content(); ?>`)
+      }
+
+      // content_dom.html(`<?php $post_type = ${this_type}; archives_list($post_type); the_content(); ?>`)
+
+      // var req = {
+      //     action: "preview_post",
+      //     um_id: this_id,
+      //     um_action: this_action
+      // };
+      // $.post("/wp-admin/admin-ajax.php", req, function (res) {
+      //     var content = res;
+      //     this_dom.removeClass("hide").html(content);
+      //     this_dom.siblings().addClass("hide");
+
+      //     this_.siblings().removeClass("hide").addClass("show");
+      //     this_.removeClass("show").addClass("hide");
+
+      // });
+  })
+</script>
 <?php get_footer();

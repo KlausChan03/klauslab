@@ -387,6 +387,8 @@ function normal_style_script() {
     wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.min.css', array(), '3.5.1', false ); 
     // vue.js   
 	wp_enqueue_script( 'vue', get_template_directory_uri() . '/js/vue.js', array(), '2.5.17', false );
+
+
 } 
 
 

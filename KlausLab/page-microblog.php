@@ -1,12 +1,11 @@
 <?php 
-/*
-    Template Name: 说说
-    author: Klaus
+/**
+*  @package KlausLab
+*  Template Name: 说说
+*  author: Klaus
 */
 get_header(); 
 ?>
-
-
 <div id="primary" class="main-area w-1">
     <main id="main" class="main-content" role="main">
         <section class="kl_shuoshuo">
