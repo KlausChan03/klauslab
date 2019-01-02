@@ -50,7 +50,7 @@
 			?>	
 			<div id="menu-avatar"  class="menu-avatar pos-r m-lr-15 <?php if ( is_user_logged_in() ) { echo 'have-login'; } ?>">
 				<?php global $current_user;get_currentuserinfo();
-					echo get_avatar( $current_user->user_email, 42);
+					echo get_avatar( $current_user->user_email, 48);
 				?>	
 				<div id="personal-menu">
 					<ul>

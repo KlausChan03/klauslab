@@ -1,14 +1,9 @@
 <?php 
 /**
- *
- * @package WordPress
- * @Theme K&L
- *
- * @author xing930629@163.com
- * @link https://www.klauslaura.com
- * Template Name: 链集
- * Template Post Type: page
- */
+*  @package KlausLab
+*  Template Name: 链集
+*  author: Klaus
+*/
 get_header();
 setPostViews(get_the_ID()); ?>
 <div id="primary" class="main-area w-1">

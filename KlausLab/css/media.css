@@ -25,12 +25,12 @@
 @media screen and (min-width: 1000px) {	
 	.site-header{background: transparent}
 	.menu-touch { visibility: hidden; opacity: 0; display: none; }
-	.site-header .main-navigation { float: none; height: 72px;  max-width: 1200px; margin: 0 auto; }
+	.site-header .main-navigation { float: none; height: 65px;  max-width: 1200px; margin: 0 auto; }
 	.site-header .main-navigation *{font-size:14px;}
 	.site-header .menu { z-index: 1314; width: auto;  }
-	.site-header .menu > li { position: relative;display: inline-block; margin:0 1em;height: 72px; line-height: 82px; width: auto }
+	.site-header .menu > li { position: relative;display: inline-block; margin:0 1em;height: 65px; line-height: 65px; width: auto }
 	.site-header .menu > li a{ padding:0 5px; }
-	.site-header .menu .sub-menu { position: absolute; top: 73px; left: 0;width: 100%; width: 10em; z-index: 1314520; visibility: hidden; float: left; padding: 10px;  border-bottom: 4px solid #48e; background: #fff; opacity: 0;  }
+	.site-header .menu .sub-menu { position: absolute; top: 66px; left: 0;width: 100%; width: 10em; z-index: 1314520; visibility: hidden; float: left; padding: 10px;  border-bottom: 4px solid #48e; background: #fff; opacity: 0;  }
 	.site-header .menu .sub-menu > li {  height: 36px; line-height: 36px; width: 100%; text-align: center; margin: 0; height: auto; float: left; text-align: left; }
 	.site-header .menu .sub-menu > li a { min-width: auto; width: 100%; display: inline-block;padding: 0 0 0 .5em; height: 2.5em; line-height: 2.5em; border-bottom: 0; -webkit-transition: none; -moz-transition: none; transition: none; }
 	.site-header .menu > li:hover>ul, .site-header .main-navigation ul li.focus>ul { left: -32px;  visibility: visible; opacity: 1;  }

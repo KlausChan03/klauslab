@@ -193,26 +193,26 @@ layui.define(function (exports) {
                 if ($(this).scrollTop() >= 2000) {
                     $(".widget-area .widget-content").addClass("is-fixed");
                     $(".widget-area .widget-content").width($(".widget-area").width());
-                    $(".widget_custom_html").removeClass("f_i_r onsight").addClass("f_o_r outsight h-0")
-                    $(".widget_wp_statistics_widget").removeClass("f_i_r onsight").addClass("f_o_r outsight h-0")
-                    $(".widget_categories").removeClass("f_o_r outsight h-0").addClass("f_i_r onsight")
-                    $(".widget_recent_comments").removeClass("f_o_r outsight h-0").addClass("f_i_r onsight")
-                    $(".widget_tag_cloud").removeClass("f_o_r outsight h-0").addClass("f_i_r onsight")
+                    $(".widget_custom_html").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+                    $(".widget_wp_statistics_widget").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+                    $(".widget_categories").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+                    $(".widget_recent_comments").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+                    $(".widget_tag_cloud").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
                 } else if ($(this).scrollTop() < 2000 && $(this).scrollTop() > 800) {
                     $(".widget-area .widget-content").addClass("is-fixed");
                     $(".widget-area .widget-content").width($(".widget-area").width());
-                    $(".widget_custom_html").removeClass("f_o_r outsight h-0").addClass("f_i_r onsight")
-                    $(".widget_wp_statistics_widget").removeClass("f_o_r outsight h-0").addClass("f_i_r onsight")
-                    $(".widget_categories").removeClass("f_i_r onsight").addClass("f_o_r outsight h-0")
-                    $(".widget_recent_comments").removeClass("f_i_r onsight").addClass("f_o_r outsight h-0")
-                    $(".widget_tag_cloud").removeClass("f_i_r onsight").addClass("f_o_r outsight h-0")
+                    $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+                    $(".widget_wp_statistics_widget").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+                    $(".widget_categories").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+                    $(".widget_recent_comments").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+                    $(".widget_tag_cloud").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
                 } else if ($(this).scrollTop() >= 0 && $(this).scrollTop() < 800) {
                     $(".widget-area .widget-content").removeClass("is-fixed");
-                    $(".widget_custom_html").removeClass("f_o_r outsight h-0").addClass("onsight")
-                    $(".widget_wp_statistics_widget").removeClass("f_o_r outsight h-0").addClass("onsight")
-                    $(".widget_tag_cloud").removeClass("f_o_r outsight h-0").addClass("onsight")
-                    $(".widget_categories").removeClass("f_o_r outsight h-0").addClass("onsight")
-                    $(".widget_recent_comments").removeClass("f_o_r outsight h-0").addClass("onsight")
+                    $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+                    $(".widget_wp_statistics_widget").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+                    $(".widget_tag_cloud").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+                    $(".widget_categories").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+                    $(".widget_recent_comments").removeClass("f_o_r ds-none h-0").addClass("ds-block")
                 }
 
 
@@ -231,9 +231,9 @@ layui.define(function (exports) {
                     event = event || window.event;
                     direction = event.wheelDelta && (event.wheelDelta > 0 ? "mouseup" : "mousedown");
                     if (direction == "mouseup" || $scrollTop == 0) {
-                        header.removeClass("slideOutUp outsight").addClass("slideInDown onsight");
+                        header.removeClass("slideOutUp ds-none").addClass("slideInDown ds-block");
                     } else {
-                        header.removeClass("slideInDown onsight").addClass("slideOutUp outsight");
+                        header.removeClass("slideInDown ds-block").addClass("slideOutUp ds-none");
                     }
                 };
 

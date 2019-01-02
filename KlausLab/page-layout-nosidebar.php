@@ -1,9 +1,9 @@
 <?php
 /**
- * Template Name: No Sidebars
- *
- * @package KlausLab
- */
+*  @package KlausLab
+*  Template Name: 无侧边栏
+*  author: Klaus
+*/
 
 get_header(); ?>
 

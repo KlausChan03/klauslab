@@ -127,6 +127,7 @@ h6 { font-size: 12px }
 /* padding-10 */
 .pt-15{padding-top: 15px!important;} .pb-15 { padding-bottom: 15px!important;} .pl-15{padding-left:15px!important;} .pr-15{padding-right: 15px!important;} .p-tb-15{padding: 15px 0;} .p-lr-15{padding: 0 15px;}
 
+.p-lr-01{padding:0 10%;}
 .p-tb-5 { padding: 5px 0!important; }
 .p-tb-10 { padding: 10px 0!important; }
 .p-20{padding:20px!important;}
@@ -173,12 +174,16 @@ h6 { font-size: 12px }
 .i-vertical-middle { position: absolute; top: 50%; -webkit-transform: translateY(-50%); -moz-transform: translateY(-50%); -ms-transform: translateY(-50%); -o-transform: translateY(-50%); transform: translateY(-50%) }
 .font-microsoft { font-family: "微软雅黑"; }
 
+
+.kl-btn-container {margin:10px 0;}
+.kl-btn-container .kl-btn{margin-right: 10px;}
+.kl-btn-container .kl-btn:last-child{margin-right: 0}
 .kl-btn{outline: none; -webkit-appearance: none; transition: all .3s; -webkit-transition: all .3s; line-height: 30px; height: 30px; border-radius: 2px; border-style:solid;border-width: 1px;border-color:#ddd; letter-spacing:2px; padding:0;padding-left: 10px;padding-right: 8px}
 .kl-btn.kl-btn-primary{border-color: #48e;}
 
 .kl-btn-sm{height: 24px; min-height: 24px;line-height: 24px; padding: 0 5px; font-size: 12px;}
-.mid-btn{height: 30px; min-height: 30px;line-height: 30px; padding: 0 10px; font-size: 14px;}
-.lg-btn{height: 40px;  min-height: 40px; line-height: 40px; padding: 0 15px; font-size: 16px;}
+.kl-btn-md{height: 30px; min-height: 30px;line-height: 30px; padding: 0 10px; font-size: 14px;}
+.kl-btn-lg{height: 40px;  min-height: 40px; line-height: 40px; padding: 0 15px; font-size: 16px;}
 
 .gradient-red-blue{background: linear-gradient(to right, #d42 ,#48e); color:#fff}
 .gradient-blue-red{background: linear-gradient(to right, #48e, #d42); color:#fff}
@@ -502,156 +507,36 @@ body.color.color-5 {  background-image: url(/wp-content/themes/anissa/img/bg-5.j
 
 
 /** 垂直时间线CSS样式 */
-.kl_shuoshuo{ padding: 2em;}
+.kl_shuoshuo{ padding: 1.5em;}
 .kl_shuoshuo .timeline-ul { margin: 0; padding: 0; list-style: none; position: relative; } 
-/* The line */
-.kl_shuoshuo .timeline-ul:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 10px;
-    background: #48e;
-    left: 32px;
-    box-shadow: 0px 0px 15px 0px rgba(219,219,219,1);
-}
-/* Right content */
-.kl_shuoshuo .timeline-ul li .label {
-    margin: 0 0 40px 80px;
-    font-size: 1.2em;
-    line-height: 1.4;
-    position: relative;
-    border-radius: 5px;
-    width: 90%;
-    margin-left: 30px;
-    box-shadow: 0px 0px 15px 0px rgba(219,219,219,1);
-}
-.kl_shuoshuo .timeline-ul li.author-by-klaus .label{
-    background:#b0c4de;
-}
-
-.kl_shuoshuo .timeline-ul li.author-by-laura .label{
-    background:#e6e6fa;
-}
-
-.kl_shuoshuo .timeline-ul .label * {
-    color: #fff;
-}
-
-.kl_shuoshuo .timeline-ul .label > div{
-    padding: 1.2em;
-
-}
-
-.kl_shuoshuo .timeline-ul .label .label_content p{
-    font-size:15px;
-    margin-bottom:5px;
-}
-
-.kl_shuoshuo .timeline-ul .label .label_content img{
-    object-fit: cover;
-    border-radius: 4px;
-    margin-right:15px;
-    margin-bottom:10px;
-}
-
-.kl_shuoshuo .timeline-ul .label .label_others { 
-    border-bottom: 0px;
-    border-top:1px dashed #FFF; 
-    font-size:16px; 
-    margin:0px;
-}
-.kl_shuoshuo .timeline-ul .label .label_others > span { 
-    font-size: 14px; 
-    text-align: center; 
-    line-height: 24px; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    white-space: nowrap;
-}
-/* The triangle */
-.kl_shuoshuo .timeline-ul li .label:after {
-    right: 100%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-right-color: #48e;
-    border-width: 10px;
-    top: 10px;
-}
-.kl_shuoshuo .timeline-ul li.author-by-klaus .label:after {
-    border-right-color: #b0c4de;
-}
-.kl_shuoshuo .timeline-ul li.author-by-laura .label:after {
-    border-right-color: #e6e6fa;
-}
-/* The icons */
-.kl_shuoshuo .timeline-ul .icon {
-    width: 72px;
-    height: 72px;
-    -webkit-font-smoothing: antialiased;
-    position: relative;
-    background: #48e;
-    border-radius: 5%;
-    box-shadow: 0px 0px 15px 0px rgba(219,219,219,1);
-    box-sizing: border-box;
-    border: 6px solid #48e;
-}
-.kl_shuoshuo .timeline-ul .icon > img {
-    border-radius: 5%; 
-    position: absolute; 
-    top: 0px; 
-    left: 0px;
-    z-index: 2;
-}
+.kl_shuoshuo .timeline-ul:before { content: ''; position: absolute; top: 0; bottom: 0; width: 10px; background: #48e; left: 32px; box-shadow: 0px 0px 15px 0px rgba(219,219,219,1); }
+.kl_shuoshuo .timeline-ul li .label { margin: 0 0 40px 80px; font-size: 1.2em; line-height: 1.4; position: relative; border-radius: 5px; width: 90%; margin-left: 30px; box-shadow: 0px 0px 15px 0px rgba(219,219,219,1); }
+.kl_shuoshuo .timeline-ul li.author-by-klaus .label{ background:#b0c4de; }
+.kl_shuoshuo .timeline-ul li.author-by-laura .label{ background:#e6e6fa; }
+.kl_shuoshuo .timeline-ul .label * { color: #fff; }
+.kl_shuoshuo .timeline-ul .label > div{ padding: 1.2em; }
+.kl_shuoshuo .timeline-ul .label .label_content p{ font-size:15px; margin-bottom:5px; }
+.kl_shuoshuo .timeline-ul .label .label_content img{ object-fit: cover; border-radius: 4px; margin-right:15px; margin-bottom:10px; }
+.kl_shuoshuo .timeline-ul .label .label_others { border-bottom: 0px; border-top:1px dashed #FFF; font-size:16px; margin:0px; }
+.kl_shuoshuo .timeline-ul .label .label_others > span { font-size: 14px; text-align: center; line-height: 24px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kl_shuoshuo .timeline-ul li .label:after { right: 100%; border: solid transparent; content: " "; height: 0; width: 0; position: absolute; pointer-events: none; border-right-color: #48e; border-width: 10px; top: 10px; }
+.kl_shuoshuo .timeline-ul li.author-by-klaus .label:after { border-right-color: #b0c4de; }
+.kl_shuoshuo .timeline-ul li.author-by-laura .label:after { border-right-color: #e6e6fa; }
+.kl_shuoshuo .timeline-ul .icon { width: 72px; height: 72px; -webkit-font-smoothing: antialiased; position: relative; background: #48e; border-radius: 5%; box-shadow: 0px 0px 15px 0px rgba(219,219,219,1); box-sizing: border-box; border: 6px solid #48e; }
+.kl_shuoshuo .timeline-ul .icon > img { border-radius: 5%; position: absolute; top: 0px; left: 0px; z-index: 2; }
 
 /* Example Media Queries */
 @media screen and (max-width: 65.375em) {
-    .kl_shuoshuo .timeline-ul .time span:last-child {
-        font-size: 1.5em;
-    }
+    .kl_shuoshuo .timeline-ul .time span:last-child { font-size: 1.5em; }
 }
 @media screen and (max-width: 47.2em) {
-    .kl_shuoshuo .timeline-ul:before {
-        display: none;
-    }
-    .kl_shuoshuo .timeline-ul li {
-        -webkit-box-orient: vertical;
-        -webkit-flex-direction: column;
-        -moz-flex-direction: column;
-        -ms-flex-direction: column;
-        -o-flex-direction: column;
-        flex-direction: column;
-    }
-    .kl_shuoshuo .timeline-ul li .label {
-        margin: 20px 0 30px 0;
-        padding: 1em;
-        font-weight: 400;
-        font-size: 95%;
-    }
-
-    .kl_shuoshuo .timeline-ul li .label:after{
-        right: auto;
-        left: 20px;
-        border-right-color: transparent!important;
-        border-bottom-color: #48e;
-        top: -20px;
-    }
-    .kl_shuoshuo .timeline-ul li.author-by-klaus .label:after {
-        border-bottom-color: #b0c4de;
-    }
-    .kl_shuoshuo .timeline-ul li.author-by-laura .label:after {
-        border-bottom-color:#e6e6fa;
-    }
-    .kl_shuoshuo .timeline-ul .icon {
-        position: relative;
-        float: right;
-        left: auto;
-        margin: 0;
-    }
+    .kl_shuoshuo .timeline-ul:before { display: none; }
+    .kl_shuoshuo .timeline-ul li { -webkit-box-orient: vertical; -webkit-flex-direction: column; -moz-flex-direction: column; -ms-flex-direction: column; -o-flex-direction: column; flex-direction: column; }
+    .kl_shuoshuo .timeline-ul li .label { margin: 20px 0 20px 0; padding: 0; font-weight: 400; font-size: 95%; width:100%; }
+    .kl_shuoshuo .timeline-ul li .label:after{ right: auto; left: 20px; border-right-color: transparent!important; border-bottom-color: #48e; top: -20px; }
+    .kl_shuoshuo .timeline-ul li.author-by-klaus .label:after { border-bottom-color: #b0c4de; }
+    .kl_shuoshuo .timeline-ul li.author-by-laura .label:after { border-bottom-color:#e6e6fa; }
+    .kl_shuoshuo .timeline-ul .icon { position: relative; float: right; left: auto; margin: 0; }
 }
 
 

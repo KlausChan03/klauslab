@@ -1,15 +1,11 @@
 <?php 
 /**
- *
- * @package WordPress
- * @Theme K&L
- *
- * @author xing930629@163.com
- * @link https://www.klauslaura.com
- * Template Name: 归档
- * Template Post Type: page
- */
+*  @package KlausLab
+*  Template Name: 归档
+*  author: Klaus
+*/
 get_header();
+
 setPostViews(get_the_ID()); ?>
 <div id="primary" class="main-area w-1">
   <main id="main" class="main-content" role="main">
@@ -23,12 +19,60 @@ setPostViews(get_the_ID()); ?>
               </div><!-- .featured-header-image -->
             <?php endif; ?> 
           </div><!-- .entry-header --> 
-          <div class="entry-content page-content">
-            <div class="entry-content-list"><?php archives_list(); the_content(); ?></div>
+          <div class="entry-content page-content">  
+            <div class="entry-content-filter p-lr-01">
+              <div class="filter-author flex-hl-vc">
+                <label>作者：</label>
+                <div class="kl-btn-container">
+                    <button class="kl-btn kl-btn-sm" data-author="Klaus">Klaus</button>                  
+                    <button class="kl-btn kl-btn-sm" data-author="Laura">Laura</button>                  
+                  </div>
+              </div>
+              <div class="filter-type flex-hl-vc">
+                <label>类型：</label>
+                <div class="kl-btn-container">
+                    <button class="kl-btn kl-btn-sm" data-type="post">文章</button>                  
+                    <button class="kl-btn kl-btn-sm" data-type="shuoshuo">说说</button> 
+                </div>                 
+              </div>
+            </div>          
+            <div class="entry-content-list p-lr-01">              
+              <?php archives_list("shuoshuo"); the_content(); ?>
+            </div>
           </div> 
           <?php edit_post_link( esc_html__( 'Edit', 'KlausLab' ), '<footer class="entry-footer clear"><span class="edit-link">', '</span></footer><!-- .entry-footer -->' ); ?>                          
       </article>
     <?php endif; ?>
   </main>
 </div>
+<script>
+  $(document).on("click", ".filter-type button", function () {
+      var this_ = $(this),
+          that_author,
+          this_type = $(this).data("type"),
+          content_dom = $(".entry-content-list");
+      this_.attr("data-active",true);
+      this_.siblings().removeAttr("data-active");
+      if(this_type == "post"){
+        content_dom.html(`<?php archives_list("post",null); the_content(); ?>`)
+      }else if(this_type == "shuoshuo"){
+        content_dom.html(`<?php archives_list("shuoshuo",null); the_content(); ?>`)
+      }
+  })
+  $(document).on("click", ".filter-author button", function () {
+      var this_ = $(this),
+          that_type,
+          this_author = $(this).data("author"),
+          content_dom = $(".entry-content-list");
+
+      this_.attr("data-active",true);
+      this_.siblings().removeAttr("data-active");
+
+      if(this_author == "Klaus"){
+        content_dom.html(`<?php archives_list("post","Klaus"); the_content(); ?>`)
+      }else if(this_author == "Laura"){
+        content_dom.html(`<?php archives_list("post","Laura"); the_content(); ?>`)
+      }
+  })
+</script>
 <?php get_footer();

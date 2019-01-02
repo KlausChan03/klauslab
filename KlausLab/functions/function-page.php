@@ -3,10 +3,17 @@
 <?php
 
 // 文章归档
-function archives_list() {
-	if( !$output = get_option('archives_list') ){
+function archives_list($post_type,$post_author) {
+	if( empty($post_type) ){
+		$post_type = "post"
+	}
+	if( empty($post_author) ){
+		$post_author = "Klaus"
+	}
+	if( empty($output) ){
+		$output = '';
 		$output = '<div id="archives">';
-		$the_query = new WP_Query( 'posts_per_page=-1&ignore_sticky_posts=1&post_type=post' ); 
+		$the_query = new WP_Query( 'posts_per_page=-1&ignore_sticky_posts=1&post_type=' . $post_type . '&post_author=' . $post_author ); 
 		$year=0; $mon=0; $i=0; $j=0;
 		while ( $the_query->have_posts() ) : $the_query->the_post();
 			$year_tmp = get_the_time('Y');
@@ -16,7 +23,7 @@ function archives_list() {
             if ($year != $year_tmp && $year > 0) $output .= '</ul>';
             if ($year != $year_tmp) {
                 $year = $year_tmp;
-                $output .= '<h3 class="al_year">'. $year .' 年</h3><ul class="al_mon_list">'; //输出年份
+                $output .= '<h3 class="al_year">'. $year.' 年</h3><ul class="al_mon_list">'; //输出年份
             }
             if ($mon != $mon_tmp) {
                 $mon = $mon_tmp;
@@ -34,6 +41,7 @@ function clear_cache() {
     update_option('archives_list', ''); // 清空 archives_list
 }
 add_action('save_post', 'clear_cache'); // 新发表文章/修改文章时
+// add_action('save_post', 'clear_cache');
 
 //说说
 function my_custom_init() { 
