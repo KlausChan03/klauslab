@@ -37,7 +37,7 @@ setPostViews(get_the_ID()); ?>
               </div>
             </div>          
             <div class="entry-content-list p-lr-01">              
-              <?php archives_list("shuoshuo"); the_content(); ?>
+              <?php archives_list("shuoshuo",null); the_content(); ?>
             </div>
           </div> 
           <?php edit_post_link( esc_html__( 'Edit', 'KlausLab' ), '<footer class="entry-footer clear"><span class="edit-link">', '</span></footer><!-- .entry-footer -->' ); ?>                          
@@ -67,11 +67,11 @@ setPostViews(get_the_ID()); ?>
 
       this_.attr("data-active",true);
       this_.siblings().removeAttr("data-active");
-
+      console.log(this_author)
       if(this_author == "Klaus"){
-        content_dom.html(`<?php archives_list("post","Klaus"); the_content(); ?>`)
+        content_dom.html(`<?php archives_list(null,"Klaus"); the_content(); ?>`)
       }else if(this_author == "Laura"){
-        content_dom.html(`<?php archives_list("post","Laura"); the_content(); ?>`)
+        content_dom.html(`<?php archives_list(null,"Laura"); the_content(); ?>`)
       }
   })
 </script>

@@ -5,16 +5,17 @@
 // 文章归档
 function archives_list($post_type,$post_author) {
 	if( empty($post_type) ){
-		$post_type = "post"
+		$post_type = "post";
 	}
 	if( empty($post_author) ){
-		$post_author = "Klaus"
+		$post_author = "Klaus";
 	}
 	if( empty($output) ){
 		$output = '';
 		$output = '<div id="archives">';
-		$the_query = new WP_Query( 'posts_per_page=-1&ignore_sticky_posts=1&post_type=' . $post_type . '&post_author=' . $post_author ); 
+		$the_query = new WP_Query( 'posts_per_page=-1&ignore_sticky_posts=1&post_type=' . $post_type . '&author_name=' . $post_author ); 
 		$year=0; $mon=0; $i=0; $j=0;
+
 		while ( $the_query->have_posts() ) : $the_query->the_post();
 			$year_tmp = get_the_time('Y');
 			$mon_tmp = get_the_time('M');
