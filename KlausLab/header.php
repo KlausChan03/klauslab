@@ -14,31 +14,29 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, user-scalable=no" />
 	<link rel="profile" href="http://gmpg.org/xfn/11">
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?> >
 
 
 <div id="page" class="hfeed site">
-	<!-- <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'KlausLab' ); ?></a> -->
 	<header id="masthead" class="site-header" role="banner">
 		<div id="site-touch-header" class="menu-touch">
 			<div class="menu-toggle flex-hc-vc" aria-controls="primary-menu" aria-expanded="">
 				<i class="lalaksks lalaksks-ic-menu"></i>
 			</div>
 			<div class="flex-hc-vc">
-				<?php echo get_bloginfo('name'); ?>
+				<h2 class="m-0"><?php echo get_bloginfo('name'); ?></h2>
 			</div>
 			<div class="flex-hc-vc">
 				<i class="lalaksks lalaksks-ic-search"></i>
 			</div>			
 		</div>
-		<nav id="site-navigation" class="menu-pc main-navigation flex-hb-vc" role="navigation">
-			
-			<div class="menu-logo flex-hc-vc m-lr-15">
+		<nav id="site-navigation" class="menu-pc main-navigation flex-hb-vc" role="navigation">			
+			<div class="menu-logo m-lr-15">
 				<?php echo the_custom_logo(); ?>
 			</div>			
-			<!-- <div id="menu-blog-name" class="m-lr-15"> <?php echo get_bloginfo('name'); ?> </div> -->	   
 			<?php 
 				wp_nav_menu( 
 					array( 

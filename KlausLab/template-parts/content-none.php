@@ -11,7 +11,7 @@
 
 <section class="no-results not-found">
 	<div class="page-header">
-		<h1 class="page-title"><?php esc_html_e( '从什么都没有的地方，到什么都没有的地方', 'KlausLab' ); ?></h1>
+		<h2 class="page-title"><?php esc_html_e( '从什么都没有的地方，到什么都没有的地方', 'KlausLab' ); ?></h2>
 	</div><!-- .page-header -->
 
 	<div class="page-content">

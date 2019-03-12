@@ -12,7 +12,7 @@ get_header(); ?>
     <?php if ( have_posts() ) : ?>
       <section class="page-header flex-hb-vc">
         <?php
-        the_archive_title( '<h1 class="page-title">', '</h1>' );
+        the_archive_title( '<h2 class="page-title">', '</h2>' );
         the_archive_description( '<div class="archive-description">', '</div>' );
         ?>
       </section>

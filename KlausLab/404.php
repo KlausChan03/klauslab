@@ -11,9 +11,9 @@ get_header(); ?>
   <main id="main" class="main-content" role="main">
     <section class="error-404 not-found">
       <header class="page-header">
-        <h1 class="page-title">
+        <h2 class="page-title">
           <?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'KlausLab' ); ?>
-        </h1>
+        </h2>
       </header>
       <!-- .page-header -->
       

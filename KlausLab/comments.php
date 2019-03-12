@@ -21,7 +21,7 @@ if ( post_password_required() ) {
 <section id="comments" class="comments-area">
   <?php // You can start editing here -- including this comment! ?>
   <?php if ( have_comments() ) : ?>
-  <h2 class="comments-title">
+  <h3 class="comments-title">
     <?php
 				printf( // WPCS: XSS OK.
 				  esc_html( _nx( '%1$s &nbsp;条回应', '%1$s &nbsp;条回应', get_comments_number(), 'comments title', 'KlausLab' ) ),
@@ -29,7 +29,7 @@ if ( post_password_required() ) {
 					'<span>' . get_the_title() . '</span>'
 				);
 			?>
-  </h2>
+  </h3>
   <?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
   <nav id="comment-nav-above" class="navigation comment-navigation" role="navigation">
     <h2 class="screen-reader-text">
@@ -63,9 +63,6 @@ if ( post_password_required() ) {
   
   <?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
   <nav id="comment-nav-below" class="navigation comment-navigation" role="navigation">
-    <h2 class="screen-reader-text">
-      <?php esc_html_e( 'Comment navigation', 'KlausLab' ); ?>
-    </h2>
     <div class="nav-links">
       <div class="nav-previous">
         <?php previous_comments_link( esc_html__( 'Older Comments', 'KlausLab' ) ); ?>
