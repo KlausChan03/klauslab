@@ -77,10 +77,4 @@
 </div>
 
 <?php wp_footer(); ?>
-<script>
-  basic.pageLoadingMask.show(document);
-  setTimeout(() => {
-	  basic.pageLoadingMask.remove(document);    
-  }, 50000);
-</script>
 </body></html>

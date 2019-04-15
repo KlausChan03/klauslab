@@ -223,36 +223,16 @@ $(window).scroll(function () {
     }
 })
 
-let basic = {};
-basic.pageLoadingMask = (function () {
-    var maskDivId = "cdfd5f6428794b309256805748abe2b2";
-    return {
-        show: function (doc) {
-            if (doc === undefined) doc = window.document;
-            if (doc.getElementById(maskDivId)) return;
-            doc.body.innerHTML += `<div class="loader-shade" id="${maskDivId}">
-            <div class="loader-wrapper">
-                <div class="loader">
-                    <div class="roller"></div>
-                    <div class="roller"></div>
-                </div>
-                
-                <div id="loader2" class="loader">
-                    <div class="roller"></div>
-                    <div class="roller"></div>
-                </div>
-                
-                <div id="loader3" class="loader">
-                    <div class="roller"></div>
-                    <div class="roller"></div>
-                </div>
-            </div></div>
-            `
-        },
-        remove: function (doc) {
-            if (doc === undefined) doc = window.document;
-            var mask = doc.getElementById(maskDivId);
-            if (mask) mask.parentNode.removeChild(mask);
-        }
-    }
-})();
+// $(document).on("mouseover mouseout", "img", function (event) {
+//     var _this = $(this);
+//     console.log(_this.css("width"), $(this).css("width"))
+//     var _this_parent = $(this).parent();
+//     if (event.type == "mouseover") {
+//         _this_parent.css({"width":_this.css("width"),"height":_this.css("height"),"overflow":"hidden","display":"inline-block"})
+//         _this.addClass("extend-img");
+//     } else {
+//         _this_parent.css({"width":"auto","height":"auto","overflow":"visible"})
+//         _this.removeClass("extend-img");
+//     }
+// })
+

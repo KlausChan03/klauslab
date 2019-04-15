@@ -354,7 +354,22 @@ background_.addEventListener('mouseover', function (e) {
 
 
 let init = () => {
-    Animation.snow();
+    let myDate = new Date();
+    let mymonth = myDate.getMonth() + 1;
+    console.log(mymonth)
+    if(1<mymonth && mymonth<=4){
+        Animation.snow("sakura");    
+        return false;    
+    }else if(4<mymonth && mymonth<=7){
+        Animation.snow("sunshine");        
+        return false;    
+    }else if(7<mymonth && mymonth<=10){
+        Animation.snow("maple");        
+        return false;  
+    }else if(10<mymonth && mymonth<=1){
+        Animation.snow("snow");        
+        return false;    
+    }
 }
 
 init();
