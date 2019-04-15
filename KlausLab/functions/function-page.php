@@ -3,11 +3,24 @@
 <?php
 
 // 文章归档
-function archives_list() {
-	if( !$output = get_option('archives_list') ){
+	function archives_list($filter) {
+	$filter = explode(',',$filter); 
+	if( empty($filter[0]) ){
+		$post_type = "post";
+	}else{
+		$post_type = $filter[0];
+	}
+	if( empty($filter[1]) ){
+		$post_author = "Klaus";
+	}else{
+		$post_author = $filter[1];
+	}
+	if( empty($output) ){
+		$output = '';
 		$output = '<div id="archives">';
-		$the_query = new WP_Query( 'posts_per_page=-1&ignore_sticky_posts=1&post_type=post' ); 
+		$the_query = new WP_Query( 'posts_per_page=-1&ignore_sticky_posts=1&post_type=' . $post_type . '&author_name=' . $post_author ); 
 		$year=0; $mon=0; $i=0; $j=0;
+
 		while ( $the_query->have_posts() ) : $the_query->the_post();
 			$year_tmp = get_the_time('Y');
 			$mon_tmp = get_the_time('M');
@@ -16,7 +29,7 @@ function archives_list() {
             if ($year != $year_tmp && $year > 0) $output .= '</ul>';
             if ($year != $year_tmp) {
                 $year = $year_tmp;
-                $output .= '<h3 class="al_year">'. $year .' 年</h3><ul class="al_mon_list">'; //输出年份
+                $output .= '<hr><h3 class="al_year">'. $year.' 年</h3><ul class="al_mon_list">'; //输出年份
             }
             if ($mon != $mon_tmp) {
                 $mon = $mon_tmp;
@@ -28,12 +41,13 @@ function archives_list() {
         $output .= '</ul></li></ul></div>';
         update_option('archives_list', $output);
 	}
-    echo $output;
+    return $output;
 }
 function clear_cache() {
     update_option('archives_list', ''); // 清空 archives_list
 }
 add_action('save_post', 'clear_cache'); // 新发表文章/修改文章时
+// add_action('save_post', 'clear_cache');
 
 //说说
 function my_custom_init() { 
@@ -93,7 +107,7 @@ function get_the_link_items($id = null,$cat){
     $bookmarks = get_bookmarks('orderby=date&category='.$id );
     $output = '';
     if ( !empty($bookmarks) ) {		
-        $output .= '<ul class="link-items klaus-links flex-hl-vl flex-hw">';
+        $output .= '<ul class="klaus-links link-container flex-hl-vl flex-hw">';
         foreach ($bookmarks as $bookmark) {
 			$arr_col = array("qs","lvs","ls","zs","lh","hs","cs","hos");
 			shuffle($arr_col);
@@ -105,7 +119,6 @@ function get_the_link_items($id = null,$cat){
 			if( $link_rss == '' and  $link_notes == '' and  $link_image != ''){
 				$imgUrl = '<img src="'. $link_image .'"></img>';				
 			}elseif( $link_image == '' and  $link_rss == '' and  $link_notes != ''){
-				// $imgUrl = '<img src="'.getGravatar($link_notes).'"></img>';
 				$imgUrl = '<img src="//www.google.com/s2/favicons?domain=' . $link_notes . '"/>' ;
 			}elseif( $link_image == '' and  $link_notes == '' and  $link_rss != '' ){
 				$imgUrl  = '<img src="'.getGravatar(str_replace("http://","",$link_rss)).'"/>';
@@ -113,7 +126,7 @@ function get_the_link_items($id = null,$cat){
 				$imgUrl = '';
 			}			
 			
-			$output .=  '<li class="col-md-4 mt-15 mb-15 p-10"> <div class="p-0 borderr-main-4"> <div class="flex-hb-vc link-1 p-20 bgc-' 
+			$output .=  '<li class="link-item col-md-4"> <div class="p-0 borderr-main-4"> <div class="flex-hb-vc link-1 p-20 bgc-' 
 			. $arr_col[0] . $arr_num[0] . '"> <div class="w-85 p-0"> <strong><a title="'
 			. $bookmark->link_name . '" href="' 
 			. $bookmark->link_url . '" target="_blank" class="col-fff link-name">'
@@ -121,8 +134,8 @@ function get_the_link_items($id = null,$cat){
 			. $bookmark->link_url . '</p> </div> <div class="w-15 flex-hr-vc"><a title="'
 			. $bookmark->link_name .'" href="' 
 			. $bookmark->link_url . '" target="_blank" class="link-avatar col-aaa"> '
-			. $imgUrl . '</a> </div></div> <div class="p-20 pt-10 pb-10 col-primary clearfix link-2"><h5 class="col-222"> '
-			. $cat .'</h5><p class="col-aaa text-overflow">' 
+			. $imgUrl . '</a> </div></div> <div class="p-20 pt-10 pb-10 col-primary clearfix link-2"><h5 class="col-222 m-tb-5 flex-hl-vc"><i class="lalaksks lalaksks-ic-category mr-5"></i> '
+			. $cat .'</h5><p class="col-aaa  m-tb-5 text-overflow">' 
 			. $bookmark->link_description . '</p> </div>  </div> </li>';
         }
         $output .= '</ul>';

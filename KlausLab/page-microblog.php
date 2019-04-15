@@ -1,12 +1,11 @@
 <?php 
-/*
-    Template Name: 说说
-    author: Klaus
+/**
+*  @package KlausLab
+*  Template Name: 说说
+*  author: Klaus
 */
 get_header(); 
 ?>
-
-
 <div id="primary" class="main-area w-1">
     <main id="main" class="main-content" role="main">
         <section class="kl_shuoshuo">
@@ -27,24 +26,20 @@ get_header();
                             <p class="flex-hr-vc">From <?php the_author_meta('user_nicename'); ?>, At <?php the_time('Y年n月j日 G:i'); ?></p>
                         </div>
                         <div class="label_others flex-hb-vc">
-                            <div class="flex-hl-vc">
+                            <div class="flex-hb-vc flex-hw w-1">
                                 <span class="label_title"><?php the_title(); ?></span>
-                            </div>
-                            <div class="flex-hl-vc">
-                                <div class="entry-comment m-0 mr-15">
-                                    <?php is_icon( get_the_ID() , "reply"); ?>
-                                </div>
-                                <div class="zan m-0 mr-15">
-                                    <a href="#" data-action="ding" data-id="<?php the_ID(); ?>" id="Addlike" class="action flex-hb-vc <?php if(isset($_COOKIE['inlo_ding_'.$post->ID])) echo 'actived';?> <?php $category = get_the_category();  echo $category[0]->category_nicename;?>">
-                                        <i class="lalaksks lalaksks-ic-zan"></i>
-                                        <span class="count"><?php if( get_post_meta($post->ID,'inlo_ding',true) ){ echo get_post_meta($post->ID,'inlo_ding',true); } else {echo '0';}?></span>
-                                    </a>
-                                </div>
-                                <?php  	
-                                    if(isAdmin()){
-                                        edit_post_link(_e('<div> <span class="edit-link mr-15"><i class="lalaksks lalaksks-ic-edit mr-5"></i>', '</span></div>' ) );
-                                    }
-							    ?>		
+                                <div class="flex-hc-vc">
+                                    <div class="entry-comment m-0 mr-10">
+                                        <?php is_icon( get_the_ID() , "reply"); ?>
+                                    </div>
+                                    <div class="zan m-0 mr-10">
+                                        <a href="#" data-action="ding" data-id="<?php the_ID(); ?>" id="Addlike" class="action  <?php if(isset($_COOKIE['inlo_ding_'.$post->ID])) echo 'actived';?> <?php $category = get_the_category();  echo $category[0]->category_nicename;?>">
+                                            <i class="lalaksks lalaksks-ic-zan"></i>
+                                            <span class="count"><?php if( get_post_meta($post->ID,'inlo_ding',true) ){ echo get_post_meta($post->ID,'inlo_ding',true); } else {echo '0';}?></span>
+                                        </a>
+                                    </div>
+                                    <?php if(isAdmin()){ edit_post_link(_e('<div> <span class="edit-link"><i class="lalaksks lalaksks-ic-edit"></i>', '</span></div>' ) ); } ?>	
+                                </div>	
                             </div>                           
                         </div>
                     </div>

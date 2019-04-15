@@ -10,7 +10,7 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class('article-main'); ?>>
 
 	<div class="entry-header flex-hc-vc">
-		<?php the_title( '<h1 class="entry-title flex-hc-vc col-fff">', '</h1>' ); ?>     
+		<?php the_title( '<h3 class="entry-title">', '</h3>' ); ?>     
 		<?php if ( is_single() || is_page() && has_post_thumbnail() ) : ?>
 			<div id="banner-bg" class="featured-header-image">
 					<?php the_post_thumbnail( 'KlausLab-home' ); ?>

@@ -317,10 +317,7 @@ if (login_ || logout_) {
 
 
 // 搜索功能
-var search_ = document.querySelector('.fp-search');
-var search_in = document.querySelector('.fp-search-in');
-var search_out = document.querySelector('.fp-search-out');
-var search_form = document.querySelector('.fp-search-out .search-form');
+let [search_, search_in, search_out, search_form] = [document.querySelector('.fp-search'), document.querySelector('.fp-search-in'), document.querySelector('.fp-search-out'), document.querySelector('.fp-search-out .search-form')];
 addClass(search_form, 'flex-hc-vc');
 search_.addEventListener('mouseover', function (event) {
     removeClass(search_out, 'hide');
@@ -333,27 +330,56 @@ search_.addEventListener('mouseout', function (event) {
 
 
 // 切换背景功能
-let [background_, background_in, background_out] = [document.querySelector('.fp-background'), document.querySelector('.fp-background-in'), document.querySelector('.fp-background-out')];
-let [body_dom, body_bg, random_] = [document.getElementsByTagName("body")[0]];
-background_.addEventListener('mouseover', function (event) {
+let [background_, background_in, background_out] = [document.querySelector(".fp-background"), document.querySelector('.fp-background-in'), document.querySelector('.fp-background-out')];
+background_.addEventListener('mouseover', function (e) {
     removeClass(background_out, 'hide');
     addClass(background_out, 'show');
     background_out.querySelectorAll('li')[0].onclick = function (event) {
-        random_ = Math.floor(Math.random() * 6 + 1);
-        setCookie("body_class", `color color-${random_}`);
-        addClass(body_dom, getCookie("body_class"));
+        Animation.closeGravity();
+        Animation.closeSnow();
+        Animation.snow();
+    }
+    background_out.querySelectorAll('li')[0].ondblclick = function (event) {
+        Animation.closeSnow();
     }
     background_out.querySelectorAll('li')[1].onclick = function (event) {
-        setCookie("body_class", "");
-        removeClass(body_dom, "color");
+        Animation.closeSnow();
+        Animation.closeGravity();
+        Animation.gravity();
+    }
+    background_out.querySelectorAll('li')[1].ondblclick = function (event) {
+        Animation.closeGravity();
     }
 })
-background_.addEventListener('mouseout', function (event) {
-    removeClass(background_out, 'show');
-    addClass(background_out, 'hide');
-})
-addClass(body_dom, getCookie("body_class"))
 
+
+let init = () => {
+    Animation.snow();
+}
+
+init();
+
+
+// let [background_, background_in, background_out] = [document.querySelector('.fp-background'), document.querySelector('.fp-background-in'), document.querySelector('.fp-background-out')];
+// let [body_dom, body_bg, random_] = [document.getElementsByTagName("body")[0]];
+// background_.addEventListener('mouseover', function (event) {
+//     removeClass(background_out, 'hide');
+//     addClass(background_out, 'show');
+//     background_out.querySelectorAll('li')[0].onclick = function (event) {
+//         random_ = Math.floor(Math.random() * 6 + 1);
+//         setCookie("body_class", `color color-${random_}`);
+//         addClass(body_dom, getCookie("body_class"));
+//     }
+//     background_out.querySelectorAll('li')[1].onclick = function (event) {
+//         setCookie("body_class", "");
+//         removeClass(body_dom, "color");
+//     }
+// })
+// background_.addEventListener('mouseout', function (event) {
+//     removeClass(background_out, 'show');
+//     addClass(background_out, 'hide');
+// })
+// addClass(body_dom, getCookie("body_class"))
 
 // var img = document.getElementsByTagName("img")
 // for(let i=0;i++;i<img.length){

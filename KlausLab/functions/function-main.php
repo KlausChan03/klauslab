@@ -6,13 +6,6 @@
  */
 
 if ( ! function_exists( 'KlausLab_setup' ) ) :
-/**
- * Sets up theme defaults and registers support for various WordPress features.
- *
- * Note that this function is hooked into the after_setup_theme hook, which
- * runs before the init hook. The init hook is too late for some features, such
- * as indicating support for post thumbnails.
- */
 function KlausLab_setup() {
 	/*
 	 * Make theme available for translation.
@@ -20,7 +13,7 @@ function KlausLab_setup() {
 	 * If you're building a theme based on KlausLab, use a find and replace
 	 * to change 'KlausLab' to the name of your theme in all the template files
 	 */
-	load_theme_textdomain( 'KlausLab', get_template_directory() . '/languages' );
+	// load_theme_textdomain( 'KlausLab', get_template_directory() . '/languages' );
 
 	// Add default posts and comments RSS feed links to head.
 	add_theme_support( 'automatic-feed-links' );
@@ -33,29 +26,11 @@ function KlausLab_setup() {
 	 */
 	add_theme_support( 'title-tag' );
 
-	add_theme_support( 'custom-logo', array(
-		'height'      => 300,
-		'width'       => 600,
-		'flex-height' => true,
-		'flex-width'  => true,
-		'header-text' => array( 'site-title', 'site-description' ),
-		) );
-
-	/*
-	 * Enable support for Post Thumbnails on posts and pages.
-	 *
-	 * @link http://codex.wordpress.org/Function_Reference/add_theme_support#Post_Thumbnails
-	 */
-	// add_theme_support( 'post-thumbnails' );
-	// add_image_size( 'KlausLab-home', 900, 450, true );
-	// add_image_size( 'KlausLab-header', 1400, 400, true );
-	// add_image_size( 'KlausLab-carousel-pic', 480, 320, true ); 
-
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus( array(
 		'primary' => esc_html__( 'Primary Menu', 'KlausLab' ),
 		'social'  => esc_html__( 'Social Links', 'KlausLab' ),
-		) );
+	));
 	
 	
 	/*
@@ -69,28 +44,11 @@ function KlausLab_setup() {
 		'gallery',
 		'caption',
 		) );
-
-	// Set up the WordPress core custom background feature.
-	add_theme_support( 'custom-background', apply_filters( 'KlausLab_custom_background_args', array(
-		'default-color' => 'ffffff',
-		) ) );
-	
 	
 }
 endif; // KlausLab_setup
 add_action( 'after_setup_theme', 'KlausLab_setup' );
 
-/**
- * Set the content width in pixels, based on the theme's design and stylesheet.
- *
- * Priority 0 to make it available to lower priority callbacks.
- *
- * @global int $content_width
- */
-function KlausLab_content_width() {
-	$GLOBALS['content_width'] = apply_filters( 'KlausLab_content_width', 900 );
-}
-add_action( 'after_setup_theme', 'KlausLab_content_width', 0 );
 
 /**
  * Register widget area.
@@ -142,12 +100,6 @@ add_action( 'widgets_init', 'KlausLab_widgets_init' );
 function KlausLab_scripts() {
 	wp_enqueue_style( 'KlausLab-style', get_stylesheet_uri() );
 
-	wp_enqueue_style( 'KlausLab-fonts', KlausLab_fonts_url(), array(), null );
-	wp_enqueue_style( 'KlausLab-fontawesome', get_template_directory_uri() . '/fonts/font-awesome.css', array(), '4.3.0' );
-	
-
-	wp_enqueue_script( 'KlausLab-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20130115', true );
-
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
@@ -155,125 +107,6 @@ function KlausLab_scripts() {
 add_action( 'wp_enqueue_scripts', 'KlausLab_scripts' );
 
 
-
-function KlausLab_carousel_scripts() {
-//    wp_enqueue_script( 'owl.carousel', get_template_directory_uri() . '/js/owl.carousel.js', array('jquery'), '20120206', true );
-    // wp_enqueue_script( 'KlausLab-effects', get_template_directory_uri() . '/js/effects.js', array('jquery'), '20120206', true );
-}
-add_action( 'wp_enqueue_scripts', 'KlausLab_carousel_scripts' );
-
-/**
- * Register Google Fonts
- */
-function KlausLab_fonts_url() {
-	$fonts_url = '';
-
-   	/* Translators: If there are characters in your language that are not
-	 * supported by Playfair, translate this to 'off'. Do not translate
-	 * into your own language.
-	 */
-   	$playfair = esc_html_x( 'on', 'Playfair font: on or off', 'KlausLab' );
-
-	/* Translators: If there are characters in your language that are not
-	 * supported by Montserrat, translate this to 'off'. Do not translate
-	 * into your own language.
-	 */
-	$montserrat = esc_html_x( 'on', 'Montserrat font: on or off', 'KlausLab' );
-	
-	 /* Translators: If there are characters in your language that are not
-	 * supported by Merriweather, translate this to 'off'. Do not translate
-	 * into your own language.
-	 */
-	 $merriweather = esc_html_x( 'on', 'Merriweather font: on or off', 'KlausLab' );
-
-
-	 if ( 'off' !== $playfair && 'off' !== $montserrat && 'off' !== $merriweather ) {
-	 	$font_families = array();
-
-	 	if ( 'off' !== $playfair ) {
-	 		$font_families[] = 'Playfair Display:400,700';
-	 	}
-
-	 	if ( 'off' !== $montserrat ) {
-	 		$font_families[] = 'Montserrat:400,700';
-	 	}
-
-	 	if ( 'off' !== $merriweather ) {
-	 		$font_families[] = 'Merriweather:400,300,700';
-	 	}
-
-	 	// $query_args = array(
-	 	// 	'family' => urlencode( implode( '|', $font_families ) ),
-	 	// 	'subset' => urlencode( 'latin,latin-ext' ),
-	 	// 	);
-
-	 	// $fonts_url = add_query_arg( $query_args, '//fonts.googleapis.com/css' );
-	 }
-
-	 return $fonts_url;
-
-	}
-
-/**
- * Enqueue Google Fonts for custom headers
- */
-function KlausLab_admin_scripts( $hook_suffix ) {
-
-	wp_enqueue_style( 'KlausLab-fonts', KlausLab_fonts_url(), array(), null );
-
-}
-add_action( 'admin_print_styles-appearance_page_custom-header', 'KlausLab_admin_scripts' );
-
-// if ( ! function_exists( 'KlausLab_continue_reading_link' ) ) :
-// /**
-//  * Returns an ellipsis and "Continue reading" plus off-screen title link for excerpts
-//  */
-// function KlausLab_continue_reading_link() {
-// 	return '&hellip; <div class="flex-hr-vc"><button class="expand-btn kl-btn kl-btn-primary kl-btn-sm gradient-blue-red" data-link ='. esc_url( get_permalink() ) . '">' . sprintf( __( '展开更多 <span class="screen-reader-text">%1$s</span>', 'KlausLab' ), esc_attr( strip_tags( get_the_title() ) ) ) . '</button></div>';
-// }
-// endif; // KlausLab_continue_reading_link
-
-
-// /**
-//  * Replaces "[...]" (appended to automatically generated excerpts) with KlausLab_continue_reading_link().
-//  *
-//  * To override this in a child theme, remove the filter and add your own
-//  * function tied to the excerpt_more filter hook.
-//  */
-// function KlausLab_auto_excerpt_more( $more ) {
-// 	return KlausLab_continue_reading_link();
-// }
-// add_filter( 'excerpt_more', 'KlausLab_auto_excerpt_more' );
-
-
-// /**
-//  * Adds a pretty "Continue Reading" link to custom post excerpts.
-//  *
-//  * To override this link in a child theme, remove the filter and add your own
-//  * function tied to the get_the_excerpt filter hook.
-//  */
-// function KlausLab_custom_excerpt_more( $output ) {
-// 	if ( has_excerpt() && ! is_attachment() ) {
-// 		$output .= KlausLab_continue_reading_link();
-// 	}
-// 	return $output;
-// }
-// add_filter( 'get_the_excerpt', 'KlausLab_custom_excerpt_more' );
-
-
-
-
-// Style the Tag Cloud
-function KlausLab_tag_cloud_widget( $args )
-{
-	$args['largest'] = 12; //largest tag
-	$args['smallest'] = 12; //smallest tag
-	$args['unit'] = 'px'; //tag font unit
-	$args['number'] = '18'; //number of tags
-	return $args;
-}
-
-add_filter( 'widget_tag_cloud_args', 'KlausLab_tag_cloud_widget' );
 
 // Declare WooCommerce Support
 add_action( 'after_setup_theme', 'woocommerce_support' );
@@ -289,36 +122,37 @@ if ( ! function_exists( 'KlausLab_comments' ) ) :
  */
 function KlausLab_comments( $comment, $args, $depth ) {
 	?>
-	<li id="comment-<?php comment_ID(); ?>" <?php comment_class( empty( $args['has_children'] ) ? '' : 'parent' ); ?>>
-		<article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
-			<div class="comment-meta">
-				<div class="comment-author vcard flex-hl-vc">
-					<?php if ( 0 != $args['avatar_size'] ) echo get_avatar( $comment, '60' ); ?>
-					<div class="comment-metadata flex-hb-vc flex-hw">
-						<div class="flex-v">
-							<!-- 评论者 -->
-							<div>
-							<b class="fn mr-5"><?php printf( '%s', get_comment_author_link() ); ?></b>	
-							<?php if ($comment->user_id == '1') { echo '<span class="vip level_Max">博主</span>'; }else{ echo get_author_class($comment->comment_author_email,$comment->user_id); } ?>
-							</div>
-							<!-- 评论时间 -->
-							<div>
-							<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID, $args ) ); ?>">
-								<time datetime="<?php comment_time( 'c' ); ?>">
-									<?php printf( esc_html_x( '%1$s at %2$s', '1: date, 2: time', 'KlausLab' ), get_comment_date(), get_comment_time() ); ?>
-								</time>
-							</a>
-							</div>
-						</div>
-						<div class="flex-hc-vc">
-							<!-- 编辑评论 -->
-							<?php 
+<li id="comment-<?php comment_ID(); ?>" <?php comment_class( empty( $args['has_children'] ) ? '' : 'parent' ); ?>>
+    <article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
+        <div class="comment-meta">
+            <div class="comment-author vcard flex-hl-vc">
+                <?php if ( 0 != $args['avatar_size'] ) echo get_avatar( $comment, '36' ); ?>
+                <div class="comment-metadata flex-hb-vc flex-hw">
+                    <div class="flex-v">
+                        <!-- 评论者 -->
+                        <div>
+                            <b class="fn mr-5">
+                                <?php printf( '%s', get_comment_author_link() ); ?></b>
+                            <?php if ($comment->user_id == '1') { echo '<span class="vip level_Max">博主</span>'; }else{ echo get_author_class($comment->comment_author_email,$comment->user_id); } ?>
+                        </div>
+                        <!-- 评论时间 -->
+                        <div>
+                            <a href="<?php echo esc_url( get_comment_link( $comment->comment_ID, $args ) ); ?>">
+                                <time datetime="<?php comment_time( 'c' ); ?>">
+                                    <?php printf( esc_html_x( '%1$s at %2$s', '1: date, 2: time', 'KlausLab' ), get_comment_date(), get_comment_time() ); ?>
+                                </time>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="flex-hc-vc">
+                        <!-- 编辑评论 -->
+                        <?php 
 								if(isAdmin()){
 									edit_comment_link( _e('<span class="edit-link flex-hc-vc"><i class="lalaksks lalaksks-ic-edit"></i>', '</span>' )); 
 								}
-							?>							
-							<!-- 回复评论 -->
-							<?php
+							?>
+                        <!-- 回复评论 -->
+                        <?php
 							comment_reply_link( array_merge( $args, array(
 								'add_below' => 'div-comment',
 								'depth'     => $depth,
@@ -327,31 +161,26 @@ function KlausLab_comments( $comment, $args, $depth ) {
 								'after'     => '</span>'
 								) ) );
 							?>
-						</div>
-					</div><!-- .comment-metadata -->
-				</div><!-- .comment-author -->
+                    </div>
+                </div><!-- .comment-metadata -->
+            </div><!-- .comment-author -->
 
+            <?php if ( '0' == $comment->comment_approved ) : ?>
+            <p class="comment-awaiting-moderation">
+                <?php esc_html_e( 'Your comment is awaiting moderation.', 'KlausLab' ); ?>
+            </p>
+            <?php endif; ?>
+        </div><!-- .comment-meta -->
 
+        <div class="comment-content">
+            <?php comment_text(); ?>
+        </div><!-- .comment-content -->
 
-				<?php if ( '0' == $comment->comment_approved ) : ?>
-				<p class="comment-awaiting-moderation"><?php esc_html_e( 'Your comment is awaiting moderation.', 'KlausLab' ); ?></p>
-			<?php endif; ?>
-		</div><!-- .comment-meta -->
-
-		<div class="comment-content">
-			<?php comment_text(); ?>
-		</div><!-- .comment-content -->
-
-	</article><!-- .comment-body -->
-	<?php
+    </article><!-- .comment-body -->
+    <?php
 }
 
 endif;
-
-/**
- * Implement the Custom Header feature.
- */
-// require get_template_directory() . '/inc/custom-header.php';
 
 /**
  * Custom template tags for this theme.
@@ -369,34 +198,26 @@ require get_template_directory() . '/inc/extras.php';
  */
 require get_template_directory() . '/inc/customizer.php';
 
-/**
- * Load Jetpack compatibility file.
- */
-// require get_template_directory() . '/inc/jetpack.php';
-
-
 function normal_style_script() { 
 	wp_enqueue_script( 'KlausLab-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20120206', true );
-	// layui.css
-	wp_enqueue_style( 'layuiCss', get_template_directory_uri() . '/frameworks/layui/css/layui.css', array(), '1.0', false );
 	// 自定义样式
-	wp_enqueue_style( 'direction', get_template_directory_uri() . '/css/direction.css', array(), '1.0', false );
+	// wp_enqueue_style( 'direction', get_template_directory_uri() . '/css/direction.css', array(), '1.0', false );
 	// 媒体查询样式
 	wp_enqueue_style( 'mediaCss', get_template_directory_uri() . '/css/media.css', array(), '1.0', false );
 	// 动画库样式
     wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.min.css', array(), '3.5.1', false ); 
-    // vue.js   
-	wp_enqueue_script( 'vue', get_template_directory_uri() . '/js/vue.js', array(), '2.5.17', false );
+    // vue.min.js   
+	wp_enqueue_script( 'vue', get_template_directory_uri() . '/js/vue.min.js', array(), '2.6.0', false );
+	// axios.min.js
+	wp_enqueue_script( 'axios', get_template_directory_uri() . '/js/axios.min.js', array(), '0.19.0', false );
 } 
 
 
 function footer_script(){
-	wp_enqueue_script( 'layui', get_template_directory_uri() . '/frameworks/layui/layui.js', array(), 'lastet', false );	
-	wp_enqueue_script( 'common_func', get_template_directory_uri() . '/js/common.js', array(), '1.0', false );
+	wp_enqueue_script( 'canvasFunc', get_template_directory_uri() . '/js/canvas.js', array(), '1.0', false );
+	wp_enqueue_script( 'commonFunc', get_template_directory_uri() . '/js/common.js', array(), '1.0', false );
 	wp_enqueue_script( 'fixed-plugins', get_template_directory_uri() . '/js/fixed-plugins.js', array(), '1.0', false );
-	wp_enqueue_script( 'snow', get_template_directory_uri() . '/js/snow.js', array(), '1.0', false );
-	// wp_enqueue_script( '3d-cloud', get_template_directory_uri() . '/js/3d-cloud.js', array(), '1.0', false );
-	wp_localize_script( 'canvas', 'my_ajax_obj', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) ); 
+	wp_localize_script( 'ajax', 'my_ajax_obj', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) ); 
 	// 先将ajaxurl变数设定好
 }
 
@@ -405,7 +226,7 @@ function custom_login() {
 }
 
 
-function my_styles_scripts() {
+function styles_scripts() {
     if( ! is_admin() ) { // 前台加载的脚本与样式表
         // 去除已注册的 jquery 脚本
         wp_deregister_script( 'jquery' );
@@ -424,8 +245,9 @@ function my_styles_scripts() {
         wp_enqueue_script( 'jquery', '//code.jquery.com/jquery.min.js', array(), 'lastest', false );
     }
 }
-// 添加回调函数到 init 动作上
-add_action('init', 'my_styles_scripts');
+
+
+add_action('init', 'styles_scripts');
 add_action('wp_footer', 'footer_script'); 
 add_action('wp_enqueue_scripts', 'normal_style_script'); 
 add_action('login_head', 'custom_login');
@@ -683,19 +505,19 @@ function custom_excerpt_length( $length ){
 add_filter( 'excerpt_length', 'custom_excerpt_length');
 
 
-// 邮件发送模块
-function mail_smtp( $phpmailer ){
-	$phpmailer->From = "xing930629@163.com"; //发件人
-	$phpmailer->FromName = "测试";   //发件人昵称
-	$phpmailer->Host = "smtp.163.com"; //SMTP服务器地址(比如QQ是smtp.qq.com,腾讯企业邮箱是smtp.exmail.qq.com,阿里云是smtp.域名,其他自行咨询邮件服务商)
-	$phpmailer->Port = 465;    //SMTP端口，常用的有25、465、587，SSL加密连接端口：465或587,qq是25,qq企业邮箱是465
-	$phpmailer->SMTPSecure = "SSL"; //SMTP加密方式，常用的有ssl/tls,一般25端口不填，端口465天ssl
-	$phpmailer->Username = "xing930629@qq.com";  //邮箱帐号，一般和发件人相同
-	$phpmailer->Password = 'xurvgirfzblvcbbi';  //邮箱授权码
-	$phpmailer->IsSMTP(); //使用SMTP发送
-	$phpmailer->SMTPAuth = true; //启用SMTPAuth服务
-}
-add_action('phpmailer_init','mail_smtp');
+// // 邮件发送模块
+// function mail_smtp( $phpmailer ){
+// 	$phpmailer->From = "xing930629@163.com"; //发件人
+// 	$phpmailer->FromName = "测试";   //发件人昵称
+// 	$phpmailer->Host = "smtp.163.com"; //SMTP服务器地址(比如QQ是smtp.qq.com,腾讯企业邮箱是smtp.exmail.qq.com,阿里云是smtp.域名,其他自行咨询邮件服务商)
+// 	$phpmailer->Port = 465;    //SMTP端口，常用的有25、465、587，SSL加密连接端口：465或587,qq是25,qq企业邮箱是465
+// 	$phpmailer->SMTPSecure = "SSL"; //SMTP加密方式，常用的有ssl/tls,一般25端口不填，端口465天ssl
+// 	$phpmailer->Username = "xing930629@163.com";  //邮箱帐号，一般和发件人相同
+// 	$phpmailer->Password = 'xingxing930629';  //邮箱授权码
+// 	$phpmailer->IsSMTP(); //使用SMTP发送
+// 	$phpmailer->SMTPAuth = true; //启用SMTPAuth服务
+// }
+// add_action('phpmailer_init','mail_smtp');
 
 
 /* 删除文章时删除图片附件
@@ -748,9 +570,51 @@ function svg_upload_mimes($mimes = array()) {
     return $mimes;
 }
 
+// 查询时间节点
+function love_time(){
+	global $wpdb,$post;
+    $action = $_POST["action"];
+	$user_first = $wpdb->get_row("SELECT user_nicename,user_registered FROM $wpdb->users WHERE ID=1");
+	$user_hero = $wpdb->get_row("SELECT nickname,img FROM {$wpdb->prefix}xh_social_channel_wechat WHERE ID=1"); 
+	$user_heroine = $wpdb->get_row("SELECT nickname,img FROM {$wpdb->prefix}xh_social_channel_wechat WHERE ID=2");
+
+	$return_arr = array($user_first,$user_hero,$user_heroine);
+	wp_send_json($return_arr);
+}
+add_action('wp_ajax_nopriv_love_time', 'love_time');
+add_action('wp_ajax_love_time', 'love_time');
+
+// 条件查询归档
+function filter_archive() {
+	global $wpdb,$post;
+	$action = $_POST["action"];
+	$filter = $_POST["filter"];
+	$return_arr = archives_list($filter);
+
+	wp_send_json($return_arr);
+}
+add_action('wp_ajax_nopriv_filter_archive', 'filter_archive');
+add_action('wp_ajax_filter_archive', 'filter_archive');
+
+$current_user = wp_get_current_user();
+
+// Only Her
+function only_her() {
+	global $wpdb,$post;
+	$action = $_POST["action"];
+	$current_user = wp_get_current_user();
+	wp_send_json($current_user->user_login);
+	// if ( $current_user->user_login == 'Laura' ) {  
+	// 	wp_send_json($current_user->user_login);
+	// } else {  
+	// 	wp_send_json($current_user->user_login);
+	// }  
+}
+add_action('wp_ajax_nopriv_only_her', 'only_her');
+add_action('wp_ajax_only_her', 'only_her');
 
 //点赞功能
-function inlo_like(){
+function like_post(){
     global $wpdb,$post;
     $id = $_POST["um_id"];
     $action = $_POST["um_action"];
@@ -770,8 +634,8 @@ function inlo_like(){
     die;
 }
 
-add_action('wp_ajax_nopriv_inlo_like', 'inlo_like');
-add_action('wp_ajax_inlo_like', 'inlo_like');
+add_action('wp_ajax_nopriv_like_post', 'like_post');
+add_action('wp_ajax_like_post', 'like_post');
 
 //点赞最多文章
 function get_like_most($mode = '', $limit = 10, $days = 7, $display = true) {
@@ -890,14 +754,3 @@ if ( !is_admin() ) {
 // 	if ($echo) return $before.number_format($views).$after;
 // 	else return $views;
 // }
-
-
-
-
-
-
-
-
-
-
-

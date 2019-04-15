@@ -11,7 +11,7 @@ get_header(); ?>
   <main id="main" class="main-content" role="main">
     <?php if ( have_posts() ) : ?>
     <header class="page-header">
-      <h1 class="page-title"><?php printf( esc_html__( '搜索结果如下 (包含%s)', 'KlausLab' ), get_search_query() ); ?></h1>
+      <h2 class="page-title"><?php printf( esc_html__( '搜索结果如下 (包含%s)', 'KlausLab' ), get_search_query() ); ?></h2>
     </header>
     <!-- .page-header -->
     
