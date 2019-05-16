@@ -1,5 +1,4 @@
 
-console.log("hello,expand")
 $(document).on("click", ".collapse-btn", function () {
     var this_ = $(this),
         this_dom = $(this).parent().parent().siblings(".entry-main").find(".entry-main-excerpt");
@@ -12,7 +11,6 @@ $(document).on("click", ".collapse-btn", function () {
 });
 
 $(document).on("click", ".expand-btn", function () {
-    console.log("hello,expand")
     var this_ = $(this),
         this_id = $(this).data("id"),
         this_action = $(this).data("action"),
@@ -24,14 +22,11 @@ $(document).on("click", ".expand-btn", function () {
         um_action: this_action
     };
     $.post("/wp-admin/admin-ajax.php", req, function (res) {
-        console.log(res)
         var content = res;
         this_dom.removeClass("hide").html(content);
         this_dom.siblings().addClass("hide");
-
         this_.siblings().removeClass("hide").addClass("show");
         this_.removeClass("show").addClass("hide");
-
     });
 });
 
@@ -63,19 +58,10 @@ $(document).on("click", "#Addlike", function () {
 });
 
 
-$(document).on("click", ".only-her", function () {
-    if($(this).data("user") == "Laura"){
-        window.location.href = window.location.href+"/shop"
-    }else{
-        alert ("你不是她");
-    }
-    return false;
-
-});
-
 function kl_count(_time, _dom, _content) {
-
-    _time = _time.replace(/-/g, "/");
+    if(_time){
+        _time = _time.replace(/-/g, "/");
+    }
 
     // 计算出相差毫秒
     var create_time = new Date(_time);
@@ -123,12 +109,7 @@ let timer = new Vue({
     },
 })
 
-if (document.getElementById("createtime")) {
-    setInterval(`kl_count(blog_create_time,'#createtime','运作了')`, 1000);
-}
-if (document.getElementById("lovetime")) {
-    setInterval(`kl_count(our_love_time,'#lovetime','相恋了')`, 1000);
-}
+
 
 
 let archiveFilter = new Vue({
@@ -159,9 +140,8 @@ let archiveFilter = new Vue({
 
 })
 
-
-
-// 滚动触发事件 (Sidebar固定、Header动画)
+// 滚动触发事件 (Sidebar固定、Header动画) 
+// 功能尚有瑕疵
 $(".widget-area .widget-content > aside").addClass("animated");
 $(window).scroll(function () {
     var doc = document,
@@ -223,16 +203,13 @@ $(window).scroll(function () {
     }
 })
 
-// $(document).on("mouseover mouseout", "img", function (event) {
-//     var _this = $(this);
-//     console.log(_this.css("width"), $(this).css("width"))
-//     var _this_parent = $(this).parent();
-//     if (event.type == "mouseover") {
-//         _this_parent.css({"width":_this.css("width"),"height":_this.css("height"),"overflow":"hidden","display":"inline-block"})
-//         _this.addClass("extend-img");
-//     } else {
-//         _this_parent.css({"width":"auto","height":"auto","overflow":"visible"})
-//         _this.removeClass("extend-img");
-//     }
-// })
-
+if (document.getElementById("createtime")) {
+    setInterval(`kl_count(blog_create_time,'#createtime','运作了')`, 1000);
+}
+if (document.getElementById("lovetime")) {
+    setInterval(`kl_count(our_love_time,'#lovetime','相恋了')`, 1000);
+}
+if (document.querySelector("#thisYear")) {
+    const thisYear = document.querySelector("#thisYear");
+    thisYear.innerHTML = new Date().getFullYear();
+}

@@ -42,6 +42,7 @@ get_header();
                                 </div>	
                             </div>                           
                         </div>
+                        
                     </div>
                 </li>
             <?php }
