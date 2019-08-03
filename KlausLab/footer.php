@@ -88,6 +88,11 @@ wp_localize_script( 'fixed-plugins', 'KlausLabConfig', array(
   'commentEditAgain' => cs_get_option( 'memory_comment_edit' ),
   'loadPjax' => cs_get_option( 'memory_pjax' ),
 ));
-wp_footer(); 
+wp_footer();
 ?>
+<script>
+  setTimeout(() => {
+    option.pageLoadingMask.remove(document);    
+  }, 1500);
+</script> 
 </body></html>

@@ -105,10 +105,13 @@ if ( post_password_required() ) {
         <div class="comment-s">
           <textarea class="text-input error" id="comment" name="comment" rows="8" cols="45" aria-required="true" placeholder=""></textarea>
           <div class="flex-hb-vc p-tb-10">
-            <button class="OwO no-touch kl-btn kl-btn-sm"></button>
-            <button type="submit" name="submit" class="comment-submit push-status kl-btn kl-btn-sm">发表评论</button>
+            <button type="button" class="OwO no-touch kl-btn kl-btn-sm"></button>
+            <div class="comment-action flex-hr-vc">
+              <span class="comment-cancel"><?php cancel_comment_reply_link('取消评论') ?></span>
+              <button type="submit" name="submit" class="comment-submit push-status kl-btn kl-btn-sm kl-btn-normal">发表评论</button>
+            </div>            
           </div> 
-          <span class="comment-cancel"><?php cancel_comment_reply_link('放弃治疗') ?></span>
+         
         </div>
       </div>
       <?php comment_id_fields(); ?>

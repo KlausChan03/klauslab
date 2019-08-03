@@ -19,7 +19,9 @@
 </head>
 <body <?php body_class(); ?> >
 
-
+<script>
+ 	option.pageLoadingMask.show(document);
+</script>
 <div id="page" class="hfeed site">
 	<header id="masthead" class="site-header" role="banner">
 		<div id="site-touch-header" class="menu-touch">

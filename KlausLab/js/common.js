@@ -143,39 +143,64 @@ let archiveFilter = new Vue({
 // 滚动触发事件 (Sidebar固定、Header动画) 
 // 功能尚有瑕疵
 $(".widget-area .widget-content > aside").addClass("animated");
+$("#custom_html-4").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0");
 $(window).scroll(function () {
     var doc = document,
         win = window,
         $scrollBottom = $(doc).height() - $(win).height() - $(win).scrollTop(),
         $scrollTop = $(win).scrollTop();
-    var direction, header = $(".site-header");
+    var direction, header = $(".site-header"), article = $(".kl-catelog-content");
 
     if ($(window).width() > 1000 && $(document).height() > 1500) {
         $(window).resize(function () { $(".widget-area .widget-content").width($(".widget-area").width()); });
+        if(article.length === 0){
 
-        if ($(this).scrollTop() >= 2000) {
-            $(".widget-area .widget-content").addClass("is-fixed");
-            $(".widget-area .widget-content").width($(".widget-area").width());
-            $(".widget_custom_html").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-            $(".widget_wp_statistics_widget").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-            $(".widget_categories").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-            $(".widget_recent_comments").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-            $(".widget_tag_cloud").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-        } else if ($(this).scrollTop() < 2000 && $(this).scrollTop() > 800) {
-            $(".widget-area .widget-content").addClass("is-fixed");
-            $(".widget-area .widget-content").width($(".widget-area").width());
-            $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-            $(".widget_wp_statistics_widget").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+            if ($(this).scrollTop() >= 2000) {
+                $(".widget-area .widget-content").addClass("is-fixed");
+                $(".widget-area .widget-content").width($(".widget-area").width());
+                $(".widget_custom_html").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+                $("#custom_html-4").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+                $(".widget_wp_statistics_widget").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+                $(".widget_categories").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+                $(".widget_recent_comments").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+                $(".widget_tag_cloud").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+            } else if ($(this).scrollTop() < 2000 && $(this).scrollTop() > 800) {
+                $(".widget-area .widget-content").addClass("is-fixed");
+                $(".widget-area .widget-content").width($(".widget-area").width());
+                $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+                $("#custom_html-4").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+                $(".widget_wp_statistics_widget").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+                $(".widget_categories").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+                $(".widget_recent_comments").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+                $(".widget_tag_cloud").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+            } else if ($(this).scrollTop() >= 0 && $(this).scrollTop() < 800) {
+                $(".widget-area .widget-content").removeClass("is-fixed");
+                $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+                $("#custom_html-4").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+                $(".widget_wp_statistics_widget").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+                $(".widget_tag_cloud").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+                $(".widget_categories").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+                $(".widget_recent_comments").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+            }
+
+        } else {
+
+            if ($(this).scrollTop() >= 2000) {
+                $(".widget-area .widget-content").addClass("is-fixed");
+                $(".widget-area .widget-content").width($(".widget-area").width());
+                $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+            } else if ($(this).scrollTop() < 2000 && $(this).scrollTop() > 300) {
+                $(".widget-area .widget-content").addClass("is-fixed");
+                $(".widget-area .widget-content").width($(".widget-area").width());
+                $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+            } else if ($(this).scrollTop() >= 0 && $(this).scrollTop() < 300) {
+                $(".widget-area .widget-content").removeClass("is-fixed");
+                $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+            }
+
             $(".widget_categories").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
             $(".widget_recent_comments").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
             $(".widget_tag_cloud").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-        } else if ($(this).scrollTop() >= 0 && $(this).scrollTop() < 800) {
-            $(".widget-area .widget-content").removeClass("is-fixed");
-            $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-            $(".widget_wp_statistics_widget").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-            $(".widget_tag_cloud").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-            $(".widget_categories").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-            $(".widget_recent_comments").removeClass("f_o_r ds-none h-0").addClass("ds-block")
         }
 
         if ($scrollBottom < 80) {

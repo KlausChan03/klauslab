@@ -356,7 +356,6 @@ background_.addEventListener('mouseover', function (e) {
 let init = () => {
     let myDate = new Date();
     let mymonth = myDate.getMonth() + 1;
-    console.log(mymonth)
     if (1 < mymonth && mymonth <= 4) {
         Animation.snow("sakura");
         return false;
@@ -383,11 +382,11 @@ let App = {};
 App.owoEmoji = () => {
     $('.OwO').each(function (i, block) {
         var s = new OwO({
-            logo: '<i class="lalaksks lalaksks-ic-background"></i>',
+            logo: '<i class="lalaksks lalaksks-ic-background"></i> Emoji',
             container: document.getElementsByClassName('OwO')[0],
             target: document.getElementsByClassName('error')[0],
             position: 'down',
-            width: '100%',
+            width: '400px',
             maxHeight: '200px',
             api: KlausLabConfig.siteUrl + "/emoji/OwO.min.json"
         });

@@ -20,21 +20,21 @@
             </div><!-- .entry-header -->
             <div class="entry-content page-content">
                 <div id="archive-filter" class="archive-filter p-lr-01">
-                    <div class="filter-author kl-btn-container flex-hl-vc">
+                    <div class="filter-author kl-btn-container flex-hl-vc p-tb-5">
                         <label>作者：</label>
                         <div>
                             <button class="kl-btn kl-btn-sm" data-author="Klaus" @click="choose($event)">Klaus</button>
                             <button class="kl-btn kl-btn-sm" data-author="Laura" @click="choose($event)">Laura</button>
                         </div>
                     </div>
-                    <div class="filter-type kl-btn-container flex-hl-vc">
+                    <div class="filter-type kl-btn-container flex-hl-vc p-tb-5">
                         <label>类型：</label>
                         <div>
                             <button class="kl-btn kl-btn-sm" data-type="post" @click="choose($event)">文章</button>
                             <button class="kl-btn kl-btn-sm" data-type="shuoshuo" @click="choose($event)">说说</button>
                         </div>
                     </div>
-                    <div class="filter-chosed kl-btn-container flex-hl-vc">
+                    <div class="filter-chosed mt-30 flex-hl-vc">
                         <label>当前选择：</label>
                         <div v-html="filterContent"></div>
                     </div>

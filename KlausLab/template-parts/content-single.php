@@ -16,9 +16,8 @@
 					<?php the_post_thumbnail( 'KlausLab-home' ); ?>
 			</div><!-- .featured-header-image -->
 		<?php endif; ?> 
-	</div><!-- .entry-header --> 
-	
-	<div class="entry-content">
+	</div><!-- .entry-header --> 	
+	<div id="kl-catelog-content" class="entry-content kl-catelog-content">
 		<?php the_content(); ?>
 		<?php
 			wp_link_pages( array(
@@ -27,7 +26,7 @@
 			) );
 		?>
 	</div><!-- .entry-content -->
-
+				
 	<div class="entry-footer clear">
 		<div class="entry-action flex-hl-vc flex-hw">
 			<div class="entry-date m-0 mr-15">
@@ -54,7 +53,5 @@
 				}
 			?>
 		</div>
-
 	</div><!-- .entry-footer -->
 </article><!-- #post-## -->
-

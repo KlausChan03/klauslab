@@ -18,7 +18,6 @@ var _createClass = function() {
 }();
 
 !function() {
-    console.log("hello")
     var e = function() {
         function e(t) {
             var a = this;
@@ -28,7 +27,7 @@ var _createClass = function() {
                 container: document.getElementsByClassName('OwO')[0],
                 target: document.getElementsByClassName('text-input')[0],
                 position: 'down',
-                width: '100%',
+                // width: '100%',
                 maxHeight: '210px',
                 api:"https://api.anotherhome.net/OwO/OwO.json"
             };
@@ -56,13 +55,13 @@ var _createClass = function() {
                     else if(s==1){
                     //阿鲁
                     a += '\n                <ul class="OwO-items OwO-items-' + this.odata[this.packages[s]].type + '" style="max-height: ' + (parseInt(e.maxHeight) - 53 + "px") + ';">';
-                    for (var n = this.odata[this.packages[s]].container, i = 0; i < n.length; i++) a += '\n                    <li class="OwO-item" title="' + n[i].text + '" data-OwO="@(' + n[i].text + ')">' + n[i].icon + "</li>";
+                    for (var n = this.odata[this.packages[s]].container, i = 0; i < n.length; i++) a += '\n                    <li class="OwO-item" title="' + n[i].text + '" data-OwO="$(' + n[i].text + ')">' + n[i].icon + "</li>";
                     a += "\n                </ul>";
                     }
                     else {
                     //泡泡
                     a += '\n                <ul class="OwO-items OwO-items-' + this.odata[this.packages[s]].type + '" style="max-height: ' + (parseInt(e.maxHeight) - 53 + "px") + ';">';
-                    for (var n = this.odata[this.packages[s]].container, i = 0; i < n.length; i++) a += '\n                    <li class="OwO-item" title="' + n[i].text + '" data-OwO="@[' + n[i].text + ']">' + n[i].icon + "</li>";
+                    for (var n = this.odata[this.packages[s]].container, i = 0; i < n.length; i++) a += '\n                    <li class="OwO-item" title="' + n[i].text + '" data-OwO="$[' + n[i].text + ']">' + n[i].icon + "</li>";
                     a += "\n                </ul>";
                     }
                     //此处结束
