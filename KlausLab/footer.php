@@ -17,7 +17,7 @@
     <div class="site-info">
     <p><span>一个秀恩爱的博客，</span><span id="createtime"></span></p>
     <p><span>Theme KlausLab By Klaus | All Rights Reserved</span></p>
-    <p><a href="http://www.miitbeian.gov.cn/" rel="nofollow noopener noreferrer" target="_blank" >版权所有 © 2016-2018 粤 ICP 备17095567号</a></p>
+    <p>版权所有 © 2016-<span id="thisYear"></span><a href="http://www.miitbeian.gov.cn/" rel="nofollow noopener noreferrer" target="_blank" > 粤 ICP 备17095567号</a></p>
     </div>
   <!-- .site-info --> 
 </footer>
@@ -76,5 +76,23 @@
   </div>
 </div>
 
-<?php wp_footer(); ?>
+<?php 
+// 支持
+wp_enqueue_script( 'support', get_template_directory_uri() . '/js/support.js', false, '1.0',array('jquery') );
+// 右下角固定组件
+wp_enqueue_script( 'fixed-plugins', get_template_directory_uri() . '/js/fixed-plugins.js', array(), '1.0', false );
+wp_localize_script( 'fixed-plugins', 'KlausLabConfig', array(
+  'siteUrl' => get_stylesheet_directory_uri(),
+  'siteStartTime' => cs_get_option( 'memory_start_time' ),
+  'ajaxUrl' => admin_url('admin-ajax.php'),
+  'commentEditAgain' => cs_get_option( 'memory_comment_edit' ),
+  'loadPjax' => cs_get_option( 'memory_pjax' ),
+));
+wp_footer();
+?>
+<script>
+  setTimeout(() => {
+    option.pageLoadingMask.remove(document);    
+  }, 1500);
+</script> 
 </body></html>

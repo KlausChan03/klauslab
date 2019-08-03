@@ -17,7 +17,7 @@ function IncludeAll($dir){
     }
 }
 // codestar后台框架
-// require_once dirname( __FILE__ ) .'/cs-framework/cs-framework.php';
+require_once dirname( __FILE__ ) .'/cs-framework/cs-framework.php';
 
 /* 检查更新
 require_once(TEMPLATEPATH . '/theme-update-checker.php'); 

@@ -18,7 +18,7 @@
 					<?php the_post_thumbnail( 'KlausLab-home' ); ?> 
 				</div>
 			<?php endif; ?>
-			<div class="entry-summary <?php if ( has_post_thumbnail() ) : ?> ml-10 <?php endif; ?>">
+			<div class="entry-summary <?php if ( has_post_thumbnail() ) { echo ("entry-summary-has-thumbnail"); }  ?>">
 				<?php the_excerpt(); ?>
 			</div>
 		</div>

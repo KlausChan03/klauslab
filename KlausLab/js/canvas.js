@@ -97,7 +97,7 @@ Animation.gravity = () => {
     }, 100);
 }
 
-Animation.snow = () => {
+Animation.snow = (seasons) => {
     var THREE = THREE || {};
     if (!self.Int32Array) self.Int32Array = Array, self.Float32Array = Array;
     THREE.Color = function (a) {
@@ -3243,8 +3243,8 @@ Animation.snow = () => {
                 windowHalfX = window.innerWidth / 2, windowHalfY = window.innerHeight / 2, particles = [],
                 particleImage =
                 new Image, particleImage.src =
-                "https://www.klauslaura.com/wp-content/themes/KlausLab/img/sakura.png", snowNum =
-                214, init())
+                `https://www.klauslaura.com/wp-content/themes/KlausLab/img/${seasons}.png`, snowNum =
+                138, init())
         })
     }();
 }

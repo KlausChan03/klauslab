@@ -19,7 +19,9 @@
 </head>
 <body <?php body_class(); ?> >
 
-
+<script>
+ 	option.pageLoadingMask.show(document);
+</script>
 <div id="page" class="hfeed site">
 	<header id="masthead" class="site-header" role="banner">
 		<div id="site-touch-header" class="menu-touch">
@@ -54,6 +56,8 @@
 					<ul>
 						<?php if ( is_user_logged_in() ) { ?>							
 							<li><a href="<?php echo get_option('home'); ?>/wp-admin"><i class="lalaksks lalaksks-ic-dashboard m-lr-5"></i>后台</a></li>
+							<li><a href="<?php echo get_option('home'); ?>/wp-admin/post-new.php"><i class="lalaksks lalaksks-ic-addArticle m-lr-5"></i>发布文章</a></li>
+							<li><a href="<?php echo get_option('home'); ?>/wp-admin/post-new.php?post_type=shuoshuo"><i class="lalaksks lalaksks-ic-addTalk m-lr-5"></i>发布说说</a></li>
 							<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=logout"><i class="lalaksks lalaksks-ic-logout m-lr-5"></i>登出</a></li>												
 						<?php } else { ?>					
 							<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=login"><i class="lalaksks lalaksks-ic-login m-lr-5"></i>登录</a></li>													

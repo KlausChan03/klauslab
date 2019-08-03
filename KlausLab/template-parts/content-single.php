@@ -16,8 +16,7 @@
 					<?php the_post_thumbnail( 'KlausLab-home' ); ?>
 			</div><!-- .featured-header-image -->
 		<?php endif; ?> 
-	</div><!-- .entry-header --> 
-	
+	</div><!-- .entry-header --> 	
 	<div class="entry-content">
 		<?php the_content(); ?>
 		<?php
@@ -27,7 +26,7 @@
 			) );
 		?>
 	</div><!-- .entry-content -->
-
+				
 	<div class="entry-footer clear">
 		<div class="entry-action flex-hl-vc flex-hw">
 			<div class="entry-date m-0 mr-15">
@@ -54,7 +53,5 @@
 				}
 			?>
 		</div>
-
 	</div><!-- .entry-footer -->
 </article><!-- #post-## -->
-
