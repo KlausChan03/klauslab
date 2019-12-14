@@ -50,7 +50,6 @@ endif; // KlausLab_setup
 add_action( 'after_setup_theme', 'KlausLab_setup' );
 
 
-
 /**
  * Register widget area.
  *

@@ -17,7 +17,7 @@
 			</div><!-- .featured-header-image -->
 		<?php endif; ?> 
 	</div><!-- .entry-header --> 	
-	<div id="kl-catelog-content" class="entry-content kl-catelog-content">
+	<div class="entry-content">
 		<?php the_content(); ?>
 		<?php
 			wp_link_pages( array(

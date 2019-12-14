@@ -6,24 +6,32 @@ option.pageLoadingMask = (function () {
         show: function (doc, closeCallback) {
             if (doc === undefined) doc = window.document;
             if (doc.getElementById(maskDivId)) return;
-            doc.body.innerHTML += `<div class="my-loading-shade" id="${maskDivId}">
-            <div class="loader-wrapper">
-                <div class="loader">
-                    <div class="roller"></div>
-                    <div class="roller"></div>
+            doc.body.innerHTML += `
+            <div class="my-loading-shade" id="${maskDivId}">
+                <div class="loader-wrapper ☯-bg fadeOut animated">
+                    <div class='☯'></div>
                 </div>
-                
-                <div id="loader2" class="loader">
-                    <div class="roller"></div>
-                    <div class="roller"></div>
-                </div>
-                
-                <div id="loader3" class="loader">
-                    <div class="roller"></div>
-                    <div class="roller"></div>
-                </div>
-            </div></div>
+            </div>
             `;
+
+            // doc.body.innerHTML += `
+            // <div class="my-loading-shade" id="${maskDivId}">
+            //     <div class="loader-wrapper">
+            //         <div class="loader">
+            //             <div class="roller"></div>
+            //             <div class="roller"></div>
+            //         </div>                    
+            //         <div id="loader2" class="loader">
+            //             <div class="roller"></div>
+            //             <div class="roller"></div>
+            //         </div>                    
+            //         <div id="loader3" class="loader">
+            //             <div class="roller"></div>
+            //             <div class="roller"></div>
+            //         </div>
+            //     </div>
+            // </div>
+            // `;
 
             if (typeof closeCallback === "function") {
                 if (typeof doc.docId !== "string") {
