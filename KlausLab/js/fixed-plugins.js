@@ -359,7 +359,7 @@ let init = () => {
     if (1 < mymonth && mymonth <= 4) {
         Animation.snow("sakura");
         return false;
-    } else if (10 < mymonth && mymonth <= 1) {
+    } else if (10 < mymonth || mymonth <= 1) {
         Animation.snow("snow");
         return false;
     }

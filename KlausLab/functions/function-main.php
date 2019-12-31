@@ -249,23 +249,29 @@ function normal_style_script() {
     // katelog.min.js
 	wp_enqueue_script( 'katelog', get_template_directory_uri() . '/js/katelog.min.js', array(), '1.0.0', false );
     // 配置
-	wp_enqueue_script( 'myOptions', get_template_directory_uri() . '/js/options.js', array(), '1.0', false );
+    wp_enqueue_script( 'myOptions', get_template_directory_uri() . '/js/options.js', array(), '1.0', false );
+
 } 
 
 
 
 function footer_script(){	
-	// 交互
+    // 交互
 	wp_enqueue_script( 'commonFunc', get_template_directory_uri() . '/js/common.js', array(), '1.0', false );
 	// 动画
-	wp_enqueue_script( 'canvasFunc', get_template_directory_uri() . '/js/canvas.js', array(), '1.0', false );
-
+	// wp_enqueue_script( 'canvasFunc', get_template_directory_uri() . '/js/canvas.js', array(), '1.0', false );
+	// 右下角固定插件
+	// wp_enqueue_script( 'fixedPlugins', get_template_directory_uri() . '/js/fixed-plugins.js', array(), '1.0', false );
 	// 先将ajaxurl变数设定好
 	wp_localize_script( 'ajax', 'my_ajax_obj', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) ); 
 }
 
 function custom_login() {
     echo '<link rel="stylesheet" type="text/css" href="' . get_bloginfo('template_directory') . '/css/login.css" />';
+}
+
+function is_login() {
+    return in_array($GLOBALS['pagenow'], array('wp-login.php', 'wp-register.php'));
 }
 
 
@@ -277,7 +283,7 @@ function styles_scripts() {
         wp_register_script( 'jquery', '//code.jquery.com/jquery.min.js', array(), 'lastest', false );
         // 提交加载 jquery 脚本
 		wp_enqueue_script( 'jquery' );
-		if( is_mobile() == true ){
+		if( is_mobile() === true && is_login() === false){
 			wp_enqueue_script( 'util', get_template_directory_uri() . '/js/util.js', array(), 'lastet', false );
 		}
 
@@ -724,8 +730,8 @@ if ( !is_admin() ) {
  
     // 修改自七牛镜像存储 WordPress 插件
     function qiniu_cdn_replace($html){
-        $local_host = 'https://www.klauslaura.com'; //博客域名
-        $qiniu_host = 'https://cdn.klauslaura.com'; //七牛域名
+        $local_host = 'https://www.klauslaura.cn'; //博客域名
+        $qiniu_host = 'https://cdn.klauslaura.cn'; //七牛域名
         $cdn_exts   = 'png|jpg|jpeg|gif|ico|webp'; //扩展名（使用|分隔）
         $cdn_dirs   = 'wp-content|wp-includes'; //目录（使用|分隔）
  

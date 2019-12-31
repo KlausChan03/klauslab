@@ -12,19 +12,18 @@
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, user-scalable=no" />
-	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<!-- <link rel="profile" href="http://gmpg.org/xfn/11"> -->
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
-	<!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?> >
 
-<script>
+<!-- <script>
 	if(Number(getCookie('logo-gg')) !== Number(1)){
 		setCookie('logo-gg','1');
 		option.pageLoadingMask.show(document);
 	}
-</script>
+</script> -->
 
 <div id="page" class="hfeed site">
 	<header id="masthead" class="site-header" role="banner">

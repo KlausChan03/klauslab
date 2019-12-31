@@ -1,3 +1,12 @@
+
+Vue.prototype.GLOBAL = {
+    homeUrl: `https:klauslaura.cn`, 
+    shopSiteHref: `http://shop.klauslaura.cn`,
+    tempImgSrc:function(){
+        return `${this.homeUrl}/wp-content/uploads/2019/01/5f9a28eb0b877dd805224243ef377ec7.jpg`
+    },
+}
+
 let option = {};
 option.pageLoadingMask = (function () {
     var maskDivId = "cdfd5f6428794b309256805748abe2b2";

@@ -3243,7 +3243,7 @@ Animation.snow = (seasons) => {
                 windowHalfX = window.innerWidth / 2, windowHalfY = window.innerHeight / 2, particles = [],
                 particleImage =
                 new Image, particleImage.src =
-                `https://www.klauslaura.com/wp-content/themes/KlausLab/img/${seasons}.png`, snowNum =
+                `https://www.klauslaura.cn/wp-content/themes/KlausLab/img/${seasons?seasons:"snow"}.png`, snowNum =
                 138, init())
         })
     }();
