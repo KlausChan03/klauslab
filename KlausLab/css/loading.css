@@ -1,0 +1,52 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 100vh;
+  background: lightslategray;
+}
+
+.☯ {
+  display: flex;
+  align-items: center;
+  width: 30vmin;
+  height: 30vmin;
+  border-radius: 50%;
+  background: linear-gradient(black 50%, white 0);
+  animation: r 2s linear infinite;
+}
+
+.☯:before,
+.☯:after {
+  flex: 1;
+  border: solid 5vmin white;
+  height: 5vmin;
+  border-radius: 50%;
+  transform-origin: 0 50%;
+  transform: scale(0.5);
+  background: black;
+  animation: s 1s ease-in-out infinite alternate;
+  content: "";
+}
+
+.☯:after {
+  border-color: black;
+  transform-origin: 100% 50%;
+  background: white;
+  animation-delay: -1s;
+}
+
+@keyframes s {
+  to {
+    transform: scale(1.5);
+  }
+}
+
+@keyframes r {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/*# sourceMappingURL=loading.css.map */

@@ -1,4 +1,5 @@
 
+
 $(document).on("click", ".collapse-btn", function () {
     var this_ = $(this),
         this_dom = $(this).parent().parent().siblings(".entry-main").find(".entry-main-excerpt");
@@ -49,7 +50,7 @@ $(document).on("click", "#Addlike", function () {
             um_id: z,
             um_action: y
         };
-        $.post("https://klauslaura.com/wp-admin/admin-ajax.php", w, function (res) {
+        $.post("https://klauslaura.cn/wp-admin/admin-ajax.php", w, function (res) {
             console.log(res)
 
         });
@@ -86,8 +87,6 @@ function kl_count(_time, _dom, _content) {
     document.querySelector(_dom).innerHTML = _final;
 }
 
-
-
 let blog_create_time, our_love_time, our_info, photo_container = document.querySelector('.photo-container');
 let timer = new Vue({
     el: '#created-time',
@@ -95,7 +94,7 @@ let timer = new Vue({
     mounted: function () {
         let params = new FormData;
         params.append('action', 'love_time');
-        axios.post('https://klauslaura.com/wp-admin/admin-ajax.php', params).then((res) => {
+        axios.post('http://localhost/dashboard/klausLab//wp-admin/admin-ajax.php', params).then((res) => {
             blog_create_time = res.data[0].user_registered; // 博客建立时间（根据第一个用户诞生时间）
             our_love_time = `2015-05-23 20:00:00`; // 恋爱时间
             our_info = [res.data[1].nickname, res.data[1].img, res.data[2].nickname, res.data[1].img];
@@ -126,7 +125,7 @@ let archiveFilter = new Vue({
             }
             this.filterContent = this.filterArr.join(',');
             params.append('filter', this.filterArr);
-            axios.post('https://klauslaura.com/wp-admin/admin-ajax.php', params).then((res) => {
+            axios.post('https://klauslaura.cn/wp-admin/admin-ajax.php', params).then((res) => {
                 this.archiveContent = res.data;
             })
 
