@@ -1,6 +1,9 @@
 
-Vue.prototype.GLOBAL = {
+let GLOBAL = {
     homeUrl: `https:klauslaura.cn`, 
+}
+Vue.prototype.GLOBAL = {
+    homeUrl: GLOBAL.homeUrl, 
     shopSiteHref: `http://shop.klauslaura.cn`,
     tempImgSrc:function(){
         return `${this.homeUrl}/wp-content/uploads/2019/01/5f9a28eb0b877dd805224243ef377ec7.jpg`

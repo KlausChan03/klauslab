@@ -261,7 +261,7 @@ function footer_script(){
 	// 动画
 	// wp_enqueue_script( 'canvasFunc', get_template_directory_uri() . '/js/canvas.js', array(), '1.0', false );
 	// 右下角固定插件
-	// wp_enqueue_script( 'fixedPlugins', get_template_directory_uri() . '/js/fixed-plugins.js', array(), '1.0', false );
+	// wp_enqueue_script( 'fixedPlugins', get_template_directory_uri() . '/js/fixed-plugins.js', array(), '1.0',false );
 	// 先将ajaxurl变数设定好
 	wp_localize_script( 'ajax', 'my_ajax_obj', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) ); 
 }
@@ -724,9 +724,9 @@ function get_like_most($mode = '', $limit = 10, $days = 7, $display = true) {
 if ( !is_admin() ) {
     add_action('wp_loaded','cdn_ob_start');
  
-    function cdn_ob_start() {
-        ob_start('qiniu_cdn_replace');
-    }
+    // function cdn_ob_start() {
+    //     ob_start('qiniu_cdn_replace');
+    // }
  
     // 修改自七牛镜像存储 WordPress 插件
     function qiniu_cdn_replace($html){
