@@ -1,6 +1,7 @@
 
 let GLOBAL = {
-    homeUrl: `https:klauslaura.cn`, 
+    // homeUrl: `https:klauslaura.cn`, 
+    homeUrl: `http://localhost/dashboard/klausLab`,
 }
 Vue.prototype.GLOBAL = {
     homeUrl: GLOBAL.homeUrl, 
