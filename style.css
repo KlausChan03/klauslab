@@ -22,12 +22,12 @@ Text Domain: KlausLab
 /* 图标字体定义 */
 @font-face {
   font-family: 'lalaksks';  /* project id 765116 */
-  src: url('//at.alicdn.com/t/font_765116_bqwkd4wy3cr.eot');
-  src: url('//at.alicdn.com/t/font_765116_bqwkd4wy3cr.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_765116_bqwkd4wy3cr.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_765116_bqwkd4wy3cr.woff') format('woff'),
-  url('//at.alicdn.com/t/font_765116_bqwkd4wy3cr.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_765116_bqwkd4wy3cr.svg#lalaksks') format('svg');
+  src: url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.eot');
+  src: url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.woff') format('woff'),
+  url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.svg#lalaksks') format('svg');
 }
 
 /*主要标签元素自定义设置*/

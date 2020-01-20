@@ -250,6 +250,9 @@ function normal_style_script() {
 	wp_enqueue_script( 'katelog', get_template_directory_uri() . '/js/katelog.min.js', array(), '1.0.0', false );
     // 配置
     wp_enqueue_script( 'myOptions', get_template_directory_uri() . '/js/options.js', array(), '1.0', false );
+    // ElementUI
+    wp_enqueue_script( 'element-ui','https://unpkg.com/element-ui/lib/index.js', array(), '1.0', false );
+    wp_enqueue_style( 'element-ui-css','https://unpkg.com/element-ui/lib/theme-chalk/index.css', array(), '1.0', false );
 
 } 
 

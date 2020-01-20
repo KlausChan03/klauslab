@@ -1,124 +1,13 @@
-<?php  
-ini_set('max_execution_time','0');
-class DoubanAPI
-{
-    /**
-     * 从本地读取缓存信息，若不存在则创建，若过期则更新。并返回格式化 JSON
-     * 
-     * @access  public 
-     * @param   string    $UserID             豆瓣ID
-     * @param   int       $PageSize           分页大小
-     * @param   int       $From               开始位置
-     * @param   int       $ValidTimeSpan      有效时间，Unix 时间戳，s
-     * @return  json      返回格式化影单
-     */  
-    public static function updateMovieCacheAndReturn($UserID,$PageSize,$From,$ValidTimeSpan){
-        if(!$UserID) return json_encode(array());
-        $expired = self::__isCacheExpired(__DIR__.'/cache/movie.json',$ValidTimeSpan);
-        if($expired!=0){
-			$oldData=json_decode(file_get_contents(__DIR__.'/cache/movie.json'))->data;
-            $data=self::__getMovieRawData($UserID, $oldData[0]->name);
-			array_splice($oldData,0,0,$data);
-            $file=fopen(__DIR__.'/cache/movie.json',"w");
-            fwrite($file,json_encode(array('time'=>time(),'data'=>$oldData)));
-            fclose($file);
-            $data=$oldData;
-            $total=count($data);
-            if($From<0 || $From>$total-1) echo json_encode(array());
-            else{
-                $end=min($From+$PageSize,$total);
-                $out=array();
-                for ($index=$From; $index<$end; $index++) {
-                    array_push($out,$data[$index]);
-                }
-                return json_encode($out);
-            }
-        }else{
-            $data=json_decode(file_get_contents(__DIR__.'/cache/movie.json'))->data;
-            $total=count($data);
-            if($From<0 || $From>$total-1) echo json_encode(array());
-            else{
-                $end=min($From+$PageSize,$total);
-                $out=array();
-                for ($index=$From; $index<$end; $index++) {
-                    array_push($out,$data[$index]);
-                }
-                return json_encode($out);
-            }
-        }
-    }
-    /**
-     * 检查缓存是否过期
-     * 
-     * @access  private
-     * @param   string    $FilePath           缓存路径
-     * @param   int       $ValidTimeSpan      有效时间，Unix 时间戳，s
-     * @return  int       0: 未过期; 1:已过期; -1：无缓存或缓存无效
-     */
-    private static function __isCacheExpired($FilePath,$ValidTimeSpan){
-        $file=fopen($FilePath,"r");
-        if(!$file) {
-			$file=fopen($FilePath,"w");
-			fwrite($file, json_encode(array('time'=>'946656000','data'=>array(array("name" => "", "img" => "", "url" => "")))));
-			return -1;
-		}
-        $content=json_decode(fread($file,filesize($FilePath)));
-        fclose($file);
-        if(!$content->time || $content->time<1) return -1;
-        if(time()-$content->time > $ValidTimeSpan) return 1;
-        return 0; 
-    }
-    /**
-     * 从豆瓣网页解析影单数据
-     * 
-     * @access  private
-     * @param   string    $UserID     豆瓣ID
-     * @return  array     返回格式化 array
-     */
-    private static function __getMovieRawData($UserID, $oldData){
-        $api='https://movie.douban.com/people/'.$UserID.'/collect';
-        
-        $data=array();
-        while($api!=null){
-            $raw=self::curl_file_get_contents($api);
-            if($raw==null || $raw=="" || !$raw) break;
-            $doc = new ParserDom($raw); 
-            $itemArray = $doc->find("div.item");
-            foreach ($itemArray as $v) {
-                $t = $v->find("li.title", 0);
-                $movie_name = str_replace(strstr(str_replace(array(" ", "　", "\t", "\n", "\r"),
-                                          array("", "", "", "", ""),$t->getPlainText()),"/"),"",str_replace(array(" ", "　", "\t", "\n", "\r"),
-                                          array("", "", "", "", ""),$t->getPlainText()));
-                $movie_img  = $v->find("div.pic a img", 0)->getAttr("src");
-                $movie_url  = $t->find("a", 0)->getAttr("href");
-				if ($oldData == $movie_name) return $data;
-                $data[] = array("name" => $movie_name, "img" => 'https://images.weserv.nl/?url='.$movie_img, "url" => $movie_url);
-            }
-            $url = $doc->find("span.next a", 0);
-            if ($url) {
-                $api = "https://movie.douban.com" .$url->getAttr("href");
-            }else{
-                $api = null;
-            }
-        }
-        return $data;
-    }
-	
-	public static function curl_file_get_contents($_url){
-		$myCurl = curl_init($_url);
-		//不验证证书
-		curl_setopt($myCurl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($myCurl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($myCurl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($myCurl, CURLOPT_REFERER, 'https://www.douban.com');
-		curl_setopt($myCurl,  CURLOPT_HEADER, false);
-		//获取
-		$content = curl_exec($myCurl);
-		//关闭
-		curl_close($myCurl);
-		return $content;
-	}
-}
+<?php
+namespace HtmlParser;
+/**
+ * Copyright (c) 2013, 俊杰Jerry
+ * All rights reserved.
+ *
+ * @description: html解析器
+ * @author     : 俊杰Jerry<bupt1987@gmail.com>
+ * @date       : 2013-6-10
+ */
 class ParserDom {
     /**
      * @var \DOMNode
@@ -464,14 +353,3 @@ class ParserDom {
         return $node->parentNode;
     }
 }
-$UserID="65077635";
-$PageSize=20;
-$ValidTimeSpan=60*60*24;
-$From=$_GET['from'];
-if($_GET['type']=='movie'){
-header("Content-type: application/json");
-echo DoubanAPI::updateMovieCacheAndReturn($UserID,$PageSize,$From,$ValidTimeSpan);
-}else{
-echo json_encode(array());
-}
-?>

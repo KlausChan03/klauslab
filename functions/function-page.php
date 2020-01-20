@@ -159,10 +159,10 @@ function get_link_items(){
     return $result;
 }
 
-// function shortcode_link(){
-//     return get_link_items();
-// }
-// add_shortcode('bigfalink', 'shortcode_link');
+function shortcode_link(){
+    return get_link_items();
+}
+add_shortcode('bigfalink', 'shortcode_link');
 add_action('init', 'get_link_items');
 
 add_filter('pre_option_link_manager_enabled','__return_true');

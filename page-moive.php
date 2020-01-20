@@ -2,28 +2,21 @@
 
 /**
  *  @package KlausLab
- *  Template Name: 电影
+ *  Template Name: 备份
  *  author: Klaus
  */
 get_header();
+wp_enqueue_script( 'doubanjs', get_template_directory_uri() . '/js/douban.js', false, '1.0',array('jquery') );
+wp_enqueue_style( 'doubancss', get_template_directory_uri() . '/css/douban.css', false, '1.0' );
 ?>
 
 <div id="primary" class="main-area w-1">
     <main id="main" class="main-content" role="main">
         <h1 style="text-align: center;">我看过的电影</h1>
-        <script type="text/javascript">
-            var head = document.getElementsByTagName('head')[0];
-            var link = document.createElement('link');
-            link.type = 'text/css';
-            link.rel = 'stylesheet';
-            link.href = './wp-content/themes/KlausLab/css/douban.css';
-            head.appendChild(link);
-        </script>
         <script>
             var DoubanPageSize = 20;
         </script>
-        <script type="text/javascript" src="./wp-content/themes/KlausLab/js/douban.js"></script>
-        <div id="douban-movie-list" class="doubanboard-list" style="margin-top: -70px;"></div>
+        <div id="douban-movie-list" class="doubanboard-list"></div>
     </main>
     <!-- #main -->
 </div>

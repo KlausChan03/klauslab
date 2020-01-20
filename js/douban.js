@@ -93,7 +93,7 @@ DoubanBoard = {
     loadMovies : function(){
         if($("#douban-movie-list").length < 1) return;
         $("#loadMoreMovies").html("加载中...");
-        $.getJSON("//localhost/dashboard/klauslab/douban/douban.php?type=movie&from="+String(curMovies),function(result){
+        $.getJSON("//localhost/dashboard/klauslab/wp-content/themes/klausLab/douban/douban.php?type=movie&from="+String(curMovies),function(result){
             $("#loadMoreMovies").html("加载更多");
             if(result.length<DoubanPageSize){
                 $("#loadMoreMovies").html("没有啦");

@@ -92,6 +92,7 @@ let timer = new Vue({
     el: '#created-time',
     data: { content: null },
     mounted: function () {
+        const h = this.$createElement;
         let params = new FormData;
         params.append('action', 'love_time');
         axios.post(`${GLOBAL.homeUrl}/wp-admin/admin-ajax.php`, params).then((res) => {
