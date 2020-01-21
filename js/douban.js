@@ -1,3 +1,4 @@
+
 var curBooks_read=0;
 var curBooks_reading=0;
 var curBooks_wish=0;
@@ -59,7 +60,7 @@ DoubanBoard = {
         if(status=='read') curBooks=curBooks_read;
         else if(status=='reading') curBooks=curBooks_reading;
         else curBooks=curBooks_wish;
-        var api="/index.php/DoubanBoard?type=book&from="+String(curBooks)+"&status="+status;
+        var api= GLOBAL.homeSourceUrl+"/douban/douban.php?type=book&from="+String(curBooks)+"&status="+status;
         $.getJSON(api,function(result){
             $(`#loadMoreBooks_`+status).html("加载更多");
             if(result.length<DoubanPageSize){
@@ -100,9 +101,9 @@ DoubanBoard = {
             }
             $.each(result,function(i,item){
 				if (item.name == "") {return false;}
-                var html=`<div id="doubanboard-movie-item-`+String(curMovies)+`" class="doubanboard-item" style="border: 2px solid;border-radius: 5px;-moz-border-radius:25px;">
-                            <div class="doubanboard-thumb" style="background-image:url(`+item.img+`)"></div>
-                            <div class="doubanboard-title"><a href="`+item.url+`" target="_blank">`+item.name+`</a></div>
+                var html=`<div id="doubanboard-movie-item-${String(curMovies)}" class="doubanboard-item" style="border: 2px solid;border-radius: 5px;-moz-border-radius:25px;">
+                            <div class="doubanboard-thumb" style="background-image:url(${item.img})"></div>
+                            <div class="doubanboard-title"><a href="${item.url}" target="_blank">${item.name}</a></div>
                         </div>`;
                 $("#douban-movie-list").append(html);
                 curMovies++;

@@ -59,7 +59,7 @@ class DoubanAPI
         $file=fopen($FilePath,"r");
         if(!$file) {
 			$file=fopen($FilePath,"w");
-			fwrite($file, json_encode(array('time'=>'946656000','data'=>array(array("name" => "", "img" => "", "url" => "")))));
+			fwrite($file, json_encode(array('time'=>'946656000','data'=>array(array("name" => "", "img" => "", "url" => "", "remark" => "", "mark" => "")))));
 			return -1;
 		}
         $content=json_decode(fread($file,filesize($FilePath)));
@@ -86,13 +86,17 @@ class DoubanAPI
             $itemArray = $doc->find("div.item");
             foreach ($itemArray as $v) {
                 $t = $v->find("li.title", 0);
+                $r = $v->find("li", 3);
+                $m = $v->find("li", 2);
                 $movie_name = str_replace(strstr(str_replace(array(" ", "　", "\t", "\n", "\r"),
                                           array("", "", "", "", ""),$t->getPlainText()),"/"),"",str_replace(array(" ", "　", "\t", "\n", "\r"),
                                           array("", "", "", "", ""),$t->getPlainText()));
                 $movie_img  = $v->find("div.pic a img", 0)->getAttr("src");
                 $movie_url  = $t->find("a", 0)->getAttr("href");
+                $movie_remark  = $r->find("span.comment", 0)->getPlainText();
+                $movie_mark  = $m->find("span", 0)->getAttr("class");
 				if ($oldData == $movie_name) return $data;
-                $data[] = array("name" => $movie_name, "img" => 'https://images.weserv.nl/?url='.$movie_img, "url" => $movie_url);
+                $data[] = array("name" => $movie_name, "img" => 'https://images.weserv.nl/?url='.$movie_img, "url" => $movie_url, "remark" => $movie_remark, "mark" => $movie_mark);
             }
             $url = $doc->find("span.next a", 0);
             if ($url) {

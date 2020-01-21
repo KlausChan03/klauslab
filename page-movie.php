@@ -2,7 +2,7 @@
 
 /**
  *  @package KlausLab
- *  Template Name: 备份
+ *  Template Name: 电影
  *  author: Klaus
  */
 get_header();
@@ -10,21 +10,26 @@ wp_enqueue_script( 'doubanjs', get_template_directory_uri() . '/js/douban.js', f
 wp_enqueue_style( 'doubancss', get_template_directory_uri() . '/css/douban.css', false, '1.0' );
 ?>
 
-<div id="primary" class="main-area w-1">
-    <main id="main" class="main-content" role="main">
+<div id="primary" class="page-movie main-area w-1">
+    <main id="main" class="main-content" role="main">        
         <h1 style="text-align: center;">我看过的电影</h1>
-        <script>
-            var DoubanPageSize = 20;
-        </script>
-        <div id="douban-movie-list" class="doubanboard-list"></div>
+        <div id="douban-movie-list" class="doubanboard-list">
+        </div>
+        <el-row :gutter="20">
+            <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+            <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+            <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+            <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+        </el-row>
     </main>
     <!-- #main -->
 </div>
 <!-- #primary -->
 
 <script>
-    let app = new Vue({
-        el: "#page-home",
+    let DoubanPageSize = 20;
+     let app = new Vue({
+        el: ".page-movie",
         data: {
             tempImgSrc: '',
             shopSiteHref: '',

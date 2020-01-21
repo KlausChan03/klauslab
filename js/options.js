@@ -1,10 +1,10 @@
 
 let GLOBAL = {
-    homeUrl: `https://klauslaura.cn`, 
-    homeSourceUrl: `https://klauslaura.cn/wp-content/themes/KlausLab`,
+    // homeUrl: `https://klauslaura.cn`, 
+    // homeSourceUrl: `https://klauslaura.cn/wp-content/themes/KlausLab`,
 
-    homeUrlLocal: `http://localhost/dashboard/klausLab`,
-    homeSourceUrlLocal: `http://localhost/dashboard/klausLab/wp-content/themes/klausLab`,
+    homeUrl: `http://localhost/dashboard/klausLab`,
+    homeSourceUrl: `http://localhost/dashboard/klausLab/wp-content/themes/klausLab`,
 }
 Vue.prototype.GLOBAL = {
     homeUrl: GLOBAL.homeUrl, 

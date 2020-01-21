@@ -31,7 +31,7 @@ Text Domain: KlausLab
 }
 
 /*主要标签元素自定义设置*/
-*{ margin: 0; padding: 0; border: 0; font-size: 14px; color:#1a1a1a; background: transparent; word-wrap: break-word; box-sizing: border-box; -webkit-box-sizing: border-box; font-family: Play, "Microsoft Yahei", "Hiragino Sans GB", "Helvetica Neue", Helvetica, tahoma, arial, "WenQuanYi Micro Hei", Verdana, sans-serif, "\5B8B\4F53"; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale }
+*{ margin: 0; padding: 0; border: 0; color:#1a1a1a; background: transparent; word-wrap: break-word; box-sizing: border-box; -webkit-box-sizing: border-box; font-family: Play, "Microsoft Yahei", "Hiragino Sans GB", "Helvetica Neue", Helvetica, tahoma, arial, "WenQuanYi Micro Hei", Verdana, sans-serif, "\5B8B\4F53"; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale }
 *:before, *:after { box-sizing: inherit; }
 body { overflow-x: hidden;}
 html { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-tap-highlight-color: rgba(0, 0, 0, 0) }

@@ -8,9 +8,9 @@
 get_header();
 ?>
 
-<div id="primary" class="main-area w-1">
+<div id="primary" class="page-home main-area w-1">
     <main id="main" class="main-content" role="main">
-        <section id="page-home" class="flex-hc-vc flex-v p-20">
+        <section class="flex-hc-vc flex-v p-20">
             <div class="row w-1">
                 <div class="col-md-7 col-sm-12 p-20">
                     <img class="img-shadow" :src="tempImgSrc" alt="">
@@ -28,7 +28,7 @@ get_header();
 
 <script>
     let app = new Vue({
-        el: "#page-home",
+        el: ".page-home",
         data: {
             tempImgSrc: '',
             shopSiteHref: '',
