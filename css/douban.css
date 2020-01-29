@@ -31,7 +31,7 @@
 }
 .doubanboard-title,.doubanboard-title a{
     margin: 8px 0!important;
-    font-size: 1.2em!important;
+    font-size: 1.0em!important;
     overflow: hidden!important;
     text-overflow: ellipsis!important;
     white-space: nowrap !important;

@@ -1,0 +1,15 @@
+{
+  "name": "klauslab",
+  "version": "1.0.0",
+  "description": "a klaus and laura's blog",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://120.79.147.208:8099/KlausChan/wp-klauslab.git"
+  },
+  "author": "klaus",
+  "license": "ISC"
+}
