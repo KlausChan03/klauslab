@@ -92,6 +92,7 @@ DoubanBoard = {
     },
 
     loadMovies : function(){
+        return false;
         if($("#douban-movie-list").length < 1) return;
         $("#loadMoreMovies").html("加载中...");
         $.getJSON(GLOBAL.homeSourceUrl+"/douban/douban.php?type=movie&from="+String(curMovies),function(result){

@@ -1,5 +1,32 @@
 <?php  
 ini_set('max_execution_time','0');
+
+/**
+* 按符号截取字符串的指定部分
+* @param string $str 需要截取的字符串
+* @param string $sign 需要截取的符号
+* @param int $number 如是正数以0为起点从左向右截 负数则从右向左截
+* @return string 返回截取的内容
+*/
+function cut_str($str,$sign,$number){
+    $array=explode($sign, $str);
+    $length=count($array);
+    if($number<0){
+        $new_array=array_reverse($array);
+        $abs_number=abs($number);
+        if($abs_number>$length){
+        return 'error';
+        }else{
+        return $new_array[$abs_number-1];
+        }
+    }else{
+        if($number>=$length){
+        return 'error';
+        }else{
+        return $array[$number];
+        }
+    }
+}
 class DoubanAPI
 {
     /**
@@ -59,7 +86,7 @@ class DoubanAPI
         $file=fopen($FilePath,"r");
         if(!$file) {
 			$file=fopen($FilePath,"w");
-			fwrite($file, json_encode(array('time'=>'946656000','data'=>array(array("name" => "", "img" => "", "url" => "", "remark" => "", "mark" => "")))));
+			fwrite($file, json_encode(array('time'=>'946656000','data'=>array(array("name" => "", "img" => "", "url" => "", "remark" => "", "date" => "", "mark_myself" => "", "mark_douban" => "")))));
 			return -1;
 		}
         $content=json_decode(fread($file,filesize($FilePath)));
@@ -94,9 +121,16 @@ class DoubanAPI
                 $movie_img  = $v->find("div.pic a img", 0)->getAttr("src");
                 $movie_url  = $t->find("a", 0)->getAttr("href");
                 $movie_remark  = $r->find("span.comment", 0)->getPlainText();
-                $movie_mark  = $m->find("span", 0)->getAttr("class");
-				if ($oldData == $movie_name) return $data;
-                $data[] = array("name" => $movie_name, "img" => 'https://images.weserv.nl/?url='.$movie_img, "url" => $movie_url, "remark" => $movie_remark, "mark" => $movie_mark);
+                $movie_mark_myself  = floatval(preg_replace('/[^0-9]/','',$m->find("span", 0)->getAttr("class")) * 2);
+                $movie_date = $m->find("span", 1)->getPlainText();
+                $api_num = cut_str($movie_url,'/',-2);
+                $api_movie = 'https://movie.douban.com/subject/'.$api_num.'/';
+                $raw_movie = self::curl_file_get_contents($api_movie);
+                $doc_movie = new ParserDom($raw_movie);
+                $movie_mark_douban = floatval($doc_movie->find("strong.rating_num",0)->getPlainText());
+                
+                if ($oldData == $movie_name) return $data;
+                $data[] = array("name" => $movie_name, "img" => 'https://images.weserv.nl/?url='.$movie_img, "url" => $movie_url, "remark" => $movie_remark, "date" => $movie_date, "mark_myself" => $movie_mark_myself, "mark_douban" => $movie_mark_douban);
             }
             $url = $doc->find("span.next a", 0);
             if ($url) {
