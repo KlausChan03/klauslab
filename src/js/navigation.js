@@ -5,7 +5,7 @@
  * support for dropdown menus.
  */
 ( function() {
-	var header,container, button, menu, links, subMenus;
+	var header,container, button, menu, links, subMenus, socialMenu;
 
 	container = document.getElementById( 'site-navigation' );
 	if ( ! container ) {

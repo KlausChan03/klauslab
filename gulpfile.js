@@ -40,6 +40,7 @@ let FILTERJS = [dir.src + '/js/**/*.js',  '!' + dir.src + '/js/**/*.min.js',  '!
 let COPYJS = [dir.src + '/js/**/*.min.js',  dir.src + '/js/**/canvas.js',  dir.src + '/js/**/fixed-plugins.js'];
 let FILTERCSS =  [dir.src + '/css/**/*.css']
 let COPYCSS = [];
+let COPYEMOJI = [dir.src + '/emoji/**/*.json',];
 
 // Browser sync
 var browsersync = false;
@@ -219,7 +220,7 @@ gulp.task('js', function () {
 // });
 
 gulp.task('copy', () => {
-    return gulp.src(COPYJS.concat(COPYCSS), {
+    return gulp.src(COPYJS.concat(COPYCSS).concat(COPYEMOJI), {
         base: dir.ORIGINROUTER
     })
         .pipe(gulp.dest('./'));

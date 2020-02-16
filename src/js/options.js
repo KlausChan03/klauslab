@@ -1,10 +1,13 @@
 
 let GLOBAL = {
-    // homeUrl: `https://klauslaura.cn`, 
-    // homeSourceUrl: `https://klauslaura.cn/wp-content/themes/KlausLab`,
-
+    // @if NODE_ENV = 'prod'
+    homeUrl: `https://klauslaura.cn`, 
+    homeSourceUrl: `https://klauslaura.cn/wp-content/themes/KlausLab`,
+    // @endif
+    // @if NODE_ENV = 'dev'
     homeUrl: `http://localhost/dashboard/klausLab`,
     homeSourceUrl: `http://localhost/dashboard/klausLab/wp-content/themes/klausLab`,
+    // @endif
 }
 Vue.prototype.GLOBAL = {
     homeUrl: GLOBAL.homeUrl, 
@@ -85,10 +88,10 @@ function setCookie(name, value) {
  function getCookie(Name) {
     var search = Name + "="
     if (document.cookie.length > 0) {
-        offset = document.cookie.indexOf(search)
+        var offset = document.cookie.indexOf(search)
         if (offset != -1) {
             offset += search.length
-            end = document.cookie.indexOf(";", offset)
+            var end = document.cookie.indexOf(";", offset)
             if (end == -1) end = document.cookie.length
             return unescape(document.cookie.substring(offset, end))
         } else return ""
