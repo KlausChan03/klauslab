@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "prod": "export NODE_ENV=prod&&gulp",
-    "dev": "export NODE_ENV=dev&&gulp",
+    "dev": "set NODE_ENV=dev&&gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
