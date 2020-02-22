@@ -251,8 +251,8 @@ function normal_style_script() {
     // 配置
     wp_enqueue_script( 'myOptions', get_template_directory_uri() . '/js/options.js', array(), '1.0', false );
     // ElementUI
-    wp_enqueue_script( 'element-ui','https://unpkg.com/element-ui/lib/index.js', array(), '1.0', false );
-    wp_enqueue_style( 'element-ui-css','https://unpkg.com/element-ui/lib/theme-chalk/index.css', array(), '1.0', false );
+    wp_enqueue_script( 'element-ui-js', get_template_directory_uri() . '/js/element-ui.min.js', array(), '1.0', false );
+    wp_enqueue_style( 'element-ui-css', get_template_directory_uri() . '/css/element-ui.min.css', array(), '1.0', false );
 
 } 
 

@@ -1,13 +1,1 @@
-! function() {
-	var pageWid = 720;
-
-	function a() {
-		document.documentElement.style.fontSize = document.documentElement.clientWidth / pageWid * 10 / 16 * 1000 + "%"
-	}
-	var b = null;
-	window.addEventListener("resize", function() {
-		clearTimeout(b);
-		b = setTimeout(a, 300)
-	}, !1);
-	a()
-}(window);
+"use strict";!function(){var e=720;function t(){document.documentElement.style.fontSize=document.documentElement.clientWidth/e*10/16*1e3+"%"}var n=null;window.addEventListener("resize",function(){clearTimeout(n);n=setTimeout(t,300)},!1);t()}(window);

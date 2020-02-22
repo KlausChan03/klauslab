@@ -39,8 +39,7 @@ html { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-tap-h
 
 
 /* 结构元素 */
-header,footer{ position: relative; }
-header,footer{ z-index:1314;}
+header.site-header,footer.site-footer{ position: relative; z-index:1314; }
 article, aside{ border:none; }
 
 /* 标题元素 */
