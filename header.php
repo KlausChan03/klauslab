@@ -19,10 +19,10 @@
 <body <?php body_class(); ?> >
 
 <script>
-	if(Number(getCookie('logo-gg')) !== Number(1)){
-		setCookie('logo-gg','1');
-		option.pageLoadingMask.show(document);
-	}
+	// if(Number(getCookie('logo-gg')) !== Number(1)){
+	// 	setCookie('logo-gg','1');
+	// 	option.pageLoadingMask.show(document);
+	// }
 </script>
 
 <div id="page" class="hfeed site">

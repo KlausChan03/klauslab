@@ -1,14 +1,13 @@
 // Gulp.js config file
 
 'use strict';
-
 const env = process.env.NODE_ENV
-
-const 
-    dir = {
+const dir = {
         // 源文件和构建目录
         src:    'src/',
-        ORIGINROUTER: './src/',
+        dist: 'dist/',
+        srcRouter: './src/',
+        distRouter: './dist/',
         // 注意：这里的路径需要根据自己的 wordpress 安装路径进行修改
         build:  env === 'dev' ? 'C:/Tools/xampp/htdocs/dashboard/klausLab/wp-content/themes/KlausLab/' : '/var/www/html/wordpress/wp-content/themes/KlausLab/'
     },    
@@ -31,31 +30,23 @@ const
     babelify    = require('babelify'),
     deporder    = require('gulp-deporder'),
     removeUseStrict = require("gulp-remove-use-strict"),
-    stripdebug  = require('gulp-strip-debug')
-;
-
-console.log(dir.build)
+    stripdebug  = require('gulp-strip-debug');
 
 let FILTERJS = [dir.src + '/js/**/*.js',  '!' + dir.src + '/js/**/*.min.js',  '!' + dir.src + '/js/**/canvas.js',  '!' + dir.src + '/js/**/fixed-plugins.js'];
 let COPYJS = [dir.src + '/js/**/*.min.js',  dir.src + '/js/**/canvas.js',  dir.src + '/js/**/fixed-plugins.js'];
 let FILTERCSS =  [dir.src + '/css/**/*.css']
 let COPYCSS = [];
 let COPYEMOJI = [dir.src + '/emoji/**/*.json',];
+let COPYFONT = [dir.src + '/fonts/**/*',];
 
-// Browser sync
-var browsersync = false;
+
+
 
 // PHP
 const php = {
     src:    dir.src + 'template-parts/**/*.php',
     build:  dir.build + 'template-parts'
 };
-
-
-gulp.task('clean', function () {
-    return promiseddel(['js','images','css']);
-});
-
 
 // 复制 PHP 文件
 gulp.task('php', () => {
@@ -67,7 +58,7 @@ gulp.task('php', () => {
 // 图像处理
 const images = {
     src:    dir.src + 'img/**/*',
-    build:  dir.build + 'img/'
+    build:  dir.build + dir.distRouter +'img/'
 };
 
 gulp.task('images', () => {
@@ -81,7 +72,7 @@ gulp.task('images', () => {
 var css = {
     src:    dir.src + 'scss/style.scss',
     watch:  dir.src + 'scss/**/*',
-    build:  dir.build + 'css/',
+    build:  dir.build + dir.distRouter +'css/',
     sassOpts: {
         outputStyle     : 'nested',
         imagePath       : images.build,
@@ -102,61 +93,6 @@ var css = {
     ]
 };
 
-// gulp.task('css', gulp.series('images', () => {
-//     return gulp.src(css.src)
-//         .pipe(sass(css.sassOpts))
-//         .pipe(postcss(css.processors))
-//         .pipe(gulp.dest(css.build))
-//         .pipe(browsersync ? browsersync.reload({ stream: true }) : gutil.noop());
-// }));
-
-// Javascript 的处理
-const js = {
-    src:        dir.src + 'js/**/*',
-    build:      dir.build + 'js/',
-    filename:   'scripts.js'
-};
-
-gulp.task('browserify', () => {
-    return browserify({
-        entries: js.entry,
-        debug: true
-    })
-    .transform("babelify", {presets: ["es2015"]}).on('error', (error) => {
-        gutil.log(gutil.colors.red('[Error]'), err.toString());
-    })
-    .bundle()
-    .pipe(source(js.filename))
-    .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true}))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(js.build))
-});
-
-// gulp.task('js',  () => {
-//     return gulp.src(js.build + '*.js',{
-//         base:'./src/'
-//     })
-//         .pipe(deporder())
-//         .pipe(babel({
-//             presets: ["env"]
-//         }))
-//         // .pipe(stripdebug())
-//         .pipe(uglify())
-//         .pipe(gulp.dest(js.build))
-//         // .pipe(browsersync ? browsersync.reload({ stream: true }) : gutil.noop());
-// });
-
-// gulp.task('js', function () {
-//     return gulp.src([js.build + '/**/*.js'])
-//       .pipe(babel({
-//         presets: ["env"]
-//       }))
-//       .pipe(uglify())
-//       .pipe(gulp.dest(js.build));
-//   });
-
-
 gulp.task('css', function () {
     return gulp.src(FILTERCSS)
         // 这会输出一个未压缩过的版本 
@@ -171,6 +107,14 @@ gulp.task('css', function () {
         // .pipe(rev.manifest()) //- 生成一个rev-manifest.json
         // .pipe(gulp.dest(DEST + '/rev/css')); //- 将 rev-manifest.json 保存到 rev 目录内
 });
+
+// Javascript 的处理
+const js = {
+    src:        dir.src + 'js/**/*',
+    build:      dir.build + dir.distRouter +'js/',
+    filename:   'scripts.js'
+};
+
 
 gulp.task('js', function () {
     return gulp.src(FILTERJS)
@@ -198,32 +142,32 @@ gulp.task('js', function () {
 });
 
 
-// Browser sync
-// const syncOpts = {
-//     // 你的WP运行在虚拟主机下，而且还绑定了一个自定义的域名，那么
-//     // localhost 也可以改成你运行wp的虚拟主机绑定的域名
-//     proxy:      'localhost',
-//     files:      dir.build + '**/*',
-//     open:       false,
-//     notify:     false,
-//     ghostMode:  false,
-//     ui: {
-//         port: 8001
-//     }
-// };
-
-// gulp.task('browsersync', () => {
-//     if(browsersync === false) {
-//         browsersync = require('browser-sync').create();
-//         browsersync.init(syncOpts);
-//     }
+// gulp.task('browserify', () => {
+//     return browserify({
+//         entries: js.entry,
+//         debug: true
+//     })
+//     .transform("babelify", {presets: ["es2015"]}).on('error', (error) => {
+//         gutil.log(gutil.colors.red('[Error]'), err.toString());
+//     })
+//     .bundle()
+//     .pipe(source(js.filename))
+//     .pipe(buffer())
+//     .pipe(sourcemaps.init({loadMaps: true}))
+//     .pipe(sourcemaps.write('.'))
+//     .pipe(gulp.dest(js.build))
 // });
 
+
+gulp.task('clean', function () {
+    return promiseddel(['dist']);
+});
+
 gulp.task('copy', () => {
-    return gulp.src(COPYJS.concat(COPYCSS).concat(COPYEMOJI), {
-        base: dir.ORIGINROUTER
+    return gulp.src(COPYJS.concat(COPYCSS).concat(COPYEMOJI).concat(COPYFONT), {
+        base: dir.srcRouter
     })
-        .pipe(gulp.dest('./'));
+        .pipe(gulp.dest(dir.distRouter));
 });
 
 // 监视

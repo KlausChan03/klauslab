@@ -83,46 +83,46 @@
 </div>
 <?php 
 // 支持
-wp_enqueue_script( 'support', get_template_directory_uri() . '/js/support.js', false, '1.0',array('jquery') );
-// 动画
-wp_enqueue_script( 'canvasFunc', get_template_directory_uri() . '/js/canvas.js', array(), '1.0', false );
-// 右下角固定组件
-wp_enqueue_script( 'fixed-plugins', get_template_directory_uri() . '/js/fixed-plugins.js', array(), '1.0', false );
-wp_localize_script( 'fixed-plugins', 'KlausLabConfig', array(
-  'siteUrl' => get_stylesheet_directory_uri(),
-  'siteStartTime' => cs_get_option( 'memory_start_time' ),
-  'ajaxUrl' => admin_url('admin-ajax.php'),
-  'commentEditAgain' => cs_get_option( 'memory_comment_edit' ),
-  'loadPjax' => cs_get_option( 'memory_pjax' ),
-));
+// wp_enqueue_script( 'support', get_template_directory_uri() . '/js/support.js', false, '1.0',array('jquery') );
+// // 动画
+// wp_enqueue_script( 'canvasFunc', get_template_directory_uri() . '/js/canvas.js', array(), '1.0', false );
+// // 右下角固定组件
+// wp_enqueue_script( 'fixed-plugins', get_template_directory_uri() . '/js/fixed-plugins.js', array(), '1.0', false );
+// wp_localize_script( 'fixed-plugins', 'KlausLabConfig', array(
+//   'siteUrl' => get_stylesheet_directory_uri(),
+//   'siteStartTime' => cs_get_option( 'memory_start_time' ),
+//   'ajaxUrl' => admin_url('admin-ajax.php'),
+//   'commentEditAgain' => cs_get_option( 'memory_comment_edit' ),
+//   'loadPjax' => cs_get_option( 'memory_pjax' ),
+// ));
 wp_footer();
 ?>
 <?php
 wp_footer();
 ?>
 <script>
-  (function() {
-    var pro = [],
-      i = 0,
-      len = pro.length,
-      load = function(src) {
-        if (i < len) {
-          var img_obj = new Image;
-          img_obj.src = src;
-          timer = setInterval(() => {
-            if (img_obj.complete) {
-              clearInterval(timer);
-              load(pro[i++])
-            }
-          }, 80);
-        } else {
-          setTimeout(() => {
-            option.pageLoadingMask.remove(document);
-          }, 1500);
-        }
-      };
-    load(pro[i])
-  })()
+  // (function() {
+  //   var pro = [],
+  //     i = 0,
+  //     len = pro.length,
+  //     load = function(src) {
+  //       if (i < len) {
+  //         var img_obj = new Image;
+  //         img_obj.src = src;
+  //         timer = setInterval(() => {
+  //           if (img_obj.complete) {
+  //             clearInterval(timer);
+  //             load(pro[i++])
+  //           }
+  //         }, 80);
+  //       } else {
+  //         setTimeout(() => {
+  //           option.pageLoadingMask.remove(document);
+  //         }, 1500);
+  //       }
+  //     };
+  //   load(pro[i])
+  // })()
 </script>
 </body>
 
