@@ -107,36 +107,6 @@ let timer = new Vue({
     },
 })
 
-let archiveFilter = new Vue({
-    el: '#archive-main',
-    data: {
-        archiveContent: '',
-        filterContent:'',
-        filterArr: [],
-    },
-    methods: {
-        choose: function ($event) {
-            let params = new FormData;
-            params.append('action', 'filter_archive');
-            if ($event.target.attributes['data-type']) {
-                this.filterArr[0] = $event.target.attributes['data-type'].value;
-            }
-            if ($event.target.attributes['data-author']) {
-                this.filterArr[1] = $event.target.attributes['data-author'].value;
-            }
-            this.filterContent = this.filterArr.join(',');
-            params.append('filter', this.filterArr);
-            axios.post(`${GLOBAL.homeUrl}/wp-admin/admin-ajax.php`, params).then((res) => {
-                this.archiveContent = res.data;
-            })
-
-        }
-    }
-
-})
-
-
-
 // 滚动触发事件 (Sidebar固定、Header动画)
 $(".widget-area .widget-content > aside").addClass("animated");
 $(window).scroll(function () {
