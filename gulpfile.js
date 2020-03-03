@@ -9,7 +9,9 @@ const dir = {
         srcRouter: './src/',
         distRouter: './dist/',
         // 注意：这里的路径需要根据自己的 wordpress 安装路径进行修改
-        build:  env === 'dev' ? 'C:/Tools/xampp/htdocs/dashboard/klausLab/wp-content/themes/KlausLab/' : '/var/www/html/wordpress/wp-content/themes/KlausLab/'
+        build:  env === 'dev' ? 'C:/xampp/htdocs/dashboard/klausLab/wp-content/themes/klausLab/' : '/var/www/html/wordpress/wp-content/themes/KlausLab/'
+
+        
     },    
 
     // Gulp 和 插件
@@ -36,16 +38,14 @@ let FILTERJS = [dir.src + '/js/**/*.js',  '!' + dir.src + '/js/**/*.min.js',  '!
 let COPYJS = [dir.src + '/js/**/*.min.js',  dir.src + '/js/**/canvas.js',  dir.src + '/js/**/fixed-plugins.js'];
 let FILTERCSS =  [dir.src + '/css/**/*.css']
 let COPYCSS = [];
-let COPYEMOJI = [dir.src + '/emoji/**/*.json',];
-let COPYFONT = [dir.src + '/fonts/**/*',];
-
+let COPYOTHERS = [dir.src + '/emoji/**/*.json',dir.src + '/fonts/**/*'];
 
 
 
 // PHP
 const php = {
     src:    dir.src + 'template-parts/**/*.php',
-    build:  dir.build + 'template-parts'
+    build:  dir.build + dir.dist + 'template-parts'
 };
 
 // 复制 PHP 文件
@@ -58,7 +58,7 @@ gulp.task('php', () => {
 // 图像处理
 const images = {
     src:    dir.src + 'img/**/*',
-    build:  dir.build + dir.distRouter +'img/'
+    build:  dir.build + dir.dist +'img/'
 };
 
 gulp.task('images', () => {
@@ -72,7 +72,7 @@ gulp.task('images', () => {
 var css = {
     src:    dir.src + 'scss/style.scss',
     watch:  dir.src + 'scss/**/*',
-    build:  dir.build + dir.distRouter +'css/',
+    build:  dir.build + dir.dist +'css/',
     sassOpts: {
         outputStyle     : 'nested',
         imagePath       : images.build,
@@ -111,7 +111,7 @@ gulp.task('css', function () {
 // Javascript 的处理
 const js = {
     src:        dir.src + 'js/**/*',
-    build:      dir.build + dir.distRouter +'js/',
+    build:      dir.build + dir.dist +'js/',
     filename:   'scripts.js'
 };
 
@@ -164,7 +164,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('copy', () => {
-    return gulp.src(COPYJS.concat(COPYCSS).concat(COPYEMOJI).concat(COPYFONT), {
+    return gulp.src(COPYJS.concat(COPYCSS).concat(COPYOTHERS), {
         base: dir.srcRouter
     })
         .pipe(gulp.dest(dir.distRouter));
@@ -188,7 +188,7 @@ gulp.task('copy', () => {
 //     gulp.watch(js.src, gulp.parallel('js')).on('change', browsersync ? browsersync.reload : gutil.noop);
 // }));
 
-gulp.task('default', gulp.series( 'clean','php',  'js', 'css', 'images','copy'));
+gulp.task('default', gulp.series( 'clean', 'js', 'css', 'images','copy'));
 
 // default task
 // gulp.task('default', gulp.series('build', 'watch'));
