@@ -24,7 +24,8 @@ function KlausLab_setup() {
 	 * hard-coded <title> tag in the document head, and expect WordPress to
 	 * provide it for us.
 	 */
-	add_theme_support( 'title-tag' );
+    add_theme_support('title-tag');
+    add_theme_support('custom-logo');
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus( array(

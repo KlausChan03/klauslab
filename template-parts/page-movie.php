@@ -8,12 +8,13 @@
 get_header();
 ?>
 
+
 <div id="primary" class="page-movie main-area w-1">
     <main id="main" class="main-content" role="main">
         <div id="douban-movie-list" class="doubanboard-list">
             <el-row v-bind:gutter="20">
                 <el-col :xs="24" :sm="12" :md="6" :lg="4" v-for="(item,index) in list" v-bind:key="item.url" v-bind:class="'doubanboard-item'">
-                    <el-tooltip class="cur-p"  effect="light" placement="right" popper-class="s-tooltip">
+                    <!-- <el-tooltip class="cur-p" effect="light" placement="right" popper-class="s-tooltip">
                         <div v-if="item.url" v-bind:class="'doubanboard-thumb'" v-bind:style="{backgroundImage : 'url(' + item.img +')'}">
                             <div class="doubanboard-title flex-hb-vc">
                                 <a class="movie-title w-06" v-bind:href="item.url" v-bind:title="item.name" target="_blank">{{item.name}}</a>
@@ -21,22 +22,42 @@ get_header();
                                     <span class="flex-hr-vc mr-5"><i class="lalaksks lalaksks-ic-tag"></i> {{item.mark_myself}}</span>
                                     <span class="flex-hr-vc"><i class="lalaksks lalaksks-ic-douban"></i> {{item.mark_douban}}</span>
                                 </div>
-                            </div>                        
+                            </div>
                         </div>
                         <div slot="content">
                             <h4>{{item.name}}</h4>
                             <p class="mt-10">{{item.remark}}</p>
                             <p class="mt-10">{{item.date}}</p>
                         </div>
-                    </el-tooltip>
+                    </el-tooltip> -->
+                    <rotate-card trigger="hover" direction="row" v-if="item.url">
+                        <div slot="cz">
+                            <div v-if="item.url" v-bind:class="'doubanboard-thumb'" v-bind:style="{backgroundImage : 'url(' + item.img +')'}">
+                                <div class="doubanboard-title flex-hb-vc">
+                                    <a class="movie-title w-06" v-bind:href="item.url" v-bind:title="item.name" target="_blank">{{item.name}}</a>
+                                    <div class="movie-mark flex-hr-vc w-04">
+                                        <span class="flex-hr-vc mr-5"><i class="lalaksks lalaksks-ic-tag"></i> {{item.mark_myself}}</span>
+                                        <span class="flex-hr-vc"><i class="lalaksks lalaksks-ic-douban"></i> {{item.mark_douban}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div slot="cf">
+                            <h4>{{item.name}}</h4>
+                            <p class="mt-10">{{item.remark}}</p>
+                            <p class="mt-10">{{item.date}}</p>                            
+                        </div>
+                    </rotate-card>
                 </el-col>
             </el-row>
+           
         </div>
     </main>
     <!-- #main -->
 </div>
 <!-- #primary -->
 <script>
+
     let app = new Vue({
         el: ".page-movie",
         data: {
@@ -47,12 +68,12 @@ get_header();
             list: [],
             loading: '',
         },
-        created: function() { 
+        created: function() {
             this.loading = this.$loading({
                 target: document.querySelector("#douban-movie-list")[0],
                 lock: true,
                 background: 'rgba(0, 0, 0, 0.8)'
-            });       
+            });
             this.loadMovies();
         },
         methods: {
@@ -61,16 +82,70 @@ get_header();
                 axios.post(GLOBAL.homeSourceUrl + "/douban/douban.php?type=movie&from=" + String(this.curMovies)).then(result => {
                     this.list = result.data;
                     setTimeout(() => {
-                        this.loading.close();                        
+                        this.loading.close();
                     }, 2000);
                 });
             }
         },
     })
+    Vue.component('rotate-card', {
+        template: `
+        <div class="card-3d" @click="eve_cardres_click" @mouseover="eve_cardres_msover" @mouseout="eve_cardres_msout">
+            <div class="card card-z" ref="cardz">
+                <slot name="cz"></slot>
+            </div>
+            <div :class="['card card-f',direction=='row'?'card-f-y':'card-f-x']" ref="cardf">
+                <slot name="cf"></slot>
+            </div>
+        </div>
+        `,
+        props: {
+            trigger: { //触发方式 hover click custom
+                type: String,
+                default: 'click' //默认点击触发
+            },
+            value: { //正反面
+                type: Boolean,
+                default: true
+            },
+            direction: { //方向 row col
+                type: String,
+                default: 'row'
+            }
+        },
+        data() {
+            return {
+                surface: true
+            }
+        },
+        watch: {
+            value(bool) { //自定义触发方式
+                if (this.trigger == 'custom') this.fn_reserve_action(bool)
+            }
+        },
+        methods: {
+            fn_reserve_action(bool) {
+                var arr = this.direction == 'row' ? ['rotateY(180deg)', 'rotateY(0deg)'] : ['rotateX(-180deg)', 'rotateX(0deg)']
+                this.$refs.cardz.style.transform = bool ? arr[0] : arr[1]
+                this.$refs.cardf.style.transform = !bool ? arr[0] : arr[1]
+            },
+            eve_cardres_click() {
+                if (this.trigger == 'click') {
+                    this.fn_reserve_action(this.surface)
+                    this.surface = !this.surface
+                }
+            },
+            eve_cardres_msover() {
+                if (this.trigger == 'hover') this.fn_reserve_action(true)
+            },
+            eve_cardres_msout() {
+                if (this.trigger == 'hover') this.fn_reserve_action(false)
+            }
+        }
+    })
 </script>
 
 <style>
-   
     .doubanboard-list {
         padding: 10px 0;
     }
@@ -81,6 +156,7 @@ get_header();
         margin-bottom: 15px;
         border-radius: 4px;
     }
+
     .doubanboard-thumb {
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
         background: #f7fbf7;
@@ -97,36 +173,78 @@ get_header();
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
 
-    .doubanboard-title{
+    .doubanboard-title {
         background: #000;
         opacity: .8;
         padding: 8px;
         border-radius: 4px;
     }
-    .doubanboard-title .movie-title{
+
+    .doubanboard-title .movie-title {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         color: #fff;
         font-size: 14px;
-        cursor: pointer; 
+        cursor: pointer;
     }
 
-    .doubanboard-title .movie-title:hover{
+    .doubanboard-title .movie-title:hover {
         color: #ddd;
     }
 
-    .doubanboard-title  .movie-mark *{
+    .doubanboard-title .movie-mark * {
         font-size: 12px;
-        color:#ff9900
+        color: #ff9900
     }
 
-        
-    .s-tooltip{
+
+    .s-tooltip {
         min-width: 25%;
         max-width: 80%;
     }
 
+    .card-3d {
+        width: 200px;
+        height: 300px;
+        transition: all .2s;
+        perspective: 1500px;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+    .card {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: all 1s;
+        backface-visibility: hidden;
+        border-radius: 4px;
+        border: 1px solid #e8eaec;
+    }
+
+    .card:hover {
+        box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+        border-color: #eee;
+    }
+
+    .card-z {
+        background-color: rgb(64, 158, 255);
+    }
+
+    .card-f {
+        background-color: rgb(255, 64, 105);
+    }
+
+    .card-f-y {
+        transform: rotateY(-180deg);
+    }
+
+    .card-f-x {
+        transform: rotateX(-180deg);
+    }
 </style>
 
 <?php
