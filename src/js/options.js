@@ -1,14 +1,3 @@
-
-let GLOBAL = {
-    // @if NODE_ENV = 'prod'
-    homeUrl: `https://klauslaura.cn`, 
-    homeSourceUrl: `https://klauslaura.cn/wp-content/themes/KlausLab`,
-    // @endif
-    // @if NODE_ENV = 'dev'
-    homeUrl: `http://localhost/dashboard/klausLab`,
-    homeSourceUrl: `http://localhost/dashboard/klausLab/wp-content/themes/klausLab`,
-    // @endif
-}
 Vue.prototype.GLOBAL = {
     homeUrl: GLOBAL.homeUrl, 
     shopSiteHref: `http://shop.klauslaura.cn`,

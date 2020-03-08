@@ -36,6 +36,7 @@
     "gulp-strip-debug": "^3.0.0",
     "gulp-uglify": "^3.0.2",
     "gulp-util": "^3.0.8",
+    "minimist": "^1.2.0",
     "postcss-assets": "^5.0.0",
     "promised-del": "^1.0.2",
     "vinyl-buffer": "^1.0.1",

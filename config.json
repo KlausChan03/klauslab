@@ -1,0 +1,10 @@
+{
+    "dev": {
+        "homeUrl": "http://localhost/dashboard/klausLab",
+        "homeSourceUrl": "http://localhost/dashboard/klausLab/wp-content/themes/klausLab"
+    },
+    "prod": {
+        "homeUrl": "https://klauslaura.cn", 
+        "homeSourceUrl": "https://klauslaura.cn/wp-content/themes/KlausLab"
+    }
+}

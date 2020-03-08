@@ -31,10 +31,9 @@ const
     babelify    = require('babelify'),
     deporder    = require('gulp-deporder'),
     removeUseStrict = require("gulp-remove-use-strict"),
-    stripdebug  = require('gulp-strip-debug')
+    stripdebug  = require('gulp-strip-debug'),
+    minimist   = require('minimist')
 ;
-
-console.log(dir.build)
 
 let FILTERJS = [dir.src + '/js/**/*.js',  '!' + dir.src + '/js/**/*.min.js',  '!' + dir.src + '/js/**/canvas.js',  '!' + dir.src + '/js/**/fixed-plugins.js'];
 let COPYJS = [dir.src + '/js/**/*.min.js',  dir.src + '/js/**/canvas.js',  dir.src + '/js/**/fixed-plugins.js'];
@@ -44,6 +43,15 @@ let COPYEMOJI = [dir.src + '/emoji/**/*.json',];
 
 // Browser sync
 var browsersync = false;
+
+//默认development环境
+var knowOptions = {
+    string: 'env',
+    default: {
+      env: process.env.NODE_ENV || 'dev'
+    }
+  };
+
 
 // PHP
 const php = {
@@ -226,6 +234,33 @@ gulp.task('copy', () => {
         .pipe(gulp.dest('./'));
 });
 
+
+var options = minimist(process.argv.slice(2), knowOptions);
+console.log(options)
+
+//生成filename文件，存入string内容
+function string_src(filename, string) {
+  var src = require('stream').Readable({ objectMode: true })
+  src._read = function () {
+    this.push(new gutil.File({ cwd: "", base: "", path: filename, contents: Buffer.from(string) }))
+    this.push(null)
+  }
+  return src
+}
+
+gulp.task('constants', function() {
+  //读入config.json文件
+  var myConfig = require('./config.json');
+  //取出对应的配置信息
+  var envConfig = myConfig[options.env];
+  console.log(envConfig)
+  var conConfig = 'GLOBAL = ' + JSON.stringify(envConfig);
+  //生成config.js文件
+  return string_src("config.js", conConfig)
+      .pipe(gulp.dest(js.build))
+});
+
+
 // 监视
 // gulp.task('watch', gulp.parallel('browsersync', () => {
 //     console.log('watch......');
@@ -244,7 +279,7 @@ gulp.task('copy', () => {
 //     gulp.watch(js.src, gulp.parallel('js')).on('change', browsersync ? browsersync.reload : gutil.noop);
 // }));
 
-gulp.task('default', gulp.series( 'clean','php',  'js', 'css', 'images','copy'));
+gulp.task('default', gulp.series( 'clean','php',  'js', 'css', 'images','copy','constants'));
 
 // default task
 // gulp.task('default', gulp.series('build', 'watch'));
