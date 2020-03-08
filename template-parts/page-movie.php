@@ -79,7 +79,7 @@ get_header();
         methods: {
             loadMovies: function() {
                 if ($("#douban-movie-list").length < 1) return;
-                axios.post(GLOBAL.homeSourceUrl + "/douban/douban.php?type=movie&from=" + String(this.curMovies)).then(result => {
+                axios.post(GLOBAL.ajaxSourceUrl + "/douban/douban.php?type=movie&from=" + String(this.curMovies)).then(result => {
                     this.list = result.data;
                     setTimeout(() => {
                         this.loading.close();

@@ -9,9 +9,11 @@ const dir = {
         srcRouter: './src/',
         distRouter: './dist/',
         // 注意：这里的路径需要根据自己的 wordpress 安装路径进行修改
-        build:  env === 'dev' ? 'C:/Tools/xampp/htdocs/dashboard/klausLab/wp-content/themes/KlausLab/' : '/var/www/html/wordpress/wp-content/themes/KlausLab/'
+        build:  env === 'dev' ?  'C:/Tools/xampp/htdocs/dashboard/klausLab/wp-content/themes/KlausLab/' : '/var/www/html/wordpress/wp-content/themes/KlausLab/'
+        
+        
     },    
-
+    // 'C:/xampp/htdocs/dashboard/klausLab/wp-content/themes/klausLab/'
     // Gulp 和 插件
     gulp        = require('gulp'),
     gutil       = require('gulp-util'),
@@ -38,9 +40,7 @@ let FILTERJS = [dir.src + '/js/**/*.js',  '!' + dir.src + '/js/**/*.min.js',  '!
 let COPYJS = [dir.src + '/js/**/*.min.js',  dir.src + '/js/**/canvas.js',  dir.src + '/js/**/fixed-plugins.js'];
 let FILTERCSS =  [dir.src + '/css/**/*.css']
 let COPYCSS = [];
-let COPYEMOJI = [dir.src + '/emoji/**/*.json',];
-let COPYFONT = [dir.src + '/fonts/**/*',];
-
+let COPYOTHERS = [dir.src + '/emoji/**/*',dir.src + '/fonts/**/*'];
 
 
 
@@ -56,7 +56,7 @@ var knowOptions = {
 // PHP
 const php = {
     src:    dir.src + 'template-parts/**/*.php',
-    build:  dir.build + 'template-parts'
+    build:  dir.build  + 'template-parts'
 };
 
 // 复制 PHP 文件
@@ -69,7 +69,7 @@ gulp.task('php', () => {
 // 图像处理
 const images = {
     src:    dir.src + 'img/**/*',
-    build:  dir.build + dir.distRouter +'img/'
+    build:  dir.build + dir.dist +'img/'
 };
 
 gulp.task('images', () => {
@@ -83,7 +83,7 @@ gulp.task('images', () => {
 var css = {
     src:    dir.src + 'scss/style.scss',
     watch:  dir.src + 'scss/**/*',
-    build:  dir.build + dir.distRouter +'css/',
+    build:  dir.build + dir.dist +'css/',
     sassOpts: {
         outputStyle     : 'nested',
         imagePath       : images.build,
@@ -122,7 +122,7 @@ gulp.task('css', function () {
 // Javascript 的处理
 const js = {
     src:        dir.src + 'js/**/*',
-    build:      dir.build + dir.distRouter +'js/',
+    build:      dir.build + dir.dist +'js/',
     filename:   'scripts.js'
 };
 
@@ -175,7 +175,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('copy', () => {
-    return gulp.src(COPYJS.concat(COPYCSS).concat(COPYEMOJI).concat(COPYFONT), {
+    return gulp.src(COPYJS.concat(COPYCSS).concat(COPYOTHERS), {
         base: dir.srcRouter
     })
         .pipe(gulp.dest(dir.distRouter));
@@ -183,7 +183,6 @@ gulp.task('copy', () => {
 
 
 var options = minimist(process.argv.slice(2), knowOptions);
-console.log(options)
 
 //生成filename文件，存入string内容
 function string_src(filename, string) {
@@ -200,7 +199,6 @@ gulp.task('constants', function() {
   var myConfig = require('./config.json');
   //取出对应的配置信息
   var envConfig = myConfig[options.env];
-  console.log(envConfig)
   var conConfig = 'GLOBAL = ' + JSON.stringify(envConfig);
   //生成config.js文件
   return string_src("config.js", conConfig)
