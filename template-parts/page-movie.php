@@ -31,8 +31,8 @@ get_header();
                         </div>
                     </el-tooltip> -->
                     <rotate-card trigger="hover" direction="row" v-if="item.url">
-                        <div slot="cz">
-                            <div v-if="item.url" v-bind:class="'doubanboard-thumb'" v-bind:style="{backgroundImage : 'url(' + item.img +')'}">
+                        <div slot="cz" v-if="item.url" v-bind:class="'doubanboard-thumb'" v-bind:style="{backgroundImage : 'url(' + item.img +')'}">
+                            <div >
                                 <div class="doubanboard-title flex-hb-vc">
                                     <a class="movie-title w-06" v-bind:href="item.url" v-bind:title="item.name" target="_blank">{{item.name}}</a>
                                     <div class="movie-mark flex-hr-vc w-04">
@@ -42,9 +42,9 @@ get_header();
                                 </div>
                             </div>
                         </div>
-                        <div slot="cf">
-                            <h4>{{item.name}}</h4>
-                            <p class="mt-10">{{item.remark}}</p>
+                        <div slot="cf" v-bind:class="'inner'" >
+                            <h3>{{item.name}}</h3>
+                            <p class="mt-10 item-content" v-bind:title=item.remark >{{item.remark}}</p>
                             <p class="mt-10">{{item.date}}</p>                            
                         </div>
                     </rotate-card>
@@ -205,27 +205,28 @@ get_header();
     }
 
     .card-3d {
-        width: 200px;
-        height: 300px;
         transition: all .2s;
         perspective: 1500px;
         background-color: transparent;
         cursor: pointer;
     }
 
-    .card {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        transition: all 1s;
+    .card-3d .card {
+        background-size: cover;
+        background-position: center;
+        -webkit-transition: -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+        transition: -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+        -o-transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+        transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+        transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1), -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+        -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
+        min-height: 280px;
+        height: 100%;
         border-radius: 4px;
-        border: 1px solid #e8eaec;
     }
 
-    .card:hover {
+    .card-3d .card:hover {
         box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
         border-color: #eee;
     }
@@ -234,9 +235,33 @@ get_header();
         background-color: rgb(64, 158, 255);
     }
 
-    .card-f {
-        background-color: rgb(255, 64, 105);
+    .card-f {        
+        background-color: #48e;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
     }
+
+    .card-f .inner{
+        /* transform: translateY(-50%) translateZ(60px) scale(0.94);
+        top: 50%; */
+        /* position: absolute;
+        left: 0; */
+        width: 100%;
+        padding: .8rem;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        outline: 1px solid transparent;
+        -webkit-perspective: inherit;
+        perspective: inherit;
+        z-index: 2;
+    }
+
+    .card-f .inner h3,.card-f .inner p{
+        color:#fff
+    }
+
 
     .card-f-y {
         transform: rotateY(-180deg);
@@ -244,6 +269,15 @@ get_header();
 
     .card-f-x {
         transform: rotateX(-180deg);
+    }
+
+    .item-content{
+        text-overflow: -o-ellipsis-lastline;
+        overflow-y: auto;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 10;
+        -webkit-box-orient: vertical;
     }
 </style>
 
