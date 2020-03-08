@@ -6,6 +6,12 @@
  * @package KlausLab
  */
 
+define( 'KL_THEME_DIR', get_template_directory() . '/dist' );
+define( 'KL_DIR', get_template_directory() . '/inc' );
+define( 'KL_THEME_URI', get_template_directory_uri() . '/dist' );
+define( 'KL_URI', get_template_directory_uri() . '/inc' );
+
+
 if (!function_exists('KlausLab_setup')) :
     function KlausLab_setup()
     {
@@ -49,6 +55,13 @@ if (!function_exists('KlausLab_setup')) :
     }
 endif; // KlausLab_setup
 add_action('after_setup_theme', 'KlausLab_setup');
+
+
+// function KL_THEME_DIR {
+//     $new_router = get_template_directory_uri() . '/dist';
+//     return $new_router;
+// }
+// $new_router = get_template_directory_uri() . '/dist';
 
 
 /**
@@ -226,46 +239,45 @@ if (!function_exists('KlausLab_comments')) :
 
 endif;
 
-require get_template_directory() . '/ajax-comment/main.php';
+require KL_DIR . '/ajax-comment/main.php';
 
 
 /**
  * Custom template tags for this theme.
  */
-require get_template_directory() . '/inc/template-tags.php';
+require KL_DIR . '/template-tags.php';
 
 /**
  * Custom functions that act independently of the theme templates.
  */
 
-require get_template_directory() . '/inc/extras.php';
+require KL_DIR . '/extras.php';
 
 /**
  * Customizer additions.
  */
-require get_template_directory() . '/inc/customizer.php';
+require KL_DIR . '/customizer.php';
 
 function normal_style_script()
 {
-    wp_enqueue_script('KlausLab-navigation', get_dist_template_directory_uri() . '/js/navigation.js', array(), '20120206', true);
+    wp_enqueue_script('KlausLab-navigation', KL_THEME_URI . '/js/navigation.js', array(), '20120206', true);
     // 媒体查询样式
-    wp_enqueue_style('mediaCss', get_dist_template_directory_uri() . '/css/media.css', array(), '1.0', false);
+    wp_enqueue_style('mediaCss', KL_THEME_URI . '/css/media.css', array(), '1.0', false);
     // 动画库样式
-    wp_enqueue_style('animate', get_dist_template_directory_uri() . '/css/animate.min.css', array(), '3.5.1', false);
+    wp_enqueue_style('animate', KL_THEME_URI . '/css/animate.min.css', array(), '3.5.1', false);
     // 插件样式
-    wp_enqueue_style('support', get_dist_template_directory_uri() . '/css/support.css', array(), '1.0', false);
+    wp_enqueue_style('support', KL_THEME_URI . '/css/support.css', array(), '1.0', false);
     // vue.min.js   
-    wp_enqueue_script('vue', get_dist_template_directory_uri() . '/js/vue.min.js', array(), '2.6.0', false);
+    wp_enqueue_script('vue', KL_THEME_URI . '/js/vue.min.js', array(), '2.6.0', false);
     // axios.min.js
-    wp_enqueue_script('axios', get_dist_template_directory_uri() . '/js/axios.min.js', array(), '0.19.0', false);
+    wp_enqueue_script('axios', KL_THEME_URI . '/js/axios.min.js', array(), '0.19.0', false);
     // katelog.min.js
-    wp_enqueue_script('katelog', get_dist_template_directory_uri() . '/js/katelog.min.js', array(), '1.0.0', false);
+    wp_enqueue_script('katelog', KL_THEME_URI . '/js/katelog.min.js', array(), '1.0.0', false);
     // 配置
-    wp_enqueue_script('myOptions', get_dist_template_directory_uri() . '/js/options.js', array(), '1.0', false);
+    wp_enqueue_script('myOptions', KL_THEME_URI . '/js/options.js', array(), '1.0', false);
     // ElementUI
-    wp_enqueue_script('element-ui-js', get_dist_template_directory_uri() . '/js/element-ui.min.js', array(), '1.0', false);
-    wp_enqueue_style('element-ui-css', get_dist_template_directory_uri() . '/css/element-ui.min.css', array(), '1.0', false);
-
+    wp_enqueue_script('element-ui-js', KL_THEME_URI . '/js/element-ui.min.js', array(), '1.0', false);
+    wp_enqueue_style('element-ui-css', KL_THEME_URI . '/css/element-ui.min.css', array(), '1.0', false);
 }
 
 
@@ -274,22 +286,22 @@ function footer_script()
 {
 
     // 交互
-    wp_enqueue_script('commonFunc', get_dist_template_directory_uri() . '/js/common.js', array(), '1.0', false);
+    wp_enqueue_script('commonFunc', KL_THEME_URI . '/js/common.js', array(), '1.0', false);
     // 支持
-    wp_enqueue_script( 'support', get_dist_template_directory_uri() . '/js/support.js', false, '1.0',array('jquery') );
+    wp_enqueue_script('support', KL_THEME_URI . '/js/support.js', false, '1.0', array('jquery'));
     // 动画
-    wp_enqueue_script( 'canvasFunc', get_dist_template_directory_uri() . '/js/canvas.js', array(), '1.0', false );
+    wp_enqueue_script('canvasFunc', KL_THEME_URI . '/js/canvas.js', array(), '1.0', false);
     // 右下角固定插件
-    wp_enqueue_script( 'fixedPlugins', get_dist_template_directory_uri() . '/js/fixed-plugins.js', array(), '1.0', false );
+    wp_enqueue_script('fixedPlugins', KL_THEME_URI . '/js/fixed-plugins.js', array(), '1.0', false);
     // 先将ajaxurl变数设定好
     // wp_localize_script('ajax', 'my_ajax_obj', array('ajaxurl' => admin_url('admin-ajax.php')));
-    wp_localize_script( 'fixedPlugins', 'KlausLabConfig', array(
+    wp_localize_script('fixedPlugins', 'KlausLabConfig', array(
         'siteUrl' => get_stylesheet_directory_uri(),
-        'siteStartTime' => cs_get_option( 'memory_start_time' ),
+        'siteStartTime' => cs_get_option('memory_start_time'),
         'ajaxUrl' => admin_url('admin-ajax.php'),
-        'commentEditAgain' => cs_get_option( 'memory_comment_edit' ),
-        'loadPjax' => cs_get_option( 'memory_pjax' ),
-      ));
+        'commentEditAgain' => cs_get_option('memory_comment_edit'),
+        'loadPjax' => cs_get_option('memory_pjax'),
+    ));
 }
 
 function custom_login()
@@ -313,7 +325,7 @@ function styles_scripts()
         // 提交加载 jquery 脚本
         wp_enqueue_script('jquery');
         if (is_mobile() === true && is_login() === false) {
-            wp_enqueue_script('util', get_dist_template_directory_uri() . '/js/util.js', array(), 'lastet', false);
+            wp_enqueue_script('util', KL_THEME_URI . '/js/util.js', array(), 'lastet', false);
         }
     } else { // 后台加载的脚本与样式表
         // 取消加载 jquery 脚本
@@ -335,7 +347,7 @@ function my_custom_login_logo()
 {
     echo '<style type="text/css">
         .login h1 a {
-			background-image:url("' . get_dist_template_directory_uri() . '/img/bg-test.jpg' . '") !important;
+			background-image:url("' . KL_THEME_URI . '/img/bg-test.jpg' . '") !important;
 			height: 80px;
 			width: 80px;
 			border-radius: 50%;
@@ -1154,12 +1166,6 @@ function ajax_comment_callback()
         wp_deregister_script('comment-reply');
     }
     add_action('init', 'Memory_disable_comment_js');
-
-
-    function get_dist_template_directory_uri() {
-        $new_router = get_template_directory_uri() . '/dist';
-        return $new_router;
-    }
 
 
 // 2018-8-14 引入

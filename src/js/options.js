@@ -3,10 +3,12 @@ let GLOBAL = {
     // @if NODE_ENV = 'prod'
     homeUrl: `https://klauslaura.cn`, 
     homeSourceUrl: `https://klauslaura.cn/wp-content/themes/KlausLab`,
+    ajaxSourceUrl: `https://klauslaura.cn/wp-content/themes/KlausLab/inc`,
     // @endif
     // @if NODE_ENV = 'dev'
     homeUrl: `http://localhost/dashboard/klausLab`,
     homeSourceUrl: `http://localhost/dashboard/klausLab/wp-content/themes/klausLab`,
+    ajaxSourceUrl: `http://localhost/dashboard/klausLab/wp-content/themes/klausLab/inc`,
     // @endif
 }
 Vue.prototype.GLOBAL = {
