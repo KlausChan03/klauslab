@@ -15,6 +15,7 @@ get_header(); ?>
 
 <div id="primary" class="main-area">
   <main id="main" class="main-content" role="main">
+    
     <?php if ( have_posts() ) : ?>
     <?php /* Start the Loop */ ?>
     <?php while ( have_posts() ) : the_post(); ?>
@@ -29,6 +30,7 @@ get_header(); ?>
 				?>
     <?php endwhile; ?>
     <?php the_posts_navigation(); ?>
+
     <?php else : ?>
     <?php get_template_part( 'template-parts/content', 'none' ); ?>
     <?php endif; ?>

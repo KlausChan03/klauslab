@@ -6,10 +6,10 @@
  * @package KlausLab
  */
 
-define( 'KL_THEME_DIR', get_template_directory() . '/dist' );
-define( 'KL_DIR', get_template_directory() . '/inc' );
-define( 'KL_THEME_URI', get_template_directory_uri() . '/dist' );
-define( 'KL_URI', get_template_directory_uri() . '/inc' );
+define('KL_THEME_DIR', get_template_directory() . '/dist');
+define('KL_DIR', get_template_directory() . '/inc');
+define('KL_THEME_URI', get_template_directory_uri() . '/dist');
+define('KL_URI', get_template_directory_uri() . '/inc');
 
 
 if (!function_exists('KlausLab_setup')) :
@@ -32,17 +32,17 @@ if (!function_exists('KlausLab_setup')) :
 	 * hard-coded <title> tag in the document head, and expect WordPress to
 	 * provide it for us.
 	 */
-    add_theme_support('title-tag');
-    add_theme_support('custom-logo');
+        add_theme_support('title-tag');
+        add_theme_support('custom-logo');
 
-	// This theme uses wp_nav_menu() in one location.
-	register_nav_menus( array(
-		'primary' => esc_html__( 'Primary Menu', 'KlausLab' ),
-		'social'  => esc_html__( 'Social Links', 'KlausLab' ),
-	));
-	
-	
-	/*
+        // This theme uses wp_nav_menu() in one location.
+        register_nav_menus(array(
+            'primary' => esc_html__('Primary Menu', 'KlausLab'),
+            'social'  => esc_html__('Social Links', 'KlausLab'),
+        ));
+
+
+        /*
 	 * Switch default core markup for search form, comment form, and comments
 	 * to output valid HTML5.
 	 */
@@ -275,7 +275,7 @@ function normal_style_script()
     // katelog.min.js
     wp_enqueue_script('katelog', KL_THEME_URI . '/js/katelog.min.js', array(), '1.0.0', false);
     // 全局变量配置
-     wp_enqueue_script('myConfig', KL_THEME_URI . '/js/config.js', array(), '1.0', false);
+    wp_enqueue_script('myConfig', KL_THEME_URI . '/js/config.js', array(), '1.0', false);
     // 配置
     wp_enqueue_script('myOptions', KL_THEME_URI . '/js/options.js', array(), '1.0', false);
     // ElementUI
@@ -1169,6 +1169,31 @@ function ajax_comment_callback()
         wp_deregister_script('comment-reply');
     }
     add_action('init', 'Memory_disable_comment_js');
+
+    function wp_pagenavi()
+    {
+        global $wp_query, $wp_rewrite;
+        $wp_query->query_vars['paged'] > 1 ? $current = $wp_query->query_vars['paged'] : $current = 1;
+
+        $pagination = array(
+            'base' => @add_query_arg('paged', '%#%'),
+            'format' => '',
+            'total' => $wp_query->max_num_pages,
+            'current' => $current,
+            'show_all' => false,
+            'type' => 'plain',
+            'end_size' => '1',
+            'mid_size' => '3',
+            'prev_text' => 'Prev',
+            'next_text' => 'Next'
+        );
+
+        if ($wp_rewrite->using_permalinks())
+            $pagination['base'] = user_trailingslashit(trailingslashit(remove_query_arg('s', get_pagenum_link(1))) . 'page/%#%/', 'paged');
+        if (!empty($wp_query->query_vars['s']))
+            $pagination['add_args'] = array('s' => get_query_var('s'));
+        echo paginate_links($pagination);
+    }
 
 
 // 2018-8-14 引入

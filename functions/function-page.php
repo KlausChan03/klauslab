@@ -127,11 +127,11 @@ function get_the_link_items($id = null,$cat){
 			}			
 			
 			$output .=  '<li class="link-item col-md-4"> <div class="p-0 borderr-main-4"> <div class="flex-hb-vc link-1 p-20 bgc-' 
-			. $arr_col[0] . $arr_num[0] . '"> <div class="w-85 p-0"> <strong><a title="'
+			. $arr_col[0] . $arr_num[0] . '"> <div class="w-085 p-0"> <strong><a title="'
 			. $bookmark->link_name . '" href="' 
 			. $bookmark->link_url . '" target="_blank" class="col-fff link-name">'
 			. $bookmark->link_name .'</a></strong> <p class="f12 col-fff text-overflow">' 
-			. $bookmark->link_url . '</p> </div> <div class="w-15 flex-hr-vc"><a title="'
+			. $bookmark->link_url . '</p> </div> <div class="w-015 flex-hr-vc"><a title="'
 			. $bookmark->link_name .'" href="' 
 			. $bookmark->link_url . '" target="_blank" class="link-avatar col-aaa"> '
 			. $imgUrl . '</a> </div></div> <div class="p-20 pt-10 pb-10 col-primary clearfix link-2"><h5 class="col-222 m-tb-5 flex-hl-vc"><i class="lalaksks lalaksks-ic-category mr-5"></i> '
