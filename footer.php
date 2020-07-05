@@ -92,27 +92,22 @@ wp_footer();
     },
     data() {
       return {
-        isShowNewYearActivity: '',
+        ifShowOurMemory: false,
+        ourDate:[]
       }
     },
     methods: {
       getTimeSetCookieFun() {
-        let day = this.getCookieFun('day') ? this.getCookieFun('day') : '';
-        let newTime = new Date().getDate();
+        let day = this.getCookieFun('day') ? this.getCookieFun('day') : ''; //cookie记录日期
+        let newTime = new Date().getDate(); //今天日期
+        console.log(day,newTime)
+        // 判断是否有cookie记录日期
         if (!day) {
-          this.isShowNewYearActivity = true;
           this.setcookieTimeFun('day', newTime, 1)
+          this.$notify({ message: '游客，欢迎到此一游。' });
         } else {
           if (newTime > day) {
-            this.isShowNewYearActivity = true;
             this.setcookieTimeFun('day', newTime, 1)
-          } else {
-            if (true) {
-              this.$notify({
-                message: '游客，你好！欢迎来到本站'
-              });
-              this.isShowNewYearActivity = false;
-            }
           }
         }
       },
