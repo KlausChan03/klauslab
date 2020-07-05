@@ -12,18 +12,10 @@
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, user-scalable=no" />
-	<!-- <link rel="profile" href="http://gmpg.org/xfn/11"> -->
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?> >
-
-<script>
-	// if(Number(getCookie('logo-gg')) !== Number(1)){
-	// 	setCookie('logo-gg','1');
-	// 	option.pageLoadingMask.show(document);
-	// }
-</script>
 
 <div id="page" class="hfeed site">
 	<header id="masthead" class="site-header" role="banner">
@@ -47,12 +39,11 @@
 					array( 
 					'theme_location' => 'primary', 
 					'menu_id' => 'primary-menu' ,
-					'after'  => '<span class="nm-menu-toggle hide"><i class="lalaksks lalaksks-ic-add add"></i><i class="lalaksks lalaksks-ic-minus minus"></i></span>',
 					) 
 				); 
 			?>	
 			<div id="menu-avatar"  class="menu-avatar pos-r m-lr-15 <?php if ( is_user_logged_in() ) { echo 'have-login'; } ?>">
-				<?php global $current_user;get_currentuserinfo();
+				<?php global $current_user;
 					echo get_avatar( $current_user->user_email, 48);
 				?>	
 				<div id="personal-menu">

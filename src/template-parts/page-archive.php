@@ -76,38 +76,11 @@
     //         content_dom.html(`<?php archives_list(null,"Laura"); the_content(); ?>`)
     //     }
     // })
-    // $(document).on("click", ".entry-content-filter button", function() {
-    //     var this_ = $(this),
-    //         this_type =  $(this).data("type"),
-    //         this_author = $(this).data("author"),
-    //         content_dom = $(".entry-content-list");
-    // })
-
-    let archiveFilter = new Vue({
-        el: '#archive-main',
-        data: {
-            archiveContent: '',
-            filterContent:'',
-            filterArr: [],
-        },
-        methods: {
-            choose: function ($event) {
-                let params = new FormData;
-                params.append('action', 'filter_archive');
-                if ($event.target.attributes['data-type']) {
-                    this.filterArr[0] = $event.target.attributes['data-type'].value;
-                }
-                if ($event.target.attributes['data-author']) {
-                    this.filterArr[1] = $event.target.attributes['data-author'].value;
-                }
-                this.filterContent = this.filterArr.join(',');
-                params.append('filter', this.filterArr);
-                axios.post(`${GLOBAL.homeUrl}/wp-admin/admin-ajax.php`, params).then((res) => {
-                    this.archiveContent = res.data;
-                })
-
-            }
-        }
+    $(document).on("click", ".entry-content-filter button", function() {
+        var this_ = $(this),
+            this_type =  $(this).data("type"),
+            this_author = $(this).data("author"),
+            content_dom = $(".entry-content-list");
     })
 
 

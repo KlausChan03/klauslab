@@ -6,6 +6,7 @@
  * @package KlausLab
  */
 
+// 定义目录变量
 define('KL_THEME_DIR', get_template_directory() . '/dist');
 define('KL_DIR', get_template_directory() . '/inc');
 define('KL_THEME_URI', get_template_directory_uri() . '/dist');
@@ -56,13 +57,6 @@ if (!function_exists('KlausLab_setup')) :
     }
 endif; // KlausLab_setup
 add_action('after_setup_theme', 'KlausLab_setup');
-
-
-// function KL_THEME_DIR {
-//     $new_router = get_template_directory_uri() . '/dist';
-//     return $new_router;
-// }
-// $new_router = get_template_directory_uri() . '/dist';
 
 
 /**
@@ -261,19 +255,21 @@ require KL_DIR . '/customizer.php';
 
 function normal_style_script()
 {
-    wp_enqueue_script('KlausLab-navigation', KL_THEME_URI . '/js/navigation.js', array(), '20120206', true);
-    // 媒体查询样式
-    wp_enqueue_style('mediaCss', KL_THEME_URI . '/css/media.css', array(), '1.0', false);
-    // 动画库样式
+    // wp_enqueue_script('KlausLab-navigation', KL_THEME_URI . '/js/navigation.js', array(), '20120206', true);
+    // 除style.css之外的样式
+    wp_enqueue_style('main', KL_THEME_URI . '/css/main.css', array(), '1.0', false);
+    // // 媒体查询样式
+    // wp_enqueue_style('mediaCss', KL_THEME_URI . '/css/media.css', array(), '1.0', false);
+    // // 动画库样式
     wp_enqueue_style('animate', KL_THEME_URI . '/css/animate.min.css', array(), '3.5.1', false);
-    // 插件样式
-    wp_enqueue_style('support', KL_THEME_URI . '/css/support.css', array(), '1.0', false);
+    // // 插件样式
+    // wp_enqueue_style('support', KL_THEME_URI . '/css/support.css', array(), '1.0', false);
     // vue.min.js   
     wp_enqueue_script('vue', KL_THEME_URI . '/js/vue.min.js', array(), '2.6.0', false);
+    // jquery.min.js
+    wp_enqueue_script('jquery', KL_THEME_URI . '/js/jquery-3.1.1.min.js', array(), '3.1.1', false);
     // axios.min.js
     wp_enqueue_script('axios', KL_THEME_URI . '/js/axios.min.js', array(), '0.19.0', false);
-    // katelog.min.js
-    wp_enqueue_script('katelog', KL_THEME_URI . '/js/katelog.min.js', array(), '1.0.0', false);
     // 全局变量配置
     wp_enqueue_script('myConfig', KL_THEME_URI . '/js/config.js', array(), '1.0', false);
     // 配置
@@ -281,6 +277,10 @@ function normal_style_script()
     // ElementUI
     wp_enqueue_script('element-ui-js', KL_THEME_URI . '/js/element-ui.min.js', array(), '1.0', false);
     wp_enqueue_style('element-ui-css', KL_THEME_URI . '/css/element-ui.min.css', array(), '1.0', false);
+
+    // MuseUI
+    //  wp_enqueue_script('muse-ui-js', KL_THEME_URI . '/theme/muse-ui.js', array(), '1.0', false);
+    //  wp_enqueue_style('muse-ui-css', KL_THEME_URI . '/theme/muse-ui.css', array(), '1.0', false);
 }
 
 
@@ -291,7 +291,7 @@ function footer_script()
     // 交互
     wp_enqueue_script('commonFunc', KL_THEME_URI . '/js/common.js', array(), '1.0', false);
     // 支持
-    wp_enqueue_script('support', KL_THEME_URI . '/js/support.js', false, '1.0', array('jquery'));
+    // wp_enqueue_script('support', KL_THEME_URI . '/js/support.js', false, '1.0', array('jquery'));
     // 动画
     wp_enqueue_script('canvasFunc', KL_THEME_URI . '/js/canvas.js', array(), '1.0', false);
     // 右下角固定插件
@@ -307,10 +307,10 @@ function footer_script()
     ));
 }
 
-function custom_login()
-{
-    echo '<link rel="stylesheet" type="text/css" href="' . get_bloginfo('template_directory') . '/css/login.css" />';
-}
+// function custom_login()
+// {
+//     wp_enqueue_style('myLogin', KL_THEME_URI . '/css/login.css', array(), '1.0', false);
+// }
 
 function is_login()
 {
@@ -324,7 +324,7 @@ function styles_scripts()
         // 去除已注册的 jquery 脚本
         wp_deregister_script('jquery');
         // 注册 jquery 脚本
-        wp_register_script('jquery', '//code.jquery.com/jquery.min.js', array(), 'lastest', false);
+        // wp_register_script('jquery', '//code.jquery.com/jquery.min.js', array(), 'lastest', false);
         // 提交加载 jquery 脚本
         wp_enqueue_script('jquery');
         if (is_mobile() === true && is_login() === false) {
@@ -334,7 +334,7 @@ function styles_scripts()
         // 取消加载 jquery 脚本
         wp_dequeue_script('jquery');
         // 注册并加载 jquery 脚本
-        wp_enqueue_script('jquery', '//code.jquery.com/jquery.min.js', array(), 'lastest', false);
+        // wp_enqueue_script('jquery', '//code.jquery.com/jquery.min.js', array(), 'lastest', false);
     }
 }
 
@@ -342,7 +342,7 @@ function styles_scripts()
 add_action('init', 'styles_scripts');
 add_action('wp_footer', 'footer_script');
 add_action('wp_enqueue_scripts', 'normal_style_script');
-add_action('login_head', 'custom_login');
+// add_action('login_head', 'custom_login');
 
 
 //自定义登录页面的LOGO图片
@@ -1195,6 +1195,53 @@ function ajax_comment_callback()
         echo paginate_links($pagination);
     }
 
+    function hitokoto()
+    {
+        $data  = KL_THEME_URI . '/json/one.json';
+        $json  = file_get_contents($data);
+        $array = json_decode($json, true);
+        $count = count($array);
+        if ($count != 0) {
+            $hitokoto = $array[array_rand($array)]['hitokoto'];
+            echo $hitokoto;
+        } else {
+            echo '';
+        }
+    }
+
+
+
+    function my_avatar($avatar)
+    {
+
+        $tmp = strpos($avatar, 'http');
+        $g = substr($avatar, $tmp, strpos($avatar, "'", $tmp) - $tmp);
+        $tmp = strpos($g, 'avatar/') + 7;
+        $f = substr($g, $tmp, strpos($g, "?", $tmp) - $tmp);
+        $w = get_bloginfo('wpurl');
+        $e = ABSPATH . 'avatar/' . $f . '.jpg';
+        $t = 1209600; //設定14天, 單位:秒
+        if (!is_file($e) || (time() - filemtime($e)) > $t) { //當頭像不存在或文件超過14天才更新
+            copy(htmlspecialchars_decode($g), $e);
+        } else $avatar = strtr($avatar, array($g => $w . '/avatar/' . $f . '.jpg'));
+        if (filesize($e) < 500) copy($w . '/avatar/default.jpg', $e);
+        return $avatar;
+    }
+
+    add_filter('get_avatar', 'my_avatar');
+
+
+    //增加个人简介信息
+    function my_new_contactmethods($contactmethods)
+    {
+        $contactmethods['weibo'] = '微博';
+        $contactmethods['zhihu'] = '知乎';
+        $contactmethods['github'] = 'Github';
+        $contactmethods['douban'] = '豆瓣';
+        $contactmethods['juejin'] = '掘金';
+        return $contactmethods;
+    }
+    add_filter('user_contactmethods', 'my_new_contactmethods', 10, 1);
 
 // 2018-8-14 引入
 // function translate_chinese_post_title_to_en_for_slug( $title ) {

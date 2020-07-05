@@ -6,19 +6,22 @@
 	function archives_list($filter) {
 	$filter = explode(',',$filter); 
 	if( empty($filter[0]) ){
-		$post_type = "post";
+		$post_type = '&post_type=any';
 	}else{
-		$post_type = $filter[0];
+		// $post_type = $filter[0];
+		$post_type = '&post_type=' . $filter[0];
 	}
 	if( empty($filter[1]) ){
-		$post_author = "Klaus";
+		$post_author = "";
 	}else{
-		$post_author = $filter[1];
+		// $post_author = $filter[1];
+		$post_author =  '&author_name=' . $filter[1];
 	}
 	if( empty($output) ){
 		$output = '';
 		$output = '<div id="archives">';
-		$the_query = new WP_Query( 'posts_per_page=-1&ignore_sticky_posts=1&post_type=' . $post_type . '&author_name=' . $post_author ); 
+		$the_query = new WP_Query( 'posts_per_page=-1&ignore_sticky_posts=1' . $post_type . $post_author ); 
+		
 		$year=0; $mon=0; $i=0; $j=0;
 
 		while ( $the_query->have_posts() ) : $the_query->the_post();
@@ -38,7 +41,7 @@
             $output .= '<li>'.'<a class="no-des" href="'. get_permalink() .'">'.get_the_time('j日: ') . get_the_title() .'('. get_comments_number('0', '1', '%') .'条评论)</a></li>'; //输出文章日期和标题
         endwhile;
         wp_reset_postdata();
-        $output .= '</ul></li></ul></div>';
+		$output .= '</ul></li></ul></div>';
         update_option('archives_list', $output);
 	}
     return $output;
@@ -50,36 +53,41 @@ add_action('save_post', 'clear_cache'); // 新发表文章/修改文章时
 // add_action('save_post', 'clear_cache');
 
 //说说
-function my_custom_init() { 
+function create_shuoshuo() { 
 	$labels = array( 
-		'name' => '说说',
-		'singular_name' => '说说',
-		'add_new' => '发表说说', 
-		'add_new_item' => '发表说说', 
-		'edit_item' => '编辑说说', 
-		'new_item' => '新说说', 
-		'view_item' => '查看说说', 
-		'search_items' => '搜索说说', 
-		'not_found' => '暂无说说', 
-		'not_found_in_trash' => '没有已遗弃的说说', 
-		'parent_item_colon' => '', 'menu_name' => '说说' 
+		'name' 					=> '说说',
+		'singular_name' 		=> '说说',
+		'add_new' 				=> '新建说说', 
+		'add_new_item' 			=> '新建一个说说', 
+		'edit_item' 			=> '编辑说说', 
+		'new_item' 				=> '新说说', 
+        'all_items'          	=> ( '所有说说' ),
+		'view_item' 			=> '查看说说', 
+		'search_items' 			=> '搜索说说', 
+		'not_found' 			=> '没有找到有关说说', 
+		'not_found_in_trash' 	=> '没有已遗弃的说说', 
+		'parent_item_colon' 	=> '', 'menu_name' => '说说' 
 	); 
 	$args = array( 
 		'labels' => $labels, 
+        'description'   => '写条说说',
 		'public' => true, 
 		'publicly_queryable' => true, 
 		'show_ui' => true, 
 		'show_in_menu' => true, 
-		'query_var' => true, 'rewrite' => true, 
+		'show_in_rest' => true,
+		'query_var' => true, 
+		'rewrite' => true, 
 		'capability_type' => 'post', 
 		'has_archive' => true, 
 		'hierarchical' => false, 
 		'menu_position' => null, 
-		'supports' => array('title','editor','author','comments') 
+		'taxonomies'=>array('shuoshuo'),
+		'supports' => array('title','editor','author','comments','custom-fields', 'thumbnail') 
 	); 
 	register_post_type('shuoshuo',$args); 
 }
-add_action('init', 'my_custom_init');
+add_action('init', 'create_shuoshuo');
 
 
 //友情链接
@@ -149,7 +157,7 @@ function get_link_items(){
     $linkcats = get_terms( 'link_category' );
     if ( !empty($linkcats) ) {
         foreach( $linkcats as $linkcat){            
-            $result .=  '<blockquote class="link-title">'.$linkcat->name.'</blockquote>';
+            $result .=  '<h2 class="p-10 mt-15">'.$linkcat->name.'</h2>';
             if( $linkcat->description ) $result .= '<div class="link-description">' . $linkcat->description . '</div>';
             $result .=  get_the_link_items($linkcat->term_id,$linkcat->name);
         }

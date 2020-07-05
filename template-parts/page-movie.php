@@ -11,9 +11,9 @@ get_header();
 
 <div id="primary" class="page-movie main-area w-1">
     <main id="main" class="main-content" role="main">
-        <div id="douban-movie-list" class="doubanboard-list">
-            <el-row v-bind:gutter="20" v-loading="loadingAll">
-                <el-col :span="6" :xs="24" :sm="12" :md="6" :lg="4" v-for="(item,index) in list" v-bind:key="item.url" v-bind:class="'doubanboard-item'">
+        <div id="douban-movie-list" class="doubanboard-list"  v-loading="loadingAll">
+            <el-row v-bind:gutter="20">
+                <el-col :span="6" :xs="24" :sm="12" :md="6" :lg="4" v-for="(item,index) in list" v-bind:key="item.url" v-bind:class="'doubanboard-item'" v-if="item.url">
                     <!-- <el-tooltip class="cur-p" effect="light" placement="right" popper-class="s-tooltip">
                         <div v-if="item.url" v-bind:class="'doubanboard-thumb'" v-bind:style="{backgroundImage : 'url(' + item.img +')'}">
                             <div class="doubanboard-title flex-hb-vc">
@@ -30,7 +30,7 @@ get_header();
                             <p class="mt-10">{{item.date}}</p>
                         </div>
                     </el-tooltip> -->
-                    <rotate-card trigger="hover" direction="row" v-if="item.url">
+                    <rotate-card trigger="hover" direction="row" >
                         <div slot="cz" v-if="item.url" v-bind:class="'doubanboard-thumb'" v-bind:style="{backgroundImage : 'url(' + item.img +')'}">
                             <div>
                                 <div class="doubanboard-title flex-hb-vc">
@@ -50,7 +50,9 @@ get_header();
                     </rotate-card>
                 </el-col>
             </el-row>
-
+            <div class="flex-hc-vc">
+                <el-button ref="getMoreButton" id="loadMoreMovies" @click="loadMovies();">加载更多</el-button>
+            </div>
         </div>
     </main>
     <!-- #main -->
@@ -65,6 +67,7 @@ get_header();
             curBooks_wish: 0,
             curMovies: 0,
             list: [],
+            pageSize: 20,
             loadingAll: true,
         },
         created: function() {
@@ -75,10 +78,15 @@ get_header();
                 this.loadingAll = true;
                 if ($("#douban-movie-list").length < 1) return;
                 axios.post(GLOBAL.ajaxSourceUrl + "/douban/douban.php?type=movie&from=" + String(this.curMovies)).then(result => {
-                    this.list = result.data;
+                    if(result.data.length < this.pageSize){
+                        this.$refs.getMoreButton.$el.setAttribute("disabled",true)
+                        this.$refs.getMoreButton.$el.innerHTML = "已加载完毕"                        
+                    }
+                    console.log(result.data.length,this.pageSize,this.curMovies)
+                    this.list = this.list.concat(result.data);
+                    this.curMovies+=this.pageSize;
                     setTimeout(() => {
                         this.loadingAll = false;
-
                     }, 1000);
                 });
             }
@@ -86,7 +94,7 @@ get_header();
     })
     Vue.component('rotate-card', {
         template: `
-        <div class="card-3d" @click="eve_cardres_click" @mouseover="eve_cardres_msover" @mouseout="eve_cardres_msout">
+        <div class="card-3d" @click="eve_cardres_click">
             <div class="card card-z" ref="cardz">
                 <slot name="cz"></slot>
             </div>
@@ -126,10 +134,10 @@ get_header();
                 this.$refs.cardf.style.transform = !bool ? arr[0] : arr[1]
             },
             eve_cardres_click() {
-                if (this.trigger == 'click') {
+                // if (this.trigger == 'click') {
                     this.fn_reserve_action(this.surface)
                     this.surface = !this.surface
-                }
+                // }
             },
             eve_cardres_msover() {
                 if (this.trigger == 'hover') this.fn_reserve_action(true)
@@ -145,6 +153,7 @@ get_header();
     .doubanboard-list {
         padding: 10px 0;
         overflow: hidden;
+        min-height: 100px;
     }
 
     .doubanboard-item {
@@ -221,6 +230,7 @@ get_header();
         min-height: 280px;
         height: 100%;
         border-radius: 4px;
+        overflow: hidden!important;
     }
 
     .card-3d .card:hover {
@@ -246,7 +256,7 @@ get_header();
         /* position: absolute;
         left: 0; */
         width: 100%;
-        padding: .8rem;
+        padding: .5rem;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
         outline: 1px solid transparent;
@@ -276,6 +286,7 @@ get_header();
         display: -webkit-box;
         -webkit-line-clamp: 10;
         -webkit-box-orient: vertical;
+        line-height: 1.5;
     }
 </style>
 

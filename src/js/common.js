@@ -96,9 +96,10 @@ let timer = new Vue({
         let params = new FormData;
         params.append('action', 'love_time');
         axios.post(`${GLOBAL.homeUrl}/wp-admin/admin-ajax.php`, params).then((res) => {
+            console.log(res)
             blog_create_time = res.data[0].user_registered; // 博客建立时间（根据第一个用户诞生时间）
             our_love_time = `2015-05-23 20:00:00`; // 恋爱时间
-            our_info = [res.data[1].nickname, res.data[1].img, res.data[2].nickname, res.data[1].img];
+            our_info = [res.data[1].nickname, res.data[1].img, res.data[2].nickname, res.data[2].img];
             if (photo_container) {
                 photo_container.innerHTML = ` <span class="m-lr-10"><img src="https://${our_info[1]}"></span> <i class="lalaksks lalaksks-ic-heart-2 throb"></i> <span class="m-lr-10"><img src="https://${our_info[3]}"></span> `;
             }
@@ -116,57 +117,60 @@ $(window).scroll(function () {
         $scrollTop = $(win).scrollTop();
     var direction, header = $(".site-header");
 
-    if ($(window).width() > 1000 && $(document).height() > 1500) {
-        $(window).resize(function () { $(".widget-area .widget-content").width($(".widget-area").width()); });
+    // if ($(window).width() > 1000 && $(document).height() > 1500) {
+    //     $(window).resize(function () { $(".widget-area .widget-content").width($(".widget-area").width()); });
 
-        if ($(this).scrollTop() >= 2000) {
-            $(".widget-area .widget-content").addClass("is-fixed");
-            $(".widget-area .widget-content").width($(".widget-area").width());
-            $(".widget_custom_html").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-            $(".widget_wp_statistics_widget").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-            $(".widget_categories").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-            $(".widget_recent_comments").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-            $(".widget_tag_cloud").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-        } else if ($(this).scrollTop() < 2000 && $(this).scrollTop() > 800) {
-            $(".widget-area .widget-content").addClass("is-fixed");
-            $(".widget-area .widget-content").width($(".widget-area").width());
-            $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-            $(".widget_wp_statistics_widget").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-            $(".widget_categories").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-            $(".widget_recent_comments").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-            $(".widget_tag_cloud").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-        } else if ($(this).scrollTop() >= 0 && $(this).scrollTop() < 800) {
-            $(".widget-area .widget-content").removeClass("is-fixed");
-            $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-            $(".widget_wp_statistics_widget").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-            $(".widget_tag_cloud").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-            $(".widget_categories").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-            $(".widget_recent_comments").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-        }
+    //     if ($(this).scrollTop() >= 2000) {
+    //         $(".widget-area .widget-content").addClass("is-fixed");
+    //         $(".widget-area .widget-content").width($(".widget-area").width());
+    //         $(".widget_custom_html").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+    //         $(".widget_recent_entries").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+    //         $(".widget_recent_comments").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
 
-        if ($scrollBottom < 80) {
-            $(".widget-area .widget-content").addClass("is-bottom")
-        } else {
-            $(".widget-area .widget-content").removeClass("is-bottom");
-        }
+    //         $(".widget_categories").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+    //         $(".widget_tag_cloud").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+    //     } else if ($(this).scrollTop() < 2000 && $(this).scrollTop() > 800) {
+    //         $(".widget-area .widget-content").addClass("is-fixed");
+    //         $(".widget-area .widget-content").width($(".widget-area").width());
+    //         $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+    //         $(".widget_recent_entries").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+    //         $(".widget_recent_comments").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
 
-        /*滚轮事件只有firefox比较特殊，使用DOMMouseScroll; 其他浏览器使用mousewheel;*/
-        document.body.addEventListener("DOMMouseScroll", function (event) {
-            direction = event.detail && (event.detail > 0 ? "mousedown" : "mouseup");
-        });
+    //         $(".widget_categories").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+    //         $(".widget_tag_cloud").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+    //     } else if ($(this).scrollTop() >= 0 && $(this).scrollTop() < 800) {
+    //         $(".widget-area .widget-content").removeClass("is-fixed");
+    //         $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+    //         $(".widget_recent_entries").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+    //         $(".widget_recent_comments").removeClass("f_o_r ds-none h-0").addClass("ds-block")
 
-        document.body.onmousewheel = function (event) {
-            event = event || window.event;
-            direction = event.wheelDelta && (event.wheelDelta > 0 ? "mouseup" : "mousedown");
-            if (direction == "mouseup" || $scrollTop == 0) {
-                header.removeClass("slideOutUp ds-none").addClass("slideInDown ds-block");
-            } else {
-                header.removeClass("slideInDown ds-block").addClass("slideOutUp ds-none");
-            }
-        };
-    } else {
-        $(".widget-area .widget-content").removeClass("is-fixed animated");
-    }
+    //         $(".widget_categories").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+    //         $(".widget_tag_cloud").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+    //     }
+
+    //     if ($scrollBottom < 80) {
+    //         $(".widget-area .widget-content").addClass("is-bottom")
+    //     } else {
+    //         $(".widget-area .widget-content").removeClass("is-bottom");
+    //     }
+
+    //     /*滚轮事件只有firefox比较特殊，使用DOMMouseScroll; 其他浏览器使用mousewheel;*/
+    //     document.body.addEventListener("DOMMouseScroll", function (event) {
+    //         direction = event.detail && (event.detail > 0 ? "mousedown" : "mouseup");
+    //     });
+
+    //     document.body.onmousewheel = function (event) {
+    //         event = event || window.event;
+    //         direction = event.wheelDelta && (event.wheelDelta > 0 ? "mouseup" : "mousedown");
+    //         if (direction == "mouseup" || $scrollTop == 0) {
+    //             header.removeClass("slideOutUp ds-none").addClass("slideInDown ds-block");
+    //         } else {
+    //             header.removeClass("slideInDown ds-block").addClass("slideOutUp ds-none");
+    //         }
+    //     };
+    // } else {
+    //     $(".widget-area .widget-content").removeClass("is-fixed animated");
+    // }
 })
 
 // $(document).on("mouseover mouseout", "img", function (event) {
@@ -213,78 +217,11 @@ function kl_count(_time, _dom, _content) {
 }
 
 
-// 滚动触发事件 (Sidebar固定、Header动画) 
-// 功能尚有瑕疵
-$(".widget-area .widget-content > aside").addClass("animated");
-$("#custom_html-4").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0");
-$(window).scroll(function () {
-    var doc = document,
-        win = window,
-        $scrollBottom = $(doc).height() - $(win).height() - $(win).scrollTop(),
-        $scrollTop = $(win).scrollTop();
-    var direction, header = $(".site-header");
-
-    if ($(window).width() > 1000 && $(document).height() > 1500) {
-        $(window).resize(function () { $(".widget-area .widget-content").width($(".widget-area").width()); });
-
-
-            if ($(this).scrollTop() >= 2000) {
-                $(".widget-area .widget-content").addClass("is-fixed");
-                $(".widget-area .widget-content").width($(".widget-area").width());
-                $(".widget_custom_html").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-                $(".widget_wp_statistics_widget").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-                $(".widget_categories").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-                $(".widget_recent_comments").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-                $(".widget_tag_cloud").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-            } else if ($(this).scrollTop() < 2000 && $(this).scrollTop() > 800) {
-                $(".widget-area .widget-content").addClass("is-fixed");
-                $(".widget-area .widget-content").width($(".widget-area").width());
-                $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-                $(".widget_wp_statistics_widget").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-                $(".widget_categories").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-                $(".widget_recent_comments").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-                $(".widget_tag_cloud").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-            } else if ($(this).scrollTop() >= 0 && $(this).scrollTop() < 800) {
-                $(".widget-area .widget-content").removeClass("is-fixed");
-                $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-                $(".widget_wp_statistics_widget").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-                $(".widget_tag_cloud").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-                $(".widget_categories").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-                $(".widget_recent_comments").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-            }
-
-   
-
-        if ($scrollBottom < 80) {
-            $(".widget-area .widget-content").addClass("is-bottom")
-        } else {
-            $(".widget-area .widget-content").removeClass("is-bottom");
-        }
-
-        /*滚轮事件只有firefox比较特殊，使用DOMMouseScroll; 其他浏览器使用mousewheel;*/
-        document.body.addEventListener("DOMMouseScroll", function (event) {
-            direction = event.detail && (event.detail > 0 ? "mousedown" : "mouseup");
-        });
-
-        document.body.onmousewheel = function (event) {
-            event = event || window.event;
-            direction = event.wheelDelta && (event.wheelDelta > 0 ? "mouseup" : "mousedown");
-            if (direction == "mouseup" || $scrollTop == 0) {
-                header.removeClass("slideOutUp ds-none").addClass("slideInDown ds-block");
-            } else {
-                header.removeClass("slideInDown ds-block").addClass("slideOutUp ds-none");
-            }
-        };
-    } else {
-        $(".widget-area .widget-content").removeClass("is-fixed animated");
-    }
-})
-
 if (document.getElementById("createtime")) {
-    setInterval(`kl_count(blog_create_time,'#createtime','运作了')`, 1000);
+    setInterval(`kl_count(blog_create_time,'#createtime','它运作了')`, 1000);
 }
 if (document.getElementById("lovetime")) {
-    setInterval(`kl_count(our_love_time,'#lovetime','相恋了')`, 1000);
+    setInterval(`kl_count(our_love_time,'#lovetime','他与她相恋了')`, 1000);
 }
 if (document.querySelector("#thisYear")) {
     const thisYear = document.querySelector("#thisYear");

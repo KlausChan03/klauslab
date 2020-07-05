@@ -1,3 +1,5 @@
 _bp/
 dist/
 node_modules/
+src/js/useless/
+src/css/temp/

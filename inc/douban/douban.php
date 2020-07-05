@@ -122,7 +122,7 @@ class DoubanAPI
                 $movie_url  = $t->find("a", 0)->getAttr("href");
                 $movie_remark  = $r->find("span.comment", 0)->getPlainText();
                 $movie_mark_myself  = floatval(preg_replace('/[^0-9]/','',$m->find("span", 0)->getAttr("class")) * 2);
-                $movie_date = $m->find("span", 1)->getPlainText();
+                $movie_date = str_replace("\"","\'",$m->find("span", 1)->getPlainText());
                 $api_num = cut_str($movie_url,'/',-2);
                 $api_movie = 'https://movie.douban.com/subject/'.$api_num.'/';
                 $raw_movie = self::curl_file_get_contents($api_movie);

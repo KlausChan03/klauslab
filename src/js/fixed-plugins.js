@@ -1,3 +1,24 @@
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1, // 月份
+        "d+": this.getDate(), // 日
+        "h+": this.getHours(), // 小时
+        "m+": this.getMinutes(), // 分
+        "s+": this.getSeconds(), // 秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+        "S": this.getMilliseconds()
+        // 毫秒
+    };
+    if (/(y+)/.test(fmt))
+        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "")
+            .substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) :
+                (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+   }
+
 // 返回顶部
 var backTop = document.getElementsByClassName("fp-gototop")[0];
 
@@ -82,48 +103,48 @@ function __checkDisplay() {
 
 // 繁体简体切换
 
-var Default_isFT = 0 // 默认是否繁体，0-简体，1-繁体，如果修改默认为繁体下面的所有“繁”、“简”互换
-var StranIt_Delay = 1000 // 翻译延时毫秒（设这个的目的是让网页先流畅的显现出来）
-//转换文本
-function StranText(txt, toFT, chgTxt) {
-    if (txt == "" || txt == null) return ""
-    toFT = toFT == null ? BodyIsFt : toFT
-    if (chgTxt) txt = txt.replace((toFT ? "简" : "繁"), (toFT ? "繁" : "简"))
-    if (toFT) {
-        return Traditionalized(txt)
-    } else {
-        return Simplized(txt)
-    }
-}
+// var Default_isFT = 0 // 默认是否繁体，0-简体，1-繁体，如果修改默认为繁体下面的所有“繁”、“简”互换
+// var StranIt_Delay = 1000 // 翻译延时毫秒（设这个的目的是让网页先流畅的显现出来）
+// //转换文本
+// function StranText(txt, toFT, chgTxt) {
+//     if (txt == "" || txt == null) return ""
+//     toFT = toFT == null ? BodyIsFt : toFT
+//     if (chgTxt) txt = txt.replace((toFT ? "简" : "繁"), (toFT ? "繁" : "简"))
+//     if (toFT) {
+//         return Traditionalized(txt)
+//     } else {
+//         return Simplized(txt)
+//     }
+// }
 
-function StranBody(fobj) {
-    if (typeof (fobj) == "object") {
-        var obj = fobj.childNodes
-    } else {
-        var tmptxt = lang_Obj.innerHTML.toString()
-        if (tmptxt.indexOf("简") < 0) {
-            BodyIsFt = 1
-            lang_Obj.innerHTML = StranText(tmptxt, 0, 1)
-            lang_Obj.title = StranText(lang_Obj.title, 0, 1)
-        } else {
-            BodyIsFt = 0
-            lang_Obj.innerHTML = StranText(tmptxt, 1, 1)
-            lang_Obj.title = StranText(lang_Obj.title, 1, 1)
-        }
-        setCookie(JF_cn, BodyIsFt, 7)
-        var obj = document.body.childNodes
-    }
-    for (var i = 0; i < obj.length; i++) {
-        var OO = obj.item(i)
-        if ("||BR|HR|TEXTAREA|".indexOf("|" + OO.tagName + "|") > 0 || OO == lang_Obj) continue;
-        if (OO.title != "" && OO.title != null) OO.title = StranText(OO.title);
-        if (OO.alt != "" && OO.alt != null) OO.alt = StranText(OO.alt);
-        if (OO.tagName == "INPUT" && OO.value != "" && OO.type != "text" && OO.type != "hidden") OO.value = StranText(OO.value);
-        if (OO.nodeType == 3) {
-            OO.data = StranText(OO.data)
-        } else StranBody(OO)
-    }
-}
+// function StranBody(fobj) {
+//     if (typeof (fobj) == "object") {
+//         var obj = fobj.childNodes
+//     } else {
+//         var tmptxt = lang_Obj.innerHTML.toString()
+//         if (tmptxt.indexOf("简") < 0) {
+//             BodyIsFt = 1
+//             lang_Obj.innerHTML = StranText(tmptxt, 0, 1)
+//             lang_Obj.title = StranText(lang_Obj.title, 0, 1)
+//         } else {
+//             BodyIsFt = 0
+//             lang_Obj.innerHTML = StranText(tmptxt, 1, 1)
+//             lang_Obj.title = StranText(lang_Obj.title, 1, 1)
+//         }
+//         setCookie(JF_cn, BodyIsFt, 7)
+//         var obj = document.body.childNodes
+//     }
+//     for (var i = 0; i < obj.length; i++) {
+//         var OO = obj.item(i)
+//         if ("||BR|HR|TEXTAREA|".indexOf("|" + OO.tagName + "|") > 0 || OO == lang_Obj) continue;
+//         if (OO.title != "" && OO.title != null) OO.title = StranText(OO.title);
+//         if (OO.alt != "" && OO.alt != null) OO.alt = StranText(OO.alt);
+//         if (OO.tagName == "INPUT" && OO.value != "" && OO.type != "text" && OO.type != "hidden") OO.value = StranText(OO.value);
+//         if (OO.nodeType == 3) {
+//             OO.data = StranText(OO.data)
+//         } else StranBody(OO)
+//     }
+// }
 
 
 
@@ -150,25 +171,25 @@ function Simplized(cc) {
 }
 
 
-var lang_Obj = document.getElementById("fp-change-lang")
-if (lang_Obj) {
-    var JF_cn = "ft" + self.location.hostname.toString().replace(/\./g, "")
-    var BodyIsFt = getCookie(JF_cn)
-    if (BodyIsFt != "1") BodyIsFt = Default_isFT
-    with(lang_Obj) {
-        if (typeof (document.all) != "object") {
-            href = "javascript:StranBody()"
-        } else {
-            href = "#";
-            onclick = new Function("StranBody();return false")
-        }
-        title = StranText("繁体", 1, 1)
-        innerHTML = StranText(innerHTML, 1, 1)
-    }
-    if (BodyIsFt == "1") {
-        setTimeout("StranBody()", StranIt_Delay)
-    }
-}
+// var lang_Obj = document.getElementById("fp-change-lang")
+// if (lang_Obj) {
+//     var JF_cn = "ft" + self.location.hostname.toString().replace(/\./g, "")
+//     var BodyIsFt = getCookie(JF_cn)
+//     if (BodyIsFt != "1") BodyIsFt = Default_isFT
+//     with(lang_Obj) {
+//         if (typeof (document.all) != "object") {
+//             href = "javascript:StranBody()"
+//         } else {
+//             href = "#";
+//             onclick = new Function("StranBody();return false")
+//         }
+//         title = StranText("繁体", 1, 1)
+//         innerHTML = StranText(innerHTML, 1, 1)
+//     }
+//     if (BodyIsFt == "1") {
+//         setTimeout("StranBody()", StranIt_Delay)
+//     }
+// }
 
 
 function JTPYStr() {
@@ -234,6 +255,15 @@ background_.addEventListener('mouseover', function (e) {
 let init = () => {
     let myDate = new Date();
     let mymonth = myDate.getMonth() + 1;
+    let today = myDate.Format('MM-dd');
+    let mourningDate = ['04-04','05-12'];
+    let _html = document.querySelectorAll('html')[0];
+    for(let i in mourningDate){
+        if(today === mourningDate[i]){
+            _html.classList.add('mourning')
+        }
+    }
+
     if (1 < mymonth && mymonth <= 4) {
         Animation.snow("sakura");
         return false;

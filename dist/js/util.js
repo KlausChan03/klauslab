@@ -1,1 +1,57 @@
-"use strict";!function(t){function i(){var e=o.getBoundingClientRect().width;if(e/a>720){e=720*a}t.rem=e/7.2;o.style.fontSize=t.rem+"px"}var a,e,n,r=t.document,o=r.documentElement,l=r.querySelector('meta[name="viewport"]'),s=r.querySelector('meta[name="flexible"]');if(l){var d=l.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);if(d){e=parseFloat(d[2]);a=parseInt(1/e)}}else{if(s){var d=s.getAttribute("content").match(/initial\-dpr=(["']?)([\d\.]+)\1?/);if(d){a=parseFloat(d[2]);e=parseFloat((1/a).toFixed(2))}}}if(!a&&!e){var m=(t.navigator.appVersion.match(/android/gi),t.navigator.appVersion.match(/iphone/gi));a=t.devicePixelRatio;a=m?a>=3?3:a>=2?2:1:1,e=1/a}if(o.setAttribute("data-dpr",a),!l){if(l=r.createElement("meta"),l.setAttribute("name","viewport"),l.setAttribute("content","initial-scale="+e+", maximum-scale="+e+", minimum-scale="+e+", user-scalable=no"),o.firstElementChild){o.firstElementChild.appendChild(l)}else{var c=r.createElement("div");c.appendChild(l),r.write(c.innerHTML)}}t.dpr=a;t.addEventListener("resize",function(){clearTimeout(n),n=setTimeout(i,300)},false);t.addEventListener("pageshow",function(e){e.persisted&&(clearTimeout(n),n=setTimeout(i,300))},false);"complete"===r.readyState?r.body.style.fontSize=12*a+"px":r.addEventListener("DOMContentLoaded",function(){r.body.style.fontSize=12*a+"px"},false);i()}(window);
+
+!function(win) {
+     function resize() {
+        var domWidth = domEle.getBoundingClientRect().width;
+        if(domWidth / v > 720){
+            domWidth = 720 * v;
+        }
+        win.rem = domWidth / 7.2;
+        domEle.style.fontSize = win.rem + "px";
+     }
+     var v, initial_scale, timeCode, dom = win.document, domEle = dom.documentElement, viewport = dom.querySelector('meta[name="viewport"]'), flexible = dom.querySelector('meta[name="flexible"]');
+     if (viewport) {
+//          viewport：<meta name="viewport"content="initial-scale=0.5, minimum-scale=0.5, maximum-scale=0.5,user-scalable=no,minimal-ui"/>
+     var o = viewport.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);
+        if(o){
+            initial_scale = parseFloat(o[2]);
+            v = parseInt(1 / initial_scale);
+        }
+     } else {
+        if (flexible) {
+            var o = flexible.getAttribute("content").match(/initial\-dpr=(["']?)([\d\.]+)\1?/);
+            if(o){
+                v = parseFloat(o[2]);
+                initial_scale = parseFloat((1 / v).toFixed(2))
+            }
+        }
+     }
+     if (!v && !initial_scale) {
+        var n = (win.navigator.appVersion.match(/android/gi), win.navigator.appVersion.match(/iphone/gi));
+        v = win.devicePixelRatio;
+        v = n ? v >= 3 ? 3 : v >= 2 ? 2 : 1 : 1, initial_scale = 1 / v
+     }
+     //没有viewport标签的情况下
+     if (domEle.setAttribute("data-dpr", v), !viewport) {
+        if (viewport = dom.createElement("meta"), viewport.setAttribute("name", "viewport"), viewport.setAttribute("content", "initial-scale=" + initial_scale + ", maximum-scale=" + initial_scale + ", minimum-scale=" + initial_scale + ", user-scalable=no"), domEle.firstElementChild) {
+            domEle.firstElementChild.appendChild(viewport)
+      } else {
+            var m = dom.createElement("div");
+            m.appendChild(viewport), dom.write(m.innerHTML)
+      }
+     }
+     win.dpr = v;
+     win.addEventListener("resize", function() {
+        clearTimeout(timeCode), timeCode = setTimeout(resize, 300)
+     }, false);
+     win.addEventListener("pageshow", function(b) {
+        b.persisted && (clearTimeout(timeCode), timeCode = setTimeout(resize, 300))
+     }, false);
+     /* 个人觉得没必要完成后就把body的字体设置为12*/
+     "complete" === dom.readyState ? dom.body.style.fontSize = 12 * v + "px" : dom.addEventListener("DOMContentLoaded", function() {
+        dom.body.style.fontSize = 12 * v + "px"
+     }, false);
+     
+     resize();
+}(window);
+
+

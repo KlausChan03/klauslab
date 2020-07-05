@@ -15,13 +15,12 @@
 <!-- .wrap  -->
 <footer id="colophon" class="site-footer flex-hc-vc" role="contentinfo">
   <div id="created-time">{{content}}</div>
-  <div class="site-info">
-    <p><span>一个秀恩爱的博客，</span><span id="createtime"></span></p>
+  <div class="site-info">    
     <p><span>Theme KlausLab By Klaus | All Rights Reserved</span></p>
     <p>版权所有 © 2016-<span id="thisYear"></span>
       <!-- <a href="http://www.miitbeian.gov.cn/" rel="nofollow noopener noreferrer" target="_blank"> 粤 ICP 备17095567号</a> -->
-      <a href="http://www.miitbeian.gov.cn/" rel="nofollow" target="_blank">
-        <?php echo get_option('zh_cn_l10n_icp_num'); ?>
+      <a href="http://beian.miit.gov.cn" rel="nofollow" target="_blank">
+        <?php echo get_option('zh_cn_l10n_icp_num'); ?> 号
       </a>
     </p>
   </div>
@@ -31,7 +30,6 @@
 <!-- #colophon -->
 </div>
 <!-- #page -->
-
 
 <!-- 背景动画DOM -->
 <div class="Snow"></div>
@@ -50,9 +48,7 @@
     <div class="fp-items fp-login">
       <a title="登录" href="<?php echo wp_login_url() ?>" class="login-btn"><i class="lalaksks lalaksks-ic-login"></i></a>
     </div>
-
   <?php endif ?>
-
   <div class="flex-hl-vc fp-search pos-r">
     <div class="fp-items fp-search-in">
       <a class="flex-hc-vc" title="站内搜索"><i class="lalaksks lalaksks-ic-search"></i></a>
@@ -65,10 +61,9 @@
   <div class="fp-items fp-gototop">
     <a title="返回顶部"><i class="lalaksks lalaksks-ic-backtotop"></i></a>
   </div>
-
-  <div class="fp-items fp-change-lang">
+  <!-- <div class="fp-items fp-change-lang">
     <a id="fp-change-lang" title="繁简切换" href="javascript:StranBody()" title="繁體"><i>繁</i></a>
-  </div>
+  </div> -->
   <div class="flex-hl-vc fp-background pos-r">
     <div class="fp-items fp-background-in">
       <a class="flex-hc-vc" title="切换背景"><i class="lalaksks lalaksks-ic-background"></i></a>
@@ -81,48 +76,86 @@
     </div>
   </div>
 </div>
-<?php 
-// 支持
-// wp_enqueue_script( 'support', get_template_directory_uri() . '/js/support.js', false, '1.0',array('jquery') );
-// // 动画
-// wp_enqueue_script( 'canvasFunc', get_template_directory_uri() . '/js/canvas.js', array(), '1.0', false );
-// // 右下角固定组件
-// wp_enqueue_script( 'fixed-plugins', get_template_directory_uri() . '/js/fixed-plugins.js', array(), '1.0', false );
-// wp_localize_script( 'fixed-plugins', 'KlausLabConfig', array(
-//   'siteUrl' => get_stylesheet_directory_uri(),
-//   'siteStartTime' => cs_get_option( 'memory_start_time' ),
-//   'ajaxUrl' => admin_url('admin-ajax.php'),
-//   'commentEditAgain' => cs_get_option( 'memory_comment_edit' ),
-//   'loadPjax' => cs_get_option( 'memory_pjax' ),
-// ));
+<?php
 wp_footer();
 ?>
 <?php
 wp_footer();
 ?>
 <script>
-  // (function() {
-  //   var pro = [],
-  //     i = 0,
-  //     len = pro.length,
-  //     load = function(src) {
-  //       if (i < len) {
-  //         var img_obj = new Image;
-  //         img_obj.src = src;
-  //         timer = setInterval(() => {
-  //           if (img_obj.complete) {
-  //             clearInterval(timer);
-  //             load(pro[i++])
-  //           }
-  //         }, 80);
-  //       } else {
-  //         setTimeout(() => {
-  //           option.pageLoadingMask.remove(document);
-  //         }, 1500);
-  //       }
-  //     };
-  //   load(pro[i])
-  // })()
+
+  let mainPage = new Vue({
+    element: '#app',
+    created() {
+      // 活动,设置cookie存储时间
+      this.getTimeSetCookieFun()
+    },
+    data() {
+      return {
+        isShowNewYearActivity: '',
+      }
+    },
+    methods: {
+      getTimeSetCookieFun() {
+        let day = this.getCookieFun('day') ? this.getCookieFun('day') : '';
+        let newTime = new Date().getDate();
+        if (!day) {
+          this.isShowNewYearActivity = true;
+          this.setcookieTimeFun('day', newTime, 1)
+        } else {
+          if (newTime > day) {
+            this.isShowNewYearActivity = true;
+            this.setcookieTimeFun('day', newTime, 1)
+          } else {
+            if (true) {
+              this.$notify({
+                message: '游客，你好！欢迎来到本站'
+              });
+              this.isShowNewYearActivity = false;
+            }
+          }
+        }
+      },
+
+      // 设置cookie时间
+      setcookieTimeFun(name, value, Days) {
+        value = new Date().getDate();
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+        document.cookie = name + "=" + value + ";expires=" + exp.toGMTString();
+      },
+
+      // 取出设置的cookie时间,存在就返回获取到的值,不存在返回''
+      getCookieFun(c_name) {
+        if (document.cookie.length > 0) {
+          let c_start = document.cookie.indexOf(c_name + "=");
+          if (c_start != -1) {
+            c_start = c_start + c_name.length + 1;
+            let c_end = document.cookie.indexOf(";", c_start)
+            if (c_end == -1) {
+              c_end = document.cookie.length;
+            }
+            return decodeURIComponent(document.cookie.substring(c_start, c_end));
+          }
+        }
+        return "";
+      },
+
+      //移除某一个cookie
+      delTimeCookie(name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cval = this.getCookieFun(name);
+        if (cval != null)
+          document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+      }
+    }
+
+  });
+
+  let secondary = new Vue({
+    element: '.author-info',
+  })
 </script>
 </body>
 

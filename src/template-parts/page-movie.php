@@ -12,8 +12,8 @@ get_header();
 <div id="primary" class="page-movie main-area w-1">
     <main id="main" class="main-content" role="main">
         <div id="douban-movie-list" class="doubanboard-list">
-            <el-row v-bind:gutter="20">
-                <el-col :xs="24" :sm="12" :md="6" :lg="4" v-for="(item,index) in list" v-bind:key="item.url" v-bind:class="'doubanboard-item'">
+            <el-row v-bind:gutter="20" v-loading="loadingAll">
+                <el-col :span="6" :xs="24" :sm="12" :md="6" :lg="4" v-for="(item,index) in list" v-bind:key="item.url" v-bind:class="'doubanboard-item'">
                     <!-- <el-tooltip class="cur-p" effect="light" placement="right" popper-class="s-tooltip">
                         <div v-if="item.url" v-bind:class="'doubanboard-thumb'" v-bind:style="{backgroundImage : 'url(' + item.img +')'}">
                             <div class="doubanboard-title flex-hb-vc">
@@ -32,7 +32,7 @@ get_header();
                     </el-tooltip> -->
                     <rotate-card trigger="hover" direction="row" v-if="item.url">
                         <div slot="cz" v-if="item.url" v-bind:class="'doubanboard-thumb'" v-bind:style="{backgroundImage : 'url(' + item.img +')'}">
-                            <div >
+                            <div>
                                 <div class="doubanboard-title flex-hb-vc">
                                     <a class="movie-title w-06" v-bind:href="item.url" v-bind:title="item.name" target="_blank">{{item.name}}</a>
                                     <div class="movie-mark flex-hr-vc w-04">
@@ -42,22 +42,21 @@ get_header();
                                 </div>
                             </div>
                         </div>
-                        <div slot="cf" v-bind:class="'inner'" >
+                        <div slot="cf" v-bind:class="'inner'">
                             <h3>{{item.name}}</h3>
-                            <p class="mt-10 item-content" v-bind:title=item.remark >{{item.remark}}</p>
-                            <p class="mt-10">{{item.date}}</p>                            
+                            <p class="mt-10 item-content" v-bind:title=item.remark>{{item.remark}}</p>
+                            <p class="mt-10">{{item.date}}</p>
                         </div>
                     </rotate-card>
                 </el-col>
             </el-row>
-           
+
         </div>
     </main>
     <!-- #main -->
 </div>
 <!-- #primary -->
 <script>
-
     let app = new Vue({
         el: ".page-movie",
         data: {
@@ -66,24 +65,21 @@ get_header();
             curBooks_wish: 0,
             curMovies: 0,
             list: [],
-            loading: '',
+            loadingAll: true,
         },
         created: function() {
-            this.loading = this.$loading({
-                target: document.querySelector("#douban-movie-list")[0],
-                lock: true,
-                background: 'rgba(0, 0, 0, 0.8)'
-            });
             this.loadMovies();
         },
         methods: {
             loadMovies: function() {
+                this.loadingAll = true;
                 if ($("#douban-movie-list").length < 1) return;
                 axios.post(GLOBAL.ajaxSourceUrl + "/douban/douban.php?type=movie&from=" + String(this.curMovies)).then(result => {
                     this.list = result.data;
                     setTimeout(() => {
-                        this.loading.close();
-                    }, 2000);
+                        this.loadingAll = false;
+
+                    }, 1000);
                 });
             }
         },
@@ -148,6 +144,7 @@ get_header();
 <style>
     .doubanboard-list {
         padding: 10px 0;
+        overflow: hidden;
     }
 
     .doubanboard-item {
@@ -235,7 +232,7 @@ get_header();
         background-color: rgb(64, 158, 255);
     }
 
-    .card-f {        
+    .card-f {
         background-color: #48e;
         position: absolute;
         top: 0;
@@ -243,7 +240,7 @@ get_header();
         width: 100%;
     }
 
-    .card-f .inner{
+    .card-f .inner {
         /* transform: translateY(-50%) translateZ(60px) scale(0.94);
         top: 50%; */
         /* position: absolute;
@@ -258,8 +255,9 @@ get_header();
         z-index: 2;
     }
 
-    .card-f .inner h3,.card-f .inner p{
-        color:#fff
+    .card-f .inner h3,
+    .card-f .inner p {
+        color: #fff
     }
 
 
@@ -271,7 +269,7 @@ get_header();
         transform: rotateX(-180deg);
     }
 
-    .item-content{
+    .item-content {
         text-overflow: -o-ellipsis-lastline;
         overflow-y: auto;
         text-overflow: ellipsis;
