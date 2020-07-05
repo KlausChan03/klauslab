@@ -1,2 +1,3 @@
-./_bp
-./dist
+_bp/
+dist/
+node_modules/
