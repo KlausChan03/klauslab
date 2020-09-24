@@ -113,7 +113,7 @@ if (post_password_required()) {
           <div class="comment-s">
             <textarea class="text-input error" id="comment" name="comment" rows="8" cols="45" aria-required="true" placeholder="一言：<?php hitokoto(); ?>"></textarea>
             <div class="flex-hb-vc p-tb-10">
-              <button type="button" class="OwO no-touch kl-btn kl-btn-sm"></button>
+              <div class="OwO no-touch kl-btn kl-btn-sm">测试</div>
               <div class="comment-action flex-hr-vc">
                 <span class="comment-cancel"><?php cancel_comment_reply_link('取消评论') ?></span>
                 <button type="submit" name="submit" class="comment-submit push-status kl-btn kl-btn-sm kl-btn-normal">发表评论</button>

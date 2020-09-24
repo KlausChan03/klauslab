@@ -2959,6 +2959,14 @@ body {
   article:first-of-type {
     margin-top: 0;
   }
+
+  .tips{
+    padding: 8px 12px;
+    background-color: #ecf8ff;
+    border-radius: 4px;
+    border-left: 5px solid #346c9c;
+    margin: 20px 0;
+  }
 }
 
 .single .hentry,

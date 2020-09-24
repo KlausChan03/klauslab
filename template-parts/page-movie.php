@@ -11,6 +11,9 @@ get_header();
 
 <div id="primary" class="page-movie main-area w-1">
     <main id="main" class="main-content" role="main">
+        <p class="tips" v-if="count">
+            <span>记录阅片数量：{{count}}</span>
+        </p>
         <div id="douban-movie-list" class="doubanboard-list"  v-loading="loadingAll">
             <el-row v-bind:gutter="20">
                 <el-col :span="6" :xs="24" :sm="12" :md="6" :lg="4" v-for="(item,index) in list" v-bind:key="item.url" v-bind:class="'doubanboard-item'" v-if="item.url">
@@ -67,6 +70,7 @@ get_header();
             curBooks_wish: 0,
             curMovies: 0,
             list: [],
+            count: 0,
             pageSize: 20,
             loadingAll: true,
         },
@@ -78,12 +82,14 @@ get_header();
                 this.loadingAll = true;
                 if ($("#douban-movie-list").length < 1) return;
                 axios.post(GLOBAL.ajaxSourceUrl + "/douban/douban.php?type=movie&from=" + String(this.curMovies)).then(result => {
-                    if(result.data.length < this.pageSize){
+                    console.error(result)
+                    if(result.data.data.length < this.pageSize){
                         this.$refs.getMoreButton.$el.setAttribute("disabled",true)
                         this.$refs.getMoreButton.$el.innerHTML = "已加载完毕"                        
                     }
-                    console.log(result.data.length,this.pageSize,this.curMovies)
-                    this.list = this.list.concat(result.data);
+                    console.log(result.data[0],this.pageSize,this.curMovies)
+                    this.list = this.list.concat(result.data.data);
+                    this.count = result.data.total;
                     this.curMovies+=this.pageSize;
                     setTimeout(() => {
                         this.loadingAll = false;
