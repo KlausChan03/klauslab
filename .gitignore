@@ -3,3 +3,4 @@ dist/
 node_modules/
 src/js/useless/
 src/css/temp/
+style.css
