@@ -4,3 +4,4 @@ node_modules/
 src/js/useless/
 src/css/temp/
 style.css
+build_blog.sh
