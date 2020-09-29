@@ -66,7 +66,8 @@ function create_shuoshuo() {
 		'search_items' 			=> '搜索说说', 
 		'not_found' 			=> '没有找到有关说说', 
 		'not_found_in_trash' 	=> '没有已遗弃的说说', 
-		'parent_item_colon' 	=> '', 'menu_name' => '说说' 
+		'parent_item_colon' 	=> '', 
+		'menu_name' 			=> '说说' 
 	); 
 	$args = array( 
 		'labels' => $labels, 

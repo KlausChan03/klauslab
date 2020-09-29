@@ -41,7 +41,8 @@ get_header();
                                                 <?php is_icon(get_the_ID(), "reply"); ?>
                                             </div>
                                             <div class="zan m-0 mr-10">
-                                                <a href="#" data-action="ding" data-id="<?php the_ID(); ?>" id="Addlike" class="action  <?php if (isset($_COOKIE['inlo_ding_' . $post->ID])) echo 'actived'; ?> <?php $category = get_the_category();                                                                                                                                                             echo $category[0]->category_nicename; ?>">
+                                                <a href="#" data-action="ding" data-id="<?php the_ID(); ?>" id="Addlike" class="action  <?php if (isset($_COOKIE['inlo_ding_' . $post->ID])) echo 'actived'; ?> <?php $category = get_the_category();
+                                                                                                                                                                                                                echo $category[0]->category_nicename; ?>">
                                                     <i class="lalaksks lalaksks-ic-zan"></i>
                                                     <span class="count"><?php if (get_post_meta($post->ID, 'inlo_ding', true)) {
                                                                             echo get_post_meta($post->ID, 'inlo_ding', true);
@@ -62,7 +63,7 @@ get_header();
                     comments_template();
                 } ?>
             </ul>
-        <div class="page-navi m-tb-10 flex-hc-vc"><?php wp_pagenavi(); ?></div>
+            <div class="page-navi m-tb-10 flex-hc-vc"><?php wp_pagenavi(); ?></div>
         </section>
     </main>
     <!-- .main-content -->
