@@ -20,12 +20,15 @@ Text Domain: KlausLab
 }
 
 /* 图标字体定义 */
-@font-face {
-  font-family: 'lalaksks';
 
-  /* project id 765116 */
+@font-face {
+  font-family: 'lalaksks';  /* project id 765116 */
   src: url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.eot');
-  src: url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.eot?#iefix') format("embedded-opentype"), url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.woff2') format("woff2"), url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.woff') format("woff"), url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.ttf') format("truetype"), url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.svg#lalaksks') format("svg");
+  src: url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.woff') format('woff'),
+  url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.svg#lalaksks') format('svg');
 }
 
 /*主要标签元素自定义设置*/
@@ -175,7 +178,8 @@ a {
 }
 
 p,
-a {
+a,
+span {
   word-wrap: break-word;
   font-size: 14px;
 }
@@ -675,8 +679,12 @@ img {
   content: "\e61e";
 }
 
-.lalaksks-ic-author:before {
+.lalaksks-ic-create:before {
   content: "\e6bc";
+}
+
+.lalaksks-ic-author:before {
+  content: "\e672";
 }
 
 .lalaksks-ic-zan:before {
@@ -2006,6 +2014,18 @@ body {
   flex: 1;
 
   /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+fs-12{
+  font-size: 12px;
+}
+
+fs-14{
+  font-size: 14px;
+}
+
+fs-16{
+  font-size: 16px;
 }
 
 .h-0 {

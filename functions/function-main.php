@@ -1231,7 +1231,7 @@ function ajax_comment_callback()
     // add_filter('get_avatar', 'my_avatar');
 
 
-    //增加个人简介信息
+    // 增加个人简介信息
     function my_new_contactmethods($contactmethods)
     {
         $contactmethods['weibo'] = '微博';
@@ -1242,6 +1242,23 @@ function ajax_comment_callback()
         return $contactmethods;
     }
     add_filter('user_contactmethods', 'my_new_contactmethods', 10, 1);
+
+    // 添加首页支持的文体格式
+    function themename_custom_post_formats_setup()
+    {
+        // 添加文章形式支持到说说类型 'shuoshuo'
+        add_post_type_support('shuoshuo', 'post-formats');
+
+        // 添加文章形式支持到自定义文章类型 'my_custom_post_type'
+        // add_post_type_support( 'my_custom_post_type', 'post-formats' );
+    }
+    add_action('init', 'themename_custom_post_formats_setup');
+
+    function themename_post_formats_setup()
+    {
+        add_theme_support('post-formats', array('shuoshuo'));
+    }
+    add_action('after_setup_theme', 'themename_post_formats_setup');
 
 // 2018-8-14 引入
 // function translate_chinese_post_title_to_en_for_slug( $title ) {

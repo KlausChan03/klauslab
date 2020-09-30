@@ -20,7 +20,7 @@ setPostViews(get_the_ID()); ?>
     <?php
     $limit = get_option('posts_per_page');
     $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-    query_posts('post_type=shuoshuo&post_status=publish&showposts=' . $limit = 10 . '&paged=' . $paged);
+    query_posts('post_type=any&post_status=publish&showposts=' . $limit = 10 . '&paged=' . $paged);
     ?>
     <?php if (have_posts()) : ?>
       <?php /* Start the Loop */ ?>
@@ -31,6 +31,7 @@ setPostViews(get_the_ID()); ?>
 					 * If you want to override this in a child theme, then include a file
 					 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
 					 */
+        // echo $post -> post_type;
         get_template_part('template-parts/content', get_post_format());
         ?>
       <?php endwhile; ?>     

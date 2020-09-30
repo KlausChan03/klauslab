@@ -9,7 +9,15 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class('article-list style-18'); ?>>	
 	<div class="entry-header flex-hl-vc">
-		<?php the_title( sprintf( '<h3 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h3>' ); ?>	
+		<?php the_title( sprintf( '<h3 class="entry-title mr-5"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h3>' ); ?>	
+		<?php 
+			$post_type = $post -> post_type;
+			if($post_type === "shuoshuo"){
+				echo '<i class="lalaksks lalaksks-ic-create"></i>发布了一条说说';
+			} else if($post_type === "page"){
+				echo '<i class="lalaksks lalaksks-ic-create"></i>新增了一个页面';
+			}
+		?>
 	</div>
 	<div class="entry-main">
 		<div class="entry-main-excerpt flex-hl-vl">
@@ -22,9 +30,7 @@
 				<?php the_excerpt(); ?>
 			</div>
 		</div>
-		<div class="entry-main-detail hide pos-r">
-
-		</div>
+		<div class="entry-main-detail hide pos-r"> </div>
 	</div>
 	<div class="entry-footer flex-hb-vc flex-hw">				
 			<?php if ( !is_mobile() ) : ?>
@@ -32,7 +38,7 @@
 					<div class="entry-date m-0 mr-15">
 						<?php is_icon( get_the_ID() ,"date"); ?>
 					</div>		
-					<div class="entry-author m-0 mr-15">
+					<div class="entry-author m-0 mr-15 fs-16">
 						<?php is_icon( get_the_ID() ,"author"); ?>
 					</div>			
 					<div class="entry-view m-0 mr-15">
