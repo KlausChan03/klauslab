@@ -101,21 +101,30 @@ function widget_authorinfo()
 			<p><?php the_author_meta('description'); ?></p>
 		</div>
 		<div class="author-social flex-hb-vc flex-hw">
-			<span class="kl-btn kl-btn-primary kl-btn-sm">
-				<a href="<?php the_author_meta('user_url'); ?>" rel="nofollow" target="_blank"><i class="lalaksks lalaksks-ic-menu"></i>博客</a>
+			<span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">
+				<a href="<?php the_author_meta('user_url'); ?>" title="我的站点" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-menu"></i></a>
 			</span>
-			<span class="kl-btn kl-btn-primary kl-btn-sm">				
-				<a href="<?php the_author_meta('weibo'); ?>" rel="nofollow" target="_blank"><i class="lalaksks lalaksks-ic-weibo"></i>微博</a>
+			<span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">				
+				<a href="<?php the_author_meta('weibo'); ?>" title="微博" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-weibo"></i></a>
 			</span>
-			<span class="kl-btn kl-btn-primary kl-btn-sm">				
-				<a href="<?php the_author_meta('zhihu'); ?>" rel="nofollow" target="_blank"><i class="lalaksks lalaksks-ic-zhihu"></i>知乎</a>
+			<span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">				
+				<a href="<?php the_author_meta('zhihu'); ?>" title="知乎" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-zhihu fs-16"></i></a>
 			</span>
-			<span class="kl-btn kl-btn-primary kl-btn-sm">				
-				<a href="<?php the_author_meta('douban'); ?>" rel="nofollow" target="_blank"><i class="lalaksks lalaksks-ic-douban"></i>豆瓣</a>
+			<span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">				
+				<a href="<?php the_author_meta('douban'); ?>" title="豆瓣" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-douban"></i></a>
 			</span>
-			<span class="kl-btn kl-btn-primary kl-btn-sm">				
-				<a href="<?php the_author_meta('github'); ?>" rel="nofollow" target="_blank"><i class="lalaksks lalaksks-ic-github"></i>Github</a>
+			<span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">				
+				<a href="<?php the_author_meta('github'); ?>" title="github" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-github"></i></a>
 			</span>
+			<!-- <span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">				
+				<a href="<?php the_author_meta('juejin'); ?>" title="掘金" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-github"></i></a>
+			</span>
+			<span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">				
+				<a href="<?php the_author_meta('facebook'); ?>" title="facebook" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-github"></i></a>
+			</span>
+			<span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">				
+				<a href="<?php the_author_meta('bilibili'); ?>" title="bilibili" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-github"></i></a>
+			</span> -->
 		</div>
 	</div>
 <?php

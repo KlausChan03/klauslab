@@ -12,23 +12,24 @@ Text Domain: KlausLab
 
 /* 通用字体定义 */
 @font-face {
-  font-family: 'Play';
-  font-style: normal;
-  font-weight: 400;
-  src: url(https://libs.bangbang93.com/s/play/v7/ZNo-5SxCwH1CXgZ-n3bt2g.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+  font-family: 'lalaksks';  /* project id 765116 */
+  src: url('//at.alicdn.com/t/font_765116_cpk5onknvr7.eot');
+  src: url('//at.alicdn.com/t/font_765116_cpk5onknvr7.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_765116_cpk5onknvr7.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_765116_cpk5onknvr7.woff') format('woff'),
+  url('//at.alicdn.com/t/font_765116_cpk5onknvr7.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_765116_cpk5onknvr7.svg#lalaksks') format('svg');
 }
 
 /* 图标字体定义 */
-
 @font-face {
   font-family: 'lalaksks';  /* project id 765116 */
-  src: url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.eot');
-  src: url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.woff') format('woff'),
-  url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_765116_3jfcmy4xbhc.svg#lalaksks') format('svg');
+  src: url('//at.alicdn.com/t/font_765116_asmzla41x8i.eot');
+  src: url('//at.alicdn.com/t/font_765116_asmzla41x8i.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_765116_asmzla41x8i.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_765116_asmzla41x8i.woff') format('woff'),
+  url('//at.alicdn.com/t/font_765116_asmzla41x8i.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_765116_asmzla41x8i.svg#lalaksks') format('svg');
 }
 
 /*主要标签元素自定义设置*/
@@ -314,7 +315,7 @@ q {
 
 hr {
   margin: 4em auto;
-  width: 240px;
+  width: 100%;
   max-width: 100%;
   border: none;
   border-top: 1px solid #D3D3D3;
@@ -636,19 +637,19 @@ img {
 }
 
 .lalaksks-ic-menu:before {
-  content: "\e60b";
+  content: "\f0ab";
 }
 
 .lalaksks-ic-login:before {
-  content: "\e600";
+  content: "\f0bb";
 }
 
 .lalaksks-ic-register:before {
-  content: "\e696";
+  content: "\f2cc";
 }
 
 .lalaksks-ic-logout:before {
-  content: "\e846";
+  content: "\f0bc";
 }
 
 .lalaksks-ic-dashboard:before {
@@ -656,19 +657,19 @@ img {
 }
 
 .lalaksks-ic-date:before {
-  content: "\e657";
+  content: "\ef5a";
 }
 
 .lalaksks-ic-category:before {
-  content: "\e7f9";
+  content: "\f0fc";
 }
 
 .lalaksks-ic-tag:before {
-  content: "\e611";
+  content: "\f0f3";
 }
 
 .lalaksks-ic-search:before {
-  content: "\e618";
+  content: "\f0a8";
 }
 
 .lalaksks-ic-edit:before {
@@ -676,7 +677,7 @@ img {
 }
 
 .lalaksks-ic-reply:before {
-  content: "\e61e";
+  content: "\ef7d";
 }
 
 .lalaksks-ic-create:before {
@@ -684,15 +685,15 @@ img {
 }
 
 .lalaksks-ic-author:before {
-  content: "\e672";
+  content: "\f071";
 }
 
 .lalaksks-ic-zan:before {
-  content: "\e612";
+  content: "\f106";
 }
 
 .lalaksks-ic-view:before {
-  content: "\e72d";
+  content: "\f21b";
 }
 
 .lalaksks-ic-addArticle:before {
@@ -706,11 +707,11 @@ img {
 /* 社交平台icon */
 
 .lalaksks-ic-zhihu:before {
-  content: "\e8de";
+  content: "\f276";
 }
 
 .lalaksks-ic-github:before {
-  content: "\e692";
+  content: "\f1b4";
 }
 
 .lalaksks-ic-douban:before {
@@ -718,15 +719,15 @@ img {
 }
 
 .lalaksks-ic-weibo:before {
-  content: "\e69e";
+  content: "\f261";
 }
 
 .lalaksks-ic-backtotop:before {
-  content: "\e88d";
+  content: "\ef2a";
 }
 
 .lalaksks-ic-background:before {
-  content: "\e60a";
+  content: "\efec";
 }
 
 .lalaksks-ic-add:before {
@@ -2016,16 +2017,16 @@ body {
   /* NEW, Spec - Opera 12.1, Firefox 20+ */
 }
 
-fs-12{
-  font-size: 12px;
+.fs-12{
+  font-size: 12px!important;
 }
 
-fs-14{
-  font-size: 14px;
+.fs-14{
+  font-size: 14px!important;
 }
 
-fs-16{
-  font-size: 16px;
+.fs-16{
+  font-size: 16px!important;
 }
 
 .h-0 {
@@ -2436,6 +2437,10 @@ fs-16{
   padding: 0;
   padding-left: 10px;
   padding-right: 8px;
+
+  &.kl-btn-fill{
+    background: #48e;
+  }
 
   &.kl-btn-primary {
     border-color: #48e;

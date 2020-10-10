@@ -1238,7 +1238,9 @@ function ajax_comment_callback()
         $contactmethods['zhihu'] = '知乎';
         $contactmethods['github'] = 'Github';
         $contactmethods['douban'] = '豆瓣';
-        $contactmethods['juejin'] = '掘金';
+        // $contactmethods['juejin'] = '掘金';
+        // $contactmethods['facebook'] = '脸书';
+        // $contactmethods['bilibili'] = 'bilibili';
         return $contactmethods;
     }
     add_filter('user_contactmethods', 'my_new_contactmethods', 10, 1);

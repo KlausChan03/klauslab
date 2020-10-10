@@ -21,28 +21,21 @@ get_header();
                     <?php endif; ?>
                 </div><!-- .entry-header -->
                 <div class="entry-content page-content">
-                    <div id="archive-filter" class="archive-filter">
-                        <div class="filter-author flex-hl-vc p-tb-10">
-                            <label>作者：</label>
-                            <div>
-                                <el-button :class="{active:filterArr[1] === ''}" size="mini" data-author="" @click="choose($event)">全部</el-button>
-                                <el-button :class="{active:filterArr[1] === 'Klaus'}" size="mini" data-author="Klaus" @click="choose($event)">Klaus</el-button>
-                                <el-button :class="{active:filterArr[1] === 'Laura'}" size="mini" data-author="Laura" @click="choose($event)">Laura</el-button>
-                            </div>
-                        </div>
-                        <div class="filter-type flex-hl-vc p-tb-10">
-                            <label>类型：</label>
-                            <div>
-                                <el-button :class="{active:filterArr[0] === ''}" size="mini" data-type="" @click="choose($event)">全部</el-button>
-                                <el-button :class="{active:filterArr[0] === 'post'}" size="mini" data-type="post" @click="choose($event)">文章</el-button>
-                                <el-button :class="{active:filterArr[0] === 'shuoshuo'}" size="mini" data-type="shuoshuo" @click="choose($event)">说说</el-button>
-                            </div>
-                        </div>
-                        <div class="filter-chosed flex-hl-vc p-tb-10">
-                            <label>当前选择：</label>
+                    <el-form id="archive-filter" class="archive-filter">
+                        <el-form-item class="filter-author" label="作者">
+                            <el-button :class="{active:filterArr[1] === ''}" size="mini" data-author="" @click="choose($event)">全部</el-button>
+                            <el-button :class="{active:filterArr[1] === 'Klaus'}" size="mini" data-author="Klaus" @click="choose($event)">Klaus</el-button>
+                            <el-button :class="{active:filterArr[1] === 'Laura'}" size="mini" data-author="Laura" @click="choose($event)">Laura</el-button>
+                        </el-form-item>
+                        <el-form-item class="filter-type" label="类型">
+                            <el-button :class="{active:filterArr[0] === ''}" size="mini" data-type="" @click="choose($event)">全部</el-button>
+                            <el-button :class="{active:filterArr[0] === 'post'}" size="mini" data-type="post" @click="choose($event)">文章</el-button>
+                            <el-button :class="{active:filterArr[0] === 'shuoshuo'}" size="mini" data-type="shuoshuo" @click="choose($event)">说说</el-button>
+                        </el-form-item>
+                        <el-form-item class="filter-chosed" label="当前选择">
                             <el-tag type="success" v-for="(item,index) in filterName" :key="item" class="mr-5">{{item}}</el-tag>
-                        </div>
-                    </div>
+                        </el-form-item>
+                    </el-form>
                     <div class="entry-content-list" v-html="archiveContent"> </div>
                 </div>
                 <?php edit_post_link(esc_html__('Edit', 'KlausLab'), '<footer class="entry-footer clear"><span class="edit-link">', '</span></footer><!-- .entry-footer -->'); ?>
@@ -56,10 +49,10 @@ get_header();
         margin: 20px 0;
     }
 
-    .archive-filter label {
+    /* .archive-filter label {
         min-width: 100px;
         text-align: right;
-    }
+    } */
 
     .archive-filter button.active {
         color: #409EFF;
