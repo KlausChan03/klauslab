@@ -253,7 +253,8 @@ gulp.task('constants', function () {
 //     gulp.watch(js.src, gulp.parallel('js')).on('change', browsersync ? browsersync.reload : gutil.noop);
 // }));
 
-gulp.task('default', gulp.series('clean', 'php', 'headerJs','footerJs', 'css', 'scss','images', 'copy', 'constants'));
+// gulp.task('default', gulp.series('clean', 'php', 'headerJs','footerJs', 'css', 'scss','images', 'copy', 'constants'));
+gulp.task('default', gulp.series('clean', 'php', 'headerJs','footerJs', 'css', 'scss','copy', 'constants'));
  
 // default task
 // gulp.task('default', gulp.series('build', 'watch'));
