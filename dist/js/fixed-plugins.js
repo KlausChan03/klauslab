@@ -290,7 +290,7 @@ let App = {};
 App.owoEmoji = () => {
     $('.OwO').each(function (i, block) {
         var s = new OwO({
-            logo: '<i class="lalaksks lalaksks-ic-background"></i> Emoji',
+            logo: '<i class="lalaksks lalaksks-ic-emoji"></i> Emoji',
             container: document.getElementsByClassName('OwO')[0],
             target: document.getElementsByClassName('error')[0],
             position: 'down',

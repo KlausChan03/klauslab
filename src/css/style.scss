@@ -24,12 +24,12 @@ Text Domain: KlausLab
 /* 图标字体定义 */
 @font-face {
   font-family: 'lalaksks';  /* project id 765116 */
-  src: url('//at.alicdn.com/t/font_765116_asmzla41x8i.eot');
-  src: url('//at.alicdn.com/t/font_765116_asmzla41x8i.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_765116_asmzla41x8i.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_765116_asmzla41x8i.woff') format('woff'),
-  url('//at.alicdn.com/t/font_765116_asmzla41x8i.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_765116_asmzla41x8i.svg#lalaksks') format('svg');
+  src: url('//at.alicdn.com/t/font_765116_9anrc89egpd.eot');
+  src: url('//at.alicdn.com/t/font_765116_9anrc89egpd.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_765116_9anrc89egpd.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_765116_9anrc89egpd.woff') format('woff'),
+  url('//at.alicdn.com/t/font_765116_9anrc89egpd.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_765116_9anrc89egpd.svg#lalaksks') format('svg');
 }
 
 /*主要标签元素自定义设置*/
@@ -653,7 +653,7 @@ img {
 }
 
 .lalaksks-ic-dashboard:before {
-  content: "\e61a";
+  content: "\f0f2";
 }
 
 .lalaksks-ic-date:before {
@@ -673,7 +673,7 @@ img {
 }
 
 .lalaksks-ic-edit:before {
-  content: "\e845";
+  content: "\efaa";
 }
 
 .lalaksks-ic-reply:before {
@@ -693,15 +693,15 @@ img {
 }
 
 .lalaksks-ic-view:before {
-  content: "\f21b";
+  content: "\ef48";
 }
 
 .lalaksks-ic-addArticle:before {
-  content: "\e604";
+  content: "\f09b";
 }
 
 .lalaksks-ic-addTalk:before {
-  content: "\e602";
+  content: "\e6bc";
 }
 
 /* 社交平台icon */
@@ -728,6 +728,10 @@ img {
 
 .lalaksks-ic-background:before {
   content: "\efec";
+}
+
+.lalaksks-ic-emoji:before {
+  content: "\f2a8";
 }
 
 .lalaksks-ic-add:before {
@@ -3417,7 +3421,7 @@ body {
 
   .entry-header .entry-title a {
     font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
     color: #222;
 
     &:hover {
@@ -3460,8 +3464,8 @@ body {
 
     p,
     li {
-      line-height: 2.5;
-      font-size: 14px;
+      line-height: 2;
+      font-size: 15px;
     }
 
     .entry-title h1 {
@@ -4068,42 +4072,42 @@ body {
     }
 
     img {
-      border: 8px solid pink;
+      border: none;
     }
   }
 }
 
-.gallery-columns-2 .gallery-item {
-  max-width: 50%;
-}
+// .gallery-columns-2 .gallery-item {
+//   max-width: 50%;
+// }
 
-.gallery-columns-3 .gallery-item {
-  max-width: 30%;
-}
+// .gallery-columns-3 .gallery-item {
+//   max-width: 30%;
+// }
 
-.gallery-columns-4 .gallery-item {
-  max-width: 25%;
-}
+// .gallery-columns-4 .gallery-item {
+//   max-width: 25%;
+// }
 
-.gallery-columns-5 .gallery-item {
-  max-width: 20%;
-}
+// .gallery-columns-5 .gallery-item {
+//   max-width: 20%;
+// }
 
-.gallery-columns-6 .gallery-item {
-  max-width: 16.66%;
-}
+// .gallery-columns-6 .gallery-item {
+//   max-width: 16.66%;
+// }
 
-.gallery-columns-7 .gallery-item {
-  max-width: 14.28%;
-}
+// .gallery-columns-7 .gallery-item {
+//   max-width: 14.28%;
+// }
 
-.gallery-columns-8 .gallery-item {
-  max-width: 12.5%;
-}
+// .gallery-columns-8 .gallery-item {
+//   max-width: 12.5%;
+// }
 
-.gallery-columns-9 .gallery-item {
-  max-width: 11.11%;
-}
+// .gallery-columns-9 .gallery-item {
+//   max-width: 11.11%;
+// }
 
 .gallery-caption {
   display: block;
@@ -5025,7 +5029,7 @@ div[itemprop="description"] {
   }
 
   .gallery-item a img {
-    border: 5px solid pink;
+    border: none;
   }
 
   .site-branding {

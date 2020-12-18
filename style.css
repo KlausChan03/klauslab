@@ -11,19 +11,18 @@ Text Domain: KlausLab
 */
 /* 通用字体定义 */
 @font-face {
-  font-family: 'Play';
-  font-style: normal;
-  font-weight: 400;
-  src: url(https://libs.bangbang93.com/s/play/v7/ZNo-5SxCwH1CXgZ-n3bt2g.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+  font-family: 'lalaksks';
+  /* project id 765116 */
+  src: url("//at.alicdn.com/t/font_765116_cpk5onknvr7.eot");
+  src: url("//at.alicdn.com/t/font_765116_cpk5onknvr7.eot?#iefix") format("embedded-opentype"), url("//at.alicdn.com/t/font_765116_cpk5onknvr7.woff2") format("woff2"), url("//at.alicdn.com/t/font_765116_cpk5onknvr7.woff") format("woff"), url("//at.alicdn.com/t/font_765116_cpk5onknvr7.ttf") format("truetype"), url("//at.alicdn.com/t/font_765116_cpk5onknvr7.svg#lalaksks") format("svg");
 }
 
 /* 图标字体定义 */
 @font-face {
   font-family: 'lalaksks';
   /* project id 765116 */
-  src: url("//at.alicdn.com/t/font_765116_3jfcmy4xbhc.eot");
-  src: url("//at.alicdn.com/t/font_765116_3jfcmy4xbhc.eot?#iefix") format("embedded-opentype"), url("//at.alicdn.com/t/font_765116_3jfcmy4xbhc.woff2") format("woff2"), url("//at.alicdn.com/t/font_765116_3jfcmy4xbhc.woff") format("woff"), url("//at.alicdn.com/t/font_765116_3jfcmy4xbhc.ttf") format("truetype"), url("//at.alicdn.com/t/font_765116_3jfcmy4xbhc.svg#lalaksks") format("svg");
+  src: url("//at.alicdn.com/t/font_765116_9anrc89egpd.eot");
+  src: url("//at.alicdn.com/t/font_765116_9anrc89egpd.eot?#iefix") format("embedded-opentype"), url("//at.alicdn.com/t/font_765116_9anrc89egpd.woff2") format("woff2"), url("//at.alicdn.com/t/font_765116_9anrc89egpd.woff") format("woff"), url("//at.alicdn.com/t/font_765116_9anrc89egpd.ttf") format("truetype"), url("//at.alicdn.com/t/font_765116_9anrc89egpd.svg#lalaksks") format("svg");
 }
 
 /*主要标签元素自定义设置*/
@@ -167,7 +166,8 @@ a:focus, a:hover, a:active {
 }
 
 p,
-a {
+a,
+span {
   word-wrap: break-word;
   font-size: 14px;
 }
@@ -293,7 +293,7 @@ q {
 
 hr {
   margin: 4em auto;
-  width: 240px;
+  width: 100%;
   max-width: 100%;
   border: none;
   border-top: 1px solid #D3D3D3;
@@ -561,76 +561,80 @@ img {
 }
 
 .lalaksks-ic-menu:before {
-  content: "\e60b";
+  content: "\f0ab";
 }
 
 .lalaksks-ic-login:before {
-  content: "\e600";
+  content: "\f0bb";
 }
 
 .lalaksks-ic-register:before {
-  content: "\e696";
+  content: "\f2cc";
 }
 
 .lalaksks-ic-logout:before {
-  content: "\e846";
+  content: "\f0bc";
 }
 
 .lalaksks-ic-dashboard:before {
-  content: "\e61a";
+  content: "\f0f2";
 }
 
 .lalaksks-ic-date:before {
-  content: "\e657";
+  content: "\ef5a";
 }
 
 .lalaksks-ic-category:before {
-  content: "\e7f9";
+  content: "\f0fc";
 }
 
 .lalaksks-ic-tag:before {
-  content: "\e611";
+  content: "\f0f3";
 }
 
 .lalaksks-ic-search:before {
-  content: "\e618";
+  content: "\f0a8";
 }
 
 .lalaksks-ic-edit:before {
-  content: "\e845";
+  content: "\efaa";
 }
 
 .lalaksks-ic-reply:before {
-  content: "\e61e";
+  content: "\ef7d";
 }
 
-.lalaksks-ic-author:before {
+.lalaksks-ic-create:before {
   content: "\e6bc";
 }
 
+.lalaksks-ic-author:before {
+  content: "\f071";
+}
+
 .lalaksks-ic-zan:before {
-  content: "\e612";
+  content: "\f106";
 }
 
 .lalaksks-ic-view:before {
-  content: "\e72d";
+  content: "\ef48";
 }
 
 .lalaksks-ic-addArticle:before {
-  content: "\e604";
+  content: "\f09b";
 }
 
 .lalaksks-ic-addTalk:before {
-  content: "\e602";
+  content: "\e6bc";
 }
 
 /* 社交平台icon */
 .lalaksks-ic-zhihu:before {
-  content: "\e8de";
+  content: "\f276";
 }
 
 .lalaksks-ic-github:before {
-  content: "\e692";
+  content: "\f1b4";
 }
 
 .lalaksks-ic-douban:before {
@@ -638,15 +642,19 @@ img {
 }
 
 .lalaksks-ic-weibo:before {
-  content: "\e69e";
+  content: "\f261";
 }
 
 .lalaksks-ic-backtotop:before {
-  content: "\e88d";
+  content: "\ef2a";
 }
 
 .lalaksks-ic-background:before {
-  content: "\e60a";
+  content: "\efec";
+}
+
+.lalaksks-ic-emoji:before {
+  content: "\f2a8";
 }
 
 .lalaksks-ic-add:before {
@@ -1222,6 +1230,102 @@ img {
   }
 }
 
+.loader-background {
+  overflow: hidden;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999999;
+  pointer-events: none;
+  background: white;
+}
+
+.sk-cube-grid {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  /* margin: 100px auto; */
+}
+
+.sk-cube-grid .sk-cube {
+  width: 33%;
+  height: 33%;
+  background-color: #333;
+  float: left;
+  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+  animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+}
+
+.sk-cube-grid .sk-cube1 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+.sk-cube-grid .sk-cube2 {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+
+.sk-cube-grid .sk-cube3 {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+.sk-cube-grid .sk-cube4 {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+.sk-cube-grid .sk-cube5 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+.sk-cube-grid .sk-cube6 {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+
+.sk-cube-grid .sk-cube7 {
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s;
+}
+
+.sk-cube-grid .sk-cube8 {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+.sk-cube-grid .sk-cube9 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+@-webkit-keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+    transform: scale3D(1, 1, 1);
+  }
+  35% {
+    -webkit-transform: scale3D(0, 0, 1);
+    transform: scale3D(0, 0, 1);
+  }
+}
+
+@keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+    transform: scale3D(1, 1, 1);
+  }
+  35% {
+    -webkit-transform: scale3D(0, 0, 1);
+    transform: scale3D(0, 0, 1);
+  }
+}
+
 /* 背景&皮肤 */
 body.color article,
 body.color aside,
@@ -1701,6 +1805,18 @@ body {
   /* NEW, Spec - Opera 12.1, Firefox 20+ */
 }
 
+.fs-12 {
+  font-size: 12px !important;
+}
+
+.fs-14 {
+  font-size: 14px !important;
+}
+
+.fs-16 {
+  font-size: 16px !important;
+}
+
 .h-0 {
   height: 0 !important;
 }
@@ -2101,6 +2217,10 @@ body {
   padding: 0;
   padding-left: 10px;
   padding-right: 8px;
+}
+
+.kl-btn.kl-btn-fill {
+  background: #48e;
 }
 
 .kl-btn.kl-btn-primary {
@@ -3023,7 +3143,7 @@ body {
 
 .article-list .entry-header .entry-title a {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 20px;
   color: #222;
 }
 
@@ -3065,8 +3185,8 @@ body {
 
 .article-list .entry-main p,
 .article-list .entry-main li {
-  line-height: 2.5;
-  font-size: 14px;
+  line-height: 2;
+  font-size: 15px;
 }
 
 .article-list .entry-main .entry-title h1 {
@@ -3639,39 +3759,7 @@ body {
 }
 
 .gallery-item a img {
-  border: 8px solid pink;
-}
-
-.gallery-columns-2 .gallery-item {
-  max-width: 50%;
-}
-
-.gallery-columns-3 .gallery-item {
-  max-width: 30%;
-}
-
-.gallery-columns-4 .gallery-item {
-  max-width: 25%;
-}
-
-.gallery-columns-5 .gallery-item {
-  max-width: 20%;
-}
-
-.gallery-columns-6 .gallery-item {
-  max-width: 16.66%;
-}
-
-.gallery-columns-7 .gallery-item {
-  max-width: 14.28%;
-}
-
-.gallery-columns-8 .gallery-item {
-  max-width: 12.5%;
-}
-
-.gallery-columns-9 .gallery-item {
-  max-width: 11.11%;
+  border: none;
 }
 
 .gallery-caption {
@@ -4446,7 +4534,7 @@ div[itemprop="description"] {
     width: 100%;
   }
   .gallery-item a img {
-    border: 5px solid pink;
+    border: none;
   }
   .site-branding {
     padding-top: 50px;
