@@ -256,12 +256,18 @@ let init = () => {
     let myDate = new Date();
     let mymonth = myDate.getMonth() + 1;
     let today = myDate.Format('MM-dd');
-    let mourningDate = ['04-04','05-12'];
+    let MourningDate = ['04-04','05-12'];
+    let ChristmasDate = '12-24';
     let _html = document.querySelectorAll('html')[0];
-    for(let i in mourningDate){
-        if(today === mourningDate[i]){
+    let _body = document.querySelectorAll('body')[0];
+    let _widget_userinfo = document.getElementsByClassName('widget')[0].querySelectorAll('.user-bg')[0];
+    for(let index = 0; index < MourningDate.length; index++){
+        if(today === MourningDate[index]){
             _html.classList.add('mourning')
-        }
+        } 
+    }
+    if(today === ChristmasDate) {
+        _widget_userinfo.classList.add('christmas-bg')
     }
 
     if (1 < mymonth && mymonth <= 4) {

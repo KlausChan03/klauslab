@@ -88,7 +88,7 @@ wp_footer();
     element: '#app',
     created() {
       // 活动,设置cookie存储时间
-      this.getTimeSetCookieFun()
+      // this.getTimeSetCookieFun()
     },
     data() {
       return {

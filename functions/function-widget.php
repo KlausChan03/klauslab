@@ -40,23 +40,27 @@ function widget_userinfo()
 {
 	global $current_user;
 ?>
-	<div class="author-info">		
-		<div class="author-avatar flex-hc-vc mb-10">
-			<?php if (function_exists('get_avatar')) {
-				echo get_avatar( $current_user->user_email, 48);
-			} ?>
-		</div>
-		<div class="author-name flex-hc-vc mb-5 ">
-			<span>
-			<?php global $user_ID; if (!$current_user->display_name && $user_ID === 0) : ?>
-					游客，欢迎到此一游。
-				<?php else : ?>
-				<?php echo($current_user->display_name); echo ('，你在本站留下了' . get_comments('count=true&user_id=' . $user_ID) . '条评论。'); ?>
-				<?php endif; ?>
-				<!-- <?php echo($current_user->display_name); ?>，</span><span>你在本站留下了<?php global $user_ID; echo get_comments('count=true&user_id=' . $user_ID); ?>条评论。 -->
-			</span>
+	<div class="widget-user-container">
+		<div class="user-bg"></div>
+		<div class="user-main">		
+			<div class="user-avatar flex-hc-vc mb-10">
+				<?php if (function_exists('get_avatar')) {
+					echo get_avatar( $current_user->user_email, 48);
+				} ?>
+			</div>
+			<div class="user-info flex-hc-vc">
+				<span>
+				<?php global $user_ID; if (!$current_user->display_name && $user_ID === 0) : ?>
+						游客，欢迎到此一游。
+					<?php else : ?>
+					<?php echo($current_user->display_name); echo ('，你在本站留下了' . get_comments('count=true&user_id=' . $user_ID) . '条评论。'); ?>
+					<?php endif; ?>
+					<!-- <?php echo($current_user->display_name); ?>，</span><span>你在本站留下了<?php global $user_ID; echo get_comments('count=true&user_id=' . $user_ID); ?>条评论。 -->
+				</span>
+			</div>
 		</div>
 	</div>
+	
 <?php
 }
 

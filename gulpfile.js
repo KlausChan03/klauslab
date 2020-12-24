@@ -47,7 +47,7 @@ let FILTERCSS = [dir.src + '/css/*.css', '!' + dir.src + '/css/*.min.css' ]
 let FILTERSCSS = [dir.src + '/css/*.scss']
 let FILTERTEMPCSS = [dir.dist + 'css/*.css']
 let COPYCSS = [];
-let COPYOTHERS = [dir.src + '/theme/*', dir.src + '/css/**/*.min.css', dir.src + '/emoji/**/*', dir.src + '/fonts/**/*', dir.src + '/json/**/*', dir.src + '/css/lib/*'];
+let COPYOTHERS = [dir.src + '/theme/*', dir.src + '/css/**/*.min.css', dir.src + '/emoji/**/*', dir.src + '/fonts/**/*',  dir.src + '/img/**/*',dir.src + '/json/**/*', dir.src + '/css/lib/*'];
 
 //默认development环境
 var knowOptions = {
