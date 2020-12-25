@@ -2843,13 +2843,15 @@ body {
     .widget-user-container{
       position: relative;
       .user-bg{
-        height: 120px;        
+        height: 120px;  
+        background-size: cover;
+        background-image: url('./dist/img/bg-normal.jpg');
+        background-position: center center;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;     
         &.christmas-bg {
-          background-size: cover;
           background-image: url('./dist/img/bg-christmas.png');
-          background-position: center center;
-          border-top-left-radius: 4px;
-          border-top-right-radius: 4px;
+          
           *{
             color:#fff;
           }
@@ -2868,7 +2870,8 @@ body {
           }
         }
         .user-info{
-          margin-left: 88px;
+          margin-left: calc(72px + 8px + 1em);
+          margin-right: 1em;
           line-height: 2;
         }
       }
@@ -3690,12 +3693,9 @@ body {
   margin-bottom: 10px;
 }
 
-.comment-respond {
-  margin-top: 30px;
-}
 
 .comments-title {
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .comment-list>li {

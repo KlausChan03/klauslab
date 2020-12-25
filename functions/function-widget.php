@@ -45,18 +45,26 @@ function widget_userinfo()
 		<div class="user-main">		
 			<div class="user-avatar flex-hc-vc mb-10">
 				<?php if (function_exists('get_avatar')) {
-					echo get_avatar( $current_user->user_email, 48);
+					echo get_avatar( $current_user->user_email, 72);
 				} ?>
 			</div>
-			<div class="user-info flex-hc-vc">
-				<span>
-				<?php global $user_ID; if (!$current_user->display_name && $user_ID === 0) : ?>
-						游客，欢迎到此一游。
+			<div class="user-info flex-hl-vc">
+				<p>
+					<?php global $user_ID; if (!$current_user->display_name && $user_ID === 0) : ?>
+						<?php echo('游客，欢迎到此一游。'); ?>
 					<?php else : ?>
-					<?php echo($current_user->display_name); echo ('，你在本站留下了' . get_comments('count=true&user_id=' . $user_ID) . '条评论。'); ?>
+					<?php 						
+						echo('你好，' . $current_user->display_name . '。' ); 
+						echo ('你在本站留下了' 
+						. get_comments('count=true&user_id=' . $user_ID) . '条评论，' 
+						. count_user_posts($user_ID,'post') . '篇文章，'
+						. count_user_posts($user_ID,'shuoshuo') . '篇说说。'
+					); 
+					?>
 					<?php endif; ?>
 					<!-- <?php echo($current_user->display_name); ?>，</span><span>你在本站留下了<?php global $user_ID; echo get_comments('count=true&user_id=' . $user_ID); ?>条评论。 -->
-				</span>
+				</p>
+
 			</div>
 		</div>
 	</div>
@@ -97,14 +105,14 @@ function widget_authorinfo()
 	<div class="author-info">		
 		<div class="author-lover klaus-lover m-tb-10">
             <div class="photo-container flex-hc-vc m-tb-10"> </div>
-			<p id="lovetime" class="flex-hc-vc"></p>
+			<p id="lovetime" class="flex-hc-vc mb-5"></p>
 			<p id="createtime" class="flex-hc-vc"></p>
         </div>
-		<div class="author-des mb-10">
+		<div class="author-des m-tb-10">
 			<!-- <a href="<?php echo get_author_posts_url(get_the_author_meta('ID')) ?>" target="_blank">(<?php the_author_posts(); ?>篇文章)</a> -->
 			<p><?php the_author_meta('description'); ?></p>
 		</div>
-		<div class="author-social flex-hb-vc flex-hw">
+		<div class="author-social flex-hb-vc flex-hw mt-15">
 			<span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">
 				<a href="<?php the_author_meta('user_url'); ?>" title="我的站点" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-menu"></i></a>
 			</span>
