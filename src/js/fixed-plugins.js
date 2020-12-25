@@ -257,7 +257,7 @@ let init = () => {
     let mymonth = myDate.getMonth() + 1;
     let today = myDate.Format('MM-dd');
     let MourningDate = ['04-04','05-12'];
-    let ChristmasDate = ['12-24'];
+    let ChristmasDate = ['12-24','12-25'];
     let _html = document.querySelectorAll('html')[0];
     let _body = document.querySelectorAll('body')[0];
     let _widget_userinfo = document.getElementsByClassName('widget')[0].querySelectorAll('.user-bg')[0];
