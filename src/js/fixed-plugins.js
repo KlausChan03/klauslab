@@ -256,8 +256,10 @@ let init = () => {
     let myDate = new Date();
     let mymonth = myDate.getMonth() + 1;
     let today = myDate.Format('MM-dd');
+    let todayWithYear = myDate.Format('yyyy-MM-dd')
     let MourningDate = ['04-04','05-12'];
     let ChristmasDate = ['12-24','12-25'];
+    let NewYearDate = ['2021-01-01']
     let _html = document.querySelectorAll('html')[0];
     let _body = document.querySelectorAll('body')[0];
     let _widget_userinfo = document.getElementsByClassName('widget')[0].querySelectorAll('.user-bg')[0];
@@ -270,6 +272,11 @@ let init = () => {
         if(today === ChristmasDate[index]) {
             _widget_userinfo.classList.add('christmas-bg')
         }
+    }
+    for (let index = 0; index < NewYearDate.length; index++) {
+        if(todayWithYear === NewYearDate[index]){
+            _widget_userinfo.classList.add('newYear-bg')
+        }        
     }
     
 

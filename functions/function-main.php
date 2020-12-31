@@ -349,13 +349,24 @@ add_action('wp_enqueue_scripts', 'normal_style_script');
 function my_custom_login_logo()
 {
     echo '<style type="text/css">
+        .login {
+            background-image:url("' . KL_THEME_URI . '/img/bg-test.jpg' . '") !important;
+			background-position: center center;
+            background-size: 100vw 100vh;
+        }
+        .login form {
+            opacity: 0.8;
+        }
+        .login #backtoblog a, .login #nav a {
+            color: #fff;
+        }
         .login h1 a {
-			background-image:url("' . KL_THEME_URI . '/img/bg-test.jpg' . '") !important;
+			background-image:url("' . KL_THEME_URI . '/img/wp-default-gravatar.png' . '") !important;
 			height: 80px;
 			width: 80px;
 			border-radius: 50%;
 			-webkit-background-size: 160px;
-			background-size: 160px;
+			// background-size: 100% 100%;
 			background-position: center center;
         }
     </style>';

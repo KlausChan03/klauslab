@@ -2821,7 +2821,7 @@ body {
   }
 
   .widget {
-    padding: 1em;
+    padding: .8em;
     margin-bottom: 8px;
     &:first-child{
       padding: 0;
@@ -2843,15 +2843,20 @@ body {
     .widget-user-container{
       position: relative;
       .user-bg{
-        height: 120px;  
+        height: 180px;  
         background-size: cover;
         background-image: url('./dist/img/bg-normal.jpg');
         background-position: center center;
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;     
         &.christmas-bg {
-          background-image: url('./dist/img/bg-christmas.png');
-          
+          background-image: url('./dist/img/bg-christmas.png');          
+          *{
+            color:#fff;
+          }
+        }
+        &.newYear-bg {
+          background-image: url('./dist/img/bg-2021.jpg');          
           *{
             color:#fff;
           }
@@ -2862,7 +2867,7 @@ body {
         .user-avatar{
           position: absolute;
           left: 15px;
-          top: 100px;
+          top: 160px;
           .avatar {
             width: 72px;
             height: 72px;
@@ -2870,9 +2875,10 @@ body {
           }
         }
         .user-info{
-          margin-left: calc(72px + 8px + 1em);
-          margin-right: 1em;
-          line-height: 2;
+          padding-left: calc(72px + 15px + .8em);
+          padding-right: .8em;
+          line-height: 1.8;
+          margin-top: 5px;
         }
       }
       
