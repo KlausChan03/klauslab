@@ -2571,8 +2571,12 @@ body {
 }
 
 .widget-area .widget {
-  padding: 1em;
+  padding: .8em;
   margin-bottom: 8px;
+}
+
+.widget-area .widget:first-child {
+  padding: 0;
 }
 
 .widget-area .widget:last-child {
@@ -2589,10 +2593,56 @@ body {
   text-align: center;
 }
 
-.widget-area .widget .author-avatar .avatar {
-  min-width: 48px;
-  min-height: 48px;
-  border-radius: 50%;
+.widget-area .widget .widget-user-container {
+  position: relative;
+}
+
+.widget-area .widget .widget-user-container .user-bg {
+  height: 180px;
+  background-size: cover;
+  background-image: url("./dist/img/bg-normal.jpg");
+  background-position: center center;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.widget-area .widget .widget-user-container .user-bg.christmas-bg {
+  background-image: url("./dist/img/bg-christmas.png");
+}
+
+.widget-area .widget .widget-user-container .user-bg.christmas-bg * {
+  color: #fff;
+}
+
+.widget-area .widget .widget-user-container .user-bg.newYear-bg {
+  background-image: url("./dist/img/bg-2021.jpg");
+}
+
+.widget-area .widget .widget-user-container .user-bg.newYear-bg * {
+  color: #fff;
+}
+
+.widget-area .widget .widget-user-container .user-main {
+  min-height: 80px;
+}
+
+.widget-area .widget .widget-user-container .user-main .user-avatar {
+  position: absolute;
+  left: 15px;
+  top: 160px;
+}
+
+.widget-area .widget .widget-user-container .user-main .user-avatar .avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 4px;
+}
+
+.widget-area .widget .widget-user-container .user-main .user-info {
+  padding-left: calc(72px + 15px + .8em);
+  padding-right: .8em;
+  line-height: 1.8;
+  margin-top: 5px;
 }
 
 .widget-area .widget .author-social span {
@@ -3365,12 +3415,8 @@ body {
   margin-bottom: 10px;
 }
 
-.comment-respond {
-  margin-top: 30px;
-}
-
 .comments-title {
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .comment-list > li {

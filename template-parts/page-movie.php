@@ -48,7 +48,7 @@ get_header();
                         <div slot="cf" v-bind:class="'inner'">
                             <h3>{{item.name}}</h3>
                             <p class="mt-10 item-content" v-bind:title=item.remark>{{item.remark}}</p>
-                            <p class="mt-10">{{item.date}}</p>
+                            <p>{{item.date}}</p>
                         </div>
                     </rotate-card>
                 </el-col>
@@ -269,6 +269,7 @@ get_header();
         -webkit-perspective: inherit;
         perspective: inherit;
         z-index: 2;
+        height: -webkit-fill-available;
     }
 
     .card-f .inner h3,
@@ -290,9 +291,10 @@ get_header();
         overflow-y: auto;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 10;
+        /* -webkit-line-clamp: 10; */
         -webkit-box-orient: vertical;
         line-height: 1.5;
+        height: calc(100% - 55px);
     }
 </style>
 
