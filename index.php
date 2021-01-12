@@ -17,6 +17,16 @@ setPostViews(get_the_ID()); ?>
 
 <div id="primary" class="main-area">
   <main id="main" class="main-content" role="main">
+    <div class="kl-skeleton kl-skeleton-animated" v-if="ifShowPost">
+      <div class="kl-skeleton-item">
+        <div class="kl-skeleton-content">
+          <div class="kl-skeleton-line"></div>
+          <div class="kl-skeleton-line"></div>
+          <div class="kl-skeleton-line"></div>
+          <div class="kl-skeleton-line"></div>
+        </div>
+      </div>
+    </div>
     <?php
     $limit = get_option('posts_per_page');
     $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;

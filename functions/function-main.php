@@ -988,7 +988,7 @@ function Memory_protection_math()
     $num1 = rand(0, 9);
     $num2 = rand(0, 9);
     //最终网页中的具体内容
-    echo "<input type='text' name='sum' class='text-input sum' id='comment-validate' value='' placeholder='$num1 + $num2 = ?'>" . "<input type='hidden' name='num1' value='$num1'>" . "<input type='hidden' name='num2' value='$num2'>";
+    echo "<input type='text' name='sum' class='flex-1-2 text-input sum' id='comment-validate' value='' placeholder='$num1 + $num2 = ?'>" . "<input type='hidden' name='num1' value='$num1'>" . "<input type='hidden' name='num2' value='$num2'>";
 }
 function Memory_protection_pre($commentdata)
 {

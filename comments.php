@@ -85,32 +85,34 @@ if (post_password_required()) {
       <p class="login-must">你必须 <a href="<?php echo wp_login_url(get_permalink()); ?>">登录</a> 才能发表评论！</p>
     <?php else : ?>
       <form name="comment-form" class="comment-form" id="comment-form" method="post" action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php">
-        <div class="comment-text">
+        <div class="comment-text <?php if (is_user_logged_in()) { echo ('flex-hc-vl flex-hw mt-15'); } ?>">
           <?php if (!is_user_logged_in()) : ?>
-            <div class="commentator mb-5">
-              <?php if (isset($_COOKIE['comment_author_email_' . COOKIEHASH])) {
-                $comment_author_email = $_COOKIE['comment_author_email_' . COOKIEHASH];
-                echo get_avatar($comment_author_email, 60);
-              }
-              ?>
-            </div>
-            <div class="comment-input p-tb-10 flex-hb-vc flex-hw">
-              <input type="text" name="author" value="<?php if (isset($_COOKIE['comment_author_' . COOKIEHASH])) { $comment_author = $_COOKIE['comment_author_' . COOKIEHASH]; echo $comment_author; } ?>" class="text-input text-top" id="comment-author" placeholder="昵称 *">
-              <input type="text" name="email" value="<?php if (isset($_COOKIE['comment_author_email_' . COOKIEHASH])) { $comment_author_email = $_COOKIE['comment_author_email_' . COOKIEHASH]; echo $comment_author_email; } ?>" class="text-input text-top" id="comment-email" placeholder="邮箱 *">
-              <input type="text" name="url" value="<?php if (isset($_COOKIE['comment_author_url_' . COOKIEHASH])) { $comment_author_url = $_COOKIE['comment_author_url_' . COOKIEHASH]; echo $comment_author_url; } ?>" class="text-input" id="comment-url" placeholder="网址">
-              <?php Memory_protection_math(); ?>
-            </div>
+            <div class="commentator m-tb-10 flex-hl-vc">
+              <div class="comment-avatar mr-10">
+                <?php if (isset($_COOKIE['comment_author_email_' . COOKIEHASH])) {
+                  $comment_author_email = $_COOKIE['comment_author_email_' . COOKIEHASH];
+                  echo get_avatar($comment_author_email, 80);
+                }
+                ?>
+              </div>              
+              <div class="comment-input flex-hb-vc flex-hw flex-1">
+                <input type="text" name="author" value="<?php if (isset($_COOKIE['comment_author_' . COOKIEHASH])) { $comment_author = $_COOKIE['comment_author_' . COOKIEHASH]; echo $comment_author; } ?>" class="flex-1-2 text-input text-top" id="comment-author" placeholder="昵称 *">
+                <input type="text" name="email" value="<?php if (isset($_COOKIE['comment_author_email_' . COOKIEHASH])) { $comment_author_email = $_COOKIE['comment_author_email_' . COOKIEHASH]; echo $comment_author_email; } ?>" class="flex-1-2 text-input text-top" id="comment-email" placeholder="邮箱 *">
+                <input type="text" name="url" value="<?php if (isset($_COOKIE['comment_author_url_' . COOKIEHASH])) { $comment_author_url = $_COOKIE['comment_author_url_' . COOKIEHASH]; echo $comment_author_url; } ?>" class="flex-1-2 text-input" id="comment-url" placeholder="网址">
+                <?php Memory_protection_math(); ?>
+              </div>
+            </div>            
           <?php else : ?>
-            <div class="commentator">
+            <div class="commentator mr-10">
               <p> <?php global $current_user;
                   wp_get_current_user();
-                  echo get_avatar($current_user->user_email, 48); ?> </p>
+                  echo get_avatar($current_user->user_email, 80); ?> </p>
             </div>
-            <div class="comment-login">
+            <!-- <div class="comment-login">
               <p>您已登录: <a class="have-login-name" href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a> <a class="log-out-now no-pjax" href="<?php echo wp_logout_url(get_permalink()); ?>" title="退出登录">退出</a></p>
-            </div>
+            </div> -->
           <?php endif; ?>
-          <div class="comment-s">
+          <div class="comment-s flex-1">
             <textarea class="text-input error" id="comment" name="comment" rows="8" cols="45" aria-required="true" placeholder="一言：<?php hitokoto(); ?>"></textarea>
             <div class="flex-hb-vc p-tb-10">
               <div class="OwO no-touch kl-btn kl-btn-sm">测试</div>
@@ -119,7 +121,6 @@ if (post_password_required()) {
                 <button type="submit" name="submit" class="comment-submit push-status kl-btn kl-btn-sm kl-btn-normal">发表评论</button>
               </div>
             </div>
-
           </div>
         </div>
         <?php comment_id_fields(); ?>

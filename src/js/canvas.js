@@ -53,7 +53,8 @@ Animation.gravity = () => {
             }
         }), frame_func(draw_canvas);
     }
-    var container_ = document.querySelector(".Gravity"),the_canvas = document.createElement("canvas"),
+    var container_ = document.querySelector(".Gravity"),
+        the_canvas = document.createElement("canvas"),
         config = get_config_option(),
         canvas_id = "c_n" + config.l, //canvas id
         context = the_canvas.getContext("2d"),
@@ -137,8 +138,8 @@ Animation.snow = (seasons) => {
             var d, f, e;
             if (c === 0) this.r = this.g = this.b = 0;
             else switch (d = Math.floor(a * 6), f = a * 6 - d, a = c * (1 - b), e = c * (1 - b * f), b = c *
-            (1 - b * (1 -
-                f)), d) {
+                (1 - b * (1 -
+                    f)), d) {
                 case 1:
                     this.r = e;
                     this.g = c;
@@ -182,7 +183,7 @@ Animation.snow = (seasons) => {
         },
         getContextStyle: function () {
             return "rgb(" + Math.floor(this.r * 255) + "," + Math.floor(this.g * 255) + "," + Math.floor(
-                this.b * 255) +
+                    this.b * 255) +
                 ")"
         },
         clone: function () {
@@ -410,7 +411,7 @@ Animation.snow = (seasons) => {
             var b = Math.cos(this.y);
             this.y = Math.asin(a.n13);
             Math.abs(b) > 1.0E-5 ? (this.x = Math.atan2(-a.n23 / b, a.n33 / b), this.z = Math.atan2(-a.n12 /
-                b, a.n11 / b)) :
+                    b, a.n11 / b)) :
                 (this.x = 0, this.z = Math.atan2(a.n21, a.n22))
         },
         isZero: function () {
@@ -570,7 +571,7 @@ Animation.snow = (seasons) => {
             } else if (k instanceof THREE.Mesh) {
                 n = c(this.origin, this.direction, k.matrixWorld.getPosition());
                 if (n === null || n > k.geometry.boundingSphere.radius * Math.max(k.scale.x, Math.max(k.scale
-                    .y, k.scale.z)))
+                        .y, k.scale.z)))
                     return o;
                 var p, G = k.geometry,
                     H = G.vertices,
@@ -583,8 +584,8 @@ Animation.snow = (seasons) => {
                         (p <= 0) && (f =
                             I.multiplyVector3(f.copy(H[i.a].position)), e = I.multiplyVector3(e.copy(H[i.b]
                                 .position)), g = I.multiplyVector3(
-                                    g.copy(H[i.c].position)), i instanceof THREE.Face4 && (h = I.multiplyVector3(
-                                        h.copy(H[i.d].position))),
+                                g.copy(H[i.c].position)), i instanceof THREE.Face4 && (h = I.multiplyVector3(
+                                h.copy(H[i.d].position))),
                             l = k.matrixRotationWorld.multiplyVector3(l.copy(i.normal)), p = b.dot(l), k.doubleSided ||
                             (k.flipSided ?
                                 p > 0 : p < 0)))
@@ -596,11 +597,11 @@ Animation.snow = (seasons) => {
                                 object: k
                             }, o.push(i));
                         else if (i instanceof THREE.Face4 && (d(j, f, e, h) || d(j, e, g, h))) i = {
-                            distance: a.distanceTo(j),
-                            point: j.clone(),
-                            face: i,
-                            object: k
-                        }, o.push(i)
+                    distance: a.distanceTo(j),
+                    point: j.clone(),
+                    face: i,
+                    object: k
+                }, o.push(i)
             }
             return o
         };
@@ -650,21 +651,21 @@ Animation.snow = (seasons) => {
         this.addPoint = function (e, g) {
             h ? (h = !1, b = e, c = g, d = e, f = g) : (b = b < e ? b : e, c = c < g ? c : g, d = d > e ? d :
                 e, f = f > g ?
-                    f : g);
+                f : g);
             a()
         };
         this.add3Points = function (e, g, j, i, n, o) {
             h ? (h = !1, b = e < j ? e < n ? e : n : j < n ? j : n, c = g < i ? g < o ? g : o : i < o ? i :
                 o, d = e > j ?
-                    e > n ? e : n : j > n ? j : n, f = g > i ? g > o ? g : o : i > o ? i : o) : (b = e < j ?
-                        e < n ? e < b ? e :
-                            b : n < b ? n : b : j < n ? j < b ? j : b : n < b ? n : b, c = g < i ? g < o ? g < c ?
-                                g : c : o < c ? o :
-                                    c : i < o ? i < c ? i : c : o < c ? o : c, d = e > j ? e > n ? e > d ? e : d : n > d ?
-                                        n : d : j > n ? j >
-                                            d ? j : d : n > d ? n : d, f = g > i ? g > o ? g > f ? g : f : o > f ? o : f : i > o ?
-                                                i > f ? i : f : o >
-                                                    f ? o : f);
+                e > n ? e : n : j > n ? j : n, f = g > i ? g > o ? g : o : i > o ? i : o) : (b = e < j ?
+                e < n ? e < b ? e :
+                b : n < b ? n : b : j < n ? j < b ? j : b : n < b ? n : b, c = g < i ? g < o ? g < c ?
+                g : c : o < c ? o :
+                c : i < o ? i < c ? i : c : o < c ? o : c, d = e > j ? e > n ? e > d ? e : d : n > d ?
+                n : d : j > n ? j >
+                d ? j : d : n > d ? n : d, f = g > i ? g > o ? g > f ? g : f : o > f ? o : f : i > o ?
+                i > f ? i : f : o >
+                f ? o : f);
             a()
         };
         this.addRectangle = function (e) {
@@ -672,7 +673,7 @@ Animation.snow = (seasons) => {
                 .getLeft() ? b :
                 e.getLeft(), c = c < e.getTop() ? c : e.getTop(), d = d > e.getRight() ? d : e.getRight(),
                 f = f > e.getBottom() ?
-                    f : e.getBottom());
+                f : e.getBottom());
             a()
         };
         this.inflate = function (e) {
@@ -1528,7 +1529,7 @@ Animation.snow = (seasons) => {
         updateMatrixWorld: function (a) {
             this.matrixAutoUpdate && this.updateMatrix();
             if (this.matrixWorldNeedsUpdate || a) this.parent ? this.matrixWorld.multiply(this.parent.matrixWorld,
-                this.matrix) :
+                    this.matrix) :
                 this.matrixWorld.copy(this.matrix), this.matrixWorldNeedsUpdate = !1, a = !0;
             for (var b = 0, c = this.children.length; b < c; b++) this.children[b].updateMatrixWorld(a)
         }
@@ -1561,8 +1562,8 @@ Animation.snow = (seasons) => {
             return e >= 0 && f >= 0 && g >= 0 && h >= 0 ? !0 : e < 0 && f < 0 || g < 0 && h < 0 ? !1 : (e < 0 ?
                 c = Math.max(
                     c, e / (e - f)) : f < 0 && (d = Math.min(d, e / (e - f))), g < 0 ? c = Math.max(c, g /
-                        (g - h)) : h < 0 &&
-                    (d = Math.min(d, g / (g - h))), d < c ? !1 : (a.lerpSelf(b, c), b.lerpSelf(a, 1 - d), !0))
+                    (g - h)) : h < 0 &&
+                (d = Math.min(d, g / (g - h))), d < c ? !1 : (a.lerpSelf(b, c), b.lerpSelf(a, 1 - d), !0))
         }
         var f, e, g = [],
             h, m, l = [],
@@ -1581,7 +1582,7 @@ Animation.snow = (seasons) => {
             D = new THREE.Matrix4,
             u = new THREE.Matrix4,
             r = [new THREE.Vector4, new THREE.Vector4, new THREE.Vector4, new THREE.Vector4, new THREE.Vector4,
-            new THREE.Vector4
+                new THREE.Vector4
             ],
             E = new THREE.Vector4,
             N = new THREE.Vector4;
@@ -1629,8 +1630,8 @@ Animation.snow = (seasons) => {
                     if (c = b instanceof THREE.Mesh || b instanceof THREE.Line)
                         if (!(c = b.frustumCulled === !1)) a: {
                             for (var d = b.matrixWorld, e = -b.geometry.boundingSphere.radius *
-                                Math.max(b.scale.x,
-                                    Math.max(b.scale.y, b.scale.z)), h = 0; h < 6; h++)
+                                    Math.max(b.scale.x,
+                                        Math.max(b.scale.y, b.scale.z)), h = 0; h < 6; h++)
                                 if (c = r[h].x * d.n14 + r[h].y *
                                     d.n24 + r[h].z * d.n34 + r[h].w, c <= e) {
                                     c = !1;
@@ -1639,11 +1640,11 @@ Animation.snow = (seasons) => {
                             c = !0
                         }
                     c ? (D.multiplyVector3(F.copy(b.position)), f = a(), f.object = b, f.z = F.z, w.objects
-                        .push(f)) : b instanceof THREE
-                            .Sprite || b instanceof THREE.Particle ? (D.multiplyVector3(F.copy(b.position)),
-                                f = a(), f.object =
-                                b, f.z = F.z, w.sprites.push(f)) : b instanceof THREE.Light && w.lights.push(
-                                    b);
+                            .push(f)) : b instanceof THREE
+                        .Sprite || b instanceof THREE.Particle ? (D.multiplyVector3(F.copy(b.position)),
+                            f = a(), f.object =
+                            b, f.z = F.z, w.sprites.push(f)) : b instanceof THREE.Light && w.lights.push(
+                            b);
                     c = 0;
                     for (d = b.children.length; c < d; c++) g(b.children[c])
                 }
@@ -1677,11 +1678,11 @@ Animation.snow = (seasons) => {
                     A = J.matrixRotationWorld.extractRotation(t);
                     L = 0;
                     for (B = S.length; L < B; L++) h = b(), h.positionWorld.copy(S[L].position), t.multiplyVector3(
-                        h.positionWorld),
+                            h.positionWorld),
                         h.positionScreen.copy(h.positionWorld), D.multiplyVector4(h.positionScreen), h.positionScreen
-                            .x /=
+                        .x /=
                         h.positionScreen.w, h.positionScreen.y /= h.positionScreen.w, h.visible = h.positionScreen
-                            .z >
+                        .z >
                         g && h.positionScreen.z < r;
                     S = 0;
                     for (L = M.length; S < L; S++) {
@@ -1693,22 +1694,22 @@ Animation.snow = (seasons) => {
                                         .y - v.positionScreen.y) - (P.positionScreen.y - v.positionScreen.y) *
                                     (R.positionScreen.x -
                                         v.positionScreen.x) < 0)) V = n[i] = n[i] || new THREE.RenderableFace3,
-                                            i++ , j = V, j.v1.copy(
-                                                v), j.v2.copy(R), j.v3.copy(P);
+                                i++, j = V, j.v1.copy(
+                                    v), j.v2.copy(R), j.v3.copy(P);
                             else continue;
                         else if (B instanceof THREE.Face4)
                             if (v = l[B.a], R = l[B.b], P = l[B.c], V = l[B.d], v.visible &&
                                 R.visible && P.visible && V.visible && (J.doubleSided || J.flipSided != ((V
-                                    .positionScreen.x -
-                                    v.positionScreen.x) * (R.positionScreen.y - v.positionScreen.y) -
+                                        .positionScreen.x -
+                                        v.positionScreen.x) * (R.positionScreen.y - v.positionScreen.y) -
                                     (V.positionScreen.y - v.positionScreen
                                         .y) * (R.positionScreen.x - v.positionScreen.x) < 0 || (R.positionScreen
-                                            .x - P.positionScreen
-                                                .x) * (V.positionScreen.y - P.positionScreen.y) - (R.positionScreen
-                                                    .y - P.positionScreen.y) *
-                                        (V.positionScreen.x - P.positionScreen.x) < 0))) fa = p[o] = p[o] ||
-                                            new THREE.RenderableFace4,
-                                            o++ , j = fa, j.v1.copy(v), j.v2.copy(R), j.v3.copy(P), j.v4.copy(V);
+                                        .x - P.positionScreen
+                                        .x) * (V.positionScreen.y - P.positionScreen.y) - (R.positionScreen
+                                        .y - P.positionScreen.y) *
+                                    (V.positionScreen.x - P.positionScreen.x) < 0))) fa = p[o] = p[o] ||
+                                new THREE.RenderableFace4,
+                                o++, j = fa, j.v1.copy(v), j.v2.copy(R), j.v3.copy(P), j.v4.copy(V);
                             else continue;
                         j.normalWorld.copy(B.normal);
                         A.multiplyVector3(j.normalWorld);
@@ -1732,34 +1733,34 @@ Animation.snow = (seasons) => {
                         w.elements.push(j)
                     }
                 } else if (J instanceof THREE.Line) {
-                    u.multiply(D, t);
-                    S = J.geometry.vertices;
-                    v = b();
-                    v.positionScreen.copy(S[0].position);
-                    u.multiplyVector4(v.positionScreen);
-                    L = 1;
-                    for (B = S.length; L < B; L++)
-                        if (v = b(), v.positionScreen.copy(S[L].position), u.multiplyVector4(v.positionScreen),
-                            R = l[m - 2], E.copy(v.positionScreen), N.copy(R.positionScreen), d(E, N)) E.multiplyScalar(
-                                1 / E.w),
-                                N.multiplyScalar(1 / N.w), J = K[s] = K[s] || new THREE.RenderableLine, s++ , k = J,
-                                k.v1.positionScreen
-                                    .copy(E), k.v2.positionScreen.copy(N), k.z = Math.max(E.z, N.z), k.material = x, w.elements
-                                        .push(
-                                            k)
-                }
+                u.multiply(D, t);
+                S = J.geometry.vertices;
+                v = b();
+                v.positionScreen.copy(S[0].position);
+                u.multiplyVector4(v.positionScreen);
+                L = 1;
+                for (B = S.length; L < B; L++)
+                    if (v = b(), v.positionScreen.copy(S[L].position), u.multiplyVector4(v.positionScreen),
+                        R = l[m - 2], E.copy(v.positionScreen), N.copy(R.positionScreen), d(E, N)) E.multiplyScalar(
+                            1 / E.w),
+                        N.multiplyScalar(1 / N.w), J = K[s] = K[s] || new THREE.RenderableLine, s++, k = J,
+                        k.v1.positionScreen
+                        .copy(E), k.v2.positionScreen.copy(N), k.z = Math.max(E.z, N.z), k.material = x, w.elements
+                        .push(
+                            k)
+            }
             a = 0;
             for (F = w.sprites.length; a < F; a++)
                 if (J = w.sprites[a].object, t = J.matrixWorld, J instanceof THREE.Particle &&
                     (z.set(t.n14, t.n24, t.n34, 1), D.multiplyVector4(z), z.z /= z.w, z.z > 0 && z.z < 1)) g =
-                        O[Q] = O[Q] ||
-                        new THREE.RenderableParticle, Q++ , C = g, C.x = z.x / z.w, C.y = z.y / z.w, C.z = z.z,
-                        C.rotation =
-                        J.rotation.z, C.scale.x = J.scale.x * Math.abs(C.x - (z.x + e.projectionMatrix.n11) / (
-                            z.w + e.projectionMatrix
-                                .n14)), C.scale.y = J.scale.y * Math.abs(C.y - (z.y + e.projectionMatrix.n22) / (z.w +
-                                    e.projectionMatrix
-                                        .n24)), C.material = J.material, w.elements.push(C);
+                    O[Q] = O[Q] ||
+                    new THREE.RenderableParticle, Q++, C = g, C.x = z.x / z.w, C.y = z.y / z.w, C.z = z.z,
+                    C.rotation =
+                    J.rotation.z, C.scale.x = J.scale.x * Math.abs(C.x - (z.x + e.projectionMatrix.n11) / (
+                        z.w + e.projectionMatrix
+                        .n14)), C.scale.y = J.scale.y * Math.abs(C.y - (z.y + e.projectionMatrix.n22) / (z.w +
+                        e.projectionMatrix
+                        .n24)), C.material = J.material, w.elements.push(C);
             f && w.elements.sort(c);
             return w
         }
@@ -1989,20 +1990,20 @@ Animation.snow = (seasons) => {
                 .Face3 ?
                 (c.centroid.addSelf(this.vertices[c.a].position), c.centroid.addSelf(this.vertices[c.b].position),
                     c.centroid
-                        .addSelf(this.vertices[c.c].position), c.centroid.divideScalar(3)) : c instanceof THREE
-                            .Face4 && (c.centroid
-                                .addSelf(this.vertices[c.a].position), c.centroid.addSelf(this.vertices[c.b].position),
-                                c.centroid.addSelf(
-                                    this.vertices[c.c].position), c.centroid.addSelf(this.vertices[c.d].position), c.centroid
-                                        .divideScalar(
-                                            4))
+                    .addSelf(this.vertices[c.c].position), c.centroid.divideScalar(3)) : c instanceof THREE
+                .Face4 && (c.centroid
+                    .addSelf(this.vertices[c.a].position), c.centroid.addSelf(this.vertices[c.b].position),
+                    c.centroid.addSelf(
+                        this.vertices[c.c].position), c.centroid.addSelf(this.vertices[c.d].position), c.centroid
+                    .divideScalar(
+                        4))
         },
         computeFaceNormals: function () {
             var a, b, c, d, f, e, g = new THREE.Vector3,
                 h = new THREE.Vector3;
             a = 0;
             for (b = this.faces.length; a < b; a++) c = this.faces[a], d = this.vertices[c.a], f = this.vertices[
-                c.b], e =
+                    c.b], e =
                 this.vertices[c.c], g.sub(e.position, f.position), h.sub(d.position, f.position), g.crossSelf(
                     h), g.isZero() ||
                 g.normalize(), c.normal.copy(g)
@@ -2021,7 +2022,7 @@ Animation.snow = (seasons) => {
                     else if (c instanceof THREE.Face4) c.vertexNormals = [new THREE.Vector3, new THREE.Vector3,
                     new THREE.Vector3,
                     new THREE.Vector3
-                    ]
+                ]
             } else {
                 d = this.__tmpVertices;
                 a = 0;
@@ -2029,20 +2030,20 @@ Animation.snow = (seasons) => {
             }
             a = 0;
             for (b = this.faces.length; a < b; a++) c = this.faces[a], c instanceof THREE.Face3 ? (d[c.a].addSelf(
-                c.normal),
+                    c.normal),
                 d[c.b].addSelf(c.normal), d[c.c].addSelf(c.normal)) : c instanceof THREE.Face4 && (d[c.a]
-                    .addSelf(c.normal),
-                    d[c.b].addSelf(c.normal), d[c.c].addSelf(c.normal), d[c.d].addSelf(c.normal));
+                .addSelf(c.normal),
+                d[c.b].addSelf(c.normal), d[c.c].addSelf(c.normal), d[c.d].addSelf(c.normal));
             a = 0;
             for (b = this.vertices.length; a < b; a++) d[a].normalize();
             a = 0;
             for (b = this.faces.length; a < b; a++) c = this.faces[a], c instanceof THREE.Face3 ? (c.vertexNormals[
-                0].copy(
+                    0].copy(
                     d[c.a]), c.vertexNormals[1].copy(d[c.b]), c.vertexNormals[2].copy(d[c.c])) : c instanceof THREE
-                        .Face4 &&
+                .Face4 &&
                 (c.vertexNormals[0].copy(d[c.a]), c.vertexNormals[1].copy(d[c.b]), c.vertexNormals[2].copy(
                     d[c.c]), c.vertexNormals[
-                        3].copy(d[c.d]))
+                    3].copy(d[c.d]))
         },
         computeTangents: function () {
             function a(a, b, c, d, e, f, D) {
@@ -2086,13 +2087,13 @@ Animation.snow = (seasons) => {
                 .Face3 ?
                 a(this, e.a, e.b, e.c, 0, 1, 2) : e instanceof THREE.Face4 && (a(this, e.a, e.b, e.c, 0, 1,
                     2), a(this,
-                        e.a, e.b, e.d, 0, 1, 3));
+                    e.a, e.b, e.d, 0, 1, 3));
             var H = ["a", "b", "c", "d"];
             b = 0;
             for (c = this.faces.length; b < c; b++) {
                 e = this.faces[b];
                 for (d = 0; d < e.vertexNormals.length; d++) G.copy(e.vertexNormals[d]), f = e[H[d]], D = u[
-                    f], W.copy(D),
+                        f], W.copy(D),
                     W.subSelf(G.multiplyScalar(G.dot(D))).normalize(), da.cross(e.vertexNormals[d], D), f =
                     da.dot(r[f]),
                     f = f < 0 ? -1 : 1, e.vertexTangents[d] = new THREE.Vector4(W.x, W.y, W.z, f)
@@ -2134,9 +2135,9 @@ Animation.snow = (seasons) => {
             e = 0;
             for (g = this.vertices.length; e < g; e++) d = this.vertices[e].position, d = [Math.round(d.x *
                 f), Math.round(
-                    d.y * f), Math.round(d.z * f)].join("_"), a[d] === void 0 ? (a[d] = e, b.push(this.vertices[
-                        e]), c[
-                        e] = b.length - 1) : c[e] = c[a[d]];
+                d.y * f), Math.round(d.z * f)].join("_"), a[d] === void 0 ? (a[d] = e, b.push(this.vertices[
+                e]), c[
+                e] = b.length - 1) : c[e] = c[a[d]];
             e = 0;
             for (g = this.faces.length; e < g; e++)
                 if (a = this.faces[e], a instanceof THREE.Face3) a.a = c[a.a], a.b = c[
@@ -2149,7 +2150,7 @@ Animation.snow = (seasons) => {
     THREE.Camera = function () {
         if (arguments.length) return console.warn(
             "DEPRECATED: Camera() is now PerspectiveCamera() or OrthographicCamera()."), new THREE.PerspectiveCamera(
-                arguments[0], arguments[1], arguments[2], arguments[3]);
+            arguments[0], arguments[1], arguments[2], arguments[3]);
         THREE.Object3D.call(this);
         this.matrixWorldInverse = new THREE.Matrix4;
         this.projectionMatrix = new THREE.Matrix4;
@@ -2210,9 +2211,9 @@ Animation.snow = (seasons) => {
                 a = Math.abs(a * b - d),
                 c = Math.abs(b - c);
             this.projectionMatrix = THREE.Matrix4.makeFrustum(d + this.x * a / this.fullWidth, d + (this.x +
-                this.width) *
+                    this.width) *
                 a / this.fullWidth, b - (this.y + this.height) * c / this.fullHeight, b - this.y * c / this
-                    .fullHeight,
+                .fullHeight,
                 this.near, this.far)
         } else this.projectionMatrix = THREE.Matrix4.makePerspective(this.fov, this.aspect, this.near, this.far)
     };
@@ -2373,7 +2374,7 @@ Animation.snow = (seasons) => {
     };
     THREE.MeshNormalMaterial.prototype = new THREE.Material;
     THREE.MeshNormalMaterial.prototype.constructor = THREE.MeshNormalMaterial;
-    THREE.MeshFaceMaterial = function () { };
+    THREE.MeshFaceMaterial = function () {};
     THREE.ParticleBasicMaterial = function (a) {
         THREE.Material.call(this, a);
         a = a || {};
@@ -2390,7 +2391,7 @@ Animation.snow = (seasons) => {
         THREE.Material.call(this, a);
         a = a || {};
         this.color = a.color !== void 0 ? new THREE.Color(a.color) : new THREE.Color(16777215);
-        this.program = a.program !== void 0 ? a.program : function () { }
+        this.program = a.program !== void 0 ? a.program : function () {}
     };
     THREE.ParticleCanvasMaterial.prototype = new THREE.Material;
     THREE.ParticleCanvasMaterial.prototype.constructor = THREE.ParticleCanvasMaterial;
@@ -2420,13 +2421,13 @@ Animation.snow = (seasons) => {
     THREE.TextureCount = 0;
     THREE.MultiplyOperation = 0;
     THREE.MixOperation = 1;
-    THREE.CubeReflectionMapping = function () { };
-    THREE.CubeRefractionMapping = function () { };
-    THREE.LatitudeReflectionMapping = function () { };
-    THREE.LatitudeRefractionMapping = function () { };
-    THREE.SphericalReflectionMapping = function () { };
-    THREE.SphericalRefractionMapping = function () { };
-    THREE.UVMapping = function () { };
+    THREE.CubeReflectionMapping = function () {};
+    THREE.CubeRefractionMapping = function () {};
+    THREE.LatitudeReflectionMapping = function () {};
+    THREE.LatitudeRefractionMapping = function () {};
+    THREE.SphericalReflectionMapping = function () {};
+    THREE.SphericalRefractionMapping = function () {};
+    THREE.UVMapping = function () {};
     THREE.RepeatWrapping = 0;
     THREE.ClampToEdgeWrapping = 1;
     THREE.MirroredRepeatWrapping = 2;
@@ -2470,10 +2471,10 @@ Animation.snow = (seasons) => {
         this.geometry = a;
         this.material = b;
         if (b instanceof Array) console.warn(
-            "DEPRECATED: Mesh material can no longer be an Array. Using material at index 0..."), this.material =
+                "DEPRECATED: Mesh material can no longer be an Array. Using material at index 0..."), this.material =
             b[0];
         if (this.geometry && (this.geometry.boundingSphere || this.geometry.computeBoundingSphere(), this.boundRadius =
-            a.boundingSphere
+                a.boundingSphere
                 .radius, this.geometry.morphTargets.length)) {
             this.morphTargetBase = -1;
             this.morphTargetForcedOrder = [];
@@ -2481,7 +2482,7 @@ Animation.snow = (seasons) => {
             this.morphTargetDictionary = {};
             for (var c = 0; c < this.geometry.morphTargets.length; c++) this.morphTargetInfluences.push(0),
                 this.morphTargetDictionary[
-                this.geometry.morphTargets[c].name] = c
+                    this.geometry.morphTargets[c].name] = c
         }
     };
     THREE.Mesh.prototype = new THREE.Object3D;
@@ -2503,7 +2504,7 @@ Animation.snow = (seasons) => {
     THREE.Bone.prototype.update = function (a, b) {
         this.matrixAutoUpdate && (b |= this.updateMatrix());
         if (b || this.matrixWorldNeedsUpdate) a ? this.skinMatrix.multiply(a, this.matrix) : this.skinMatrix.copy(
-            this.matrix),
+                this.matrix),
             this.matrixWorldNeedsUpdate = !1, b = !0;
         var c, d = this.children.length;
         for (c = 0; c < d; c++) this.children[c].update(this.skinMatrix, b)
@@ -2572,7 +2573,7 @@ Animation.snow = (seasons) => {
             b !== -1 && this.lights.splice(b, 1)
         } else a instanceof THREE.Camera || (b = this.objects.indexOf(a), b !== -1 && (this.objects.splice(b, 1),
             this.__objectsRemoved
-                .push(a), b = this.__objectsAdded.indexOf(a), b !== -1 && this.__objectsAdded.splice(b, 1)));
+            .push(a), b = this.__objectsAdded.indexOf(a), b !== -1 && this.__objectsAdded.splice(b, 1)));
         for (b = 0; b < a.children.length; b++) this.removeObject(a.children[b])
     };
     THREE.CanvasRenderer = function (a) {
@@ -2682,13 +2683,13 @@ Animation.snow = (seasons) => {
         this.clear = function () {
             k.setTransform(1, 0, 0, -1, o, p);
             Z.isEmpty() || (Z.minSelf(ma), Z.inflate(2), K < 1 && k.clearRect(Math.floor(Z.getX()), Math.floor(
-                Z.getY()),
+                    Z.getY()),
                 Math.floor(Z.getWidth()), Math.floor(Z.getHeight())), K > 0 && (c(THREE.NormalBlending),
-                    b(1), f("rgba(" +
-                        Math.floor(s.r * 255) + "," + Math.floor(s.g * 255) + "," + Math.floor(s.b *
-                            255) + "," + K + ")"), k.fillRect(
-                                Math.floor(Z.getX()), Math.floor(Z.getY()), Math.floor(Z.getWidth()), Math.floor(
-                                    Z.getHeight()))), Z.empty())
+                b(1), f("rgba(" +
+                    Math.floor(s.r * 255) + "," + Math.floor(s.g * 255) + "," + Math.floor(s.b *
+                        255) + "," + K + ")"), k.fillRect(
+                    Math.floor(Z.getX()), Math.floor(Z.getY()), Math.floor(Z.getWidth()), Math.floor(
+                        Z.getHeight()))), Z.empty())
         };
         this.render = function (a, j) {
             function i(a) {
@@ -2698,10 +2699,10 @@ Animation.snow = (seasons) => {
                 ua.setRGB(0, 0, 0);
                 b = 0;
                 for (c = a.length; b < c; b++) d = a[b], e = d.color, d instanceof THREE.AmbientLight ? ($T
-                    .r += e.r, $T.g +=
-                    e.g, $T.b += e.b) : d instanceof THREE.DirectionalLight ? (ta.r += e.r, ta.g += e.g,
+                        .r += e.r, $T.g +=
+                        e.g, $T.b += e.b) : d instanceof THREE.DirectionalLight ? (ta.r += e.r, ta.g += e.g,
                         ta.b += e.b) :
-                        d instanceof THREE.PointLight && (ua.r += e.r, ua.g += e.g, ua.b += e.b)
+                    d instanceof THREE.PointLight && (ua.r += e.r, ua.g += e.g, ua.b += e.b)
             }
 
             function n(a, b, c, d) {
@@ -2711,11 +2712,11 @@ Animation.snow = (seasons) => {
                     (k = g.matrixWorld
                         .getPosition(), j = c.dot(k), j <= 0 || (j *= g.intensity, d.r += h.r * j, d.g += h
                             .g * j, d.b += h
-                                .b * j)) : g instanceof THREE.PointLight && (k = g.matrixWorld.getPosition(), j =
-                                    c.dot(T.sub(k, b)
-                                        .normalize()), j <= 0 || (j *= g.distance == 0 ? 1 : 1 - Math.min(b.distanceTo(
-                                            k) / g.distance, 1),
-                                            j != 0 && (j *= g.intensity, d.r += h.r * j, d.g += h.g * j, d.b += h.b * j)))
+                            .b * j)) : g instanceof THREE.PointLight && (k = g.matrixWorld.getPosition(), j =
+                        c.dot(T.sub(k, b)
+                            .normalize()), j <= 0 || (j *= g.distance == 0 ? 1 : 1 - Math.min(b.distanceTo(
+                                k) / g.distance, 1),
+                            j != 0 && (j *= g.intensity, d.r += h.r * j, d.g += h.g * j, d.b += h.b * j)))
             }
 
             function s(a, e, g) {
@@ -2729,13 +2730,13 @@ Animation.snow = (seasons) => {
                         (k.save(),
                             k.translate(a.x, a.y), k.rotate(-e.rotation), k.scale(g, -i), k.translate(-q, -
                                 n), k.drawImage(
-                                    m, 0, 0), k.restore())
+                                m, 0, 0), k.restore())
                 } else g instanceof THREE.ParticleCanvasMaterial && (h = e.scale.x * o, j = e.scale.y * p,
                     X.set(a.x - h, a
                         .y - j, a.x + h, a.y + j), ma.intersects(X) && (d(g.color.getContextStyle()), f(
                             g.color.getContextStyle()),
-                            k.save(), k.translate(a.x, a.y), k.rotate(-e.rotation), k.scale(h, j), g.program(
-                                k), k.restore()))
+                        k.save(), k.translate(a.x, a.y), k.rotate(-e.rotation), k.scale(h, j), g.program(
+                            k), k.restore()))
             }
 
             function w(a, e, f, g) {
@@ -2773,63 +2774,63 @@ Animation.snow = (seasons) => {
                 if (q instanceof THREE.MeshBasicMaterial)
                     if (q.map) q.map.mapping instanceof THREE.UVMapping && (aa = i.uvs[
                         0], Aa(G, H, I, Y, L, B, aa[g].u, aa[g].v, aa[h].u, aa[h].v, aa[k].u, aa[k]
-                            .v, q.map));
+                        .v, q.map));
                     else if (q.envMap) {
-                        if (q.envMap.mapping instanceof THREE.SphericalReflectionMapping) a = j.matrixWorldInverse,
-                            T.copy(i.vertexNormalsWorld[
-                                g]), Ba = (T.x * a.n11 + T.y * a.n12 + T.z * a.n13) * 0.5 + 0.5, Ca = -(T.x * a
-                                    .n21 + T.y * a.n22 +
-                                    T.z * a.n23) * 0.5 + 0.5, T.copy(i.vertexNormalsWorld[h]), Da = (T.x * a.n11 +
-                                        T.y * a.n12 + T.z *
-                                        a.n13) * 0.5 + 0.5, Ea = -(T.x * a.n21 + T.y * a.n22 + T.z * a.n23) * 0.5 + 0.5,
-                            T.copy(i.vertexNormalsWorld[
-                                k]), Fa = (T.x * a.n11 + T.y * a.n12 + T.z * a.n13) * 0.5 + 0.5, Ga = -(T.x * a
-                                    .n21 + T.y * a.n22 +
-                                    T.z * a.n23) * 0.5 + 0.5, Aa(G, H, I, Y, L, B, Ba, Ca, Da, Ea, Fa, Ga, q.envMap)
-                    } else q.wireframe ? ja(q.color, q.wireframeLinewidth, q.wireframeLinecap, q.wireframeLinejoin) :
-                        ia(q.color);
+                    if (q.envMap.mapping instanceof THREE.SphericalReflectionMapping) a = j.matrixWorldInverse,
+                        T.copy(i.vertexNormalsWorld[
+                            g]), Ba = (T.x * a.n11 + T.y * a.n12 + T.z * a.n13) * 0.5 + 0.5, Ca = -(T.x * a
+                            .n21 + T.y * a.n22 +
+                            T.z * a.n23) * 0.5 + 0.5, T.copy(i.vertexNormalsWorld[h]), Da = (T.x * a.n11 +
+                            T.y * a.n12 + T.z *
+                            a.n13) * 0.5 + 0.5, Ea = -(T.x * a.n21 + T.y * a.n22 + T.z * a.n23) * 0.5 + 0.5,
+                        T.copy(i.vertexNormalsWorld[
+                            k]), Fa = (T.x * a.n11 + T.y * a.n12 + T.z * a.n13) * 0.5 + 0.5, Ga = -(T.x * a
+                            .n21 + T.y * a.n22 +
+                            T.z * a.n23) * 0.5 + 0.5, Aa(G, H, I, Y, L, B, Ba, Ca, Da, Ea, Fa, Ga, q.envMap)
+                } else q.wireframe ? ja(q.color, q.wireframeLinewidth, q.wireframeLinecap, q.wireframeLinejoin) :
+                    ia(q.color);
                 else if (q instanceof THREE.MeshLambertMaterial) q.map && !q.wireframe && (q.map.mapping instanceof THREE
-                    .UVMapping &&
-                    (aa = i.uvs[0], Aa(G, H, I, Y, L, B, aa[g].u, aa[g].v, aa[h].u, aa[h].v, aa[k].u,
-                        aa[k].v, q.map)),
-                    c(THREE.SubtractiveBlending)), ya ? !q.wireframe && q.shading == THREE.SmoothShading &&
-                        i.vertexNormalsWorld
-                            .length == 3 ? (A.r = x.r = y.r = $T.r, A.g = x.g = y.g = $T.g, A.b = x.b = y.b = $T.b,
-                                n(m, i.v1.positionWorld,
-                                    i.vertexNormalsWorld[0], A), n(m, i.v2.positionWorld, i.vertexNormalsWorld[1],
-                                        x), n(m, i.v3.positionWorld,
-                                            i.vertexNormalsWorld[2], y), A.r = Math.max(0, Math.min(q.color.r * A.r, 1)), A
-                                                .g = Math.max(0,
-                                                    Math.min(q.color.g * A.g, 1)), A.b = Math.max(0, Math.min(q.color.b * A.b, 1)),
-                                x.r = Math.max(0,
-                                    Math.min(q.color.r * x.r, 1)), x.g = Math.max(0, Math.min(q.color.g * x.g, 1)),
-                                x.b = Math.max(0,
-                                    Math.min(q.color.b * x.b, 1)), y.r = Math.max(0, Math.min(q.color.r * y.r, 1)),
-                                y.g = Math.max(0,
-                                    Math.min(q.color.g * y.g, 1)), y.b = Math.max(0, Math.min(q.color.b * y.b, 1)),
-                                M.r = (x.r + y.r) *
-                                0.5, M.g = (x.g + y.g) * 0.5, M.b = (x.b + y.b) * 0.5, ea = wa(A, x, y, M), oa(G, H,
-                                    I, Y, L, B, 0,
-                                    0, 1, 0, 0, 1, ea)) : (t.r = $T.r, t.g = $T.g, t.b = $T.b, n(m, i.centroidWorld,
-                                        i.normalWorld, t),
-                                        t.r = Math.max(0, Math.min(q.color.r * t.r, 1)), t.g = Math.max(0, Math.min(q.color
-                                            .g * t.g, 1)), t
-                                                .b = Math.max(0, Math.min(q.color.b * t.b, 1)), q.wireframe ? ja(t, q.wireframeLinewidth,
-                                                    q.wireframeLinecap,
-                                                    q.wireframeLinejoin) : ia(t)) : q.wireframe ? ja(q.color, q.wireframeLinewidth,
-                                                        q.wireframeLinecap,
-                                                        q.wireframeLinejoin) : ia(q.color);
+                        .UVMapping &&
+                        (aa = i.uvs[0], Aa(G, H, I, Y, L, B, aa[g].u, aa[g].v, aa[h].u, aa[h].v, aa[k].u,
+                            aa[k].v, q.map)),
+                        c(THREE.SubtractiveBlending)), ya ? !q.wireframe && q.shading == THREE.SmoothShading &&
+                    i.vertexNormalsWorld
+                    .length == 3 ? (A.r = x.r = y.r = $T.r, A.g = x.g = y.g = $T.g, A.b = x.b = y.b = $T.b,
+                        n(m, i.v1.positionWorld,
+                            i.vertexNormalsWorld[0], A), n(m, i.v2.positionWorld, i.vertexNormalsWorld[1],
+                            x), n(m, i.v3.positionWorld,
+                            i.vertexNormalsWorld[2], y), A.r = Math.max(0, Math.min(q.color.r * A.r, 1)), A
+                        .g = Math.max(0,
+                            Math.min(q.color.g * A.g, 1)), A.b = Math.max(0, Math.min(q.color.b * A.b, 1)),
+                        x.r = Math.max(0,
+                            Math.min(q.color.r * x.r, 1)), x.g = Math.max(0, Math.min(q.color.g * x.g, 1)),
+                        x.b = Math.max(0,
+                            Math.min(q.color.b * x.b, 1)), y.r = Math.max(0, Math.min(q.color.r * y.r, 1)),
+                        y.g = Math.max(0,
+                            Math.min(q.color.g * y.g, 1)), y.b = Math.max(0, Math.min(q.color.b * y.b, 1)),
+                        M.r = (x.r + y.r) *
+                        0.5, M.g = (x.g + y.g) * 0.5, M.b = (x.b + y.b) * 0.5, ea = wa(A, x, y, M), oa(G, H,
+                            I, Y, L, B, 0,
+                            0, 1, 0, 0, 1, ea)) : (t.r = $T.r, t.g = $T.g, t.b = $T.b, n(m, i.centroidWorld,
+                            i.normalWorld, t),
+                        t.r = Math.max(0, Math.min(q.color.r * t.r, 1)), t.g = Math.max(0, Math.min(q.color
+                            .g * t.g, 1)), t
+                        .b = Math.max(0, Math.min(q.color.b * t.b, 1)), q.wireframe ? ja(t, q.wireframeLinewidth,
+                            q.wireframeLinecap,
+                            q.wireframeLinejoin) : ia(t)) : q.wireframe ? ja(q.color, q.wireframeLinewidth,
+                        q.wireframeLinecap,
+                        q.wireframeLinejoin) : ia(q.color);
                 else if (q instanceof THREE.MeshDepthMaterial) ga = j.near, ha = j.far, A.r = A.g = A.b = 1 -
                     na(a.positionScreen
                         .z, ga, ha), x.r = x.g = x.b = 1 - na(d.positionScreen.z, ga, ha), y.r = y.g = y.b =
-                        1 - na(f.positionScreen
-                            .z, ga, ha), M.r = (x.r + y.r) * 0.5, M.g = (x.g + y.g) * 0.5, M.b = (x.b + y.b) *
-                            0.5, ea = wa(A,
-                                x, y, M), oa(G, H, I, Y, L, B, 0, 0, 1, 0, 0, 1, ea);
+                    1 - na(f.positionScreen
+                        .z, ga, ha), M.r = (x.r + y.r) * 0.5, M.g = (x.g + y.g) * 0.5, M.b = (x.b + y.b) *
+                    0.5, ea = wa(A,
+                        x, y, M), oa(G, H, I, Y, L, B, 0, 0, 1, 0, 0, 1, ea);
                 else if (q instanceof THREE.MeshNormalMaterial) t.r = pa(i.normalWorld.x), t.g = pa(i.normalWorld
-                    .y), t.b =
+                        .y), t.b =
                     pa(i.normalWorld.z), q.wireframe ? ja(t, q.wireframeLinewidth, q.wireframeLinecap, q.wireframeLinejoin) :
-                        ia(t)
+                    ia(t)
             }
 
             function Q(a, d, f, g, h, k, i, q, o) {
@@ -2841,59 +2842,59 @@ Animation.snow = (seasons) => {
                 else if (G = a.positionScreen.x, H = a.positionScreen.y, I = d.positionScreen.x, Y = d.positionScreen
                     .y, L =
                     f.positionScreen.x, B = f.positionScreen.y, S = g.positionScreen.x, v = g.positionScreen
-                        .y, R = h.positionScreen
-                            .x, P = h.positionScreen.y, V = k.positionScreen.x, J = k.positionScreen.y, q instanceof THREE
-                                .MeshBasicMaterial)
+                    .y, R = h.positionScreen
+                    .x, P = h.positionScreen.y, V = k.positionScreen.x, J = k.positionScreen.y, q instanceof THREE
+                    .MeshBasicMaterial)
                     O(G, H, I, Y, L, B, S, v), q.wireframe ? ja(q.color, q.wireframeLinewidth, q.wireframeLinecap,
                         q.wireframeLinejoin) :
-                        ia(q.color);
+                    ia(q.color);
                 else if (q instanceof THREE.MeshLambertMaterial) ya ? !q.wireframe && q.shading == THREE.SmoothShading &&
                     i
-                        .vertexNormalsWorld.length == 4 ? (A.r = x.r = y.r = M.r = $T.r, A.g = x.g = y.g = M.g =
-                            $T.g, A.b =
-                            x.b = y.b = M.b = $T.b, n(m, i.v1.positionWorld, i.vertexNormalsWorld[0], A), n(m,
-                                i.v2.positionWorld,
-                                i.vertexNormalsWorld[1], x), n(m, i.v4.positionWorld, i.vertexNormalsWorld[3],
-                                    y), n(m, i.v3.positionWorld,
-                                        i.vertexNormalsWorld[2], M), A.r = Math.max(0, Math.min(q.color.r * A.r, 1)), A
-                                            .g = Math.max(0,
-                                                Math.min(q.color.g * A.g, 1)), A.b = Math.max(0, Math.min(q.color.b * A.b, 1)),
-                            x.r = Math.max(0,
-                                Math.min(q.color.r * x.r, 1)), x.g = Math.max(0, Math.min(q.color.g * x.g, 1)),
-                            x.b = Math.max(0,
-                                Math.min(q.color.b * x.b, 1)), y.r = Math.max(0, Math.min(q.color.r * y.r, 1)),
-                            y.g = Math.max(0,
-                                Math.min(q.color.g * y.g, 1)), y.b = Math.max(0, Math.min(q.color.b * y.b, 1)),
-                            M.r = Math.max(0,
-                                Math.min(q.color.r * M.r, 1)), M.g = Math.max(0, Math.min(q.color.g * M.g, 1)),
-                            M.b = Math.max(0,
-                                Math.min(q.color.b * M.b, 1)), ea = wa(A, x, y, M), K(G, H, I, Y, S, v), oa(G,
-                                    H, I, Y, S, v, 0, 0,
-                                    1, 0, 0, 1, ea), K(R, P, L, B, V, J), oa(R, P, L, B, V, J, 1, 0, 1, 1, 0, 1, ea)
+                    .vertexNormalsWorld.length == 4 ? (A.r = x.r = y.r = M.r = $T.r, A.g = x.g = y.g = M.g =
+                        $T.g, A.b =
+                        x.b = y.b = M.b = $T.b, n(m, i.v1.positionWorld, i.vertexNormalsWorld[0], A), n(m,
+                            i.v2.positionWorld,
+                            i.vertexNormalsWorld[1], x), n(m, i.v4.positionWorld, i.vertexNormalsWorld[3],
+                            y), n(m, i.v3.positionWorld,
+                            i.vertexNormalsWorld[2], M), A.r = Math.max(0, Math.min(q.color.r * A.r, 1)), A
+                        .g = Math.max(0,
+                            Math.min(q.color.g * A.g, 1)), A.b = Math.max(0, Math.min(q.color.b * A.b, 1)),
+                        x.r = Math.max(0,
+                            Math.min(q.color.r * x.r, 1)), x.g = Math.max(0, Math.min(q.color.g * x.g, 1)),
+                        x.b = Math.max(0,
+                            Math.min(q.color.b * x.b, 1)), y.r = Math.max(0, Math.min(q.color.r * y.r, 1)),
+                        y.g = Math.max(0,
+                            Math.min(q.color.g * y.g, 1)), y.b = Math.max(0, Math.min(q.color.b * y.b, 1)),
+                        M.r = Math.max(0,
+                            Math.min(q.color.r * M.r, 1)), M.g = Math.max(0, Math.min(q.color.g * M.g, 1)),
+                        M.b = Math.max(0,
+                            Math.min(q.color.b * M.b, 1)), ea = wa(A, x, y, M), K(G, H, I, Y, S, v), oa(G,
+                            H, I, Y, S, v, 0, 0,
+                            1, 0, 0, 1, ea), K(R, P, L, B, V, J), oa(R, P, L, B, V, J, 1, 0, 1, 1, 0, 1, ea)
                     ) : (t.r = $T.r, t.g =
                         $T.g, t.b = $T.b, n(m, i.centroidWorld, i.normalWorld, t), t.r = Math.max(0, Math.min(
                             q.color.r * t
-                                .r, 1)), t.g = Math.max(0, Math.min(q.color.g * t.g, 1)), t.b = Math.max(0,
-                                    Math.min(q.color.b * t.b,
-                                        1)), O(G, H, I, Y, L, B, S, v), q.wireframe ? ja(t, q.wireframeLinewidth, q
-                                            .wireframeLinecap, q.wireframeLinejoin) :
-                            ia(t)) : (O(G, H, I, Y, L, B, S, v), q.wireframe ? ja(q.color, q.wireframeLinewidth,
-                                q.wireframeLinecap,
-                                q.wireframeLinejoin) : ia(q.color));
+                            .r, 1)), t.g = Math.max(0, Math.min(q.color.g * t.g, 1)), t.b = Math.max(0,
+                            Math.min(q.color.b * t.b,
+                                1)), O(G, H, I, Y, L, B, S, v), q.wireframe ? ja(t, q.wireframeLinewidth, q
+                            .wireframeLinecap, q.wireframeLinejoin) :
+                        ia(t)) : (O(G, H, I, Y, L, B, S, v), q.wireframe ? ja(q.color, q.wireframeLinewidth,
+                        q.wireframeLinecap,
+                        q.wireframeLinejoin) : ia(q.color));
                 else if (q instanceof THREE.MeshNormalMaterial) t.r = pa(i.normalWorld.x), t.g = pa(i.normalWorld
-                    .y), t.b =
+                        .y), t.b =
                     pa(i.normalWorld.z), O(G, H, I, Y, L, B, S, v), q.wireframe ? ja(t, q.wireframeLinewidth,
                         q.wireframeLinecap,
                         q.wireframeLinejoin) : ia(t);
                 else if (q instanceof THREE.MeshDepthMaterial) ga = j.near, ha = j.far, A.r = A.g = A.b = 1 -
                     na(a.positionScreen
                         .z, ga, ha), x.r = x.g = x.b = 1 - na(d.positionScreen.z, ga, ha), y.r = y.g = y.b =
-                        1 - na(g.positionScreen
-                            .z, ga, ha), M.r = M.g = M.b = 1 - na(f.positionScreen.z, ga, ha), ea = wa(A, x, y,
-                                M), K(G, H, I,
-                                    Y, S, v), oa(G, H, I, Y, S, v, 0, 0, 1, 0, 0, 1, ea), K(R, P, L, B, V, J), oa(R, P,
-                                        L, B, V, J, 1,
-                                        0, 1, 1, 0, 1, ea)
+                    1 - na(g.positionScreen
+                        .z, ga, ha), M.r = M.g = M.b = 1 - na(f.positionScreen.z, ga, ha), ea = wa(A, x, y,
+                        M), K(G, H, I,
+                        Y, S, v), oa(G, H, I, Y, S, v, 0, 0, 1, 0, 0, 1, ea), K(R, P, L, B, V, J), oa(R, P,
+                        L, B, V, J, 1,
+                        0, 1, 1, 0, 1, ea)
             }
 
             function K(a, b, c, d, e, f) {
@@ -2962,9 +2963,9 @@ Animation.snow = (seasons) => {
                     if (p == 0) {
                         if (fa[l.id] == void 0) b = document.createElement("canvas"), b.width = l.image.width,
                             b.height = l
-                                .image.height, a = b.getContext("2d"), a.drawImage(l.image, 0, 0), fa[l.id] = a
-                                    .getImageData(
-                                        0, 0, l.image.width, l.image.height).data, delete b;
+                            .image.height, a = b.getContext("2d"), a.drawImage(l.image, 0, 0), fa[l.id] = a
+                            .getImageData(
+                                0, 0, l.image.width, l.image.height).data, delete b;
                         b = fa[l.id];
                         h = (Math.floor(h) + Math.floor(i) * l.image.width) * 4;
                         t.setRGB(b[h] / 255, b[h + 1] / 255, b[h + 2] / 255);
@@ -2972,8 +2973,8 @@ Animation.snow = (seasons) => {
                     } else p = 1 / p, l = (n * c - m * e) * p, m = (n * d - m * g) * p, c = (j * e - o * c) *
                         p, d = (j * g -
                             o * d) * p, a = a - l * h - c * i, h = b - m * h - d * i, k.save(), k.transform(
-                                l, m, c, d, a,
-                                h), k.fill(), k.restore()
+                            l, m, c, d, a,
+                            h), k.fill(), k.restore()
                 }
             }
 
@@ -3071,37 +3072,37 @@ Animation.snow = (seasons) => {
                     if (U instanceof THREE.RenderableParticle) u = U, u.x *= o, u.y *= p, s(u, U, ca, a);
                     else if (U instanceof THREE.RenderableLine) u = U.v1, r = U.v2, u.positionScreen.x *= o,
                         u.positionScreen
-                            .y *= p, r.positionScreen.x *= o, r.positionScreen.y *= p, X.addPoint(u.positionScreen
-                                .x, u.positionScreen
-                                    .y), X.addPoint(r.positionScreen.x, r.positionScreen.y), ma.intersects(X) && w(
-                                        u, r, U, ca, a);
+                        .y *= p, r.positionScreen.x *= o, r.positionScreen.y *= p, X.addPoint(u.positionScreen
+                            .x, u.positionScreen
+                            .y), X.addPoint(r.positionScreen.x, r.positionScreen.y), ma.intersects(X) && w(
+                            u, r, U, ca, a);
                     else if (U instanceof THREE.RenderableFace3) u = U.v1, r = U.v2, E = U.v3, u.positionScreen
                         .x *= o, u.positionScreen
-                            .y *= p, r.positionScreen.x *= o, r.positionScreen.y *= p, E.positionScreen.x *= o,
+                        .y *= p, r.positionScreen.x *= o, r.positionScreen.y *= p, E.positionScreen.x *= o,
                         E.positionScreen
-                            .y *= p, ca.overdraw && (ka(u.positionScreen, r.positionScreen), ka(r.positionScreen,
+                        .y *= p, ca.overdraw && (ka(u.positionScreen, r.positionScreen), ka(r.positionScreen,
                                 E.positionScreen),
-                                ka(E.positionScreen, u.positionScreen)), X.add3Points(u.positionScreen.x, u.positionScreen
-                                    .y, r
-                                        .positionScreen.x, r.positionScreen.y, E.positionScreen.x, E.positionScreen.y),
+                            ka(E.positionScreen, u.positionScreen)), X.add3Points(u.positionScreen.x, u.positionScreen
+                            .y, r
+                            .positionScreen.x, r.positionScreen.y, E.positionScreen.x, E.positionScreen.y),
                         ma.intersects(X) &&
                         C(u, r, E, 0, 1, 2, U, ca, a);
                     else if (U instanceof THREE.RenderableFace4) u = U.v1, r = U.v2, E = U.v3, N = U.v4, u.positionScreen
                         .x *=
                         o, u.positionScreen.y *= p, r.positionScreen.x *= o, r.positionScreen.y *= p, E.positionScreen
-                            .x *=
+                        .x *=
                         o, E.positionScreen.y *= p, N.positionScreen.x *= o, N.positionScreen.y *= p, W.positionScreen
-                            .copy(
-                                r.positionScreen), da.positionScreen.copy(N.positionScreen), ca.overdraw && (ka(
-                                    u.positionScreen,
-                                    r.positionScreen), ka(r.positionScreen, N.positionScreen), ka(N.positionScreen,
-                                        u.positionScreen),
-                                    ka(E.positionScreen, W.positionScreen), ka(E.positionScreen, da.positionScreen)
-                                ), X.addPoint(u.positionScreen
-                                    .x, u.positionScreen.y), X.addPoint(r.positionScreen.x, r.positionScreen.y), X.addPoint(
-                                        E.positionScreen
-                                            .x, E.positionScreen.y), X.addPoint(N.positionScreen.x, N.positionScreen.y), ma
-                                                .intersects(X) &&
+                        .copy(
+                            r.positionScreen), da.positionScreen.copy(N.positionScreen), ca.overdraw && (ka(
+                                u.positionScreen,
+                                r.positionScreen), ka(r.positionScreen, N.positionScreen), ka(N.positionScreen,
+                                u.positionScreen),
+                            ka(E.positionScreen, W.positionScreen), ka(E.positionScreen, da.positionScreen)
+                        ), X.addPoint(u.positionScreen
+                            .x, u.positionScreen.y), X.addPoint(r.positionScreen.x, r.positionScreen.y), X.addPoint(
+                            E.positionScreen
+                            .x, E.positionScreen.y), X.addPoint(N.positionScreen.x, N.positionScreen.y), ma
+                        .intersects(X) &&
                         Q(u, r, E, N, W, da, U, ca, a);
                     Z.addRectangle(X)
                 }
@@ -3166,11 +3167,11 @@ Animation.snow = (seasons) => {
             return Math.random() * (b - a) + a
         }
         Particle3D = function (a) {
-            THREE.Particle.call(this, a), this.velocity = new THREE.Vector3(0, -8, 0), this.velocity.rotateX(
-                randomRange(-0,
-                    0)), this.velocity.rotateY(randomRange(0, 0)), this.gravity = new THREE.Vector3(0, -0,
-                        0), this.drag = 1
-        }, Particle3D.prototype = new THREE.Particle, Particle3D.prototype.constructor = Particle3D, Particle3D
+                THREE.Particle.call(this, a), this.velocity = new THREE.Vector3(0, -8, 0), this.velocity.rotateX(
+                    randomRange(-0,
+                        0)), this.velocity.rotateY(randomRange(0, 0)), this.gravity = new THREE.Vector3(0, -0,
+                    0), this.drag = 1
+            }, Particle3D.prototype = new THREE.Particle, Particle3D.prototype.constructor = Particle3D, Particle3D
             .prototype.updatePhysics = function () {
                 this.velocity.multiplyScalar(this.drag), this.velocity.addSelf(this.gravity), this.position.addSelf(
                     this.velocity)
@@ -3199,8 +3200,8 @@ Animation.snow = (seasons) => {
                     1000, scene = new THREE.Scene, scene.add(camera), renderer = new THREE.CanvasRenderer,
                     renderer.setSize(
                         containerWidth, containerHeight), a = new THREE.ParticleBasicMaterial({
-                            map: new THREE.Texture(particleImage)
-                        }), b = 0; snowNum > b; b++) {
+                        map: new THREE.Texture(particleImage)
+                    }), b = 0; snowNum > b; b++) {
                     particle = new Particle3D(a), particle.position.x = 2000 * Math.random() - 1000,
                         particle.position.y =
                         2000 * Math.random() - 1000, particle.position.z = 2000 * Math.random() - 1000,
@@ -3208,7 +3209,7 @@ Animation.snow = (seasons) => {
                         particle.scale.y = 1, scene.add(particle), particles.push(particle)
                 }
                 container.appendChild(renderer.domElement), document.addEventListener("mousemove",
-                    onDocumentMouseMove, !1),
+                        onDocumentMouseMove, !1),
                     setInterval(loop, 25)
             }
 
@@ -3219,7 +3220,7 @@ Animation.snow = (seasons) => {
             function loop() {
                 var i, particle;
                 for (i = 0; i < particles.length; i++) {
-                    with (particle = particles[i], particle.updatePhysics(), particle.position) {
+                    with(particle = particles[i], particle.updatePhysics(), particle.position) {
                         -1000 > y && (y += 2000), x > 1000 ? x -= 2000 : -1000 > x && (x += 2000), z >
                             1000 ? z -= 2000 : -
                             1000 > z && (z += 2000)
@@ -3227,18 +3228,18 @@ Animation.snow = (seasons) => {
                 }
                 camera.position.x += 0.005 * (mouseX - camera.position.x), camera.position.y += 0.005 * (-
                     mouseY - camera.position
-                        .y), camera.lookAt(scene.position), renderer.render(scene, camera)
+                    .y), camera.lookAt(scene.position), renderer.render(scene, camera)
             }
             var containerWidth, containerHeight, particle, camera, scene, renderer, mouseX, mouseY,
                 windowHalfX,
                 windowHalfY, particles, particleImage, snowNum, container = document.querySelector(".Snow");
             /MSIE 6|MSIE 7|MSIE 8/.test(navigator.userAgent) || (/MSIE 9|MSIE 10/.test(navigator.userAgent) &&
                 $(container)
-                    .css("height", $(window).height()).bind("click", function () {
-                        $(this).fadeOut(1000, function () {
-                            $(this).remove()
-                        })
-                    }), containerWidth = $(container).width(), containerHeight = $(container).height(),
+                .css("height", $(window).height()).bind("click", function () {
+                    $(this).fadeOut(1000, function () {
+                        $(this).remove()
+                    })
+                }), containerWidth = $(container).width(), containerHeight = $(container).height(),
                 mouseX = 0, mouseY = 0,
                 windowHalfX = window.innerWidth / 2, windowHalfY = window.innerHeight / 2, particles = [],
                 particleImage =
@@ -3249,6 +3250,141 @@ Animation.snow = (seasons) => {
     }();
 }
 
+Animation.clickEffect = () => {
+    let balls = [];
+    let longPressed = false;
+    let longPress;
+    let multiplier = 0;
+    let width, height;
+    let origin;
+    let normal;
+    let ctx;
+    const colours = ["#F73859", "#14FFEC", "#00E0FF", "#FF99FE", "#FAF15D"];
+    const canvas = document.createElement("canvas");
+    document.body.appendChild(canvas);
+    canvas.setAttribute("style", "width: 100%; height: 100%; top: 0; left: 0; z-index: 99999; position: fixed; pointer-events: none;");
+    const pointer = document.createElement("span");
+    pointer.classList.add("pointer");
+    document.body.appendChild(pointer);
+
+    if (canvas.getContext && window.addEventListener) {
+        ctx = canvas.getContext("2d");
+        updateSize();
+        window.addEventListener('resize', updateSize, false);
+        loop();
+        window.addEventListener("mousedown", function (e) {
+            pushBalls(randBetween(10, 20), e.clientX, e.clientY);
+            document.body.classList.add("is-pressed");
+            longPress = setTimeout(function () {
+                document.body.classList.add("is-longpress");
+                longPressed = true;
+            }, 500);
+        }, false);
+        window.addEventListener("mouseup", function (e) {
+            clearInterval(longPress);
+            if (longPressed == true) {
+                document.body.classList.remove("is-longpress");
+                pushBalls(randBetween(50 + Math.ceil(multiplier), 100 + Math.ceil(multiplier)), e.clientX, e.clientY);
+                longPressed = false;
+            }
+            document.body.classList.remove("is-pressed");
+        }, false);
+        window.addEventListener("mousemove", function (e) {
+            let x = e.clientX;
+            let y = e.clientY;
+            pointer.style.top = y + "px";
+            pointer.style.left = x + "px";
+        }, false);
+    } else {
+        console.log("canvas or addEventListener is unsupported!");
+    }
+
+
+    function updateSize() {
+        canvas.width = window.innerWidth * 2;
+        canvas.height = window.innerHeight * 2;
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        ctx.scale(2, 2);
+        width = (canvas.width = window.innerWidth);
+        height = (canvas.height = window.innerHeight);
+        origin = {
+            x: width / 2,
+            y: height / 2
+        };
+        normal = {
+            x: width / 2,
+            y: height / 2
+        };
+    }
+    class Ball {
+        constructor(x = origin.x, y = origin.y) {
+            this.x = x;
+            this.y = y;
+            this.angle = Math.PI * 2 * Math.random();
+            if (longPressed == true) {
+                this.multiplier = randBetween(14 + multiplier, 15 + multiplier);
+            } else {
+                this.multiplier = randBetween(6, 12);
+            }
+            this.vx = (this.multiplier + Math.random() * 0.5) * Math.cos(this.angle);
+            this.vy = (this.multiplier + Math.random() * 0.5) * Math.sin(this.angle);
+            this.r = randBetween(2, 5) + 3 * Math.random();
+            this.color = colours[Math.floor(Math.random() * colours.length)];
+        }
+        update() {
+            this.x += this.vx - normal.x;
+            this.y += this.vy - normal.y;
+            normal.x = -2 / window.innerWidth * Math.sin(this.angle);
+            normal.y = -2 / window.innerHeight * Math.cos(this.angle);
+            this.r -= 0.3;
+            this.vx *= 0.9;
+            this.vy *= 0.9;
+        }
+    }
+
+    function pushBalls(count = 1, x = origin.x, y = origin.y) {
+        for (let i = 0; i < count; i++) {
+            balls.push(new Ball(x, y));
+        }
+    }
+
+    function randBetween(min, max) {
+        return Math.floor(Math.random() * max) + min;
+    }
+
+    function loop() {
+        ctx.fillStyle = "rgba(255, 255, 255, 0)";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < balls.length; i++) {
+            let b = balls[i];
+            if (b.r < 0) continue;
+            ctx.fillStyle = b.color;
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2, false);
+            ctx.fill();
+            b.update();
+        }
+        if (longPressed == true) {
+            multiplier += 0.2;
+        } else if (!longPressed && multiplier >= 0) {
+            multiplier -= 0.4;
+        }
+        removeBall();
+        requestAnimationFrame(loop);
+    }
+
+    function removeBall() {
+        for (let i = 0; i < balls.length; i++) {
+            let b = balls[i];
+            if (b.x + b.r < 0 || b.x - b.r > width || b.y + b.r < 0 || b.y - b.r > height || b.r < 0) {
+                balls.splice(i, 1);
+            }
+        }
+    }
+}
+Animation.clickEffect(); //调用特效函数
+
 Animation.closeGravity = () => {
     let gravityDom = document.querySelector('.Gravity');
     gravityDom.innerHTML = '';
@@ -3258,4 +3394,3 @@ Animation.closeSnow = () => {
     let gravityDom = document.querySelector('.Snow');
     gravityDom.innerHTML = '';
 }
-

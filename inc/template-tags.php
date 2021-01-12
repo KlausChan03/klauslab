@@ -88,7 +88,7 @@ function KlausLab_entry_footer() {
 
 	echo '</div><!--.entry-footer-wrapper-->';
 	if(isAdmin()){
-		edit_post_link(_e('<span class="edit-link mr-10"><i class="lalaksks lalaksks-ic-edit mr-5"></i>', '</span>' ) );
+		edit_post_link(_e('<span class="edit-link mr-10"><i class="lalaksks lalaksks-ic-edit"></i>', '</span>' ) );
 	}
 }
 endif;
