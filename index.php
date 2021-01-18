@@ -62,6 +62,26 @@ setPostViews(get_the_ID()); ?>
   <!-- #main -->
 </div>
 <!-- #primary -->
+<script>
+  
+  let mainPage = new Vue({
+    el: '#main',
+    created() {
+      // 活动,设置cookie存储时间
+      // this.getTimeSetCookieFun()
+    },
+    data() {
+      return {
+        ifShowOurMemory: false,
+        ifShowPost: false,
+        ourDate:[]
+      }
+    },
+    methods: {
+      
+    }
 
+  });
+</script>
 <?php get_sidebar(); ?>
 <?php get_footer(); ?>

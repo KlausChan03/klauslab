@@ -85,7 +85,7 @@ wp_footer();
 <script>
 
   let mainPage = new Vue({
-    el: '#main',
+    el: '#app',
     created() {
       // 活动,设置cookie存储时间
       // this.getTimeSetCookieFun()

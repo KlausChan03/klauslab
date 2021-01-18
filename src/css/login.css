@@ -7,3 +7,60 @@
     line-height: 24px !important;
     margin: 0 5px 8px 0 !important;
 }
+
+.login {
+    position: relative;
+    background-image: url("../../dist/img/bg-test.jpg") !important;
+    background-position: center center;
+    background-size: 100vw 100vh;
+}
+
+.login #login {
+    padding-top: 180px;
+
+}
+
+.login form {
+    opacity: 0.8;
+    margin-top: 0;
+}
+
+.login #backtoblog a,
+.login #nav a {
+    color: #fff;
+}
+
+.login h1 a {
+    display: none;
+    position: absolute;
+    background-size: 100% 100%;
+    background-position: center center;
+    margin-bottom: 0;
+    z-index: 1;
+   
+    left: 50%;
+}
+
+.login h1 a.normal {
+    display: block;
+    background-image: url("../../dist/img/login_normal.png");
+    transform: translate(-50%, -85%);
+    width: 120px;
+    height: 90px;
+}
+
+.login h1 a.greeting {
+    display: block;
+    background-image: url("../../dist/img/login_greeting.png");
+    transform: translate(-50%, -77%);
+    width: 120px;
+    height: 100px;
+}
+
+.login h1 a.blindfold {
+    display: block;
+    background-image: url("../../dist/img/login_blindfold.png");
+    transform: translate(-50%, -77%);
+    width: 105px;
+    /* height: 90px; */
+}

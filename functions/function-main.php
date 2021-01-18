@@ -307,10 +307,17 @@ function footer_script()
     ));
 }
 
-// function custom_login()
-// {
-//     wp_enqueue_style('myLogin', KL_THEME_URI . '/css/login.css', array(), '1.0', false);
-// }
+function my_custom_login()
+{
+    // vue.min.js   
+    wp_enqueue_script('vue', KL_THEME_URI . '/js/vue.min.js', array(), '2.6.0', false);
+    // 全局变量配置
+    wp_enqueue_script('myConfig', KL_THEME_URI . '/js/config.js', array(), '1.0', false);
+    // 配置
+    wp_enqueue_script('myOptions', KL_THEME_URI . '/js/options.js', array(), '1.0', false);
+    wp_enqueue_style('myLogin', KL_THEME_URI . '/css/login.css', array(), '1.0', false);
+    wp_enqueue_script('myLogin', KL_THEME_URI . '/js/login.js', array(), '1.0', false);
+}
 
 function is_login()
 {
@@ -342,36 +349,7 @@ function styles_scripts()
 add_action('init', 'styles_scripts');
 add_action('wp_footer', 'footer_script');
 add_action('wp_enqueue_scripts', 'normal_style_script');
-// add_action('login_head', 'custom_login');
-
-
-//自定义登录页面的LOGO图片
-function my_custom_login_logo()
-{
-    echo '<style type="text/css">
-        .login {
-            background-image:url("' . KL_THEME_URI . '/img/bg-test.jpg' . '") !important;
-			background-position: center center;
-            background-size: 100vw 100vh;
-        }
-        .login form {
-            opacity: 0.8;
-        }
-        .login #backtoblog a, .login #nav a {
-            color: #fff;
-        }
-        .login h1 a {
-			background-image:url("' . KL_THEME_URI . '/img/wp-default-gravatar.png' . '") !important;
-			height: 80px;
-			width: 80px;
-			border-radius: 50%;
-			-webkit-background-size: 160px;
-			// background-size: 100% 100%;
-			background-position: center center;
-        }
-    </style>';
-}
-add_action('login_head', 'my_custom_login_logo');
+add_action('login_footer', 'my_custom_login');
 
 
 
@@ -615,7 +593,7 @@ function get_author_class($comment_author_email, $user_id)
     else if ($author_count >= 161 && $author_count <= 320)
         echo '<span class="vip level_6">LV.6</span>';
     else if ($author_count >= 321)
-        echo '<span class="vip level_7">LV.7</span>';
+        echo '<span class="vip level_Max">LV.7</span>';
 }
 
 // 根据设备类型自定义文章摘要长度
@@ -1214,7 +1192,8 @@ function ajax_comment_callback()
         $count = count($array);
         if ($count != 0) {
             $hitokoto = $array[array_rand($array)]['hitokoto'];
-            echo $hitokoto;
+            $author = $array[array_rand($array)]['author'];
+            echo $hitokoto . " —— " . $author;
         } else {
             echo '';
         }

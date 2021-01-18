@@ -2658,6 +2658,13 @@ body {
     padding: 0 8px;
     min-width: 120px;
     text-align: left;
+    &:hover{      
+      background-color: #eee;
+    }
+    a {
+      display: inline-block;
+      width: 100%;
+    }
   }
 
   &:before {
@@ -2763,16 +2770,6 @@ body {
   border-radius: 4px;
 }
 
-.page-main .entry-header .featured-header-image {
-  height: 330px;
-  width: 100%;
-
-  img {
-    height: 330px;
-    object-fit: cover;
-  }
-}
-
 /*  Widgets */
 
 /* 底部区域 */
@@ -2876,11 +2873,6 @@ body {
           position: absolute;
           left: 15px;
           top: 160px;
-          .avatar {
-            width: 72px;
-            height: 72px;
-            border-radius: 4px;
-          }
         }
         .user-info{
           padding-left: calc(72px + 15px + .8em);
@@ -2888,11 +2880,8 @@ body {
           line-height: 1.8;
           margin-top: 5px;
         }
-      }
-      
-    }
-
-    
+      }      
+    }   
   
     .author-social{
       span{
@@ -2945,6 +2934,15 @@ body {
   }
 }
 
+/* 公共模块 */
+img.avatar{
+  border-radius: 4px;
+  -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.1), 1px 1px 1px rgba(0,0,0,0.1), 1px 1px 1px rgba(0,0,0,0.1);
+  box-shadow: 1px 1px 1px rgba(0,0,0,.1), 1px 1px 1px rgba(0,0,0,0.1), 1px 1px 1px rgba(0,0,0,0.1);
+  border: 2px solid #fff;
+  padding: 2px;
+}
+
 /* 自定义模块 */
 
 /* 日历 */
@@ -2961,12 +2959,14 @@ body {
       list-style-type: circle;
       padding-left: 1em;
     }
-
-    display: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .5s linear;
   }
 
   &:hover ul {
-    display: block;
+    max-height: 300px;
+
   }
 
   list-style-type: disc;
@@ -3112,7 +3112,7 @@ body {
 
 .main-content {
   .hentry {
-    margin-top: 1.2em;
+    margin-top: 1.0em;
   }
 
   article:first-of-type {
@@ -3311,6 +3311,7 @@ body {
 
       img {
         width: 100%;
+        max-height: 400px;
         object-fit: cover;
       }
     }
@@ -3532,56 +3533,69 @@ body {
     }
   }
 
-  &.tag-37 .entry-header::after {
+  .entry-header::after {
     position: absolute;
-    content: '转载';
-    min-width: 40px;
-    height: 24px;
-    right: 1.0em;
-    background: #48e;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 4px;
-    padding: 0 5px;
+    right: -2px;
+    top: -12px;
+    color: #48e;
+    font-family: "lalaksks";
+    font-size: 40px;
   }
-
   &.sticky .entry-header::after {
-    position: absolute;
-    content: '置顶';
-    min-width: 40px;
-    height: 24px;
-    right: 1.0em;
-    background: #48e;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 4px;
-    padding: 0 5px;
+    content: "\e63e";
   }
 
-  &.tag-37.sticky .entry-header::after {
-    position: absolute;
-    content: '置顶 + 转载';
-    min-width: 40px;
-    height: 24px;
-    right: 1.0em;
-    background: #48e;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 4px;
-    padding: 0 5px;
-  }
+  // &.tag-37 .entry-header::after {
+  //   position: absolute;
+  //   content: '转载';
+  //   min-width: 40px;
+  //   height: 24px;
+  //   right: 1.0em;
+  //   background: #48e;
+  //   color: #fff;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   border-radius: 4px;
+  //   padding: 0 5px;
+  // }
 
-  .entry-header:after {
-    font-size: 12px;
-    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  }
+  // &.sticky .entry-header::after {
+  //   position: absolute;
+  //   content: '置顶';
+  //   min-width: 40px;
+  //   height: 24px;
+  //   right: 1.0em;
+  //   background: #48e;
+  //   color: #fff;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   border-radius: 4px;
+  //   padding: 0 5px;
+
+  // }
+
+  // &.tag-37.sticky .entry-header::after {
+  //   position: absolute;
+  //   content: '置顶 + 转载';
+  //   min-width: 40px;
+  //   height: 24px;
+  //   right: 1.0em;
+  //   background: #48e;
+  //   color: #fff;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   border-radius: 4px;
+  //   padding: 0 5px;
+  // }
+
+  // .entry-header:after {
+  //   font-size: 12px;
+  //   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  //   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  // }
 
   .entry-main {
 
@@ -3673,6 +3687,11 @@ body {
   .comment-reply-title {
     margin-bottom: 10px;
   }
+
+  .text-input::placeholder{
+    color: #aaaaaa;
+    opacity: .8;
+  }
 }
 
 .comment-content {
@@ -3726,17 +3745,30 @@ body {
   border-radius: 3px;
   color: white;
   font-size: 12px;
+  background: #48e;
 
   &.level_Max {
-    background: #48e;
+    background: #ee3f4d;
   }
 
   &.level_1 {
-    background: pink;
+    background: #248067;
   }
 
   &.level_2 {
-    background: rgba(255, 102, 97, 1);
+    background: #fbda41;
+  }
+
+  &.level_3 {
+    background: #fb8b05;
+  }
+  
+  &.level_4 {
+    background: #a7a8bd;
+  }
+  
+  &.level_5 {
+    background: #61649f;
   }
 }
 
@@ -4313,16 +4345,20 @@ body {
   font-size: 13px;
   margin: 1.6em 0 0;
   text-align: center;
-
   a {
     font-weight: normal;
   }
 }
 
-.recentcomments a {
-  display: inline !important;
-  padding: 0 !important;
-  margin: 0 !important;
+.recentcomments{ 
+  span:first-child{
+    margin-right: 5px;
+  }
+  a {
+    display: inline;
+    padding: 0;
+    margin: 0;
+  }
 }
 
 img {
@@ -4441,12 +4477,12 @@ div[itemprop="description"] {
   .comment-comment {
     font-size: 14px;
     background-color: #fbf9f9;
-    padding: 5px 10px;
+    padding: 10px 15px;
     margin: 5px 0;
-    border-radius: 0 15px 15px;
+    border-radius: 0 4px 4px;
     border: 1px solid #e3e8e8;
     display: inline-block;
-
+    min-width: 120px;
     .comment-info .comment-time {
       color: #999;
     }
@@ -5134,10 +5170,6 @@ div[itemprop="description"] {
   .site-branding {
     padding-top: 50px;
     padding-bottom: 50px;
-  }
-
-  .hentry {
-    margin: 3% 0;
   }
 
   .entry-summary {

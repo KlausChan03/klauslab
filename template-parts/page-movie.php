@@ -14,7 +14,7 @@ get_header();
         <p class="tips" v-if="count">
             <span>记录阅片数量：{{count}}</span>
         </p>
-        <div id="douban-movie-list" class="doubanboard-list"  v-loading="loadingAll">
+        <div id="douban-movie-list" class="doubanboard-list" v-loading="loadingAll">
             <el-row v-bind:gutter="20">
                 <el-col :span="6" :xs="24" :sm="12" :md="6" :lg="4" v-for="(item,index) in list" v-bind:key="item.url" v-bind:class="'doubanboard-item'" v-if="item.url">
                     <!-- <el-tooltip class="cur-p" effect="light" placement="right" popper-class="s-tooltip">
@@ -33,7 +33,7 @@ get_header();
                             <p class="mt-10">{{item.date}}</p>
                         </div>
                     </el-tooltip> -->
-                    <rotate-card trigger="hover" direction="row" >
+                    <rotate-card trigger="hover" direction="row">
                         <div slot="cz" v-if="item.url" v-bind:class="'doubanboard-thumb'" v-bind:style="{backgroundImage : 'url(' + item.img +')'}">
                             <div>
                                 <div class="doubanboard-title flex-hb-vc">
@@ -54,7 +54,7 @@ get_header();
                 </el-col>
             </el-row>
             <div class="flex-hc-vc">
-                <el-button ref="getMoreButton" id="loadMoreMovies" @click="loadMovies();">加载更多</el-button>
+                <el-button ref="getMoreButton" v-if="ifShowMore" id="loadMoreMovies" @click="loadMovies();">加载更多</el-button>
             </div>
         </div>
     </main>
@@ -73,24 +73,61 @@ get_header();
             count: 0,
             pageSize: 20,
             loadingAll: true,
+            ifShowMore: false
         },
         created: function() {
             this.loadMovies();
         },
         methods: {
+
+            currDevice() {
+                var u = navigator.userAgent;
+                var app = navigator.appVersion; // appVersion 可返回浏览器的平台和版本信息。该属性是一个只读的字符串。
+                var browserLang = (navigator.browserLanguage || navigator.language).toLowerCase(); //获取浏览器语言
+
+                var deviceBrowser = function() {
+                    return {
+                        trident: u.indexOf('Trident') > -1, //IE内核
+                        presto: u.indexOf('Presto') > -1, //opera内核
+                        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+                        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                        ios: !!u.match(/\(i[^;]+;( U;)? CPU.Mac OS X/), //ios终端
+                        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+                        iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+                        iPad: u.indexOf('iPad') > -1, //是否iPad
+                        webApp: u.indexOf('Safari') == -1, //是否web应用程序，没有头部和底部
+                        weixin: u.indexOf('MicroMessenger') > -1, //是否微信
+                        qq: u.match(/\sQQ/i) == " qq", //是否QQ
+                    }
+                }();
+
+                return deviceBrowser
+            },
+
             loadMovies: function() {
                 this.loadingAll = true;
                 if ($("#douban-movie-list").length < 1) return;
                 axios.post(GLOBAL.ajaxSourceUrl + "/douban/douban.php?type=movie&from=" + String(this.curMovies)).then(result => {
                     console.error(result)
-                    if(result.data.data.length < this.pageSize){
-                        this.$refs.getMoreButton.$el.setAttribute("disabled",true)
-                        this.$refs.getMoreButton.$el.innerHTML = "已加载完毕"                        
+                    console.error(this.currDevice())
+                    
+                    if (result.data.data.length < this.pageSize) {
+                        // this.$refs.getMoreButton.$el.setAttribute("disabled",true)
+                        // this.$refs.getMoreButton.$el.innerHTML = "已加载完毕"  
+                        this.ifShowMore = false
+                    } else {
+                        this.ifShowMore = true
                     }
-                    console.log(result.data[0],this.pageSize,this.curMovies)
+                    console.log(result.data[0], this.pageSize, this.curMovies)
                     this.list = this.list.concat(result.data.data);
+                    if(this.currDevice().mobile === true){
+                        this.list.forEach(item => {
+                            item.img = item.img.replace(/s_ratio_poster/g,'m_ratio_poster')
+                        });
+                    }
                     this.count = result.data.total;
-                    this.curMovies+=this.pageSize;
+                    this.curMovies += this.pageSize;
                     setTimeout(() => {
                         this.loadingAll = false;
                     }, 1000);
@@ -141,8 +178,8 @@ get_header();
             },
             eve_cardres_click() {
                 // if (this.trigger == 'click') {
-                    this.fn_reserve_action(this.surface)
-                    this.surface = !this.surface
+                this.fn_reserve_action(this.surface)
+                this.surface = !this.surface
                 // }
             },
             eve_cardres_msover() {
@@ -236,7 +273,7 @@ get_header();
         min-height: 280px;
         height: 100%;
         border-radius: 4px;
-        overflow: hidden!important;
+        overflow: hidden !important;
     }
 
     .card-3d .card:hover {

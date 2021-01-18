@@ -12,6 +12,7 @@ get_header(); ?>
     <?php while ( have_posts() ) : the_post(); ?>
     <?php setPostViews(get_the_ID()); ?>
     <?php get_template_part( 'template-parts/content', 'single' );  ?>
+    <?php the_post_navigation( array( 'next_text' => __( '<span class="meta-nav">Next Post</span> %title', 'KlausLab' ), 'prev_text' => __( '<span class="meta-nav">Previous Post</span> %title', 'KlausLab' ) ) ); ?>
 	
     <?php
 				// If comments are open or we have at least one comment, load up the comment template.
@@ -20,7 +21,6 @@ get_header(); ?>
 				endif;
 			?>
 			
-    <?php the_post_navigation( array( 'next_text' => __( '<span class="meta-nav">Next Post</span> %title', 'KlausLab' ), 'prev_text' => __( '<span class="meta-nav">Previous Post</span> %title', 'KlausLab' ) ) ); ?>
 	
     <?php endwhile; // End of the loop. ?>
 	

@@ -88,13 +88,13 @@ if (post_password_required()) {
         <div class="comment-text <?php if (is_user_logged_in()) { echo ('flex-hc-vl flex-hw mt-15'); } ?>">
           <?php if (!is_user_logged_in()) : ?>
             <div class="commentator m-tb-10 flex-hl-vc">
-              <div class="comment-avatar mr-10">
+              <!-- <div class="comment-avatar mr-10">
                 <?php if (isset($_COOKIE['comment_author_email_' . COOKIEHASH])) {
                   $comment_author_email = $_COOKIE['comment_author_email_' . COOKIEHASH];
                   echo get_avatar($comment_author_email, 80);
                 }
                 ?>
-              </div>              
+              </div>              -->
               <div class="comment-input flex-hb-vc flex-hw flex-1">
                 <input type="text" name="author" value="<?php if (isset($_COOKIE['comment_author_' . COOKIEHASH])) { $comment_author = $_COOKIE['comment_author_' . COOKIEHASH]; echo $comment_author; } ?>" class="flex-1-2 text-input text-top" id="comment-author" placeholder="昵称 *">
                 <input type="text" name="email" value="<?php if (isset($_COOKIE['comment_author_email_' . COOKIEHASH])) { $comment_author_email = $_COOKIE['comment_author_email_' . COOKIEHASH]; echo $comment_author_email; } ?>" class="flex-1-2 text-input text-top" id="comment-email" placeholder="邮箱 *">
@@ -106,7 +106,7 @@ if (post_password_required()) {
             <div class="commentator mr-10">
               <p> <?php global $current_user;
                   wp_get_current_user();
-                  echo get_avatar($current_user->user_email, 80); ?> </p>
+                  echo get_avatar($current_user->user_email, 48); ?> </p>
             </div>
             <!-- <div class="comment-login">
               <p>您已登录: <a class="have-login-name" href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a> <a class="log-out-now no-pjax" href="<?php echo wp_logout_url(get_permalink()); ?>" title="退出登录">退出</a></p>

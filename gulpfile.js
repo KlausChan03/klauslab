@@ -42,11 +42,11 @@ const dir = {
 // let FILTERJS = [dir.src + '/js/*.js', '!' + dir.src + '/js/*.min.js', '!' + dir.src + '/js/**/canvas.js', '!' + dir.src + '/js/**/fixed-plugins.js'];
 let HEADERJS = [dir.src + '/js/options.js'];
 let FOOTERJS = [dir.src + '/js/navigation.js', dir.src + '/js/support.js', dir.src + '/js/common.js' ];
-let COPYJS = [dir.src + '/js/*.min.js', dir.src + '/js/**/canvas.js', dir.src + '/js/**/fixed-plugins.js', dir.src + '/js/util.js',];
+let COPYJS = [dir.src + '/js/*.min.js', dir.src + '/js/**/canvas.js', dir.src + '/js/**/fixed-plugins.js', dir.src + '/js/util.js', dir.src+ '/js/login.js'];
 let FILTERCSS = [dir.src + '/css/*.css', '!' + dir.src + '/css/*.min.css' ]
 let FILTERSCSS = [dir.src + '/css/*.scss']
 let FILTERTEMPCSS = [dir.dist + 'css/*.css']
-let COPYCSS = [];
+let COPYCSS = [dir.src + '/css/login.css'];
 let COPYOTHERS = [dir.src + '/theme/*', dir.src + '/css/**/*.min.css', dir.src + '/emoji/**/*', dir.src + '/fonts/**/*',  dir.src + '/img/**/*',dir.src + '/json/**/*', dir.src + '/css/lib/*'];
 
 //默认development环境
@@ -198,7 +198,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('copy', () => {
-    return gulp.src(COPYJS.concat(COPYOTHERS), {
+    return gulp.src(COPYJS.concat(COPYCSS).concat(COPYOTHERS), {
             base: dir.srcRouter
         })
         .pipe(gulp.dest(dir.distRouter));
