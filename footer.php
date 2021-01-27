@@ -49,6 +49,10 @@
       <a title="登录" href="<?php echo wp_login_url() ?>" class="login-btn"><i class="lalaksks lalaksks-ic-login"></i></a>
     </div>
   <?php endif ?>
+  <div class="fp-items" v-if="ifShowTChangeMode">
+    <a title="浅色模式" class="fp-day"><i class="lalaksks lalaksks-ic-day"></i></a>    
+    <a title="浅色模式" class="fp-night hide"><i class="lalaksks lalaksks-ic-night"></i></a>    
+  </div>
   <div class="flex-hl-vc fp-search pos-r">
     <div class="fp-items fp-search-in">
       <a class="flex-hc-vc" title="站内搜索"><i class="lalaksks lalaksks-ic-search"></i></a>
@@ -79,11 +83,23 @@
 <?php
 wp_footer();
 ?>
-<?php
-wp_footer();
-?>
 <script>
-
+  let fixedPlugins = new Vue({
+    el:"#fixed-plugins",
+    data(){
+      return {
+        ifShowTChangeMode: false,
+      }
+    }
+  })
+  let mainContent  = new Vue({
+    el:"#main",
+    data(){
+      return {
+        ifShowPost: false,
+      }
+    }
+  })
   let mainPage = new Vue({
     el: '#app',
     created() {
@@ -93,7 +109,6 @@ wp_footer();
     data() {
       return {
         ifShowOurMemory: false,
-        ifShowPost: false,
         ourDate:[]
       }
     },
