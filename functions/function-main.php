@@ -1191,9 +1191,14 @@ function ajax_comment_callback()
         $array = json_decode($json, true);
         $count = count($array);
         if ($count != 0) {
-            $hitokoto = $array[array_rand($array)]['hitokoto'];
-            $author = $array[array_rand($array)]['author'];
-            echo $hitokoto . " —— " . $author;
+            $random = array_rand($array);
+            $hitokoto = $array[$random]['hitokoto'];
+            $author = $array[$random]['author'];
+            if($hitokoto) {               
+                echo(!empty($author) ? ($hitokoto . " —— " . $author) : $hitokoto );
+            } else {
+                echo '彩蛋！你很幸运，刷到一条空白的内容，当前有 ' . (intval(count($array)) - 1) . " 条 '一言'";
+            }
         } else {
             echo '';
         }
