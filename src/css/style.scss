@@ -2828,9 +2828,6 @@ body {
   .widget {
     padding: .8em;
     margin-bottom: 8px;
-    &:first-child{
-      padding: 0;
-    }
     &:last-child {
       margin-bottom: 0;
     }
@@ -3308,10 +3305,9 @@ img.avatar{
 
     .featured-header-image {
       width: 100%;
-
       img {
         width: 100%;
-        max-height: 400px;
+        max-height: 320px;
         object-fit: cover;
       }
     }
@@ -4286,10 +4282,12 @@ img.avatar{
 
 .featured-header-image {
   text-align: center;
-
   img {
     width: 100%;
     height: auto;
+    max-height: 380px;
+    object-fit: cover;
+
   }
 }
 

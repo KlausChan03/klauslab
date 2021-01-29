@@ -17,7 +17,7 @@ setPostViews(get_the_ID()); ?>
 
 <div id="primary" class="main-area">
   <main id="main" class="main-content" role="main">
-    <div class="kl-skeleton kl-skeleton-animated" v-if="ifShowPost">
+    <div class="kl-skeleton kl-skeleton-animated" id="kl-skeleton" v-if="ifShowPost">
       <div class="kl-skeleton-item">
         <div class="kl-skeleton-content">
           <div class="kl-skeleton-line"></div>

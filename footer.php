@@ -92,8 +92,8 @@ wp_footer();
       }
     }
   })
-  let mainContent  = new Vue({
-    el:"#main",
+  let klSkeleton  = new Vue({
+    el:"#kl-skeleton",
     data(){
       return {
         ifShowPost: false,
@@ -163,10 +163,6 @@ wp_footer();
     }
 
   });
-
-  let secondary = new Vue({
-    element: '.author-info',
-  })
 </script>
 </body>
 
