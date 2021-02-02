@@ -65,6 +65,7 @@
   <div class="fp-items fp-gototop">
     <a title="返回顶部"><i class="lalaksks lalaksks-ic-backtotop"></i></a>
   </div>
+
   <!-- <div class="fp-items fp-change-lang">
     <a id="fp-change-lang" title="繁简切换" href="javascript:StranBody()" title="繁體"><i>繁</i></a>
   </div> -->
@@ -84,14 +85,7 @@
 wp_footer();
 ?>
 <script>
-  let fixedPlugins = new Vue({
-    el:"#fixed-plugins",
-    data(){
-      return {
-        ifShowTChangeMode: false,
-      }
-    }
-  })
+  
   let klSkeleton  = new Vue({
     el:"#kl-skeleton",
     data(){
@@ -100,6 +94,7 @@ wp_footer();
       }
     }
   })
+  
   let mainPage = new Vue({
     el: '#app',
     created() {

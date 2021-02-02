@@ -1,4 +1,5 @@
 let Animation = {};
+
 Animation.gravity = () => {
     function get_attribute(node, attr, default_value) {
         return node.getAttribute(attr) || default_value;
@@ -3383,6 +3384,7 @@ Animation.clickEffect = () => {
         }
     }
 }
+
 Animation.clickEffect(); //调用特效函数
 
 Animation.closeGravity = () => {

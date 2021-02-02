@@ -2,6 +2,6 @@ _bp/
 dist/
 node_modules/
 src/js/useless/
+inc/douban/cache/
 src/css/temp/
-style.css
 build_blog.sh
