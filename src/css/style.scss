@@ -10,17 +10,6 @@ Text Domain: KlausLab
 */
 @charset "utf-8";
 
-/* 通用字体定义 */
-@font-face {
-  font-family: 'lalaksks';  /* project id 765116 */
-  src: url('//at.alicdn.com/t/font_765116_cpk5onknvr7.eot');
-  src: url('//at.alicdn.com/t/font_765116_cpk5onknvr7.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_765116_cpk5onknvr7.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_765116_cpk5onknvr7.woff') format('woff'),
-  url('//at.alicdn.com/t/font_765116_cpk5onknvr7.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_765116_cpk5onknvr7.svg#lalaksks') format('svg');
-}
-
 /* 图标字体定义 */
 @font-face {
   font-family: 'lalaksks';  /* project id 765116 */
@@ -2833,6 +2822,38 @@ body {
     }
     &.widget_userinfo{
       padding: 0;
+    }
+    &.widget_blog_subscription{
+      #subscribe-email {
+        width: 80%;
+        display: inline-block;
+        input{
+          width: 100%;
+          line-height: 32px;
+          height: 32px;
+        }
+      }
+      #subscribe-submit{
+        width: 19%;
+        display: inline-block;
+        button{
+          width:100%;
+          outline: none;
+          -webkit-appearance: none;
+          transition: all .3s;
+          -webkit-transition: all .3s;
+          line-height: 32px;
+          height: 32px;
+          border-radius: 4px;
+          border-style: solid;
+          border-width: 1px;
+          border-color: #ddd;
+          letter-spacing: 2px;
+          padding: 0;
+          padding-left: 10px;
+          padding-right: 8px;
+        }
+      }
     }
 
     .widget-title {
