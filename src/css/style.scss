@@ -368,7 +368,7 @@ input {
 textarea,
 input {
   background-color: #fff;
-  border: 1px solid #eee;
+  border: 1px solid #ddd;
 }
 
 textarea:focus {
@@ -562,13 +562,13 @@ nav,
 article,
 aside,
 input,
+button,
 textarea {
   -webkit-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
   -moz-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
   box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
 }
 
-button,
 img.img-shadow {
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -2824,6 +2824,9 @@ body {
       padding: 0;
     }
     &.widget_blog_subscription{
+      #subscribe-text {
+        margin: 10px 0;
+      }
       #subscribe-email {
         width: 80%;
         display: inline-block;
@@ -2834,7 +2837,7 @@ body {
         }
       }
       #subscribe-submit{
-        width: 19%;
+        width: 18%;
         display: inline-block;
         button{
           width:100%;
