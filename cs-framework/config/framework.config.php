@@ -67,12 +67,12 @@ $options[]      = array(
       'default' =>  date('Y-m-d',time()),
     ),
     array(
-      'id'      => 'klausLab_description',
+      'id'      => 'memory_description',
       'type'    => 'text',
       'title'   => '博客的描述',
     ),
     array(
-      'id'      => 'klausLab_keywords',
+      'id'      => 'memory_keywords',
       'type'    => 'text',
       'title'   => '关键词',
       'desc'    => '博客的关键词，用英文逗号分割。',

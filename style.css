@@ -9,6 +9,14 @@ Author: Klaus
 Author URI: https://www.klauslaura.cn
 Text Domain: KlausLab
 */
+/* 通用字体定义 */
+@font-face {
+  font-family: 'lalaksks';
+  /* project id 765116 */
+  src: url("//at.alicdn.com/t/font_765116_cpk5onknvr7.eot");
+  src: url("//at.alicdn.com/t/font_765116_cpk5onknvr7.eot?#iefix") format("embedded-opentype"), url("//at.alicdn.com/t/font_765116_cpk5onknvr7.woff2") format("woff2"), url("//at.alicdn.com/t/font_765116_cpk5onknvr7.woff") format("woff"), url("//at.alicdn.com/t/font_765116_cpk5onknvr7.ttf") format("truetype"), url("//at.alicdn.com/t/font_765116_cpk5onknvr7.svg#lalaksks") format("svg");
+}
+
 /* 图标字体定义 */
 @font-face {
   font-family: 'lalaksks';
@@ -348,7 +356,7 @@ input {
 textarea,
 input {
   background-color: #fff;
-  border: 1px solid #ddd;
+  border: 1px solid #eee;
 }
 
 textarea:focus {
@@ -492,13 +500,13 @@ nav,
 article,
 aside,
 input,
-button,
 textarea {
   -webkit-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
   -moz-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
   box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
 }
 
+button,
 img.img-shadow {
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -2581,44 +2589,6 @@ body {
   padding: 0;
 }
 
-.widget-area .widget.widget_blog_subscription #subscribe-text {
-  margin: 10px 0;
-}
-
-.widget-area .widget.widget_blog_subscription #subscribe-email {
-  width: 80%;
-  display: inline-block;
-}
-
-.widget-area .widget.widget_blog_subscription #subscribe-email input {
-  width: 100%;
-  line-height: 32px;
-  height: 32px;
-}
-
-.widget-area .widget.widget_blog_subscription #subscribe-submit {
-  width: 18%;
-  display: inline-block;
-}
-
-.widget-area .widget.widget_blog_subscription #subscribe-submit button {
-  width: 100%;
-  outline: none;
-  -webkit-appearance: none;
-  transition: all .3s;
-  -webkit-transition: all .3s;
-  line-height: 32px;
-  height: 32px;
-  border-radius: 4px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #ddd;
-  letter-spacing: 2px;
-  padding: 0;
-  padding-left: 10px;
-  padding-right: 8px;
-}
-
 .widget-area .widget .widget-title {
   padding: 0;
   padding-bottom: 1em;
@@ -2881,7 +2851,7 @@ img.avatar {
 /* Content */
 /* # Posts and pages */
 .main-content .hentry {
-  margin-top: 10px;
+  margin-top: 1.0em;
 }
 
 .main-content article:first-of-type {
@@ -3225,7 +3195,7 @@ img.avatar {
 .article-list .entry-main,
 .article-list .entry-footer {
   margin: 0;
-  padding: 10px;
+  padding: 1.0em;
   position: relative;
 }
 

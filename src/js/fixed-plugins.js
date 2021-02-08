@@ -23,11 +23,12 @@ let fixedPlugins = new Vue({
     el: "#fixed-plugins",
     data() {
         return {
-            ifShowChangeMode: false,
+            ifShowTChangeMode: false,
         }
     },
     mounted() {
         this.init()
+
         this.owoEmoji();
         this.commentsSubmit();
     },

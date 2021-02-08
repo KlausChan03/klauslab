@@ -10,13 +10,6 @@
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
-
-	<?php 
-	$description = cs_get_option( 'klausLab_description' );
-	$keywords = cs_get_option( 'klausLab_keywords' );
-	?>
-	<meta name="description" content="<?php echo $description; ?>" />
-	<meta name="keywords" content="<?php echo $keywords; ?>" />
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, user-scalable=no" />
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
