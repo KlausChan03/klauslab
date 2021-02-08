@@ -23,7 +23,7 @@ let fixedPlugins = new Vue({
     el: "#fixed-plugins",
     data() {
         return {
-            ifShowTChangeMode: false,
+            ifShowChangeMode: false,
         }
     },
     mounted() {
