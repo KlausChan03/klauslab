@@ -49,7 +49,7 @@
       <a title="登录" href="<?php echo wp_login_url() ?>" class="login-btn"><i class="lalaksks lalaksks-ic-login"></i></a>
     </div>
   <?php endif ?>
-  <div class="fp-items" v-if="ifShowTChangeMode">
+  <div class="fp-items" v-if="ifShowChangeMode">
     <a title="浅色模式" class="fp-day"><i class="lalaksks lalaksks-ic-day"></i></a>    
     <a title="浅色模式" class="fp-night hide"><i class="lalaksks lalaksks-ic-night"></i></a>    
   </div>
