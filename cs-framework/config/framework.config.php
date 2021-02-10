@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------------------------------
 // ===============================================================================================
 $settings           = array(
-  'menu_title'      => 'KlausLabSetting',
+  'menu_title'      => '站点设置',
   'menu_type'       => 'menu', // menu, submenu, options, theme, etc.
   'menu_slug'       => 'cs-framework',
   'ajax_save'       => false,
@@ -67,12 +67,12 @@ $options[]      = array(
     //   'default' =>  date('Y-m-d',time()),
     // ),
     array(
-      'id'      => 'memory_description',
+      'id'      => 'klausLab_description',
       'type'    => 'text',
       'title'   => '博客的描述',
     ),
     array(
-      'id'      => 'memory_keywords',
+      'id'      => 'klausLab_keywords',
       'type'    => 'text',
       'title'   => '关键词',
       'desc'    => '博客的关键词，用英文逗号分割。',
