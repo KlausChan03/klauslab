@@ -23,14 +23,58 @@ let fixedPlugins = new Vue({
     el: "#fixed-plugins",
     data() {
         return {
+            searchValue:'',
             ifShowChangeMode: false,
+            ifShowSearchFormDialog: false,
+            season: "spring",
+            mascot: {
+                "spring": "sakura",
+                "winter": "snowflake",
+            }
         }
     },
     mounted() {
+        let _this = this
         this.init()
-
         this.owoEmoji();
         this.commentsSubmit();
+
+        // 登录和登出
+        var plugins_ = document.querySelector(".fixed-plugins");
+        var login_ = document.querySelector(".fp-login");
+        var logout_ = document.querySelector(".fp-logout");
+        var register_ = document.getElementsByClassName("fp-register")[0];
+        if (login_ || logout_) {
+            hover(plugins_, function () {
+                toggleClass(register_, "show")
+            }, function () {
+                toggleClass(register_, "hide")
+            })
+        }
+
+        // 切换背景功能
+        let [background_, background_in, background_out] = [document.querySelector(".fp-background"), document.querySelector('.fp-background-in'), document.querySelector('.fp-background-out')];
+        background_.addEventListener('mouseover', function (e) {
+            removeClass(background_out, 'hide');
+            addClass(background_out, 'show');
+            background_out.querySelectorAll('li')[0].onclick = function (event) {
+                Animation.closeGravity();
+                Animation.closeSnow();
+                Animation.snow(_this.mascot[_this.season], 88);
+            }
+            background_out.querySelectorAll('li')[0].ondblclick = function (event) {
+                Animation.closeSnow();
+            }
+            background_out.querySelectorAll('li')[1].onclick = function (event) {
+                Animation.closeSnow();
+                Animation.closeGravity();
+                Animation.gravity();
+            }
+            background_out.querySelectorAll('li')[1].ondblclick = function (event) {
+                Animation.closeGravity();
+            }
+        })
+
     },
     methods: {
         init() {
@@ -63,14 +107,17 @@ let fixedPlugins = new Vue({
             }
 
             if (1 < mymonth && mymonth <= 4) {
-                Animation.snow("sakura");
-                return false;
+                this.season = "spring"
             } else if (10 < mymonth || mymonth <= 1) {
-                Animation.snow("snow");
-                return false;
+                this.season = "winter"
             }
+            Animation.snow(this.mascot[this.season], 88);
+
         },
 
+        showSearchDialog() {
+            this.ifShowSearchFormDialog = true
+        },
 
 
         // 消息推送
@@ -125,7 +172,10 @@ let fixedPlugins = new Vue({
                     error: function (XmlHttpRequest, textStatus, errorThrown) {
                         push_status.html('重新提交');
                         // _this.createMessage(XmlHttpRequest.responseText, 3000);
-                        _this.$message({dangerouslyUseHTMLString: true, message: XmlHttpRequest.responseText})
+                        _this.$message({
+                            dangerouslyUseHTMLString: true,
+                            message: XmlHttpRequest.responseText
+                        })
                         setTimeout(function () {
                             $submit.attr('disabled', false).fadeTo('slow', 1);
                         }, 3000);
@@ -270,142 +320,98 @@ let fixedPlugins = new Vue({
 
 
 // 返回顶部
-var backTop = document.getElementsByClassName("fp-gototop")[0];
-if (window.attachEvent) {
-    window.attachEvent("onload", __checkDisplay)
-} else {
-    window.addEventListener("load", __checkDisplay, false)
-}
-backTop.onclick = function () {
-    __backToTop(520);
-}
+// var backTop = document.getElementsByClassName("fp-gototop")[0];
+// if (window.attachEvent) {
+//     window.attachEvent("onload", __checkDisplay)
+// } else {
+//     window.addEventListener("load", __checkDisplay, false)
+// }
+// backTop.onclick = function () {
+//     __backToTop(520);
+// }
 
-/**
- * 返回顶部效果
- * @param time 时间单位ms
- * */
-function __backToTop(time) {
-    time = time || 300;
-    var speed = Math.round(__getPageScrollY() / (time / 10));
-    clearInterval(scrollTopTimer);
-    var scrollTopTimer = setInterval(function () {
-        var beforeTop = __getPageScrollY();
+// /**
+//  * 返回顶部效果
+//  * @param time 时间单位ms
+//  * */
+// function __backToTop(time) {
+//     time = time || 300;
+//     var speed = Math.round(__getPageScrollY() / (time / 10));
+//     clearInterval(scrollTopTimer);
+//     var scrollTopTimer = setInterval(function () {
+//         var beforeTop = __getPageScrollY();
 
-        if (beforeTop > 0) {
-            if (beforeTop <= speed) {
-                __getPageScrollY(0);
-            } else {
-                var resultTop = beforeTop - speed;
-                __getPageScrollY(resultTop);
-            }
-        } else {
-            clearInterval(scrollTopTimer);
-        }
-    }, 10)
-}
+//         if (beforeTop > 0) {
+//             if (beforeTop <= speed) {
+//                 __getPageScrollY(0);
+//             } else {
+//                 var resultTop = beforeTop - speed;
+//                 __getPageScrollY(resultTop);
+//             }
+//         } else {
+//             clearInterval(scrollTopTimer);
+//         }
+//     }, 10)
+// }
 
-/**
- * 获取&&设置-页面垂直滚动值
- * */
-function __getPageScrollY(top) {
-    if (top || Number(top) == 0) { //设置垂直滚动值
-        if (self.pageYOffset) {
-            self.pageYOffset = Number(top);
-        }
-        if (document.documentElement && document.documentElement.scrollTop) { // Explorer 6 Strict
-            document.documentElement.scrollTop = Number(top);
-        }
-        if (document.body) { // all other Explorers
-            document.body.scrollTop = Number(top);
-        }
-        return true;
-    } else { //获取垂直滚动值
-        var yScroll;
-        if (self.pageYOffset) {
-            yScroll = self.pageYOffset;
-        } else if (document.documentElement && document.documentElement.scrollTop) { // Explorer 6 Strict
-            yScroll = document.documentElement.scrollTop;
-        } else if (document.body) { // all other Explorers
-            yScroll = document.body.scrollTop;
-        }
-        return yScroll;
-    }
-};
+// /**
+//  * 获取&&设置-页面垂直滚动值
+//  * */
+// function __getPageScrollY(top) {
+//     if (top || Number(top) == 0) { //设置垂直滚动值
+//         if (self.pageYOffset) {
+//             self.pageYOffset = Number(top);
+//         }
+//         if (document.documentElement && document.documentElement.scrollTop) { // Explorer 6 Strict
+//             document.documentElement.scrollTop = Number(top);
+//         }
+//         if (document.body) { // all other Explorers
+//             document.body.scrollTop = Number(top);
+//         }
+//         return true;
+//     } else { //获取垂直滚动值
+//         var yScroll;
+//         if (self.pageYOffset) {
+//             yScroll = self.pageYOffset;
+//         } else if (document.documentElement && document.documentElement.scrollTop) { // Explorer 6 Strict
+//             yScroll = document.documentElement.scrollTop;
+//         } else if (document.body) { // all other Explorers
+//             yScroll = document.body.scrollTop;
+//         }
+//         return yScroll;
+//     }
+// };
 
-/**
- * 监听-按钮显示与否
- * */
-function __checkDisplay() {
-    function __pageScrollY() {
-        var S = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-        if (S > 0) {
-            backTop.style.display = "block"
-        } else {
-            backTop.style.display = "none"
-        }
-    }
-    window.onscroll = __pageScrollY;
-    __pageScrollY()
-}
+// /**
+//  * 监听-按钮显示与否
+//  * */
+// function __checkDisplay() {
+//     function __pageScrollY() {
+//         var S = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+//         if (S > 0) {
+//             backTop.style.display = "block"
+//         } else {
+//             backTop.style.display = "none"
+//         }
+//     }
+//     window.onscroll = __pageScrollY;
+//     __pageScrollY()
+// }
 
 
-
-// 登录和登出
-var plugins_ = document.querySelector(".fixed-plugins");
-var login_ = document.querySelector(".fp-login");
-var logout_ = document.querySelector(".fp-logout");
-var register_ = document.getElementsByClassName("fp-register")[0];
-if (login_ || logout_) {
-    hover(plugins_, function () {
-        toggleClass(register_, "show")
-    }, function () {
-        toggleClass(register_, "hide")
-    })
-}
 
 
 // 搜索功能
-let [search_, search_in, search_out, search_form] = [document.querySelector('.fp-search'), document.querySelector('.fp-search-in'), document.querySelector('.fp-search-out'), document.querySelector('.fp-search-out .search-form')];
-addClass(search_form, 'flex-hc-vc');
-search_.addEventListener('mouseover', function (event) {
-    removeClass(search_out, 'hide');
-    addClass(search_out, 'show');
-})
-search_.addEventListener('mouseout', function (event) {
-    removeClass(search_out, 'show');
-    addClass(search_out, 'hide');
-})
-
-
-// 切换背景功能
-let [background_, background_in, background_out] = [document.querySelector(".fp-background"), document.querySelector('.fp-background-in'), document.querySelector('.fp-background-out')];
-background_.addEventListener('mouseover', function (e) {
-    removeClass(background_out, 'hide');
-    addClass(background_out, 'show');
-    background_out.querySelectorAll('li')[0].onclick = function (event) {
-        Animation.closeGravity();
-        Animation.closeSnow();
-        Animation.snow();
-    }
-    background_out.querySelectorAll('li')[0].ondblclick = function (event) {
-        Animation.closeSnow();
-    }
-    background_out.querySelectorAll('li')[1].onclick = function (event) {
-        Animation.closeSnow();
-        Animation.closeGravity();
-        Animation.gravity();
-    }
-    background_out.querySelectorAll('li')[1].ondblclick = function (event) {
-        Animation.closeGravity();
-    }
-})
-
-
-
-
-
-
-
+// let [search_, search_in, search_out, search_form] = [document.querySelector('.fp-search'), document.querySelector('.fp-search-in'), document.querySelector('.fp-search-out'), document.querySelector('.fp-search-out .search-form')];
+// addClass(search_form, 'flex-hc-vc');
+// search_.addEventListener('mouseover', function (event) {
+//     removeClass(search_out, 'hide');
+//     addClass(search_out, 'show');
+// })
+// search_.addEventListener('mouseout', function (event) {
+//     removeClass(search_out, 'show');
+//     addClass(search_out, 'hide');
+// })
 
 // let [background_, background_in, background_out] = [document.querySelector('.fp-background'), document.querySelector('.fp-background-in'), document.querySelector('.fp-background-out')];
 // let [body_dom, body_bg, random_] = [document.getElementsByTagName("body")[0]];

@@ -99,7 +99,7 @@ Animation.gravity = () => {
     }, 100);
 }
 
-Animation.snow = (seasons) => {
+Animation.snow = (seasons,imageNumber) => {
     var THREE = THREE || {};
     if (!self.Int32Array) self.Int32Array = Array, self.Float32Array = Array;
     THREE.Color = function (a) {
@@ -3246,7 +3246,7 @@ Animation.snow = (seasons) => {
                 particleImage =
                 new Image, particleImage.src =
                 `${GLOBAL.homeSourceUrl}/img/${seasons?seasons:"snow"}.png`, snowNum =
-                138, init())
+                imageNumber, init())
         })
     }();
 }

@@ -15,52 +15,78 @@
 get_header();
 setPostViews(get_the_ID()); ?>
 
-<div id="primary" class="main-area">
+<div id="primary" class="w-1 main-area">
   <main id="main" class="main-content" role="main">
-    <div class="kl-skeleton kl-skeleton-animated" id="kl-skeleton" v-if="ifShowPost">
-      <div class="kl-skeleton-item">
-        <div class="kl-skeleton-content">
-          <div class="kl-skeleton-line"></div>
-          <div class="kl-skeleton-line"></div>
-          <div class="kl-skeleton-line"></div>
-          <div class="kl-skeleton-line"></div>
-        </div>
-      </div>
+
+    <!-- 文章列表 -->
+    <div class="main-container" v-block>
+      <el-tabs @tab-click="changeType">
+        <el-tab-pane label="article">
+          <span slot="label"><i class="lalaksks lalaksks-ic-create"></i>文章</span>
+          <div class="kl-skeleton kl-skeleton-animated" id="kl-skeleton" v-if="ifShowPost">
+            <div class="kl-skeleton-item">
+              <div class="kl-skeleton-content">
+                <div class="kl-skeleton-line"></div>
+                <div class="kl-skeleton-line"></div>
+                <div class="kl-skeleton-line"></div>
+                <div class="kl-skeleton-line"></div>
+              </div>
+            </div>
+          </div>
+          <div class="article-list" v-if="!ifShowPost">
+            <article class="article-item hentry" v-for="(item,index) in listOfArticle" :key="index">
+              <div class="entry-header">
+                <h5 class="entry-title">
+                  <a :href="item.link"> {{item.title.rendered}} </a>
+                </h5>
+              </div>
+              <div class="entry-main flex-hl-vc" style="min-height:180px">
+                <div class="featured-image" v-if="item._embedded['wp:featuredmedia']">
+                  <img :src="item._embedded['wp:featuredmedia']['0'].source_url" alt="">
+                </div>
+                <p class="entry-summary" v-html="item.excerpt.rendered" :id="item.id"></p>
+              </div>
+            </article>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="chat" >
+          <span slot="label"><i class="lalaksks lalaksks-ic-create"></i>说说</span>
+          <div class="kl-skeleton kl-skeleton-animated" id="kl-skeleton" v-if="ifShowChat">
+            <div class="kl-skeleton-item">
+              <div class="kl-skeleton-content">
+                <div class="kl-skeleton-line"></div>
+                <div class="kl-skeleton-line"></div>
+                <div class="kl-skeleton-line"></div>
+                <div class="kl-skeleton-line"></div>
+              </div>
+            </div>
+          </div>
+          <div class="article-list" v-if="!ifShowChat">
+            <article class="article-item hentry" v-for="(item,index) in listOfChat" :key="index">
+              <div class="entry-header">
+                <h5 class="entry-title">
+                  <a :href="item.link"> {{item.title.rendered}} </a>
+                </h5>
+              </div>
+              <div class="entry-main flex-hl-vc" style="min-height:180px">
+                <div class="featured-image" v-if="item._embedded['wp:featuredmedia']">
+                  <img :src="item._embedded['wp:featuredmedia']['0'].source_url" alt="">
+                </div>
+                <p class="entry-summary" v-html="item.content.rendered" :id="item.id"></p>
+              </div>
+            </article>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
     </div>
-    <?php
-    $limit = get_option('posts_per_page');
-    $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-    query_posts('post_type=any&post_status=publish&showposts=' . $limit = 10 . '&paged=' . $paged);
-    ?>
-    <?php if (have_posts()) : ?>
-      <?php /* Start the Loop */ ?>
-      <?php while (have_posts()) : the_post(); ?>
-        <?php
-        /*
-					 * Include the Post-Format-specific template for the content.
-					 * If you want to override this in a child theme, then include a file
-					 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-					 */
-        // echo $post -> post_type;
-        get_template_part('template-parts/content', get_post_format());
-        ?>
-      <?php endwhile; ?>     
-    <?php else : ?>
-      <?php get_template_part('template-parts/content', 'none'); ?>
-    <?php endif; ?>
-    <?php
-      the_posts_pagination(array(
-        'prev_text' => '上页',
-        'next_text' => '下页',
-        'before_page_number' => '<span class="meta-nav screen-reader-text">第 </span>',
-        'after_page_number' => '<span class="meta-nav screen-reader-text"> 页</span>',
-      ));
-    ?>
     <!-- <div class="page-navi m-tb-10 flex-hc-vc"><?php wp_pagenavi(); ?></div> -->
 
   </main>
   <!-- #main -->
 </div>
 <!-- #primary -->
-<?php get_sidebar(); ?>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/index.js"></script>
+<?php
+// get_sidebar(); 
+?>
 <?php get_footer(); ?>
