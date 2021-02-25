@@ -22,17 +22,8 @@ setPostViews(get_the_ID()); ?>
     <div class="main-container" v-block>
       <el-tabs @tab-click="changeType">
         <el-tab-pane label="article">
-          <span slot="label"><i class="lalaksks lalaksks-ic-create"></i>文章</span>
-          <div class="kl-skeleton kl-skeleton-animated" id="kl-skeleton" v-if="ifShowPost">
-            <div class="kl-skeleton-item">
-              <div class="kl-skeleton-content">
-                <div class="kl-skeleton-line"></div>
-                <div class="kl-skeleton-line"></div>
-                <div class="kl-skeleton-line"></div>
-                <div class="kl-skeleton-line"></div>
-              </div>
-            </div>
-          </div>
+          <span slot="label">文章</span>
+          <kl-skeleton v-if="ifShowPost"></kl-skeleton>
           <div class="article-list" v-if="!ifShowPost">
             <article class="article-item hentry" v-for="(item,index) in listOfArticle" :key="index">
               <div class="entry-header">
@@ -40,7 +31,7 @@ setPostViews(get_the_ID()); ?>
                   <a :href="item.link"> {{item.title.rendered}} </a>
                 </h5>
               </div>
-              <div class="entry-main flex-hl-vc" style="min-height:180px">
+              <div class="entry-main flex-hl-vl flex-hw">
                 <div class="featured-image" v-if="item._embedded['wp:featuredmedia']">
                   <img :src="item._embedded['wp:featuredmedia']['0'].source_url" alt="">
                 </div>
@@ -50,17 +41,8 @@ setPostViews(get_the_ID()); ?>
           </div>
         </el-tab-pane>
         <el-tab-pane label="chat" >
-          <span slot="label"><i class="lalaksks lalaksks-ic-create"></i>说说</span>
-          <div class="kl-skeleton kl-skeleton-animated" id="kl-skeleton" v-if="ifShowChat">
-            <div class="kl-skeleton-item">
-              <div class="kl-skeleton-content">
-                <div class="kl-skeleton-line"></div>
-                <div class="kl-skeleton-line"></div>
-                <div class="kl-skeleton-line"></div>
-                <div class="kl-skeleton-line"></div>
-              </div>
-            </div>
-          </div>
+          <span slot="label">说说</span>
+          <kl-skeleton v-if="ifShowChat"></kl-skeleton>
           <div class="article-list" v-if="!ifShowChat">
             <article class="article-item hentry" v-for="(item,index) in listOfChat" :key="index">
               <div class="entry-header">
@@ -68,7 +50,7 @@ setPostViews(get_the_ID()); ?>
                   <a :href="item.link"> {{item.title.rendered}} </a>
                 </h5>
               </div>
-              <div class="entry-main flex-hl-vc" style="min-height:180px">
+              <div class="entry-main flex-hl-vl flex-hw">
                 <div class="featured-image" v-if="item._embedded['wp:featuredmedia']">
                   <img :src="item._embedded['wp:featuredmedia']['0'].source_url" alt="">
                 </div>
@@ -85,6 +67,7 @@ setPostViews(get_the_ID()); ?>
   <!-- #main -->
 </div>
 <!-- #primary -->
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/skeleton.js"></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/index.js"></script>
 <?php
 // get_sidebar(); 
