@@ -32,24 +32,23 @@
 <body <?php body_class(); ?>>
 
 
-	<div id="pre-loader" class="loader-background">
-		<!-- <div class="sk-cube-grid">
-  <div class="sk-cube sk-cube1"></div>
-  <div class="sk-cube sk-cube2"></div>
-  <div class="sk-cube sk-cube3"></div>
-  <div class="sk-cube sk-cube4"></div>
-  <div class="sk-cube sk-cube5"></div>
-  <div class="sk-cube sk-cube6"></div>
-  <div class="sk-cube sk-cube7"></div>
-  <div class="sk-cube sk-cube8"></div>
-  <div class="sk-cube sk-cube9"></div>
-</div> -->
-
-	</div>
-
+	<!-- <div id="pre-loader" class="loader-background">
+		<div class="sk-cube-grid">
+			<div class="sk-cube sk-cube1"></div>
+			<div class="sk-cube sk-cube2"></div>
+			<div class="sk-cube sk-cube3"></div>
+			<div class="sk-cube sk-cube4"></div>
+			<div class="sk-cube sk-cube5"></div>
+			<div class="sk-cube sk-cube6"></div>
+			<div class="sk-cube sk-cube7"></div>
+			<div class="sk-cube sk-cube8"></div>
+			<div class="sk-cube sk-cube9"></div>
+		</div>
+	</div> -->
 
 
-	<script type="text/javascript" language="JavaScript">
+
+	<!-- <script type="text/javascript" language="JavaScript">
 		//: 判断网页是否加载完成
 		document.onreadystatechange = function() {
 			if (document.readyState == "complete") {
@@ -57,7 +56,7 @@
 				// document.getElementById("pre-loader").remove();
 			}
 		}
-	</script>
+	</script> -->
 
 	<div id="page" class="hfeed site">
 		<header id="masthead" class="site-header" role="banner">

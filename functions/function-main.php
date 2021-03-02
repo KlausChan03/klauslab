@@ -1234,6 +1234,54 @@ function ajax_comment_callback()
     // add_filter('get_avatar', 'my_avatar');
 
 
+    function my_avatar($email = 'klauschan007@gmail.com', $size = '50', $default = '', $alt = '')
+    {
+        // 设置$email默认值为一个不存在的aaaaa@aaaaaa.com
+        // 防止空的$email导致出错
+        $f = md5(strtolower($email));
+
+        // 以下代码将头像缓存到wp-content目录下
+        $a = WP_CONTENT_URL . '/avatar/' . $f . $size . '.png';
+        $e = WP_CONTENT_DIR . '/avatar/' . $f . $size . '.png';
+        $d = WP_CONTENT_DIR . '/avatar/' . $f . '-d.png';
+
+        // 如果要将头像缓存到当前主题目录下，请将上面3行代码改成：
+        // $a = get_bloginfo('template_url') . '/avatar/'. $f . $size . '.png';
+        // $e = get_template_directory() . '/avatar/' . $f . $size . '.png';
+        // $d = get_template_directory() . '/avatar/' . $f . '-d.png';
+
+        if ($default == '')
+            $default = content_url() . '/avatar/default.jpg';
+
+        $t = 2592000; // 缓存有效期30天, 这里单位:秒
+        if (!is_file($e) || (time() - filemtime($e)) > $t) {
+            if (!is_file($d) || (time() - filemtime($d)) > $t) {
+                // 验证是否有头像
+                $uri = 'http://www.gravatar.com/avatar/' . $f . '?d=404';
+                $headers = @get_headers($uri);
+                if (!preg_match("|200|", $headers[0])) {
+                    // 没有头像，则新建一个空白文件作为标记
+                    $handle = fopen($d, 'w');
+                    fclose($handle);
+
+                    $a = $default;
+                } else {
+                    // 有头像且不存在则更新
+                    $r = get_option('avatar_rating');
+                    $g = 'http://www.gravatar.com/avatar/' . $f . '?s=' . $size . '&r=' . $r;
+                    copy($g, $e);
+                }
+            } else {
+                $a = $default;
+            }
+        }
+
+        $avatar = "<img alt='{$alt}' src='{$a}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+        return apply_filters('my_avatar', $avatar, $email, $size, $default, $alt);
+    }
+
+    add_filter('get_avatar', 'my_avatar');
+
     // 增加个人简介信息
     function my_new_contactmethods($contactmethods)
     {
@@ -1292,6 +1340,109 @@ function ajax_comment_callback()
             return $redirect_to;
     }
     add_filter("login_redirect", "my_login_redirect", 10, 3);
+
+    
+// 禁用emoji表情
+// function disable_emojis() {
+//     remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+//     remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+//     remove_action( 'wp_print_styles', 'print_emoji_styles' );
+//     remove_action( 'admin_print_styles', 'print_emoji_styles' );    
+//     remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+//     remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );  
+//     remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+//     add_filter( 'tiny_mce_plugins', 'disable_emojis_tinymce' );
+// }
+// add_action( 'init', 'disable_emojis' );
+// function disable_emojis_tinymce( $plugins ) {
+// 	return array_diff( $plugins, array( 'wpemoji' ) );
+// }
+
+/**
+ * wordpress优化 2020.12.18
+ */
+
+//彻底关闭 pingback
+add_filter('xmlrpc_methods',function($methods){ $methods['pingback.ping'] = '__return_false'; $methods['pingback.extensions.getPingbacks'] = '__return_false'; return $methods; });
+//禁用 pingbacks, enclosures, trackbacks
+remove_action( 'do_pings', 'do_all_pings', 10 );
+//去掉 _encloseme 和 do_ping 操作。
+remove_action( 'publish_post','_publish_post_hook',5 );
+
+// 禁用 Emoji 功能
+remove_action('admin_print_scripts',    'print_emoji_detection_script');
+remove_action('admin_print_styles', 'print_emoji_styles');
+remove_action('wp_head',        'print_emoji_detection_script', 7);
+remove_action('wp_print_styles',    'print_emoji_styles');
+remove_action('embed_head',     'print_emoji_detection_script');
+remove_filter('the_content_feed',   'wp_staticize_emoji');
+remove_filter('comment_text_rss',   'wp_staticize_emoji');
+remove_filter('wp_mail',        'wp_staticize_emoji_for_email');
+add_filter( 'emoji_svg_url',        '__return_false' );
+
+// 屏蔽字符转码
+add_filter('run_wptexturize', '__return_false');
+
+// 彻底关闭 WordPress 自动更新和后台更新检查
+add_filter('automatic_updater_disabled', '__return_true');  // 彻底关闭自动更新
+
+remove_action('init', 'wp_schedule_update_checks'); // 关闭更新检查定时作业
+wp_clear_scheduled_hook('wp_version_check');            // 移除已有的版本检查定时作业
+wp_clear_scheduled_hook('wp_update_plugins');       // 移除已有的插件更新定时作业
+wp_clear_scheduled_hook('wp_update_themes');            // 移除已有的主题更新定时作业
+wp_clear_scheduled_hook('wp_maybe_auto_update');        // 移除已有的自动更新定时作业
+
+remove_action( 'admin_init', '_maybe_update_core' );        // 移除后台内核更新检查
+
+remove_action( 'load-plugins.php', 'wp_update_plugins' );   // 移除后台插件更新检查
+remove_action( 'load-update.php', 'wp_update_plugins' );
+remove_action( 'load-update-core.php', 'wp_update_plugins' );
+remove_action( 'admin_init', '_maybe_update_plugins' );
+
+remove_action( 'load-themes.php', 'wp_update_themes' );     // 移除后台主题更新检查
+remove_action( 'load-update.php', 'wp_update_themes' );
+remove_action( 'load-update-core.php', 'wp_update_themes' );
+remove_action( 'admin_init', '_maybe_update_themes' );
+
+// 禁止古腾堡加载 Google 字体
+add_action('admin_print_styles', function(){
+    wp_deregister_style('wp-editor-font');
+    wp_register_style('wp-editor-font', '');
+});
+
+// 通过前台不加载语言包来提高博客速度
+add_filter('locale', function($locale) {$locale = ( is_admin() ) ? $locale : 'en_US';
+    return $locale;
+});
+
+// 移除 wp_head 无用的属性
+remove_action('wp_head', 'rsd_link');
+remove_action('wp_head', 'wlwmanifest_link');
+remove_action('wp_head', 'wp_generator');
+remove_action('wp_head', 'start_post_rel_link');
+remove_action('wp_head', 'index_rel_link');
+remove_action('wp_head', 'adjacent_posts_rel_link');
+
+// 移除自动修正 WordPress 大小写函数
+remove_filter( 'the_content', 'capital_P_dangit' );
+remove_filter( 'the_title', 'capital_P_dangit' );
+remove_filter( 'comment_text', 'capital_P_dangit' );
+
+// 移除后台界面右上角的帮助
+add_action('in_admin_header', function(){
+    global $current_screen;$current_screen->remove_help_tabs();
+});
+
+// 解除 per_page 参数不可以超过100的限制
+add_filter( 'rest_post_collection_params', 'my_prefix_change_post_per_page', 10, 1 );
+
+function my_prefix_change_post_per_page( $params ) {
+    if ( isset( $params['per_page'] ) ) {
+        $count_posts = wp_count_posts();
+        $params['per_page']['maximum'] = $count_posts->publish; //增加限制到当前文章总数
+    }
+    return $params;
+}
 
 // 2018-8-14 引入
 // function translate_chinese_post_title_to_en_for_slug( $title ) {

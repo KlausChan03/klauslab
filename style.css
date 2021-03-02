@@ -72,6 +72,10 @@ Text Domain: KlausLab
   box-sizing: inherit;
 }
 
+[v-block] {
+  display: none;
+}
+
 body {
   overflow-x: hidden;
 }
@@ -4322,6 +4326,10 @@ div[itemprop="description"] {
   .site-header .main-navigation .menu-logo {
     display: block;
   }
+  .site-header .main-navigation .menu-logo .custom-logo {
+    width: 150px;
+    height: 50px;
+  }
   .site-content {
     padding: 20px;
   }
@@ -5847,11 +5855,6 @@ div[itemprop="description"] {
   padding: 20px;
 }
 
-.kl-skeleton-line:first-child {
-  width: 40%;
-  margin-top: 8px;
-}
-
 .kl-skeleton-animated .kl-skeleton-avatar,
 .kl-skeleton-animated .kl-skeleton-line {
   background: linear-gradient(90deg, #fff, #edeff1, #fff);
@@ -5865,6 +5868,11 @@ div[itemprop="description"] {
   margin-bottom: 16px;
   height: 14px;
   background: #f3f3f3;
+}
+
+.kl-skeleton-line:first-child {
+  width: 40%;
+  margin-top: 8px;
 }
 
 .kl-skeleton-line:nth-child(3) {
