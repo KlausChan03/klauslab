@@ -5,6 +5,7 @@ const index_module = new Vue({
             listOfAll: [],
             listOfArticle: [],
             listOfChat: [],
+            listOfRecommend:[],
             total: 0,
             totalOfArticle: 0,
             totalOfChat: 0,
@@ -13,11 +14,11 @@ const index_module = new Vue({
             ifShowAll: true,
             per_page: 10,
             page: 1,            
-            postType: 'all',
+            postType: 'recommend',
         }
     },
     created() {
-        this.getAllTypePost()
+        this.getTypeOfRecommend()
     },
     computed:{
         getTotal(){
@@ -27,9 +28,24 @@ const index_module = new Vue({
                 return this.totalOfChat
             } else if(this.postType === "all"){
                 return this.total
-            }            
+            } else if(this.postType === "recommend"){
+                return this.listOfRecommend.length
+            }           
         },
+        judgeCount(){
+            if (this.postType === "article") {
+                return this.listOfArticle.length > this.per_page
+            } else if(this.postType === "chat"){
+                return this.listOfChat.length > this.per_page
+            } else if(this.postType === "all"){
+                return this.listOfAll.length > this.per_page
+            } else if(this.postType === "recommend"){
+                return true
+            }
+            return true
+        }
     },
+
     methods: {
         getAllTypePost() {
             let _this = this
@@ -51,6 +67,23 @@ const index_module = new Vue({
                 }))
         },
 
+        getTypeOfRecommend() {
+            // let _this = this
+            this.ifShowAll = true
+            let params = {};
+            // params.page = this.page
+            params.per_page = window.post_count
+            params.sticky = true
+            return axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/posts?_embed`, {
+                params: params
+            }).then(res => {
+                // let headerData = Object.values(res.headers)
+                // this.totalOfArticle = parseInt(headerData[16])
+                this.listOfRecommend = res.data
+                this.ifShowAll = false              
+            })
+        },
+
         getAllArticles() {
             this.ifShowPost = true
             let params = {};
@@ -60,11 +93,9 @@ const index_module = new Vue({
             return axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/posts?_embed`, {
                 params: params
             }).then(res => {
-                let headerData = Object.values(res.headers)
-                this.totalOfArticle = parseInt(headerData[16])
+                this.totalOfArticle = parseInt(res.headers['x-wp-total'])
                 this.listOfArticle = res.data
-                this.ifShowPost = false
-                
+                this.ifShowPost = false                
             })
         },
 
@@ -78,8 +109,8 @@ const index_module = new Vue({
             return axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/shuoshuo?_embed`, {
                 params: params
             }).then(res => {
-                let headerData = Object.values(res.headers)
-                this.totalOfChat = parseInt(headerData[16])
+                // let headerData = Object.values(res.headers)
+                this.totalOfChat = parseInt(res.headers['x-wp-total'])            
                 this.listOfChat = res.data
                 this.ifShowChat = false
                 
@@ -105,6 +136,8 @@ const index_module = new Vue({
                 this.getAllChat()
             } else if (type === "all") {
                 this.getAllTypePost()
+            } else if (type === "recommend"){
+                this.getTypeOfRecommend()
             }
         },
 
