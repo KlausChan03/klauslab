@@ -264,12 +264,19 @@ function normal_style_script()
     wp_enqueue_style('animate', KL_THEME_URI . '/css/animate.min.css', array(), '3.5.1', false);
     // // 插件样式
     // wp_enqueue_style('support', KL_THEME_URI . '/css/support.css', array(), '1.0', false);
+   
+    // dayjs.min.js
+    wp_enqueue_script('dayjs', KL_THEME_URI . '/js/lib/dayjs.min.js', array(), '1.10.4', false);
+    // dayjs-plugin.js
+    wp_enqueue_script('dayjs-relativeTime', KL_THEME_URI . '/js/plugin/relativeTime.js', array(), '1.10.4', false);
+    wp_enqueue_script('dayjs-locale', KL_THEME_URI . '/js/plugin/zh-cn.js', array(), '1.10.4', false);
     // vue.min.js   
     wp_enqueue_script('vue', KL_THEME_URI . '/js/lib/vue.min.js', array(), '2.6.0', false);
     // jquery.min.js
     wp_enqueue_script('jquery', KL_THEME_URI . '/js/lib/jquery-3.1.1.min.js', array(), '3.1.1', false);
     // axios.min.js
     wp_enqueue_script('axios', KL_THEME_URI . '/js/lib/axios.min.js', array(), '0.19.0', false);
+    
     // 全局变量配置
     wp_enqueue_script('myConfig', KL_THEME_URI . '/js/config.js', array(), '1.0', false);
     // 配置
@@ -1206,9 +1213,9 @@ function ajax_comment_callback()
 
     // 取消转义
     // 取消内容转义 
-    remove_filter('the_content', 'wptexturize');
+    // remove_filter('the_content', 'wptexturize');
     // 取消摘要转义 
-    remove_filter('the_excerpt', 'wptexturize');
+    // remove_filter('the_excerpt', 'wptexturize');
     // 取消评论转义 
     remove_filter('comment_text', 'wptexturize');
 
@@ -1280,7 +1287,7 @@ function ajax_comment_callback()
         return apply_filters('my_avatar', $avatar, $email, $size, $default, $alt);
     }
 
-    add_filter('get_avatar', 'my_avatar');
+    // add_filter('get_avatar', 'my_avatar');
 
     // 增加个人简介信息
     function my_new_contactmethods($contactmethods)
@@ -1341,108 +1348,122 @@ function ajax_comment_callback()
     }
     add_filter("login_redirect", "my_login_redirect", 10, 3);
 
-    
-// 禁用emoji表情
-// function disable_emojis() {
-//     remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-//     remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
-//     remove_action( 'wp_print_styles', 'print_emoji_styles' );
-//     remove_action( 'admin_print_styles', 'print_emoji_styles' );    
-//     remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
-//     remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );  
-//     remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
-//     add_filter( 'tiny_mce_plugins', 'disable_emojis_tinymce' );
-// }
-// add_action( 'init', 'disable_emojis' );
-// function disable_emojis_tinymce( $plugins ) {
-// 	return array_diff( $plugins, array( 'wpemoji' ) );
-// }
 
-/**
- * wordpress优化 2020.12.18
- */
+    // 禁用emoji表情
+    // function disable_emojis() {
+    //     remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+    //     remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+    //     remove_action( 'wp_print_styles', 'print_emoji_styles' );
+    //     remove_action( 'admin_print_styles', 'print_emoji_styles' );    
+    //     remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+    //     remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );  
+    //     remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+    //     add_filter( 'tiny_mce_plugins', 'disable_emojis_tinymce' );
+    // }
+    // add_action( 'init', 'disable_emojis' );
+    // function disable_emojis_tinymce( $plugins ) {
+    // 	return array_diff( $plugins, array( 'wpemoji' ) );
+    // }
 
-//彻底关闭 pingback
-add_filter('xmlrpc_methods',function($methods){ $methods['pingback.ping'] = '__return_false'; $methods['pingback.extensions.getPingbacks'] = '__return_false'; return $methods; });
-//禁用 pingbacks, enclosures, trackbacks
-remove_action( 'do_pings', 'do_all_pings', 10 );
-//去掉 _encloseme 和 do_ping 操作。
-remove_action( 'publish_post','_publish_post_hook',5 );
+    /**
+     * wordpress优化 2020.12.18
+     */
 
-// 禁用 Emoji 功能
-remove_action('admin_print_scripts',    'print_emoji_detection_script');
-remove_action('admin_print_styles', 'print_emoji_styles');
-remove_action('wp_head',        'print_emoji_detection_script', 7);
-remove_action('wp_print_styles',    'print_emoji_styles');
-remove_action('embed_head',     'print_emoji_detection_script');
-remove_filter('the_content_feed',   'wp_staticize_emoji');
-remove_filter('comment_text_rss',   'wp_staticize_emoji');
-remove_filter('wp_mail',        'wp_staticize_emoji_for_email');
-add_filter( 'emoji_svg_url',        '__return_false' );
+    //彻底关闭 pingback
+    add_filter('xmlrpc_methods', function ($methods) {
+        $methods['pingback.ping'] = '__return_false';
+        $methods['pingback.extensions.getPingbacks'] = '__return_false';
+        return $methods;
+    });
+    //禁用 pingbacks, enclosures, trackbacks
+    remove_action('do_pings', 'do_all_pings', 10);
+    //去掉 _encloseme 和 do_ping 操作。
+    remove_action('publish_post', '_publish_post_hook', 5);
 
-// 屏蔽字符转码
-add_filter('run_wptexturize', '__return_false');
+    // 禁用 Emoji 功能
+    remove_action('admin_print_scripts',    'print_emoji_detection_script');
+    remove_action('admin_print_styles', 'print_emoji_styles');
+    remove_action('wp_head',        'print_emoji_detection_script', 7);
+    remove_action('wp_print_styles',    'print_emoji_styles');
+    remove_action('embed_head',     'print_emoji_detection_script');
+    remove_filter('the_content_feed',   'wp_staticize_emoji');
+    remove_filter('comment_text_rss',   'wp_staticize_emoji');
+    remove_filter('wp_mail',        'wp_staticize_emoji_for_email');
+    add_filter('emoji_svg_url',        '__return_false');
 
-// 彻底关闭 WordPress 自动更新和后台更新检查
-add_filter('automatic_updater_disabled', '__return_true');  // 彻底关闭自动更新
+    // 屏蔽字符转码
+    add_filter('run_wptexturize', '__return_false');
 
-remove_action('init', 'wp_schedule_update_checks'); // 关闭更新检查定时作业
-wp_clear_scheduled_hook('wp_version_check');            // 移除已有的版本检查定时作业
-wp_clear_scheduled_hook('wp_update_plugins');       // 移除已有的插件更新定时作业
-wp_clear_scheduled_hook('wp_update_themes');            // 移除已有的主题更新定时作业
-wp_clear_scheduled_hook('wp_maybe_auto_update');        // 移除已有的自动更新定时作业
+    // 彻底关闭 WordPress 自动更新和后台更新检查
+    add_filter('automatic_updater_disabled', '__return_true');  // 彻底关闭自动更新
 
-remove_action( 'admin_init', '_maybe_update_core' );        // 移除后台内核更新检查
+    remove_action('init', 'wp_schedule_update_checks'); // 关闭更新检查定时作业
+    wp_clear_scheduled_hook('wp_version_check');            // 移除已有的版本检查定时作业
+    wp_clear_scheduled_hook('wp_update_plugins');       // 移除已有的插件更新定时作业
+    wp_clear_scheduled_hook('wp_update_themes');            // 移除已有的主题更新定时作业
+    wp_clear_scheduled_hook('wp_maybe_auto_update');        // 移除已有的自动更新定时作业
 
-remove_action( 'load-plugins.php', 'wp_update_plugins' );   // 移除后台插件更新检查
-remove_action( 'load-update.php', 'wp_update_plugins' );
-remove_action( 'load-update-core.php', 'wp_update_plugins' );
-remove_action( 'admin_init', '_maybe_update_plugins' );
+    remove_action('admin_init', '_maybe_update_core');        // 移除后台内核更新检查
 
-remove_action( 'load-themes.php', 'wp_update_themes' );     // 移除后台主题更新检查
-remove_action( 'load-update.php', 'wp_update_themes' );
-remove_action( 'load-update-core.php', 'wp_update_themes' );
-remove_action( 'admin_init', '_maybe_update_themes' );
+    remove_action('load-plugins.php', 'wp_update_plugins');   // 移除后台插件更新检查
+    remove_action('load-update.php', 'wp_update_plugins');
+    remove_action('load-update-core.php', 'wp_update_plugins');
+    remove_action('admin_init', '_maybe_update_plugins');
 
-// 禁止古腾堡加载 Google 字体
-add_action('admin_print_styles', function(){
-    wp_deregister_style('wp-editor-font');
-    wp_register_style('wp-editor-font', '');
-});
+    remove_action('load-themes.php', 'wp_update_themes');     // 移除后台主题更新检查
+    remove_action('load-update.php', 'wp_update_themes');
+    remove_action('load-update-core.php', 'wp_update_themes');
+    remove_action('admin_init', '_maybe_update_themes');
 
-// 通过前台不加载语言包来提高博客速度
-add_filter('locale', function($locale) {$locale = ( is_admin() ) ? $locale : 'en_US';
-    return $locale;
-});
+    // 禁止古腾堡加载 Google 字体
+    add_action('admin_print_styles', function () {
+        wp_deregister_style('wp-editor-font');
+        wp_register_style('wp-editor-font', '');
+    });
 
-// 移除 wp_head 无用的属性
-remove_action('wp_head', 'rsd_link');
-remove_action('wp_head', 'wlwmanifest_link');
-remove_action('wp_head', 'wp_generator');
-remove_action('wp_head', 'start_post_rel_link');
-remove_action('wp_head', 'index_rel_link');
-remove_action('wp_head', 'adjacent_posts_rel_link');
+    // 通过前台不加载语言包来提高博客速度
+    add_filter('locale', function ($locale) {
+        $locale = (is_admin()) ? $locale : 'en_US';
+        return $locale;
+    });
 
-// 移除自动修正 WordPress 大小写函数
-remove_filter( 'the_content', 'capital_P_dangit' );
-remove_filter( 'the_title', 'capital_P_dangit' );
-remove_filter( 'comment_text', 'capital_P_dangit' );
+    // 移除 wp_head 无用的属性
+    remove_action('wp_head', 'rsd_link');
+    remove_action('wp_head', 'wlwmanifest_link');
+    remove_action('wp_head', 'wp_generator');
+    remove_action('wp_head', 'start_post_rel_link');
+    remove_action('wp_head', 'index_rel_link');
+    remove_action('wp_head', 'adjacent_posts_rel_link');
 
-// 移除后台界面右上角的帮助
-add_action('in_admin_header', function(){
-    global $current_screen;$current_screen->remove_help_tabs();
-});
+    // 移除自动修正 WordPress 大小写函数
+    remove_filter('the_content', 'capital_P_dangit');
+    remove_filter('the_title', 'capital_P_dangit');
+    remove_filter('comment_text', 'capital_P_dangit');
 
-// 解除 per_page 参数不可以超过100的限制
-add_filter( 'rest_post_collection_params', 'my_prefix_change_post_per_page', 10, 1 );
+    // 移除后台界面右上角的帮助
+    add_action('in_admin_header', function () {
+        global $current_screen;
+        $current_screen->remove_help_tabs();
+    });
 
-function my_prefix_change_post_per_page( $params ) {
-    if ( isset( $params['per_page'] ) ) {
-        $count_posts = wp_count_posts();
-        $params['per_page']['maximum'] = $count_posts->publish; //增加限制到当前文章总数
+    // 解除 per_page 参数不可以超过100的限制
+    add_filter('rest_post_collection_params', 'my_prefix_change_post_per_page', 10, 1);
+
+    function my_prefix_change_post_per_page($params)
+    {
+        if (isset($params['per_page'])) {
+            $count_posts = wp_count_posts();
+            $params['per_page']['maximum'] = $count_posts->publish; //增加限制到当前文章总数
+        }
+        return $params;
     }
-    return $params;
-}
+
+    // Replace the default ellipsis
+    function trim_excerpt($text) {
+        $text = str_replace('[&hellip;]', '……', $text);
+        return $text;
+    }
+    add_filter('get_the_excerpt', 'trim_excerpt');
 
 // 2018-8-14 引入
 // function translate_chinese_post_title_to_en_for_slug( $title ) {

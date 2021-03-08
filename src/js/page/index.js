@@ -1,3 +1,6 @@
+dayjs.locale('zh-cn')
+dayjs.extend(window.dayjs_plugin_relativeTime)
+
 const index_module = new Vue({
     el: ".main-container",
     data() {
@@ -5,7 +8,7 @@ const index_module = new Vue({
             listOfAll: [],
             listOfArticle: [],
             listOfChat: [],
-            listOfRecommend:[],
+            listOfRecommend: [],
             total: 0,
             totalOfArticle: 0,
             totalOfChat: 0,
@@ -13,33 +16,40 @@ const index_module = new Vue({
             ifShowChat: false,
             ifShowAll: true,
             per_page: 10,
-            page: 1,            
-            postType: 'recommend',
+            page: 1,
+            postType: 'article',
         }
     },
     created() {
-        this.getTypeOfRecommend()
+        this.getAllArticles()
+        // let params = {}
+        // axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/user_bind`, {
+        //     params: params
+        // }).then(res => {
+        //     console.log(res)
+        // })
+        console.log(dayjs())
     },
-    computed:{
-        getTotal(){
+    computed: {
+        getTotal() {
             if (this.postType === "article") {
                 return this.totalOfArticle
-            } else if(this.postType === "chat"){
+            } else if (this.postType === "chat") {
                 return this.totalOfChat
-            } else if(this.postType === "all"){
+            } else if (this.postType === "all") {
                 return this.total
-            } else if(this.postType === "recommend"){
+            } else if (this.postType === "recommend") {
                 return this.listOfRecommend.length
-            }           
+            }
         },
-        judgeCount(){
+        judgeCount() {
             if (this.postType === "article") {
                 return this.listOfArticle.length > this.per_page
-            } else if(this.postType === "chat"){
+            } else if (this.postType === "chat") {
                 return this.listOfChat.length > this.per_page
-            } else if(this.postType === "all"){
+            } else if (this.postType === "all") {
                 return this.listOfAll.length > this.per_page
-            } else if(this.postType === "recommend"){
+            } else if (this.postType === "recommend") {
                 return true
             }
             return true
@@ -80,7 +90,7 @@ const index_module = new Vue({
                 // let headerData = Object.values(res.headers)
                 // this.totalOfArticle = parseInt(headerData[16])
                 this.listOfRecommend = res.data
-                this.ifShowAll = false              
+                this.ifShowAll = false
             })
         },
 
@@ -95,7 +105,7 @@ const index_module = new Vue({
             }).then(res => {
                 this.totalOfArticle = parseInt(res.headers['x-wp-total'])
                 this.listOfArticle = res.data
-                this.ifShowPost = false                
+                this.ifShowPost = false
             })
         },
 
@@ -110,10 +120,10 @@ const index_module = new Vue({
                 params: params
             }).then(res => {
                 // let headerData = Object.values(res.headers)
-                this.totalOfChat = parseInt(res.headers['x-wp-total'])            
+                this.totalOfChat = parseInt(res.headers['x-wp-total'])
                 this.listOfChat = res.data
                 this.ifShowChat = false
-                
+
             })
         },
 
@@ -129,18 +139,16 @@ const index_module = new Vue({
             this.getListByType(this.postType)
         },
 
-        getListByType(type){
+        getListByType(type) {
             if (type === "article") {
                 this.getAllArticles()
             } else if (type === "chat") {
                 this.getAllChat()
             } else if (type === "all") {
                 this.getAllTypePost()
-            } else if (type === "recommend"){
+            } else if (type === "recommend") {
                 this.getTypeOfRecommend()
             }
         },
-
-
-    },
+    }
 })

@@ -639,7 +639,7 @@ img {
 }
 
 .lalaksks-ic-zan:before {
-  content: "\f106";
+  content: "\e612";
 }
 
 .lalaksks-ic-view:before {
@@ -3335,6 +3335,20 @@ img.avatar {
 .article-list .entry-main .entry-summary.entry-summary-has-thumbnail {
   padding-left: 200px;
   min-height: 120px;
+}
+
+.article-list .entry-main .entry-summary img {
+  max-width: 100%;
+  cursor: -webkit-zoom-in;
+  cursor: zoom-in;
+  max-width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  margin-top: 5px;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
 }
 
 .article-list .entry-main p,
