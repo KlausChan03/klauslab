@@ -1,11 +1,12 @@
 <?php
-add_action( 'rest_api_init', function () {
-    register_rest_route( 'wp/v2', '/user_bind', array(//这里的user_bind是定义请求连接的后缀，也可以写成其他的，比如myrest_api
-        'methods' => 'GET',//根据您的情况选择POST或GET
-        'callback' => 'user_bind',//这里面的user_bind跟下面的自定义函数的名字保持一致
-    ) );
-} );
-function user_bind() {
+add_action('rest_api_init', function () {
+    register_rest_route('wp/v2', '/user_bind', array( //这里的user_bind是定义请求连接的后缀，也可以写成其他的，比如myrest_api
+        'methods' => 'GET', //根据您的情况选择POST或GET
+        'callback' => 'user_bind', //这里面的user_bind跟下面的自定义函数的名字保持一致
+    ));
+});
+function user_bind()
+{
     //自定义数据获取部分，根据您的需要自己写
     echo get_like_most();
 }
@@ -89,7 +90,15 @@ function wp_rest_insert_tag_links()
             'schema' => null,
         )
     );
-    
+    register_rest_route(
+        'wp/v2/', 
+        'menu',
+        array(
+            'methods' => 'GET',
+            'callback' => 'get_menu',
+        )
+    );
+
     // register_rest_field(
     //     'post',
     //     'post_tags',
@@ -129,7 +138,7 @@ function get_post_meta_for_api($post)
     $post_meta['title'] = get_the_title($post['id']);
     $post_meta['comments_num'] = get_comments_number($post['id']);
     $post_meta['zan_num'] = get_post_meta($post['id'], 'inlo_ding', true);
-    
+
     $tagsss = get_the_tags($post['id']);
     $post_meta['tag_name'] = $tagsss[0]->name;
     return $post_meta;
@@ -141,4 +150,9 @@ function get_post_img_for_api($post)
     $post_img['url'] = get_the_post_thumbnail_url($post['id']);
     return $post_img;
 }
-?>
+
+function get_menu()
+{
+    # Change 'menu' to your own navigation slug.
+    return wp_get_nav_menu_items('klaus');
+}
