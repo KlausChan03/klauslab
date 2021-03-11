@@ -1293,6 +1293,36 @@ function ajax_comment_callback()
     }
     add_filter("login_redirect", "my_login_redirect", 10, 3);
 
+
+    function reproduced_shortcode($atts)
+    {
+        $atts = shortcode_atts(
+            array(
+                'link' => '',
+                'site' => '',
+                'title' => '',
+                'post_link' => '',
+                'author' => '',
+                'author_link' => '',
+            ),
+            $atts
+        );
+        $more = '已获得转载授权，如需二次转载，请联系原作者。';
+
+        if (!$atts['link'] && !$atts['site']) {
+            return "<pre class='wp-block-preformatted'>转载自作者：<a href='" . $atts['author_link'] . "'>" . $atts['author']
+                . "</a> ，原标题：<a href='" . $atts['post_link'] . "'> " . $atts['title'] . "</a>。" . $more . "</pre>";
+        } elseif (!$atts['post_link'] && !$atts['title']) {
+            return "<pre class='wp-block-preformatted'>转载自<a href='" . $atts['link'] . "'> " . $atts['site']
+                . "</a>，作者：<a href='" . $atts['author_link'] . "'>" . $atts['author'] . "</a>。" . $more . "</pre>";
+        } else {
+            return "<pre class='wp-block-preformatted'>转载自<a href='" . $atts['link'] . "'> " . $atts['site']
+                . "</a>，原标题：<a href='" . $atts['post_link'] . "'> " . $atts['title']
+                . "</a>，作者：<a href='" . $atts['author_link'] . "'>" . $atts['author'] . "</a>。" . $more . "</pre>";
+        }
+    }
+    add_shortcode('reproduced', 'reproduced_shortcode');
+
 // 2018-8-14 引入
 // function translate_chinese_post_title_to_en_for_slug( $title ) {
 // 	$translation_render = 'http://fanyi.baidu.com/v2transapi?from=zh&to=en&transtype=realtime&simple_means_flag=3&query='.$title;

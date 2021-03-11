@@ -3465,16 +3465,19 @@ img.avatar{
       padding: 3px 8px;
     }
 
-    pre>code {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      color: #333;
-      background: #f8f8f8;
-      padding: 15px;
-      margin: 0;
-      word-break: normal;
-      display: block;
-      border-radius: 2px;
+    pre{
+      padding: 4px 16px;
+      >code {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        color: #333;
+        background: #f8f8f8;
+        padding: 15px;
+        margin: 0;
+        word-break: normal;
+        display: block;
+        border-radius: 2px;
+      }
     }
   }
 
