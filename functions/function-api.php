@@ -91,7 +91,7 @@ function wp_rest_insert_tag_links()
         )
     );
     register_rest_route(
-        'wp/v2/', 
+        'wp/v2/',
         'menu',
         array(
             'methods' => 'GET',
@@ -138,7 +138,7 @@ function get_post_meta_for_api($post)
     $post_meta['title'] = get_the_title($post['id']);
     $post_meta['comments_num'] = get_comments_number($post['id']);
     $post_meta['zan_num'] = get_post_meta($post['id'], 'inlo_ding', true);
-
+    $post_meta['thumbnail'] = get_the_post_thumbnail($post['id'], 'Full');
     $tagsss = get_the_tags($post['id']);
     $post_meta['tag_name'] = $tagsss[0]->name;
     return $post_meta;
@@ -156,3 +156,45 @@ function get_menu()
     # Change 'menu' to your own navigation slug.
     return wp_get_nav_menu_items('klaus');
 }
+
+function reproduced_shortcode( $atts) {
+    $atts = shortcode_atts(
+        array(
+            'link' => '',
+            'site' => '',
+            'title' => '',
+            'post_link' => '',
+            'author' => '',
+            'author_link' => '',
+        ),
+        $atts
+    );
+    $more = '已获得转载授权，如需二次转载，请联系原作者。';
+
+    if (!$atts['link'] && !$atts['site']) {
+        return "<pre class='wp-block-preformatted'>转载自作者：<a href='" . $atts['author_link'] . "'>" . $atts['author'] 
+        . "</a> ，原标题：<a href='". $atts['post_link'] . "'> " . $atts['title'] . "</a>。". $more ."</pre>";
+    } elseif (!$atts['post_link'] && !$atts['title']) {
+        return "<pre class='wp-block-preformatted'>转载自<a href='" . $atts['link'] . "'> ". $atts['site'] 
+        . "</a>，作者：<a href='" . $atts['author_link'] . "'>" . $atts['author'] . "</a>。". $more ."</pre>";
+    } else {
+        return "<pre class='wp-block-preformatted'>转载自<a href='" . $atts['link'] . "'> ". $atts['site'] 
+        . "</a>，原标题：<a href='". $atts['post_link'] . "'> " . $atts['title'] 
+        . "</a>，作者：<a href='" . $atts['author_link'] . "'>" . $atts['author'] . "</a>。". $more ."</pre>";
+    }
+}
+add_shortcode('reproduced', 'reproduced_shortcode');
+
+function gitchat_git_shortcode( $atts ) {
+    $atts = shortcode_atts(
+        array(
+            'id' => '1',
+            'title' => 'hahaha',
+        ),
+        $atts,
+        'git'
+    );
+    return  $atts['id']."__".$atts['title'];
+}
+
+add_shortcode('git', 'gitchat_git_shortcode');

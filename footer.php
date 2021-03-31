@@ -35,11 +35,7 @@
 
 <!-- 固定小工具 -->
 <div id="fixed-plugins" class="fixed-plugins flex-v flex-hl-vc">
-  <el-backtop style="position:static" target=".site" :bottom="200" :right="15">
-    <el-tooltip content="返回顶部" effect="dark" placement="top">
-      <div class="fp-items"><i class="lalaksks lalaksks-ic-backtotop"></i></div>
-    </el-tooltip>
-  </el-backtop>
+ 
   <div class="fp-user pos-r">
     <?php if (is_user_logged_in()) : global $current_user; ?>
       <el-tooltip content="登出" effect="dark" placement="top">

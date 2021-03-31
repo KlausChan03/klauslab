@@ -27,6 +27,7 @@ Text Domain: KlausLab
   --primaryText: #222831;
   --regularText: #393e46;
   --secondaryText: #909399;
+  --linesColor: rgba(50,0,0,0.05);
 }
 
 .theme-mode-light {
@@ -90,7 +91,7 @@ html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  font-size: 62.5%!important;
+  font-size: 12px!important;
 
   &.mourning {
     -webkit-filter: grayscale(100%);
@@ -467,7 +468,7 @@ button {
   vertical-align: middle;
   outline: none;
   padding: 5px;
-  letter-spacing: 2.5px;
+  // letter-spacing: 2.5px;
   text-transform: uppercase;
   transition: 0.2s;
 }
@@ -644,7 +645,7 @@ img {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--regularText);
-  padding: 0 3px;
+  // padding: 0 3px;
 }
 
 .lalaksks-ic-menu:before {
@@ -2080,6 +2081,22 @@ body {
   font-size: 16px!important;
 }
 
+.fs-18{
+  font-size: 18px!important;
+}
+
+.fs-20{
+  font-size: 20px!important;
+}
+
+.fs-22{
+  font-size: 22px!important;
+}
+
+.fs-24{
+  font-size: 24px!important;
+}
+
 .h-0 {
   height: 0 !important;
 }
@@ -2503,24 +2520,19 @@ body {
   }
 
   &.kl-btn-pink {
-    background: pink !important;
+    background: #FFBA84 ;
     color: #fff;
     border: none;
-
-    &:hover {
-      background: rgba(180, 77, 94, 1) !important;
-    }
   }
 
   &.kl-btn-normal {
     border-color: #48e;
     background: #48e;
     color: #fff;
+  }
 
-    &:hover {
-      border-color: #46e;
-      background: #46e;
-    }
+  &:hover{
+    opacity: .8;
   }
 }
 
@@ -3186,14 +3198,14 @@ img.avatar{
   article:first-of-type {
     margin-top: 0;
   }
+ 
+}
 
-  .tips{
-    padding: 1.6rem;
-    background-color: #ecf8ff;
-    border-radius: 4px;
-    border-left: 5px solid #346c9c;
-    margin: 1.6rem;
-  }
+.tips{
+  padding: 1.2rem;
+  background-color: #ecf8ff;
+  border-radius: 4px;
+  border-left: 5px solid #346c9c;
 }
 
 .single .hentry,
@@ -3309,7 +3321,7 @@ img.avatar{
     .entry-action-main{
       border: 1px solid #ddd;
       border-radius: 16px;
-      padding: .8rem;
+      padding: .4rem .8rem;
     }
     a {
       color: #495762;
@@ -3348,8 +3360,8 @@ img.avatar{
 
   .entry-header {
     position: relative;
-    min-height: 220px;
-
+    min-height: 240px;
+    background-color: #bbbbbb;
     .entry-title {
       a {
         border: none;
@@ -3391,6 +3403,9 @@ img.avatar{
   }
 
   .entry-content {
+    background-image: linear-gradient( 90deg ,var(--linesColor) 3%,transparent 0),linear-gradient( 0deg ,var(--linesColor) 3%,transparent 0);
+    background-position: 50%;
+    background-size: 20px 20px;
     word-break: break-word;
     line-height: 1.75;
     font-weight: 400;
@@ -3625,17 +3640,21 @@ img.avatar{
     }
   }
 
-  .entry-header::after {
-    position: absolute;
-    right: -2px;
-    top: -2px;
-    color: #48e;
-    font-family: "lalaksks";
-    font-size: 40px;
+  .entry-header {
+    &::after{
+      position: absolute;
+      right: -2px;
+      top: -5px;
+      color: #48e;
+      font-family: "lalaksks";
+      font-size: 40px;
+    }
+
+    &.sticky::after {
+      content: "\e63e";
+    }
   }
-  &.sticky .entry-header::after {
-    content: "\e63e";
-  }
+  
 
   // &.tag-37 .entry-header::after {
   //   position: absolute;
@@ -6564,10 +6583,12 @@ div[itemprop="description"] {
   margin-left: 91.666667%;
 }
 
-
-
+// 骨架屏
 .kl-skeleton {
   width: 100%;
+}
+
+.kl-skeleton-item{
   background-color: #fff;
 }
 
@@ -6612,6 +6633,24 @@ div[itemprop="description"] {
   width: 60%;
   margin-bottom: 0;
 }
+
+.kl-skeleton-title-container{
+  position: relative;
+  min-height: 240px;
+  background-color: #bbbbbb;
+  .kl-skeleton-title-line{
+    position: absolute;
+    font-size: 28px;
+    margin: 0;
+    color: #fff;
+    word-break: break-all;
+    padding: 10px 1em;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+  }
+}
+
+
 
 @keyframes kl-skeleton-animation {
   0% {

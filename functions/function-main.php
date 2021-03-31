@@ -7,9 +7,19 @@
  */
 
 // 定义目录变量
-define('KL_THEME_DIR', get_template_directory() . '/dist');
+// echo($_ENV);
+define('FE_ENV', "Production");
+
+if(FE_ENV !== "Development "){
+    define('KL_THEME_DIR', get_template_directory() . '/dist');
+    define('KL_THEME_URI', get_template_directory_uri() . '/dist');
+} else {
+    define('KL_THEME_DIR', get_template_directory() . '/src');
+    define('KL_THEME_URI', get_template_directory_uri() . '/src');
+}
+
+
 define('KL_DIR', get_template_directory() . '/inc');
-define('KL_THEME_URI', get_template_directory_uri() . '/dist');
 define('KL_URI', get_template_directory_uri() . '/inc');
 
 
@@ -255,15 +265,21 @@ require KL_DIR . '/customizer.php';
 
 function normal_style_script()
 {
-    // wp_enqueue_script('KlausLab-navigation', KL_THEME_URI . '/js/navigation.js', array(), '20120206', true);
-    // 除style.css之外的样式
-    wp_enqueue_style('main', KL_THEME_URI . '/css/main.css', array(), '1.0', false);
-    // // 媒体查询样式
-    // wp_enqueue_style('mediaCss', KL_THEME_URI . '/css/media.css', array(), '1.0', false);
-    // // 动画库样式
-    wp_enqueue_style('animate', KL_THEME_URI . '/css/animate.min.css', array(), '3.5.1', false);
-    // // 插件样式
-    // wp_enqueue_style('support', KL_THEME_URI . '/css/support.css', array(), '1.0', false);
+    if(FE_ENV !== "Development "){
+        // 除style.css之外的样式
+        wp_enqueue_style('main', KL_THEME_URI . '/css/main.css', array(), '1.0', false);
+    } else {     
+         // 导航
+         wp_enqueue_script('support', KL_THEME_URI . '/js/navigation.js', false, '1.0', array('jquery')); 
+        // 媒体查询样式
+        // wp_enqueue_style('mediaCss', KL_THEME_URI . '/css/media.css', array(), '1.0', false);
+        // 动画库样式
+        wp_enqueue_style('animate', KL_THEME_URI . '/css/animate.min.css', array(), '3.5.1', false);
+        // 插件样式
+        wp_enqueue_style('support', KL_THEME_URI . '/css/support.css', array(), '1.0', false);
+        // elementUI额外样式
+        wp_enqueue_style('extra', KL_THEME_URI . '/css/element-ui-extra.css', array(), '1.0', false);
+    }   
    
     // dayjs.min.js
     wp_enqueue_script('dayjs', KL_THEME_URI . '/js/lib/dayjs.min.js', array(), '1.10.4', false);
@@ -293,12 +309,18 @@ function normal_style_script()
 
 
 function footer_script()
-{
-
-    // 交互
-    wp_enqueue_script('commonFunc', KL_THEME_URI . '/js/common.js', array(), '1.0', false);
-    // 支持
-    // wp_enqueue_script('support', KL_THEME_URI . '/js/support.js', false, '1.0', array('jquery'));
+{   
+    if(FE_ENV !== "Development "){
+        // 交互
+        wp_enqueue_script('commonFunc', KL_THEME_URI . '/js/common.js', array(), '1.0', false);
+    } else {
+        // 交互
+        wp_enqueue_script('commonFunc', KL_THEME_URI . '/js/common.js', array(), '1.0', false);
+        // 支持
+        wp_enqueue_script('support', KL_THEME_URI . '/js/support.js', false, '1.0', array('jquery'));
+       
+    }
+   
     // 动画
     wp_enqueue_script('canvasFunc', KL_THEME_URI . '/js/canvas.js', array(), '1.0', false);
     // 右下角固定插件
@@ -1201,8 +1223,12 @@ function ajax_comment_callback()
             $random = array_rand($array);
             $hitokoto = $array[$random]['hitokoto'];
             $author = $array[$random]['author'];
+            $source = $array[$random]['source'];
             if ($hitokoto) {
-                echo (!empty($author) ? ($hitokoto . " —— " . $author) : $hitokoto);
+                // echo (!empty($author) ? ($hitokoto . " —— " . $author) : $hitokoto);
+                echo $hitokoto 
+                . (!empty($author) ?  (" —— " . $author) : "" ) 
+                . (!empty($source) ? ( (!empty($author) ? "," : "——") . $source ) : "") ;
             } else {
                 echo '彩蛋！你很幸运，刷到一条空白的内容，当前有 ' . (intval(count($array)) - 1) . " 条 '一言'";
             }

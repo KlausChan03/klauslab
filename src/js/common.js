@@ -129,69 +129,69 @@ let timer = new Vue({
 })
 
 // 滚动触发事件 (Sidebar固定、Header动画)
-$(".widget-area .widget-content > aside").addClass("animated");
-$(window).scroll(function () {
-    var doc = document,
-        win = window,
-        $scrollBottom = $(doc).height() - $(win).height() - $(win).scrollTop(),
-        $scrollTop = $(win).scrollTop();
-    var direction, header = $(".site-header");
+// $(".widget-area .widget-content > aside").addClass("animated");
+// $(window).scroll(function () {
+//     var doc = document,
+//         win = window,
+//         $scrollBottom = $(doc).height() - $(win).height() - $(win).scrollTop(),
+//         $scrollTop = $(win).scrollTop();
+//     var direction, header = $(".site-header");
 
-    // if ($(window).width() > 1000 && $(document).height() > 1500) {
-    //     $(window).resize(function () { $(".widget-area .widget-content").width($(".widget-area").width()); });
+//     // if ($(window).width() > 1000 && $(document).height() > 1500) {
+//     //     $(window).resize(function () { $(".widget-area .widget-content").width($(".widget-area").width()); });
 
-    //     if ($(this).scrollTop() >= 2000) {
-    //         $(".widget-area .widget-content").addClass("is-fixed");
-    //         $(".widget-area .widget-content").width($(".widget-area").width());
-    //         $(".widget_custom_html").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-    //         $(".widget_recent_entries").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-    //         $(".widget_recent_comments").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+//     //     if ($(this).scrollTop() >= 2000) {
+//     //         $(".widget-area .widget-content").addClass("is-fixed");
+//     //         $(".widget-area .widget-content").width($(".widget-area").width());
+//     //         $(".widget_custom_html").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+//     //         $(".widget_recent_entries").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+//     //         $(".widget_recent_comments").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
 
-    //         $(".widget_categories").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-    //         $(".widget_tag_cloud").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-    //     } else if ($(this).scrollTop() < 2000 && $(this).scrollTop() > 800) {
-    //         $(".widget-area .widget-content").addClass("is-fixed");
-    //         $(".widget-area .widget-content").width($(".widget-area").width());
-    //         $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-    //         $(".widget_recent_entries").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
-    //         $(".widget_recent_comments").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+//     //         $(".widget_categories").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+//     //         $(".widget_tag_cloud").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+//     //     } else if ($(this).scrollTop() < 2000 && $(this).scrollTop() > 800) {
+//     //         $(".widget-area .widget-content").addClass("is-fixed");
+//     //         $(".widget-area .widget-content").width($(".widget-area").width());
+//     //         $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+//     //         $(".widget_recent_entries").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
+//     //         $(".widget_recent_comments").removeClass("f_o_r ds-none h-0").addClass("f_i_r ds-block")
 
-    //         $(".widget_categories").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-    //         $(".widget_tag_cloud").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
-    //     } else if ($(this).scrollTop() >= 0 && $(this).scrollTop() < 800) {
-    //         $(".widget-area .widget-content").removeClass("is-fixed");
-    //         $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-    //         $(".widget_recent_entries").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-    //         $(".widget_recent_comments").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+//     //         $(".widget_categories").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+//     //         $(".widget_tag_cloud").removeClass("f_i_r ds-block").addClass("f_o_r ds-none h-0")
+//     //     } else if ($(this).scrollTop() >= 0 && $(this).scrollTop() < 800) {
+//     //         $(".widget-area .widget-content").removeClass("is-fixed");
+//     //         $(".widget_custom_html").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+//     //         $(".widget_recent_entries").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+//     //         $(".widget_recent_comments").removeClass("f_o_r ds-none h-0").addClass("ds-block")
 
-    //         $(".widget_categories").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-    //         $(".widget_tag_cloud").removeClass("f_o_r ds-none h-0").addClass("ds-block")
-    //     }
+//     //         $(".widget_categories").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+//     //         $(".widget_tag_cloud").removeClass("f_o_r ds-none h-0").addClass("ds-block")
+//     //     }
 
-    //     if ($scrollBottom < 80) {
-    //         $(".widget-area .widget-content").addClass("is-bottom")
-    //     } else {
-    //         $(".widget-area .widget-content").removeClass("is-bottom");
-    //     }
+//     //     if ($scrollBottom < 80) {
+//     //         $(".widget-area .widget-content").addClass("is-bottom")
+//     //     } else {
+//     //         $(".widget-area .widget-content").removeClass("is-bottom");
+//     //     }
 
-    //     /*滚轮事件只有firefox比较特殊，使用DOMMouseScroll; 其他浏览器使用mousewheel;*/
-    //     document.body.addEventListener("DOMMouseScroll", function (event) {
-    //         direction = event.detail && (event.detail > 0 ? "mousedown" : "mouseup");
-    //     });
+//     //     /*滚轮事件只有firefox比较特殊，使用DOMMouseScroll; 其他浏览器使用mousewheel;*/
+//     //     document.body.addEventListener("DOMMouseScroll", function (event) {
+//     //         direction = event.detail && (event.detail > 0 ? "mousedown" : "mouseup");
+//     //     });
 
-    //     document.body.onmousewheel = function (event) {
-    //         event = event || window.event;
-    //         direction = event.wheelDelta && (event.wheelDelta > 0 ? "mouseup" : "mousedown");
-    //         if (direction == "mouseup" || $scrollTop == 0) {
-    //             header.removeClass("slideOutUp ds-none").addClass("slideInDown ds-block");
-    //         } else {
-    //             header.removeClass("slideInDown ds-block").addClass("slideOutUp ds-none");
-    //         }
-    //     };
-    // } else {
-    //     $(".widget-area .widget-content").removeClass("is-fixed animated");
-    // }
-})
+//     //     document.body.onmousewheel = function (event) {
+//     //         event = event || window.event;
+//     //         direction = event.wheelDelta && (event.wheelDelta > 0 ? "mouseup" : "mousedown");
+//     //         if (direction == "mouseup" || $scrollTop == 0) {
+//     //             header.removeClass("slideOutUp ds-none").addClass("slideInDown ds-block");
+//     //         } else {
+//     //             header.removeClass("slideInDown ds-block").addClass("slideOutUp ds-none");
+//     //         }
+//     //     };
+//     // } else {
+//     //     $(".widget-area .widget-content").removeClass("is-fixed animated");
+//     // }
+// })
 
 // $(document).on("mouseover mouseout", "img", function (event) {
 //     var _this = $(this);

@@ -139,7 +139,7 @@ if (post_password_required()) {
     } else if (!have_comments()) {
     ?>
       <ol class="memory-comments-area">
-        <p class="no-comment tips" v-if="count">
+        <p class="no-comment tips" >
             <span>还没有任何评论，你来说两句吧</span>
         </p>
       </ol>
