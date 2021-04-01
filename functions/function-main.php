@@ -7,10 +7,10 @@
  */
 
 // 定义目录变量
-// echo($_ENV);
-define('FE_ENV', "Production");
+// define('FE_ENV', "Production");
+define('FE_ENV', "Development");
 
-if(FE_ENV !== "Development "){
+if(FE_ENV !== "Development"){
     define('KL_THEME_DIR', get_template_directory() . '/dist');
     define('KL_THEME_URI', get_template_directory_uri() . '/dist');
 } else {
@@ -265,7 +265,7 @@ require KL_DIR . '/customizer.php';
 
 function normal_style_script()
 {
-    if(FE_ENV !== "Development "){
+    if(FE_ENV !== "Development"){
         // 除style.css之外的样式
         wp_enqueue_style('main', KL_THEME_URI . '/css/main.css', array(), '1.0', false);
     } else {     

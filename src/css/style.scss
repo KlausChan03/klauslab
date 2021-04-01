@@ -108,7 +108,7 @@ html {
 header.site-header,
 footer.site-footer {
   position: relative;
-  z-index: 5201314;
+  z-index: 1314;
 }
 
 article,
@@ -644,7 +644,7 @@ img {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: var(--regularText);
+  color: var(--secondaryText);
   // padding: 0 3px;
 }
 
@@ -3553,7 +3553,8 @@ img.avatar{
 
   .entry-header,
   .entry-main,
-  .entry-footer {
+  .entry-footer,
+  .comment-container {
     margin: 0;
     padding: 1.0rem 1.6rem;
     position: relative;
@@ -4684,7 +4685,7 @@ div[itemprop="description"] {
     }
 
     .menu {
-      z-index: 5201314;
+      z-index: 1314;
       width: auto;
       >li {
         position: relative; 
@@ -4706,7 +4707,7 @@ div[itemprop="description"] {
         left: 0;
         width: 100%;
         width: 10em;
-        z-index: 1314520;
+        z-index: 1314;
         visibility: hidden;
         float: left;
         padding: 10px;

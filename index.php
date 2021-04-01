@@ -185,7 +185,7 @@ setPostViews(get_the_ID()); ?>
             <div class="article-list" v-if="!ifShowPost">
               <article class="article-item hentry" v-for="(item,index) in listOfArticle" :key="index">
                 <article-item :post-data="item" @change-type="changeItemType" @show-comment="showItemComment"></article-item>
-                <comment-item v-if="item.ifShowComment"></comment-item>
+                <comment-item :post-data="item.listOfComment" v-if="item.ifShowComment"></comment-item>
 
               </article>
             </div>

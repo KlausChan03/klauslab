@@ -3,11 +3,6 @@ dayjs.extend(window.dayjs_plugin_relativeTime)
 
 const index_module = new Vue({
     el: ".main-container",
-    // components:{
-    //     klSkeleton,
-    //     chatItem,
-    //     articleItem,
-    // },
     data() {
         return {
             listOfAll: [],
@@ -39,6 +34,7 @@ const index_module = new Vue({
     },
     created() {
         this.getAllArticles()
+
     },
     computed: {
         getOrderby() {
@@ -199,25 +195,56 @@ const index_module = new Vue({
             this.listOfArticle.splice(0, 0)
         },
         showItemComment(id) {
-            console.log(id)
-            var _nonce = "<?php echo wp_create_nonce( 'wp_rest' ); ?>";
-            let params = {}
+            this.listOfArticle.forEach(element => {
+                if(element.id === id){
+                    if(element.ifShowComment === false){
+                        var _nonce = "<?php echo wp_create_nonce( 'wp_rest' ); ?>";
+                        let params = {}
+                        params.post = id
+                        axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/comments`, {
+                            params: params
+                        }, {
+                            headers: {
+                                'X-WP-Nonce': _nonce
+                            }
+                        }).then(res => {
+                            this.$nextTick(()=>{
+                                element.ifShowComment = true
+                                element.listOfComment = res.data
+                            })
+                            this.$forceUpdate()
+                        })
+                    } else {
+                        element.ifShowComment = false
+                        this.$forceUpdate()
 
-            params.post = id
-            axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/comments`, {
-                params: params
-            }, {
-                headers: {
-                    'X-WP-Nonce': _nonce
-                }
-            }).then(res => {
-                console.log(res.data)
+                    }
+                }              
+
             })
-
+            
         },
         handleCommand(type) {
             this.orderby = type
-            this.getListByType(this.postType)
+            let _this = this
+            let getList = () => {
+                _this.getListByType(_this.postType)
+            }
+            let showNotify = () =>{
+                this.$notify({
+                    message: '切换成功',
+                    duration: 3000,
+                    type: 'success',
+                    showClose: false,
+                    // offset: 70
+                });
+            }            
+            (async ()=>{
+                 await getList();
+                 await showNotify();               
+            })();
+            
+            
         },
     }
 })
