@@ -383,7 +383,6 @@ var {
 /* 表单元素 */
 button,
 input {
-  min-height: 30px;
   cursor: pointer;
 }
 
@@ -4508,7 +4507,7 @@ div[itemprop="description"] {
     width: 100%;
   }
   .site-content {
-    padding: 15px;
+    padding: 20px;
   }
   .content-content,
   .site-area,

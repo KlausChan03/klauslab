@@ -44,6 +44,7 @@
     "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^3.2.8",
     "dayjs": "^1.10.4",
     "gulp-babel": "^6.0.0",
     "gulp-rev": "^9.0.0",

@@ -1,10 +1,13 @@
 dayjs.locale('zh-cn')
 dayjs.extend(window.dayjs_plugin_relativeTime)
+// var Editor = require('@tinymce/tinymce-vue').default;
 
 const index_module = new Vue({
     el: ".main-container",
+    
     data() {
         return {
+            tinyKey: '7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j',
             listOfAll: [],
             listOfArticle: [],
             listOfChat: [],
@@ -217,7 +220,6 @@ const index_module = new Vue({
                     } else {
                         element.ifShowComment = false
                         this.$forceUpdate()
-
                     }
                 }              
 

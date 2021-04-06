@@ -270,15 +270,16 @@ function normal_style_script()
         wp_enqueue_style('main', KL_THEME_URI . '/css/main.css', array(), '1.0', false);
     } else {     
          // 导航
-         wp_enqueue_script('support', KL_THEME_URI . '/js/navigation.js', false, '1.0', array('jquery')); 
+         wp_enqueue_script('navigation', KL_THEME_URI . '/js/navigation.js', false, '1.0', array('jquery')); 
         // 媒体查询样式
         // wp_enqueue_style('mediaCss', KL_THEME_URI . '/css/media.css', array(), '1.0', false);
         // 动画库样式
         wp_enqueue_style('animate', KL_THEME_URI . '/css/animate.min.css', array(), '3.5.1', false);
+         // 支持
+         wp_enqueue_script('supportJs', KL_THEME_URI . '/js/support.js', false, '1.0', array('jquery'));
         // 插件样式
-        wp_enqueue_style('support', KL_THEME_URI . '/css/support.css', array(), '1.0', false);
-        // elementUI额外样式
-        wp_enqueue_style('extra', KL_THEME_URI . '/css/element-ui-extra.css', array(), '1.0', false);
+        wp_enqueue_style('supportCss', KL_THEME_URI . '/css/support.css', array(), '1.0', false);
+        
     }   
    
     // dayjs.min.js
@@ -297,10 +298,13 @@ function normal_style_script()
     wp_enqueue_script('myConfig', KL_THEME_URI . '/js/config.js', array(), '1.0', false);
     // 配置
     wp_enqueue_script('myOptions', KL_THEME_URI . '/js/options.js', array(), '1.0', false);
+   
     // ElementUI
     wp_enqueue_script('element-ui-js', KL_THEME_URI . '/js/lib/element-ui.min.js', array(), '1.0', false);
     wp_enqueue_style('element-ui-css', KL_THEME_URI . '/css/element-ui.min.css', array(), '1.0', false);
-
+    wp_enqueue_script('tinymce-vue-js', KL_THEME_URI . '/js/lib/tinymce-vue.min.js', array(), '1.0', false);
+// elementUI额外样式
+wp_enqueue_style('extra', KL_THEME_URI . '/css/element-ui-extra.css', array(), '1.0', false);
     // MuseUI
     //  wp_enqueue_script('muse-ui-js', KL_THEME_URI . '/theme/muse-ui.js', array(), '1.0', false);
     //  wp_enqueue_style('muse-ui-css', KL_THEME_URI . '/theme/muse-ui.css', array(), '1.0', false);
@@ -310,14 +314,14 @@ function normal_style_script()
 
 function footer_script()
 {   
+   
     if(FE_ENV !== "Development "){
         // 交互
         wp_enqueue_script('commonFunc', KL_THEME_URI . '/js/common.js', array(), '1.0', false);
     } else {
         // 交互
         wp_enqueue_script('commonFunc', KL_THEME_URI . '/js/common.js', array(), '1.0', false);
-        // 支持
-        wp_enqueue_script('support', KL_THEME_URI . '/js/support.js', false, '1.0', array('jquery'));
+       
        
     }
    

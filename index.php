@@ -65,9 +65,42 @@ setPostViews(get_the_ID()); ?>
     background-color: #F5B4A7;
   }
 
-  .setting-part{
+  .setting-part {
     top: 10px;
     right: 10px;
+  }
+  .comment-list,.comment-input{
+    position: relative;
+  }
+
+  .comment-list:before{
+    position: absolute;
+    content: '评论列表';
+    background: #42A5F5;
+    color: #fff;
+    left: calc(-1.6rem - 20px);
+    word-wrap: break-word;
+    width: 20px;
+    text-align: center;
+    font-size: 12px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    padding: 4px;
+  }
+
+  .comment-input:before{
+    position: absolute;
+    content: '评论发布';
+    background: #42A5F5;
+    color: #fff;
+    left: calc(-1.6rem - 20px);
+    word-wrap: break-word;
+    width: 20px;
+    text-align: center;
+    font-size: 12px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    padding: 4px;
   }
 
   @media screen and (max-width: 720px) {
@@ -98,6 +131,8 @@ setPostViews(get_the_ID()); ?>
   }
 </style>
 <script>
+  window._nonce = "<?php echo wp_create_nonce( 'wp_rest' ); ?>";
+
   window.ifMobileDevice = document.body.offsetWidth <= 720 ? true : false
   window.post_count = <?php $count_posts = wp_count_posts();
                       echo $published_posts = $count_posts->publish; ?>
@@ -106,109 +141,106 @@ setPostViews(get_the_ID()); ?>
 <div id="primary" class="main-area">
   <main id="main" class="main-content" role="main">
     <!-- 文章列表 -->
-    <div class="main-container" v-block>
-      <div class="pos-r">
-        <el-tabs @tab-click="changeType">
-          <!-- 存在Bug -->
-          <el-tab-pane label="all" v-if="false">
-            <span slot="label">全部</span>
-            <kl-skeleton v-if="ifShowPost" type="post"></kl-skeleton>
-            <div class="article-list" v-if="!ifShowPost">
-              <article class="article-item hentry" v-for="(item,index) in listOfAll" :key="index">
-                <template v-if="item.type==='post'">
-                  <div class="entry-header">
-                    <h5 class="entry-title">
-                      <a :href="item.link"> {{item.title.rendered}} </a>
-                    </h5>
-                  </div>
-                  <div class="entry-main flex-hl-vl flex-hw">
-                    <div class="featured-image" v-if="item._embedded['wp:featuredmedia']">
-                      <img :src="item._embedded['wp:featuredmedia']['0'].source_url" alt="">
-                    </div>
-                    <p class="entry-summary" v-html="item.excerpt.rendered" :id="item.id"></p>
-                  </div>
-                </template>
-                <template v-if="item.type==='shuoshuo'">
-                  <div class="entry-header">
-                    <h5 class="entry-title">
-                      <a :href="item.link"> {{item.title.rendered}} </a>
-                    </h5>
-                  </div>
-                  <div class="entry-main flex-hl-vl flex-hw">
-                    <div class="featured-image" v-if="item._embedded['wp:featuredmedia']">
-                      <img :src="item._embedded['wp:featuredmedia']['0'].source_url" alt="">
-                    </div>
-                    <p class="entry-summary" v-html="item.content.rendered" :id="item.id"></p>
-                  </div>
-                </template>
-              </article>
-            </div>
-          </el-tab-pane>
-          <!-- 开发ing -->
-          <el-tab-pane label="recommend" v-if="false">
-            <span slot="label">推荐</span>
-            <kl-skeleton v-if="ifShowAll" type="post"></kl-skeleton>
-            <div class="article-list" v-if="!ifShowAll">
-              <article class="article-item hentry" v-for="(item,index) in listOfRecommend" :key="index">
-                <template v-if="item.type==='post'">
-                  <div class="entry-header">
-                    <h5 class="entry-title">
-                      <a :href="item.link"> {{item.title.rendered}} </a>
-                    </h5>
-                  </div>
-                  <div class="entry-main flex-hl-vl flex-hw">
-                    <div class="featured-image" v-if="item._embedded['wp:featuredmedia']">
-                      <img :src="item._embedded['wp:featuredmedia']['0'].source_url" alt="">
-                    </div>
-                    <p class="entry-summary" v-html="item.excerpt.rendered" :id="item.id"></p>
-                  </div>
-                </template>
-                <template v-if="item.type==='shuoshuo'">
-                  <div class="entry-header">
-                    <h5 class="entry-title">
-                      <a :href="item.link"> {{item.title.rendered}} </a>
-                    </h5>
-                  </div>
-                  <div class="entry-main flex-hl-vl flex-hw">
-                    <!-- <div class="featured-image" v-if="item._embedded['wp:featuredmedia']">
+    <div class="main-container pos-r" v-block>
+      <el-tabs @tab-click="changeType">
+        <!-- 存在Bug -->
+        <el-tab-pane label="all" v-if="false">
+          <span slot="label">全部</span>
+          <kl-skeleton v-if="ifShowPost" type="post"></kl-skeleton>
+          <div class="article-list" v-if="!ifShowPost">
+            <article class="article-item hentry" v-for="(item,index) in listOfAll" :key="index">
+              <template v-if="item.type==='post'">
+                <div class="entry-header">
+                  <h5 class="entry-title">
+                    <a :href="item.link"> {{item.title.rendered}} </a>
+                  </h5>
+                </div>
+                <div class="entry-main flex-hl-vl flex-hw">
+                  <div class="featured-image" v-if="item._embedded['wp:featuredmedia']">
                     <img :src="item._embedded['wp:featuredmedia']['0'].source_url" alt="">
-                  </div> -->
-                    <p class="entry-summary" v-html="item.content.rendered" :id="item.id"></p>
                   </div>
-                </template>
-              </article>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="article">
-            <span slot="label">文章</span>
-            <kl-skeleton v-if="ifShowPost" type="post"></kl-skeleton>
-            <div class="article-list" v-if="!ifShowPost">
-              <article class="article-item hentry" v-for="(item,index) in listOfArticle" :key="index">
-                <article-item :post-data="item" @change-type="changeItemType" @show-comment="showItemComment"></article-item>
-                <comment-item :post-data="item.listOfComment" v-if="item.ifShowComment"></comment-item>
-
-              </article>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="chat">
-            <span slot="label">说说</span>
-            <kl-skeleton v-if="ifShowChat" type="post"></kl-skeleton>
-            <div class="article-list" v-if="!ifShowChat">
-              <article class="article-item hentry" v-for="(item,index) in listOfChat" :key="index">
-                <chat-item :post-data="item"></chat-item>
-              </article>
-            </div>
-          </el-tab-pane>         
-        </el-tabs>
-        <div class="setting-part pos-a">
-          <el-dropdown size="mini" trigger="click" split-button type="default"  @command="handleCommand">            
-            <i class="el-icon-sort fs-12" ></i><span class="ml-5 fs-12">{{getOrderby}}</span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item :command="item.type" v-for="(item,index) in orderbyList" :key="item.type">{{item.name}}</el-dropdown-item>
+                  <p class="entry-summary" v-html="item.excerpt.rendered" :id="item.id"></p>
+                </div>
+              </template>
+              <template v-if="item.type==='shuoshuo'">
+                <div class="entry-header">
+                  <h5 class="entry-title">
+                    <a :href="item.link"> {{item.title.rendered}} </a>
+                  </h5>
+                </div>
+                <div class="entry-main flex-hl-vl flex-hw">
+                  <div class="featured-image" v-if="item._embedded['wp:featuredmedia']">
+                    <img :src="item._embedded['wp:featuredmedia']['0'].source_url" alt="">
+                  </div>
+                  <p class="entry-summary" v-html="item.content.rendered" :id="item.id"></p>
+                </div>
+              </template>
+            </article>
+          </div>
+        </el-tab-pane>
+        <!-- 开发ing -->
+        <el-tab-pane label="recommend" v-if="false">
+          <span slot="label">推荐</span>
+          <kl-skeleton v-if="ifShowAll" type="post"></kl-skeleton>
+          <div class="article-list" v-if="!ifShowAll">
+            <article class="article-item hentry" v-for="(item,index) in listOfRecommend" :key="index">
+              <template v-if="item.type==='post'">
+                <div class="entry-header">
+                  <h5 class="entry-title">
+                    <a :href="item.link"> {{item.title.rendered}} </a>
+                  </h5>
+                </div>
+                <div class="entry-main flex-hl-vl flex-hw">
+                  <div class="featured-image" v-if="item._embedded['wp:featuredmedia']">
+                    <img :src="item._embedded['wp:featuredmedia']['0'].source_url" alt="">
+                  </div>
+                  <p class="entry-summary" v-html="item.excerpt.rendered" :id="item.id"></p>
+                </div>
+              </template>
+              <template v-if="item.type==='shuoshuo'">
+                <div class="entry-header">
+                  <h5 class="entry-title">
+                    <a :href="item.link"> {{item.title.rendered}} </a>
+                  </h5>
+                </div>
+                <div class="entry-main flex-hl-vl flex-hw">
+                  <!-- <div class="featured-image" v-if="item._embedded['wp:featuredmedia']">
+                  <img :src="item._embedded['wp:featuredmedia']['0'].source_url" alt="">
+                </div> -->
+                  <p class="entry-summary" v-html="item.content.rendered" :id="item.id"></p>
+                </div>
+              </template>
+            </article>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="article">
+          <span slot="label">文章</span>
+          <kl-skeleton v-if="ifShowPost" type="post"></kl-skeleton>
+          <div class="article-list" v-if="!ifShowPost">
+            <article class="article-item hentry" v-for="(item,index) in listOfArticle" :key="index">
+              <article-item :post-data="item" @change-type="changeItemType" @show-comment="showItemComment"></article-item>
+              <comment-item :comment-data="item.listOfComment" :post-data="item" :tiny-key="tinyKey" v-if="item.ifShowComment"></comment-item>
               
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>
+            </article>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="chat">
+          <span slot="label">说说</span>
+          <kl-skeleton v-if="ifShowChat" type="post"></kl-skeleton>
+          <div class="article-list" v-if="!ifShowChat">
+            <article class="article-item hentry" v-for="(item,index) in listOfChat" :key="index">
+              <chat-item :post-data="item"></chat-item>
+            </article>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
+      <div class="setting-part pos-a">
+        <el-dropdown size="mini" trigger="click" split-button type="default" @command="handleCommand">
+          <i class="el-icon-sort fs-12"></i><span class="ml-5 fs-12">{{getOrderby}}</span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item :command="item.type" v-for="(item,index) in orderbyList" :key="item.type">{{item.name}}</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
 
       <el-card class="flex-hc-vc">
@@ -220,7 +252,7 @@ setPostViews(get_the_ID()); ?>
   <!-- #main -->
 </div>
 <!-- #primary -->
-
+<!-- <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/lib/tinymce-vue.min.js"></script> -->
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/skeleton.js"></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/articleItem.js"></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/chatItem.js"></script>
