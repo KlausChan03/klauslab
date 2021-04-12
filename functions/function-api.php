@@ -54,6 +54,7 @@ function wp_rest_insert_tag_links()
     //         'schema' => null,
     //     )
     // );
+
     register_rest_field(
         'post',
         'post_metas',
@@ -96,6 +97,16 @@ function wp_rest_insert_tag_links()
         array(
             'methods' => 'GET',
             'callback' => 'get_menu',
+        )
+    );
+
+    register_rest_field(
+        'comment',
+        'comment_metas',
+        array(
+            'get_callback' => 'get_comment_meta_for_api',
+            'update_callback' => null,
+            'schema' => null,
         )
     );
 
@@ -142,6 +153,42 @@ function get_post_meta_for_api($post)
     $tagsss = get_the_tags($post['id']);
     $post_meta['tag_name'] = $tagsss[0]->name;
     return $post_meta;
+}
+
+function get_comment_meta_for_api($comment){
+    $commentData = get_comment($comment['id']);
+    $comment_meta = array();
+    if ($comment->author == '1') {
+        $comment_meta['level'] = '<span class="vip level_Max">博主</span>';
+    } else {
+        $comment_meta['level'] =  get_author_class_for_api($commentData->comment_author_email,'');
+    } 
+
+    return $comment_meta;
+
+}
+
+// 开启用户等级-评论模块
+function get_author_class_for_api($comment_author_email, $user_id)
+{
+    global $wpdb;
+    $author_count = count($wpdb->get_results(
+        "SELECT comment_ID as author_count FROM $wpdb->comments WHERE comment_author_email = '$comment_author_email' "
+    ));
+    if ($author_count >= 1 && $author_count <= 10) //数字可自行修改，代表评论次数。
+        return '<span class="vip level_1">LV.1</span>';
+    else if ($author_count >= 11 && $author_count <= 20)
+    return '<span class="vip level_2">LV.2</span>';
+    else if ($author_count >= 21 && $author_count <= 40)
+    return '<span class="vip level_3">LV.3</span>';
+    else if ($author_count >= 41 && $author_count <= 80)
+    return '<span class="vip level_4">LV.4</span>';
+    else if ($author_count >= 81 && $author_count <= 160)
+    return '<span class="vip level_5">LV.5</span>';
+    else if ($author_count >= 161 && $author_count <= 320)
+    return '<span class="vip level_6">LV.6</span>';
+    else if ($author_count >= 321)
+    return '<span class="vip level_Max">LV.7</span>';
 }
 
 function get_post_img_for_api($post)

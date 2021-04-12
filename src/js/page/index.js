@@ -221,6 +221,10 @@ const index_module = new Vue({
                         element.ifShowComment = false
                         this.$forceUpdate()
                     }
+                } else {
+                    element.ifShowComment = false
+                    this.$forceUpdate()
+
                 }              
 
             })

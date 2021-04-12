@@ -5,13 +5,14 @@ Vue.component('comment-item', {
     return {
       commentContent: '',
       hasCommitFinish: false,
+      ifShowCommentAll: false,
     }
   },
   components: {
     'editor': Editor // <- Important part
 },
   template: `
-  <div id="comments" class="comment-container" style="margin: 0; padding: 1.0rem 1.6rem; position: relative; border-top: 1px solid #eee;">
+  <div id="comments" v-loading="!ifShowCommentAll" class="comment-container" style="margin: 0; padding: 1.0rem 1.6rem; position: relative; border-top: 1px solid #eee;">
     <ul class="comment-list">
       <li v-for="(item,index) in commentData" :id="'comment-' + item.id" :key="item.id" class="comment-item flex-hl-vl">
         <div class="commentator-avatar">
@@ -23,6 +24,7 @@ Vue.component('comment-item', {
               {{item.author_name}}
             </a>
           </span>
+          <span class="commentator-extra" v-html="item.comment_metas.level"></span>
           <div class="comment-chat">
             <div class="comment-comment">
               <p v-html="item.content.rendered"></p> 
@@ -35,6 +37,7 @@ Vue.component('comment-item', {
             </div>
           </div>
         </div>
+        
       </li>
     </ul>
     <div class="comment-input">
@@ -55,7 +58,7 @@ Vue.component('comment-item', {
         },
         toolbar:
           'undo redo | formatselect | emoticons | \
-          bullist numlist outdent indent | removeformat | help'}" initial-value="" :inline=false model-events="" plugins="" tag-name="div" toolbar="" v-model="commentContent" />
+          bullist numlist  | help'}" initial-value="" :inline=false model-events="" plugins="" tag-name="div" toolbar="" v-model="commentContent" />
       <div class="flex-hr-vc">
         <el-button size="mini" type="primary" class="mt-5" @click="commitComment()" :loading="hasCommitFinish">提交</el-button>
       </div>
@@ -65,6 +68,9 @@ Vue.component('comment-item', {
   mounted() {
     console.log(this.postData)
     console.log(this.commentData)
+    setTimeout(() => {
+      this.ifShowCommentAll = true      
+    }, 1500);
   },
   methods: {
     commitComment(){
