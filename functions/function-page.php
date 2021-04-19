@@ -155,7 +155,8 @@ function get_the_link_items($id = null,$cat){
 
 
 function get_link_items(){
-    $linkcats = get_terms( 'link_category' );
+	$linkcats = get_terms( 'link_category' );
+	$result = '';
     if ( !empty($linkcats) ) {
         foreach( $linkcats as $linkcat){            
             $result .=  '<h2 class="p-10 mt-15">'.$linkcat->name.'</h2>';
@@ -163,7 +164,7 @@ function get_link_items(){
             $result .=  get_the_link_items($linkcat->term_id,$linkcat->name);
         }
     } else {
-        $result = get_the_link_items();
+        $result = '';
     }
     return $result;
 }

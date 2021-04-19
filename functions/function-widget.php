@@ -12,14 +12,14 @@ function KlausLab_tag_cloud_widget($args)
 
 add_filter('widget_tag_cloud_args', 'KlausLab_tag_cloud_widget');
 
-add_action('widgets_init', create_function('', 'return register_widget("UserInfo");'));
+add_action('widgets_init', function(){register_widget("UserInfo");});
 class UserInfo extends WP_Widget
 {
 
-	function UserInfo()
+	function __construct()
 	{
 		$widget_ops = array('description' => '显示当前用户信息');
-		$this->WP_Widget('UserInfo', '本站用户', $widget_ops);
+		parent::__construct('UserInfo', '本站用户', $widget_ops);
 	}
 
 	function update($new_instance, $old_instance)
@@ -73,17 +73,17 @@ function widget_userinfo()
 	<?php
 }
 
-add_action('widgets_init', create_function('', 'return register_widget("NewVersionTips");'));
+add_action('widgets_init', function(){register_widget("NewVersionTips");});
 class NewVersionTips extends WP_Widget
 {
 
-	function NewVersionTips()
+	function __construct()
 	{
 		$widget_ops = array(
 			'description' => '版本更新公告',
 			'name' => '版本更新公告'
 		);
-		$this->WP_Widget('NewVersionTips', '版本更新公告', $widget_ops);
+		parent::__construct('NewVersionTips', '版本更新公告', $widget_ops);
 	}
 
 
@@ -136,14 +136,14 @@ function widget_newVersionTips()
 
 
 
-add_action('widgets_init', create_function('', 'return register_widget("AuthorInfo");'));
+add_action('widgets_init', function(){register_widget("AuthorInfo");});
 class AuthorInfo extends WP_Widget
 {
 
-	function AuthorInfo()
+	function __construct()
 	{
 		$widget_ops = array('description' => '显示站长信息');
-		$this->WP_Widget('AuthorInfo', '本站站长', $widget_ops);
+		parent::__construct('AuthorInfo', '本站站长', $widget_ops);
 	}
 
 	function update($new_instance, $old_instance)
