@@ -73,7 +73,7 @@ setPostViews(get_the_ID()); ?>
     position: relative;
   }
 
-  .comment-list:before{
+  #comments > .comment-list:before{
     position: absolute;
     content: '评论列表';
     background: #42A5F5;
@@ -88,7 +88,7 @@ setPostViews(get_the_ID()); ?>
     padding: 4px;
   }
 
-  .comment-input:before{
+  #comments > .comment-input:before{
     position: absolute;
     content: '评论发布';
     background: #42A5F5;
@@ -218,8 +218,8 @@ setPostViews(get_the_ID()); ?>
           <kl-skeleton v-if="ifShowPost" type="post"></kl-skeleton>
           <div class="article-list" v-if="!ifShowPost">
             <article class="article-item hentry" v-for="(item,index) in listOfArticle" :key="index">
-              <article-item :post-data="item" @change-type="changeItemType" @show-comment="showItemComment"></article-item>
-              <comment-item :comment-data="item.listOfComment" :post-data="item" :tiny-key="tinyKey" v-if="item.ifShowComment"></comment-item>
+              <article-item :post-data="item" @change-type="changeItemType" @show-comment="showItemComment" ></article-item>
+              <quick-comment :comment-data="item.listOfComment" :post-data="item" :tiny-key="tinyKey" v-if="item.ifShowComment" @change="changeCommentCurrent"></quick-comment>
               
             </article>
           </div>
@@ -229,7 +229,9 @@ setPostViews(get_the_ID()); ?>
           <kl-skeleton v-if="ifShowChat" type="post"></kl-skeleton>
           <div class="article-list" v-if="!ifShowChat">
             <article class="article-item hentry" v-for="(item,index) in listOfChat" :key="index">
-              <chat-item :post-data="item"></chat-item>
+              <chat-item :post-data="item" @show-comment="showItemComment"></chat-item>
+              <quick-comment :comment-data="item.listOfComment" :post-data="item" :tiny-key="tinyKey" v-if="item.ifShowComment" @change="changeCommentCurrent"></quick-comment>
+
             </article>
           </div>
         </el-tab-pane>
@@ -256,7 +258,8 @@ setPostViews(get_the_ID()); ?>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/skeleton.js"></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/articleItem.js"></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/chatItem.js"></script>
-<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/commentItem.js"></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickCommentItem.js"></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickComment.js"></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/index.js"></script>
 <?php
 get_sidebar();

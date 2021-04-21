@@ -1495,6 +1495,7 @@ function ajax_comment_callback()
     }
     add_filter('get_the_excerpt', 'trim_excerpt');
 
+
 // 2018-8-14 引入
 // function translate_chinese_post_title_to_en_for_slug( $title ) {
 // 	$translation_render = 'http://fanyi.baidu.com/v2transapi?from=zh&to=en&transtype=realtime&simple_means_flag=3&query='.$title;

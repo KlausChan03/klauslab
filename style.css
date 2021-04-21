@@ -3286,10 +3286,14 @@ img.avatar {
   padding: 3px 8px;
 }
 
+.article-main .entry-content pre {
+  padding: 4px 16px;
+}
+
 .article-main .entry-content pre > code {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  color: var(--regularText);
+  color: #333;
   background: #f8f8f8;
   padding: 15px;
   margin: 0;
@@ -3792,7 +3796,6 @@ img.avatar {
   object-fit: cover;
   border-radius: 4px;
   margin-right: 15px;
-  margin-bottom: 10px;
 }
 
 .kl_shuoshuo .timeline-ul .label .label_others {

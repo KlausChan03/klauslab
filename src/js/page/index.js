@@ -1,10 +1,9 @@
 dayjs.locale('zh-cn')
 dayjs.extend(window.dayjs_plugin_relativeTime)
-// var Editor = require('@tinymce/tinymce-vue').default;
 
 const index_module = new Vue({
     el: ".main-container",
-    
+
     data() {
         return {
             tinyKey: '7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j',
@@ -32,7 +31,9 @@ const index_module = new Vue({
                     'type': 'modified',
                     'name': '更新时间'
                 }
-            ]
+            ],
+            currentCommentId: '',
+            commentPage: 1,
         }
     },
     created() {
@@ -42,7 +43,7 @@ const index_module = new Vue({
     computed: {
         getOrderby() {
             let _this = this
-            let _item =  this.orderbyList.filter(item => {
+            let _item = this.orderbyList.filter(item => {
                 return item.type === _this.orderby
             })
             return _item[0].name
@@ -160,6 +161,9 @@ const index_module = new Vue({
                 this.totalOfChat = parseInt(res.headers['x-wp-total'])
                 this.listOfChat = res.data
                 this.ifShowChat = false
+                this.listOfArticle.forEach(element => {
+                    element.ifShowComment = false
+                });
 
             })
         },
@@ -170,6 +174,11 @@ const index_module = new Vue({
             this.$nextTick(() => {
                 document.querySelectorAll("#page")[0].scrollTop = 0
             })
+        },
+
+        changeCommentCurrent(val) {
+            this.commentPage = val
+            this.getListOfComment(this.currentCommentId)
         },
 
         changeType(tab, event) {
@@ -197,60 +206,154 @@ const index_module = new Vue({
             })
             this.listOfArticle.splice(0, 0)
         },
+
         showItemComment(id) {
-            this.listOfArticle.forEach(element => {
-                if(element.id === id){
-                    if(element.ifShowComment === false){
-                        var _nonce = "<?php echo wp_create_nonce( 'wp_rest' ); ?>";
-                        let params = {}
-                        params.post = id
-                        axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/comments`, {
-                            params: params
-                        }, {
-                            headers: {
-                                'X-WP-Nonce': _nonce
-                            }
-                        }).then(res => {
-                            this.$nextTick(()=>{
-                                element.ifShowComment = true
-                                element.listOfComment = res.data
-                            })
-                            this.$forceUpdate()
-                        })
+            this[this.postType === "article" ? 'listOfArticle' : 'listOfChat'].forEach(element => {
+                if (element.id === id) {
+                    this.currentCommentId = id
+                    if (element.ifShowComment === false) {
+                        this.getListOfComment(this.currentCommentId)
                     } else {
                         element.ifShowComment = false
-                        this.$forceUpdate()
                     }
                 } else {
                     element.ifShowComment = false
-                    this.$forceUpdate()
-
-                }              
+                }
+                this.$forceUpdate()
 
             })
+            // if(this.postType === "article"){
+            //     this.listOfArticle.forEach(element => {
+            //         if (element.id === id) {
+            //             this.currentCommentId = id
+            //             if (element.ifShowComment === false) {
+            //                 this.getListOfComment(this.currentCommentId)
+            //             } else {
+            //                 element.ifShowComment = false
+            //                 this.$forceUpdate()
+            //             }
+            //         } else {
+            //             element.ifShowComment = false
+            //             this.$forceUpdate()
+            //         }
+            //     })
+            // } else if(this.postType === "chat"){
+            //     this.listOfChat.forEach(element => {
+            //         if (element.id === id) {
+            //             this.currentCommentId = id
+            //             if (element.ifShowComment === false) {
+            //                 this.getListOfComment(this.currentCommentId)
+            //             } else {
+            //                 element.ifShowComment = false
+            //                 this.$forceUpdate()
+            //             }
+            //         } else {
+            //             element.ifShowComment = false
+            //             this.$forceUpdate()
+            //         }
+            //     })
+            // }
             
         },
+
+        getListOfComment(id, page = this.commentPage) {
+            var _nonce = "<?php echo wp_create_nonce( 'wp_rest' ); ?>";
+            let params = {}
+            params.post = id
+            params.page = page
+            axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/comments`, {
+                params: params
+            }, {
+                headers: {
+                    'X-WP-Nonce': _nonce
+                }
+            }).then(res => {
+                this[this.postType === "article" ? 'listOfArticle' : 'listOfChat'].forEach(element => {
+                    if (element.id === id) {
+                        this.$nextTick(() => {
+                            element.totalOfComment = parseInt(res.headers['x-wp-total'])
+                            element.ifShowComment = true
+                            let jsonDataTree = this.transData(res.data, 'id', 'parent', 'children');
+                            element.listOfComment = jsonDataTree
+                        })
+                    }
+                })
+                // if(this.postType === "article"){
+                //     this.listOfArticle.forEach(element => {
+                //         if (element.id === id) {
+                //             this.$nextTick(() => {
+                //                 element.totalOfComment = parseInt(res.headers['x-wp-total'])
+                //                 element.ifShowComment = true
+                //                 let jsonDataTree = this.transData(res.data, 'id', 'parent', 'children');
+                //                 element.listOfComment = jsonDataTree
+                //             })
+                //         }
+                //     })
+                // } else if(this.postType === "chat"){
+                //     this.listOfChat.forEach(element => {
+                //         if (element.id === id) {
+                //             this.$nextTick(() => {
+                //                 element.totalOfComment = parseInt(res.headers['x-wp-total'])
+                //                 element.ifShowComment = true
+                //                 let jsonDataTree = this.transData(res.data, 'id', 'parent', 'children');
+                //                 element.listOfComment = jsonDataTree
+                //             })
+                //         }
+                //     })
+                // }
+                
+                this.$forceUpdate()
+
+            })
+        },
+
         handleCommand(type) {
             this.orderby = type
             let _this = this
             let getList = () => {
                 _this.getListByType(_this.postType)
             }
-            let showNotify = () =>{
-                this.$notify({
-                    message: '切换成功',
-                    duration: 3000,
-                    type: 'success',
-                    showClose: false,
-                    // offset: 70
-                });
-            }            
-            (async ()=>{
-                 await getList();
-                 await showNotify();               
-            })();
-            
-            
+            let showNotify = () => {
+                    this.$notify({
+                        message: '切换成功',
+                        duration: 3000,
+                        type: 'success',
+                        showClose: false,
+                        // offset: 70
+                    });
+                }
+                (async () => {
+                    await getList();
+                    await showNotify();
+                })();
         },
+
+        // 转换 json - tree
+        transData(a, idStr, pidStr, chindrenStr) {
+            var r = [];
+            var hash = {};
+            var id = idStr;
+            var pid = pidStr;
+            var children = chindrenStr;
+            var i = 0;
+            var j = 0;
+            var len = a.length;
+            for (; i < len; i++) {
+                hash[a[i][id]] = a[i];
+            }
+            for (; j < len; j++) {
+                var aVal = a[j];
+                aVal.level = 1;
+                var hashVP = hash[aVal[pid]];
+                if (hashVP) {
+                    aVal.level++
+                        !hashVP[children] && (hashVP[children] = []);
+                    hashVP[children].push(aVal);
+                } else {
+                    r.push(aVal);
+                }
+            }
+            return r;
+        }
     }
 })

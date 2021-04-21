@@ -20,7 +20,7 @@ Vue.component('chat-item', {
             <i class="lalaksks lalaksks-ic-view " ></i>
             <span :style='{"font-size": Number(postData.post_metas.views) >= 1000 ? 12 + "px" : 14 + "px" }'>{{postData.post_metas.views}}</span>
           </div>
-          <div class="entry-comment flex-hc-vc flex-1-3">
+          <div class="entry-comment flex-hc-vc flex-1-3" @click="showComment(postData.id)">
             <i class="lalaksks lalaksks-ic-reply " :style='{color:postData.post_metas.comments_num > 0 ? "#4488EE":"inhert"}'></i>
             <span :style='{color:postData.post_metas.comments_num > 0 ? "#4488EE":"inhert"}'>{{postData.post_metas.comments_num > 0 ? postData.post_metas.comments_num : 0}}</span>
           </div>
@@ -36,6 +36,11 @@ Vue.component('chat-item', {
     </div>
     </div>
     `,
+  methods: {
+    showComment(id) {
+      this.$emit('show-comment', id)
+    }
+  },
   filters: {
     formateDate: (value) => {
       return dayjs(value).fromNow()

@@ -47,16 +47,12 @@ Vue.component('article-item', {
     </div>
     `,
   methods: {
-    showComment(){
-      console.log("hhh")
-    },
     changeIfShowAllToParent(id){
       // console.log(id)
       this.$emit('change-type',id)
     },
     showComment(id){
       this.$emit('show-comment',id)
-
     }
   },
   filters: {
