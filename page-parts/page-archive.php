@@ -11,17 +11,16 @@ get_header();
     <main id="main" class="main-content" role="main">
         <?php if (have_posts()) : the_post();
             update_post_caches($posts); ?>
-            <article id="archive-main" class="post-<?php the_ID(); ?> page-main style-18">
-                <div class="entry-header flex-hc-vc">
-                    <?php the_title('<h3 class="entry-title">', '</h3>'); ?>
-                    <?php if (is_single() || is_page() && has_post_thumbnail()) : ?>
-                        <div id="banner-bg" class="featured-header-image">
-                            <?php the_post_thumbnail('KlausLab-home'); ?>
-                        </div><!-- .featured-header-image -->
-                    <?php endif; ?>
-                </div><!-- .entry-header -->
-                <div class="entry-content page-content">
-                    <el-form id="archive-filter" class="archive-filter">
+            <article id="archive-main" class="post-<?php the_ID(); ?> page-main style-18" v-block>
+                <el-card>
+                    <h2 class="entry-title bor-b-1">
+                        <!-- <i class="lalaksks21 lalaksks21-worldwide mr-5"></i> -->
+                        <svg class="icon icon-title mr-5" aria-hidden="true">
+                            <use xlink:href="#lalaksks21-worldwide"></use>
+                        </svg>
+                        <?php the_title(); ?>
+                    </h2>
+                    <el-form id="archive-filter" class="archive-filter mt-15">
                         <el-form-item class="filter-author" label="作者">
                             <el-button :class="{active:filterArr[1] === ''}" size="mini" data-author="" @click="choose($event)">全部</el-button>
                             <el-button :class="{active:filterArr[1] === 'Klaus'}" size="mini" data-author="Klaus" @click="choose($event)">Klaus</el-button>
@@ -36,28 +35,65 @@ get_header();
                             <el-tag type="success" v-for="(item,index) in filterName" :key="item" class="mr-5">{{item}}</el-tag>
                         </el-form-item>
                     </el-form>
-                    <div class="entry-content-list" v-html="archiveContent"> </div>
-                </div>
-                <?php edit_post_link(esc_html__('Edit', 'KlausLab'), '<footer class="entry-footer clear"><span class="edit-link">', '</span></footer><!-- .entry-footer -->'); ?>
+                </el-card>
+                <el-card class="mt-15">
+                    <template v-if="archiveContent">
+                        <div class="mh-100 entry-content" v-loading="!ifGetList" v-html="archiveContent"> </div>
+                    </template>                    
+                    <template v-else>
+                        <kl-empty description="暂无数据"></kl-empty>
+                    </template>
+                </el-card>
+                <!-- <?php edit_post_link(esc_html__('Edit', 'KlausLab'), '<footer class="entry-footer clear"><span class="edit-link">', '</span></footer>.entry-footer'); ?> -->
             </article>
         <?php endif; ?>
     </main>
 </div>
 
 <style>
-    .archive-filter {
-        margin: 20px 0;
+    .mh-100 {
+        min-height: 100px;
     }
 
-    /* .archive-filter label {
-        min-width: 100px;
-        text-align: right;
-    } */
+    .bor-b-1 {
+        border-bottom: 1px solid #ddd;
+    }
 
-    .archive-filter button.active {
+    .style-18 {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    .style-18 .entry-title {
+        padding-bottom: 15px;
+    }
+
+    .style-18 .el-loading-mask {
+        background-color: transparent;
+    }
+
+    .style-18 .archive-filter button.active {
         color: #409EFF;
         border-color: #c6e2ff;
         background-color: #ecf5ff;
+    }
+
+    .style-18 .el-form-item {
+        margin-bottom: 5px;
+    }
+
+    .style-18 .entry-content {
+        padding: 0;
+    }
+
+    .style-18 .entry-content hr {
+        margin: 40px auto;
+        border-top: 1px solid #ddd;
+        width: 50%;
+    }
+
+    .style-18 .entry-content hr:first-child {
+        display: none;
     }
 </style>
 <script>
@@ -66,7 +102,8 @@ get_header();
         data: {
             archiveContent: '',
             filterArr: ['post', 'Klaus'],
-            filterName: ['文章', 'KLAUS']
+            filterName: ['文章', 'KLAUS'],
+            ifGetList: false
         },
         mounted() {
             this.search()
@@ -93,6 +130,7 @@ get_header();
                 console.log(params)
                 axios.post(`${GLOBAL.homeUrl}/wp-admin/admin-ajax.php`, params).then((res) => {
                     this.archiveContent = res.data;
+                    this.ifGetList = true
                 })
             }
         }

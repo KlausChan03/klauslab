@@ -699,3 +699,39 @@
 .kl-catelog-level-3{
     padding-left:45px;
 }
+
+.kl-empty {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 32px 0;
+}
+
+.kl-empty__image{
+    width: 180px;
+    height: 180px;
+}
+
+.kl-empty__image img{
+    width: 100%;
+    height: 100%;
+}
+
+.kl-empty__description {
+    margin-top: 16px;
+    padding: 0 60px;
+    color: #969799;
+    font-size: 14px;
+    line-height: 20px;
+}

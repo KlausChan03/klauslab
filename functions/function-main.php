@@ -21,6 +21,8 @@ if(FE_ENV !== "Development"){
 
 define('KL_DIR', get_template_directory() . '/inc');
 define('KL_URI', get_template_directory_uri() . '/inc');
+define('page_template_directory','page-parts/');
+define('content_template_directory','template-parts/');
 
 
 if (!function_exists('KlausLab_setup')) :
@@ -171,7 +173,7 @@ if (!function_exists('KlausLab_comments')) :
                         <div class="comment-info">
                             <span class="comment-time"><?php echo human_time_diff(get_comment_date('U', $comment->comment_ID), current_time('timestamp')) . '前'; ?></span>
                             <?php if ($comment->comment_approved == '1') {
-                                comment_reply_link(array_merge($args, array('reply_text' => '回复', 'depth' => $depth, 'max_depth' => $args['max_depth'], 'before' => '<span class="reply flex-hr-vc"><i class="lalaksks lalaksks-ic-reply"></i>', 'after' => '</span>')));
+                                comment_reply_link(array_merge($args, array('reply_text' => '', 'depth' => $depth, 'max_depth' => $args['max_depth'], 'before' => '<span class="reply flex-hr-vc"><i class="lalaksks lalaksks-ic-reply"></i>', 'after' => '</span>')));
                             } ?>
                         </div>
                     </div>
@@ -220,7 +222,7 @@ if (!function_exists('KlausLab_comments')) :
                                 <!-- 回复评论 -->
 
                                 <?php if ($comment->comment_approved == '1') {
-                                    comment_reply_link(array_merge($args, array('reply_text' => '回复', 'depth' => $depth, 'max_depth' => $args['max_depth'],                                'before'    => '<span class="reply flex-hc-vc ml-10"><i class="lalaksks lalaksks-ic-reply"></i>', 'after'     => '</span>')));
+                                    comment_reply_link(array_merge($args, array('reply_text' => '', 'depth' => $depth, 'max_depth' => $args['max_depth'],                                'before'    => '<span class="reply flex-hc-vc ml-10"><i class="lalaksks lalaksks-ic-reply"></i>', 'after'     => '</span>')));
                                 } ?>
 
                             </div>
@@ -303,8 +305,9 @@ function normal_style_script()
     wp_enqueue_script('element-ui-js', KL_THEME_URI . '/js/lib/element-ui.min.js', array(), '1.0', false);
     wp_enqueue_style('element-ui-css', KL_THEME_URI . '/css/element-ui.min.css', array(), '1.0', false);
     wp_enqueue_script('tinymce-vue-js', KL_THEME_URI . '/js/lib/tinymce-vue.min.js', array(), '1.0', false);
-// elementUI额外样式
-wp_enqueue_style('extra', KL_THEME_URI . '/css/element-ui-extra.css', array(), '1.0', false);
+    // elementUI额外样式
+    wp_enqueue_style('extra', KL_THEME_URI . '/css/element-ui-extra.css', array(), '1.0', false);
+    wp_enqueue_script('icon-font21', '//at.alicdn.com/t/font_1616851_1gtnw3vh59j.js', array(), '1.0', false);
     // MuseUI
     //  wp_enqueue_script('muse-ui-js', KL_THEME_URI . '/theme/muse-ui.js', array(), '1.0', false);
     //  wp_enqueue_style('muse-ui-css', KL_THEME_URI . '/theme/muse-ui.css', array(), '1.0', false);
@@ -1153,7 +1156,7 @@ function ajax_comment_callback()
                         <div class="comment-info">
                             <span class="comment-time"><?php echo human_time_diff(get_comment_date('U', $comment->comment_ID), current_time('timestamp')) . '前'; ?></span>
                             <?php if ($comment->comment_approved == '1') {
-                                comment_reply_link(array_merge($args, array('reply_text' => '回复', 'depth' => $depth, 'max_depth' => $args['max_depth'])));
+                                comment_reply_link(array_merge($args, array('reply_text' => '', 'depth' => $depth, 'max_depth' => $args['max_depth'])));
                             } ?>
                         </div>
                     </div>
@@ -1494,6 +1497,55 @@ function ajax_comment_callback()
         return $text;
     }
     add_filter('get_the_excerpt', 'trim_excerpt');
+
+    // 激活主题创建页面
+    // 1、添加页面函数
+    function init_add_page($title,$slug,$page_template='',$comment_status='closed',$order=0){
+        $allPages = get_pages();//获取所有页面
+        $exists = false;
+        foreach( $allPages as $page ){
+            //通过页面别名来判断页面是否已经存在
+            if( strtolower( $page->post_name ) == strtolower( $slug ) ){
+                $exists = true;
+            }
+        }
+        if( $exists == false ) {
+            $new_page_id = wp_insert_post(array(
+                'post_title' => $title,
+                'post_type' => 'page',
+                'post_name' => $slug,
+                'comment_status' => $comment_status,
+                'ping_status' => 'closed',
+                'post_content' => '',
+                'post_status' => 'publish',
+                'post_author' => 1,
+                'menu_order' => $order
+            )
+            );
+            //如果插入成功 且设置了模板
+            if($new_page_id && $page_template!=''){
+                //保存页面模板信息
+                update_post_meta($new_page_id, '_wp_page_template', $page_template);
+            }
+        }
+    }
+
+    // 2、通过hook执行创建页面函数
+    function init_add_pages() {
+        global $pagenow;
+        //判断是否为激活主题页面
+        if ( 'themes.php' == $pagenow && isset( $_GET['activated'] ) ){
+            // ashu_add_page('登录页面','login','page-login.php');
+            // ashu_add_page('注册页面','register','page-register.php');
+             //页面标题,别名,页面模板
+            init_add_page('映象','page-movie', page_template_directory . 'page-movie.php'); 
+            init_add_page('链集','page-links', page_template_directory . 'page-links.php','open'); 
+            init_add_page('归档','page-archive', page_template_directory . 'page-archive.php'); 
+            init_add_page('快捷发布','page-post-simple', page_template_directory . '/page-post-simple.php'); 
+        }
+    }
+
+    add_action( 'load-themes.php', 'init_add_pages' );
 
 
 // 2018-8-14 引入

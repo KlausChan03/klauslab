@@ -9,61 +9,67 @@ get_header();
 ?>
 
 
-<div id="primary" class="page-movie main-area w-1">
+<div id="primary" class="main-area w-1">
     <main id="main" class="main-content" role="main">
-        <p class="tips" v-if="count">
-            <span>记录阅片数量：{{count}}</span>
-        </p>
-        <div id="douban-movie-list" class="doubanboard-list" v-loading="loadingAll">
-            <el-row v-bind:gutter="20">
-                <el-col :span="6" :xs="24" :sm="12" :md="6" :lg="4" v-for="(item,index) in list" v-bind:key="item.url" v-bind:class="'doubanboard-item'" v-if="item.url">
-                    <!-- <el-tooltip class="cur-p" effect="light" placement="right" popper-class="s-tooltip">
-                        <div v-if="item.url" v-bind:class="'doubanboard-thumb'" v-bind:style="{backgroundImage : 'url(' + item.img +')'}">
-                            <div class="doubanboard-title flex-hb-vc">
-                                <a class="movie-title w-06" v-bind:href="item.url" v-bind:title="item.name" target="_blank">{{item.name}}</a>
-                                <div class="movie-mark flex-hr-vc w-04">
-                                    <span class="flex-hr-vc mr-5"><i class="lalaksks lalaksks-ic-tag"></i> {{item.mark_myself}}</span>
-                                    <span class="flex-hr-vc"><i class="lalaksks lalaksks-ic-douban"></i> {{item.mark_douban}}</span>
-                                </div>
+        <?php if (have_posts()) : the_post(); ?>
+
+            <article id="movie-main" class="post-<?php the_ID(); ?> page-main style-18">
+                <el-card>
+                    <h2 class="entry-title bor-b-1">
+                        <svg class="icon icon-title mr-5" aria-hidden="true">
+                            <use xlink:href="#lalaksks21-views"></use>
+                        </svg>
+                        <?php the_title(); ?>
+                    </h2>
+                    <div class="tips mt-15" v-if="count">
+                        <span>记录阅片数量：{{count}}</span>
+                    </div>
+                    <div id="douban-movie-list" class="doubanboard-list" v-loading="loadingAll">
+                        <template v-if="count">
+                            <el-row v-bind:gutter="20">
+                                <el-col :span="6" :xs="24" :sm="12" :md="6" :lg="4" v-for="(item,index) in list" v-bind:key="item.url" v-bind:class="'doubanboard-item'" v-if="item.url">
+                                    <rotate-card trigger="hover" direction="row">
+                                        <div slot="cz" v-if="item.url" v-bind:class="'doubanboard-thumb'" v-bind:style="{backgroundImage : 'url(' + item.img +')'}">
+                                            <div>
+                                                <div class="doubanboard-title flex-hb-vc">
+                                                    <a class="movie-title w-06" v-bind:href="item.url" v-bind:title="item.name" target="_blank">{{item.name}}</a>
+                                                    <div class="movie-mark flex-hr-vc w-04">
+                                                        <span class="flex-hr-vc mr-5"><i class="lalaksks lalaksks-ic-tag"></i> {{item.mark_myself}}</span>
+                                                        <span class="flex-hr-vc"><i class="lalaksks lalaksks-ic-douban"></i> {{item.mark_douban}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div slot="cf" v-bind:class="'inner'">
+                                            <h3>{{item.name}}</h3>
+                                            <p class="mt-10 item-content" v-bind:title=item.remark>{{item.remark}}</p>
+                                            <p>{{item.date}}</p>
+                                        </div>
+                                    </rotate-card>
+                                </el-col>
+                            </el-row>
+                            <div class="flex-hc-vc">
+                                <el-button ref="getMoreButton" v-if="ifShowMore" id="loadMoreMovies" @click="loadMovies();">加载更多</el-button>
                             </div>
-                        </div>
-                        <div slot="content">
-                            <h4>{{item.name}}</h4>
-                            <p class="mt-10">{{item.remark}}</p>
-                            <p class="mt-10">{{item.date}}</p>
-                        </div>
-                    </el-tooltip> -->
-                    <rotate-card trigger="hover" direction="row">
-                        <div slot="cz" v-if="item.url" v-bind:class="'doubanboard-thumb'" v-bind:style="{backgroundImage : 'url(' + item.img +')'}">
-                            <div>
-                                <div class="doubanboard-title flex-hb-vc">
-                                    <a class="movie-title w-06" v-bind:href="item.url" v-bind:title="item.name" target="_blank">{{item.name}}</a>
-                                    <div class="movie-mark flex-hr-vc w-04">
-                                        <span class="flex-hr-vc mr-5"><i class="lalaksks lalaksks-ic-tag"></i> {{item.mark_myself}}</span>
-                                        <span class="flex-hr-vc"><i class="lalaksks lalaksks-ic-douban"></i> {{item.mark_douban}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div slot="cf" v-bind:class="'inner'">
-                            <h3>{{item.name}}</h3>
-                            <p class="mt-10 item-content" v-bind:title=item.remark>{{item.remark}}</p>
-                            <p>{{item.date}}</p>
-                        </div>
-                    </rotate-card>
-                </el-col>
-            </el-row>
-            <div class="flex-hc-vc">
-                <el-button ref="getMoreButton" v-if="ifShowMore" id="loadMoreMovies" @click="loadMovies();">加载更多</el-button>
-            </div>
-        </div>
+                        </template>
+                        <template v-else>
+                            <kl-empty description="暂无数据"></kl-empty>
+                        </template>
+                    </div>
+
+                </el-card>
+            </article>
+
     </main>
-    <!-- #main -->
+<?php endif; ?>
+
+<!-- #main -->
 </div>
 <!-- #primary -->
+
 <script>
     let app = new Vue({
-        el: ".page-movie",
+        el: "#movie-main",
         data: {
             curBooks_read: 0,
             curBooks_reading: 0,
@@ -106,12 +112,10 @@ get_header();
             },
 
             loadMovies: function() {
+                debugger
                 this.loadingAll = true;
                 if ($("#douban-movie-list").length < 1) return;
                 axios.post(GLOBAL.ajaxSourceUrl + "/douban/douban.php?type=movie&from=" + String(this.curMovies)).then(result => {
-                    console.error(result)
-                    console.error(this.currDevice())
-                    
                     if (result.data.data.length < this.pageSize) {
                         // this.$refs.getMoreButton.$el.setAttribute("disabled",true)
                         // this.$refs.getMoreButton.$el.innerHTML = "已加载完毕"  
@@ -119,14 +123,16 @@ get_header();
                     } else {
                         this.ifShowMore = true
                     }
-                    console.log(result.data[0], this.pageSize, this.curMovies)
                     this.list = this.list.concat(result.data.data);
-                    if(this.currDevice().mobile === true){
+                    if (this.currDevice().mobile === true) {
                         this.list.forEach(item => {
-                            item.img = item.img.replace(/s_ratio_poster/g,'m_ratio_poster')
+                            item.img = item.img.replace(/s_ratio_poster/g, 'm_ratio_poster')
                         });
                     }
                     this.count = result.data.total;
+                    if (this.list[0].name === '') {
+                        this.count = 0
+                    }
                     this.curMovies += this.pageSize;
                     setTimeout(() => {
                         this.loadingAll = false;
@@ -191,7 +197,52 @@ get_header();
         }
     })
 </script>
+<style>
+    .mh-100 {
+        min-height: 100px;
+    }
 
+    .bor-b-1 {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .style-18 {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    .style-18 .entry-title {
+        padding-bottom: 15px;
+    }
+
+    .style-18 .el-loading-mask {
+        background-color: transparent;
+    }
+
+    .style-18 .archive-filter button.active {
+        color: #409EFF;
+        border-color: #c6e2ff;
+        background-color: #ecf5ff;
+    }
+
+    .style-18 .el-form-item {
+        margin-bottom: 5px;
+    }
+
+    .style-18 .entry-content {
+        padding: 0;
+    }
+
+    .style-18 .entry-content hr {
+        margin: 40px auto;
+        border-top: 1px solid #ddd;
+        width: 50%;
+    }
+
+    .style-18 .entry-content hr:first-child {
+        display: none;
+    }
+</style>
 <style>
     .doubanboard-list {
         padding: 10px 0;

@@ -245,7 +245,7 @@ setPostViews(get_the_ID()); ?>
         </el-dropdown>
       </div>
 
-      <el-card class="flex-hc-vc">
+      <el-card class="flex-hc-vc mt-15">
         <el-pagination layout="prev, pager, next, jumper" background :pager-count="getPaperSize" :page-size="per_page" :current-page.sync="page" :total="getTotal" :hide-on-single-page="judgeCount" @current-change="handleCurrentChange">
         </el-pagination>
       </el-card>

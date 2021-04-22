@@ -21,6 +21,17 @@ Text Domain: KlausLab
   url('//at.alicdn.com/t/font_765116_9anrc89egpd.svg#lalaksks') format('svg');
 }
 
+// @font-face {
+//   font-family: 'lalaksks21';  /* project id 1616851 */
+//   src: url('//at.alicdn.com/t/font_1616851_1gtnw3vh59j.eot');
+//   src: url('//at.alicdn.com/t/font_1616851_1gtnw3vh59j.eot?#iefix') format('embedded-opentype'),
+//   url('//at.alicdn.com/t/font_1616851_1gtnw3vh59j.woff2') format('woff2'),
+//   url('//at.alicdn.com/t/font_1616851_1gtnw3vh59j.woff') format('woff'),
+//   url('//at.alicdn.com/t/font_1616851_1gtnw3vh59j.ttf') format('truetype'),
+//   url('//at.alicdn.com/t/font_1616851_1gtnw3vh59j.svg#lalaksks21') format('svg');
+// }
+
+
 /*主要标签元素自定义设置*/
 
 :root{
@@ -57,6 +68,18 @@ Text Domain: KlausLab
   --borderColor: #2c2c3a;
   --codeBg: #252526;
   --codeColor: #fff;
+}
+
+.icon {
+  width: 1em; height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+  &.icon-title{
+    width: 2em;
+    height: 2em;
+    vertical-align: -0.4em;
+  }
 }
 
 * {

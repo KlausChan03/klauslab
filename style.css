@@ -54,6 +54,20 @@ Text Domain: KlausLab
   --codeColor: #fff;
 }
 
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+.icon.icon-title {
+  width: 2em;
+  height: 2em;
+  vertical-align: -0.4em;
+}
+
 * {
   margin: 0;
   padding: 0;
