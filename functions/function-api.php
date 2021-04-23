@@ -74,6 +74,15 @@ function wp_rest_insert_tag_links()
         )
     );
     register_rest_field(
+        'search',
+        'search_metas',
+        array(
+            'get_callback' => 'get_search_meta_for_api',
+            'update_callback' => null,
+            'schema' => null,
+        )
+    );
+    register_rest_field(
         'page',
         'post_metas',
         array(
@@ -150,9 +159,20 @@ function get_post_meta_for_api($post)
     $post_meta['comments_num'] = get_comments_number($post['id']);
     $post_meta['zan_num'] = get_post_meta($post['id'], 'inlo_ding', true);
     $post_meta['thumbnail'] = get_the_post_thumbnail($post['id'], 'Full');
-    $tagsss = get_the_tags($post['id']);
-    $post_meta['tag_name'] = $tagsss[0]->name;
+    $tagList = get_the_tags($post['id']);
+    $post_meta['tag_name'] = array_column( $tagList, 'name');
+
+    $catList = get_the_category($post['id']);
+    $post_meta['cat_name'] = array_column( $catList, 'name');
     return $post_meta;
+}
+
+function get_search_meta_for_api($search)
+{
+    $search_meta = array();
+    $search_meta['author'] = get_user_by('ID', $search['author'])->display_name;
+
+    return $search_meta;
 }
 
 function get_comment_meta_for_api($comment){

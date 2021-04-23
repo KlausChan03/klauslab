@@ -1,8 +1,18 @@
 Vue.component('kl-skeleton', {
-  props:["type"],
+  // props:["type"],
+  props:{
+    type:{
+      type: String,
+      default: 'post'
+    },
+    randomList: {
+      type: Number,
+      default: Math.round(Math.random() * 2) + 1,
+    }
+
+  },
   data() {
     return {
-      randomList: Math.round(Math.random() * 2) + 1,
     }
   },
   template: `

@@ -35,7 +35,11 @@
 
 <!-- 固定小工具 -->
 <div id="fixed-plugins" class="fixed-plugins flex-v flex-hl-vc">
- 
+  <el-backtop style="position:static" target=".site" :bottom="200" :right="15">
+    <el-tooltip content="返回顶部" effect="dark" placement="top">
+      <div class="fp-items"><i class="lalaksks lalaksks-ic-backtotop"></i></div>
+    </el-tooltip>
+  </el-backtop>
   <div class="fp-user pos-r">
     <?php if (is_user_logged_in()) : global $current_user; ?>
       <el-tooltip content="登出" effect="dark" placement="top">
@@ -63,16 +67,13 @@
     <a title="浅色模式" class="fp-night hide"><i class="lalaksks lalaksks-ic-night"></i></a>
   </div>
 
-  <el-tooltip content="搜索" effect="dark" placement="top">
+  <!-- <el-tooltip content="搜索" effect="dark" placement="top">
     <div class="flex-hl-vc fp-search pos-r">
       <div class="fp-items fp-search-in" @click="showSearchDialog">
         <a class="flex-hc-vc"><i class="lalaksks lalaksks-ic-search"></i></a>
       </div>
-      <!-- <div class="pos-a hide fp-search-out" style="right:40px;">
-        <?php get_search_form(); ?>
-      </div> -->
     </div>
-  </el-tooltip>
+  </el-tooltip> -->
   <div class="flex-hl-vc fp-background pos-r">
     <el-tooltip content="切换背景" effect="dark" placement="top">
       <div class="fp-items fp-background-in">
@@ -85,10 +86,8 @@
         <li data-type="gravity" class="col-fff mr-5">引力</li>
       </ul>
     </div>
-    
-    <el-dialog title="搜索" :visible.sync="ifShowSearchFormDialog" width="80%" >
-      <?php get_search_form(); ?>
-    </el-dialog>
+
+
 
   </div>
 

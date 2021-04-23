@@ -29,10 +29,7 @@ Vue.component('kl-empty', {
             var PRESETS = ['error', 'search', 'default', 'network'];
             if (PRESETS.indexOf(image) !== -1) {
                 return 'https://img.yzcdn.cn/vant/empty-image-' + image + '.png';
-            } else {
-                return 'https://img.yzcdn.cn/vant/empty-image-default.png'
             }
-
             return image;
         },
     },

@@ -1,11 +1,22 @@
 Vue.component('article-item', {
   props: ['postData'],
+  data() {
+    return {
+      ifMobileDevice: window.ifMobileDevice
+    }
+  },
   template: `
   <div>
-    <div class="entry-header" :class="{'sticky': postData.sticky }">
-      <h5 class="entry-title">
-        <a :href="postData.link"> {{postData.title.rendered}} </a>
+    <div class="entry-header flex-hl-vc" :class="{'sticky': postData.sticky }">
+      <h5 class="entry-title mr-10">
+        <a :href="postData.link"> {{postData.title.rendered}} </a>       
       </h5>
+      <el-tag class="mr-10" size="small" v-for="(item,index) in postData.post_metas.tag_name">
+        {{item}}
+      </el-tag>
+      <el-tag type="warning" class="mr-10" size="small" v-for="(item,index) in postData.post_metas.cat_name">
+        {{item}}
+      </el-tag>
     </div>
     <div class="entry-main flex-hl-vl flex-hw" :class="{'has-image' : postData._embedded['wp:featuredmedia']}">
       <div class="featured-image" v-if="postData._embedded['wp:featuredmedia']">
@@ -38,7 +49,7 @@ Vue.component('article-item', {
             </div>
           </el-tooltip>
         </div> 
-        <div class="entry-extra" style="min-width:100px;text-align:right">
+        <div class="entry-extra" style="min-width:100px;text-align:right" v-if="!ifMobileDevice">
           <button v-if="!postData.ifShowAll" @click="changeIfShowAllToParent(postData.id)" class="kl-btn kl-btn-sm gradient-blue-red border-n">预览全文</button>
           <button v-if="postData.ifShowAll" @click="changeIfShowAllToParent(postData.id)" class="kl-btn kl-btn-sm gradient-red-blue border-n">收起全文</button> 
         </div>        
@@ -48,12 +59,14 @@ Vue.component('article-item', {
     `,
   methods: {
     changeIfShowAllToParent(id){
-      // console.log(id)
       this.$emit('change-type',id)
     },
     showComment(id){
       this.$emit('show-comment',id)
     }
+  },
+  mounted() {
+    console.log("ifMobileDevice:"+this.ifMobileDevice)
   },
   filters: {
     formateDate: (value) => {

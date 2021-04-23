@@ -107,7 +107,7 @@ Text Domain: KlausLab
 }
 
 body {
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 html {
@@ -426,7 +426,6 @@ var {
 
 button,
 input {
-  // min-height: 30px;
   cursor: pointer;
 }
 
@@ -605,7 +604,7 @@ textarea {
 nav,
 article,
 aside,
-input,
+// input,
 button.kl-btn,
 textarea {
   -webkit-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);

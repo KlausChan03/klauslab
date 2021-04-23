@@ -25,6 +25,7 @@ setPostViews(get_the_ID()); ?>
   .article-list .entry-action .entry-action-main span {
     display: inline-block;
     width: 30px;
+    line-height: 30px;
     /* text-align: left; */
   }
 
