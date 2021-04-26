@@ -300,6 +300,8 @@ function normal_style_script()
     wp_enqueue_script('myConfig', KL_THEME_URI . '/js/config.js', array(), '1.0', false);
     // 配置
     wp_enqueue_script('myOptions', KL_THEME_URI . '/js/options.js', array(), '1.0', false);
+    // 基础方法
+    wp_enqueue_script('myUtil', KL_THEME_URI . '/js/utils.js', array(), '1.0', false);
    
     // ElementUI
     wp_enqueue_script('element-ui-js', KL_THEME_URI . '/js/lib/element-ui.min.js', array(), '1.0', false);
@@ -373,7 +375,7 @@ function styles_scripts()
         // 提交加载 jquery 脚本
         wp_enqueue_script('jquery');
         if (is_mobile() === true && is_login() === false) {
-            wp_enqueue_script('util', KL_THEME_URI . '/js/util.js', array(), 'lastet', false);
+            wp_enqueue_script('flexible', KL_THEME_URI . '/js/flexible.js', array(), 'lastet', false);
         }
     } else { // 后台加载的脚本与样式表
         // 取消加载 jquery 脚本

@@ -132,7 +132,6 @@ setPostViews(get_the_ID()); ?>
   }
 </style>
 <script>
-  window._nonce = "<?php echo wp_create_nonce( 'wp_rest' ); ?>";
 
   window.ifMobileDevice = document.body.offsetWidth <= 720 ? true : false
   window.post_count = <?php $count_posts = wp_count_posts();

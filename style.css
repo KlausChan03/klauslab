@@ -480,7 +480,6 @@ input[type="button"]:active, input[type="reset"]:active, input[type="submit"]:ac
 
 input[type="text"], input[type="email"], input[type="url"], input[type="tel"], input[type="password"], input[type="search"] {
   padding: 15px;
-  background: #fff;
   max-width: 100%;
   transition: 0.1s;
 }

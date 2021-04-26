@@ -131,7 +131,7 @@ html {
 header.site-header,
 footer.site-footer {
   position: relative;
-  z-index: 1314;
+  z-index: 13;
 }
 
 article,
@@ -534,7 +534,7 @@ input {
   &[type="password"],
   &[type="search"] {
     padding: 15px;
-    background: #fff;
+    // background: #fff;
     max-width: 100%;
     transition: 0.1s;
   }

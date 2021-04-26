@@ -21,7 +21,7 @@ Vue.component('kl-empty', {
         description: String,
         image: {
             type: String,
-            value: 'default',
+            default: 'default',
         },
     },
     methods: {

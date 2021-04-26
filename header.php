@@ -129,6 +129,9 @@
 			}
 		}
 	</style>
+	<script>
+		window._nonce = "<?php echo wp_create_nonce('wp_rest'); ?>";
+	</script>
 </head>
 
 <body <?php body_class(); ?>>
@@ -173,7 +176,7 @@
 						<ul>
 							<?php if (is_user_logged_in()) { ?>
 								<li><a href="<?php echo get_option('home'); ?>/wp-admin"><i class="lalaksks lalaksks-ic-dashboard m-lr-5"></i>后台</a></li>
-								<li><a href="<?php echo get_option('home'); ?>/post-simple"><i class="lalaksks lalaksks-ic-create m-lr-5"></i>快捷发布</a></li>
+								<li><a href="<?php echo get_option('home'); ?>/page-post-simple"><i class="lalaksks lalaksks-ic-create m-lr-5"></i>快捷发布</a></li>
 								<li><a href="<?php echo get_option('home'); ?>/wp-admin/post-new.php"><i class="lalaksks lalaksks-ic-addArticle m-lr-5"></i>发布文章</a></li>
 								<li><a href="<?php echo get_option('home'); ?>/wp-admin/post-new.php?post_type=shuoshuo"><i class="lalaksks lalaksks-ic-addTalk m-lr-5"></i>发布说说</a></li>
 								<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=logout"><i class="lalaksks lalaksks-ic-logout m-lr-5"></i>登出</a></li>
@@ -199,7 +202,7 @@
 				methods: {
 					showSearch() {
 						this.ifShowSearch = true
-						this.$nextTick(()=>{
+						this.$nextTick(() => {
 							console.log(this.$refs.searchMain.$refs.searchInput)
 							this.$refs.searchMain.$refs.searchInput.focus()
 						})

@@ -220,39 +220,7 @@ const index_module = new Vue({
                     element.ifShowComment = false
                 }
                 this.$forceUpdate()
-
             })
-            // if(this.postType === "article"){
-            //     this.listOfArticle.forEach(element => {
-            //         if (element.id === id) {
-            //             this.currentCommentId = id
-            //             if (element.ifShowComment === false) {
-            //                 this.getListOfComment(this.currentCommentId)
-            //             } else {
-            //                 element.ifShowComment = false
-            //                 this.$forceUpdate()
-            //             }
-            //         } else {
-            //             element.ifShowComment = false
-            //             this.$forceUpdate()
-            //         }
-            //     })
-            // } else if(this.postType === "chat"){
-            //     this.listOfChat.forEach(element => {
-            //         if (element.id === id) {
-            //             this.currentCommentId = id
-            //             if (element.ifShowComment === false) {
-            //                 this.getListOfComment(this.currentCommentId)
-            //             } else {
-            //                 element.ifShowComment = false
-            //                 this.$forceUpdate()
-            //             }
-            //         } else {
-            //             element.ifShowComment = false
-            //             this.$forceUpdate()
-            //         }
-            //     })
-            // }
             
         },
 
@@ -277,31 +245,7 @@ const index_module = new Vue({
                             element.listOfComment = jsonDataTree
                         })
                     }
-                })
-                // if(this.postType === "article"){
-                //     this.listOfArticle.forEach(element => {
-                //         if (element.id === id) {
-                //             this.$nextTick(() => {
-                //                 element.totalOfComment = parseInt(res.headers['x-wp-total'])
-                //                 element.ifShowComment = true
-                //                 let jsonDataTree = this.transData(res.data, 'id', 'parent', 'children');
-                //                 element.listOfComment = jsonDataTree
-                //             })
-                //         }
-                //     })
-                // } else if(this.postType === "chat"){
-                //     this.listOfChat.forEach(element => {
-                //         if (element.id === id) {
-                //             this.$nextTick(() => {
-                //                 element.totalOfComment = parseInt(res.headers['x-wp-total'])
-                //                 element.ifShowComment = true
-                //                 let jsonDataTree = this.transData(res.data, 'id', 'parent', 'children');
-                //                 element.listOfComment = jsonDataTree
-                //             })
-                //         }
-                //     })
-                // }
-                
+                })                
                 this.$forceUpdate()
 
             })
