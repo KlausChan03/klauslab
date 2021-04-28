@@ -4,7 +4,7 @@ Theme Name: KlausLab
 Theme URI: https://www.klauslaura.cn
 Description: KlausLab is a beautiful WordPress blogging theme, The theme has been designed to look perfect on all size screens, from mobiles to widescreen displays. Theme Upgrades and Customer Support for this theme at https://www.klauslaura.cn
 Tags: two-columns, blog, photography, custom-logo, custom-menu, full-width-template
-Version: 1.0.0
+Version: 2.0.0
 Author: Klaus
 Author URI: https://www.klauslaura.cn
 Text Domain: KlausLab
@@ -72,7 +72,6 @@ Text Domain: KlausLab
   margin: 0;
   padding: 0;
   border: 0;
-  color: var(--regularText);
   font-size: 15px;
   background: transparent;
   word-wrap: break-word;
@@ -115,7 +114,7 @@ html.mourning {
 header.site-header,
 footer.site-footer {
   position: relative;
-  z-index: 1314;
+  z-index: 13;
 }
 
 article,
@@ -704,11 +703,11 @@ img {
 }
 
 .lalaksks.lalaksks-ic-zan:hover {
-  color: #d42 !important;
+  color: #d42;
 }
 
 .actived .lalaksks-ic-zan {
-  color: #d42 !important;
+  color: #d42;
 }
 
 .lalaksks-ic-heart-1:before {
@@ -2249,6 +2248,10 @@ body {
   position: fixed;
 }
 
+.cur-p {
+  cursor: pointer;
+}
+
 .bs-bb {
   box-sizing: border-box;
 }
@@ -2602,6 +2605,103 @@ body {
 }
 
 /*  Widgets */
+.search-bg-b {
+  position: fixed;
+  width: 100%;
+  height: calc(100vh + 80px);
+  z-index: 9;
+  margin-top: -80px;
+  background: rgba(51, 51, 51, 0.73);
+  /* display: none; */
+}
+
+.search-bg {
+  position: fixed;
+  width: 600px;
+  left: calc((100% - 600px)/2);
+  z-index: 999;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 8px;
+  padding: 40px;
+  padding-bottom: 50px;
+  max-height: calc(100% - 150px);
+  overflow-y: auto;
+  transition: all .2s;
+  /* display: none; */
+}
+
+.search-div1 h3 {
+  margin: 0px;
+  font-weight: 600;
+  color: #333;
+}
+
+.search-div1 p {
+  margin: 0px;
+  color: #999;
+  margin-bottom: 20px;
+}
+
+.search-div1 input {
+  width: 100%;
+  border-radius: 3px;
+  padding: 12px 15px;
+  height: auto;
+  color: #888;
+  border: 2px solid #eee !important;
+  font-weight: 500;
+  border-color: #eee;
+}
+
+.search-div2 ul {
+  list-style: none;
+  padding: 0px;
+  margin: 20px 0 0 0;
+}
+
+.search-div2 li {
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 3px;
+  border: 1px solid #eee;
+}
+
+.search-div2 a {
+  text-decoration: none !important;
+}
+
+.search-div2 li h4 {
+  margin: 0px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-weight: 600;
+}
+
+.search-div2 li p {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0px;
+  font-size: .9rem;
+  color: #999;
+}
+
+.search_form_play {
+  opacity: 1;
+  z-index: 999;
+}
+
+@media screen and (max-width: 720px) {
+  .search-bg {
+    width: 95vw;
+    left: 50%;
+    margin-left: -47.5vw;
+    padding: 20px;
+  }
+}
+
 /* 底部区域 */
 .footer-widgets {
   border-top: 1px solid #eee;
@@ -2910,10 +3010,10 @@ img.avatar {
 .fixed-plugins {
   position: fixed;
   right: 15px;
-  bottom: 15px;
+  bottom: 60px;
   text-align: center;
   cursor: pointer;
-  z-index: 3000;
+  z-index: 20;
 }
 
 .fixed-plugins .fp-items {

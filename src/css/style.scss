@@ -86,7 +86,7 @@ Text Domain: KlausLab
   margin: 0;
   padding: 0;
   border: 0;
-  color: var(--regularText);
+  // color: var(--regularText);
   font-size: 15px;
   background: transparent;
   word-wrap: break-word;
@@ -783,12 +783,12 @@ img {
   }
 
   &.lalaksks-ic-zan:hover {
-    color: #d42 !important;
+    color: #d42 ;
   }
 }
 
 .actived .lalaksks-ic-zan {
-  color: #d42 !important;
+  color: #d42 ;
 }
 
 .lalaksks-ic-heart-1:before {
@@ -2471,6 +2471,10 @@ body {
   position: fixed;
 }
 
+.cur-p{
+  cursor: pointer;
+}
+
 .bs-bb {
   box-sizing: border-box;
 }
@@ -2843,6 +2847,108 @@ body {
 
 /*  Widgets */
 
+
+// 搜索模块
+
+.search-bg-b {
+  position: fixed;
+  width: 100%;
+  height: calc(100vh + 80px);
+  z-index: 9;
+  margin-top: -80px;
+  background: rgba(51, 51, 51, 0.73);
+  /* display: none; */
+}
+
+
+.search-bg {
+  position: fixed;
+  width: 600px;
+  left: calc((100% - 600px)/2);
+  z-index: 999;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 8px;
+  padding: 40px;
+  padding-bottom: 50px;
+  max-height: calc(100% - 150px);
+  overflow-y: auto;
+  transition: all .2s;
+  /* display: none; */
+}
+
+.search-div1 h3 {
+  margin: 0px;
+  font-weight: 600;
+  color: #333;
+}
+
+.search-div1 p {
+  margin: 0px;
+  color: #999;
+  margin-bottom: 20px;
+}
+
+.search-div1 input {
+  width: 100%;
+  border-radius: 3px;
+  padding: 12px 15px;
+  height: auto;
+  color: #888;
+  border: 2px solid #eee !important;
+  font-weight: 500;
+  border-color: #eee;
+}
+
+.search-div2 ul {
+  list-style: none;
+  padding: 0px;
+  margin: 20px 0 0 0;
+}
+
+.search-div2 li {
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 3px;
+  border: 1px solid #eee;
+}
+
+.search-div2 a {
+  text-decoration: none !important;
+}
+
+.search-div2 li h4 {
+  margin: 0px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-weight: 600;
+}
+
+.search-div2 li p {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0px;
+  font-size: .9rem;
+  color: #999;
+}
+
+.search_form_play {
+  opacity: 1;
+  z-index: 999;
+}
+
+@media screen and (max-width: 720px) {
+  .search-bg {
+    width: 95vw;
+    left: 50%;
+    margin-left: -47.5vw;
+    padding: 20px;
+
+  }
+}
+
 /* 底部区域 */
 
 .footer-widgets {
@@ -3157,10 +3263,10 @@ img.avatar{
 .fixed-plugins {
   position: fixed;
   right: 15px;
-  bottom: 15px;
+  bottom: 60px;
   text-align: center;
   cursor: pointer;
-  z-index: 3000; 
+  z-index: 20; 
   .fp-items {
     width: 40px;
     height: 40px;

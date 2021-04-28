@@ -23,7 +23,7 @@ get_header();
                     <el-upload class="upload-demo" drag :action=`${GLOBAL.homeUrl}/wp-json/wp/v2/media` :on-success="handleUploadSuccess" :headers="{'X-WP-Nonce': window._nonce}" multiple>
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+                        <!-- <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div> -->
                     </el-upload>
                     <el-button class="mr-10" size="small" slot="reference"><i class="lalaksks lalaksks-palette"></i></el-button>
                 </el-popover>
@@ -31,7 +31,7 @@ get_header();
                 <el-tag type="warning" class="mr-10" size="small" v-for="(item,index) in categoryNameList"> {{item}} </el-tag>
             </div>
             <div>
-                <el-switch class="mr-10" v-model="status" active-text="正式" inactive-text="草稿" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
+                <el-switch class="mr-10" v-model="status" active-text="正式" inactive-text="草稿" active-color="#13ce66"> </el-switch>
                 <el-button size="small" type="primary" @click="commitPost()">发布</el-button>
             </div>
         </div>
@@ -41,11 +41,7 @@ get_header();
             </el-form-item>
             <editor :api-key="tinyKey" cloud-channel="5" :disabled=false id="uuid" :setting="{inline: false}" :init="{
                  height: 360, 
-                 menubar: true, 
-                 plugins: ['image','table', 'codesample', 'advlist autolink lists link image charmap print preview anchor', 'searchreplace visualblocks code fullscreen', 'insertdatetime media table paste code help wordcount', 'lists code emoticons' ], 
-                 
-                 toolbar: ' undo redo | formatselect | media table | emoticons | help '}" 
-                 initial-value="" :inline=false model-events="" plugins="" tag-name="div" toolbar="" v-model="posts.content" />
+                 menubar: true}" initial-value="" :inline=false model-events="" plugins="image,table,codesample,advlist autolink lists link image charmap print preview anchor, searchreplace visualblocks code fullscreen, insertdatetime media table paste code help wordcount, lists code emoticons" tag-name="div" toolbar=" undo redo | formatselect | media table | emoticons | help " v-model="posts.content" />
             </editor>
         </el-card>
         <el-card class="mt-10">
@@ -58,7 +54,7 @@ get_header();
                         </el-tooltip>
                     </template>
                     <el-form-item label="置顶">
-                        <el-switch v-model="posts.sticky" active-text="是" inactive-text="否" > </el-switch>
+                        <el-switch v-model="posts.sticky" active-text="是" inactive-text="否"> </el-switch>
                     </el-form-item>
                     <el-form-item label="标签">
                         <el-select v-model="posts.tags" multiple filterable allow-create default-first-option placeholder="请选择文章标签">

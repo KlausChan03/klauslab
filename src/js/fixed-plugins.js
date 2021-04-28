@@ -53,7 +53,7 @@ let fixedPlugins = new Vue({
 
         // 切换背景功能
         let [background_, background_in, background_out] = [document.querySelector(".fp-background"), document.querySelector('.fp-background-in'), document.querySelector('.fp-background-out')];
-        background_.addEventListener('mouseover', function (e) {
+        background_ && background_.addEventListener('mouseover', function (e) {
             removeClass(background_out, 'hide');
             addClass(background_out, 'show');
             background_out.querySelectorAll('li')[0].onclick = function (event) {

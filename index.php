@@ -15,7 +15,7 @@
 
 
 get_header();
-setPostViews(get_the_ID()); ?>
+?>
 
 <style>
   .article-list .entry-action .entry-author {
@@ -62,8 +62,15 @@ setPostViews(get_the_ID()); ?>
     background-color: #A0C4F2;
   }
 
-  .article-list .entry-action-main .lalaksks.lalaksks-ic-zan:hover {
+  .article-list .entry-action-main .entry-zan .lalaksks-ic-zan:hover {
     background-color: #F5B4A7;
+    color:#DD4422
+
+  }
+
+  .article-list .entry-action-main .entry-cai .lalaksks-ic-zan:hover {
+    background-color: #856D72;
+    color:#36292F
   }
 
   .setting-part {
@@ -133,12 +140,11 @@ setPostViews(get_the_ID()); ?>
 </style>
 <script>
 
-  window.ifMobileDevice = document.body.offsetWidth <= 720 ? true : false
   window.post_count = <?php $count_posts = wp_count_posts();
                       echo $published_posts = $count_posts->publish; ?>
 </script>
 
-<div id="primary" class="main-area">
+<div id="primary" class="main-area w-1">
   <main id="main" class="main-content" role="main">
     <!-- 文章列表 -->
     <div class="main-container pos-r" v-block>
@@ -262,6 +268,6 @@ setPostViews(get_the_ID()); ?>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickComment.js"></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/index.js"></script>
 <?php
-get_sidebar();
+// get_sidebar();
 ?>
 <?php get_footer(); ?>

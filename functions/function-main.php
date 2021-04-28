@@ -309,7 +309,7 @@ function normal_style_script()
     wp_enqueue_script('tinymce-vue-js', KL_THEME_URI . '/js/lib/tinymce-vue.min.js', array(), '1.0', false);
     // elementUI额外样式
     wp_enqueue_style('extra', KL_THEME_URI . '/css/element-ui-extra.css', array(), '1.0', false);
-    wp_enqueue_style('icon-font19', '//at.alicdn.com/t/font_765116_fg7cnh015lc.css', array(), '1.0', false);
+    wp_enqueue_style('icon-font19', '//at.alicdn.com/t/font_765116_7hen7r27lco.css', array(), '1.0', false);
     wp_enqueue_script('icon-font21', '//at.alicdn.com/t/font_1616851_1gtnw3vh59j.js', array(), '1.0', false);
     
     // MuseUI

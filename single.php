@@ -104,6 +104,7 @@ get_header(); ?>
 <!-- 全局配置 -->
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/skeleton.js"></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/single.js"></script>
+<?php setPostViews(get_the_ID()); ?>
 
 <?php get_sidebar(); ?>
 <?php get_footer(); ?>

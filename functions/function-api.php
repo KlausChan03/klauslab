@@ -108,7 +108,14 @@ function wp_rest_insert_tag_links()
             'callback' => 'get_menu',
         )
     );
-
+    register_rest_route(
+        'wp/v2/',
+        'likePost',
+        array(
+            'methods' => 'POST',
+            'callback' => 'add_like',
+        )
+    );
     register_rest_field(
         'comment',
         'comment_metas',
@@ -157,7 +164,10 @@ function get_post_meta_for_api($post)
     $post_meta['img'] = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full');
     $post_meta['title'] = get_the_title($post['id']);
     $post_meta['comments_num'] = get_comments_number($post['id']);
-    $post_meta['zan_num'] = get_post_meta($post['id'], 'inlo_ding', true);
+    $post_meta['zan_num'] = get_post_meta($post['id'], 'like', true);
+    $post_meta['has_zan'] = isset($_COOKIE['like_'.$post['id']]);
+    $post_meta['cai_num'] = get_post_meta($post['id'], 'dislike', true);
+    $post_meta['has_cai'] = isset($_COOKIE['dislike_'.$post['id']]);
     $post_meta['thumbnail'] = get_the_post_thumbnail($post['id'], 'Full');
     $tagList = get_the_tags($post['id']);
     $post_meta['tag_name'] = array_column( $tagList, 'name');
@@ -222,6 +232,24 @@ function get_menu()
 {
     # Change 'menu' to your own navigation slug.
     return wp_get_nav_menu_items('klaus');
+}
+
+function add_like($request){
+    $id = $request['id'];
+    $action = $request["action"];
+    if ($action) {
+        $inlo_raters = get_post_meta($id, $action, true);
+        $expire = time() + 99999999;
+        $domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false; // make cookies work with localhost
+        setcookie($action. '_' . $id, $id, $expire, '/', $domain, false);
+        if (!$inlo_raters || !is_numeric($inlo_raters)) {
+            update_post_meta($id, $action, 1);
+        } else {
+            update_post_meta($id, $action, ($inlo_raters + 1));
+        }
+        echo get_post_meta($id, $action, true);
+    }
+    die;
 }
 
 function reproduced_shortcode( $atts) {

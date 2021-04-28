@@ -35,25 +35,25 @@
 
 <!-- 固定小工具 -->
 <div id="fixed-plugins" class="fixed-plugins flex-v flex-hl-vc">
-  <el-backtop style="position:static" target=".site" :bottom="200" :right="15">
-    <el-tooltip content="返回顶部" effect="dark" placement="top">
+  <el-backtop style="position:static" target=".site" :bottom="220" :right="15" >
+    <el-tooltip content="返回顶部" effect="dark" placement="left">
       <div class="fp-items"><i class="lalaksks lalaksks-ic-backtotop"></i></div>
     </el-tooltip>
   </el-backtop>
-  <div class="fp-user pos-r">
+  <div class="fp-user pos-r" style="margin-top:3px">
     <?php if (is_user_logged_in()) : global $current_user; ?>
-      <el-tooltip content="登出" effect="dark" placement="top">
+      <el-tooltip content="登出" effect="dark" placement="bottom">
         <div class="fp-items fp-logout">
           <a href="<?php echo wp_logout_url() ?>" class="logout-btn"><i class="lalaksks lalaksks-ic-logout"></i></a>
         </div>
       </el-tooltip>
     <?php else : ?>
-      <el-tooltip content="注册" effect="dark" placement="top">
+      <el-tooltip content="注册" effect="dark" placement="bottom">
         <div class="fp-items fp-register hide pos-a" style="right: 45px">
           <a href="<?php echo wp_registration_url() ?>" class="register-btn"><i class="lalaksks lalaksks-ic-register"></i></a>
         </div>
       </el-tooltip>
-      <el-tooltip content="登录" effect="dark" placement="top">
+      <el-tooltip content="登录" effect="dark" placement="bottom">
         <div class="fp-items fp-login">
           <a href="<?php echo wp_login_url() ?>" class="login-btn"><i class="lalaksks lalaksks-ic-login"></i></a>
         </div>
@@ -66,6 +66,7 @@
     <a title="浅色模式" class="fp-day"><i class="lalaksks lalaksks-ic-day"></i></a>
     <a title="浅色模式" class="fp-night hide"><i class="lalaksks lalaksks-ic-night"></i></a>
   </div>
+  
 
   <!-- <el-tooltip content="搜索" effect="dark" placement="top">
     <div class="flex-hl-vc fp-search pos-r">
@@ -74,7 +75,7 @@
       </div>
     </div>
   </el-tooltip> -->
-  <div class="flex-hl-vc fp-background pos-r">
+  <!-- <div class="flex-hl-vc fp-background pos-r">
     <el-tooltip content="切换背景" effect="dark" placement="top">
       <div class="fp-items fp-background-in">
         <a class="flex-hc-vc"><i class="lalaksks lalaksks-ic-background"></i></a>
@@ -86,11 +87,7 @@
         <li data-type="gravity" class="col-fff mr-5">引力</li>
       </ul>
     </div>
-
-
-
-  </div>
-
+  </div> -->
   <!-- <div class="fp-items fp-gototop">
     <a title="返回顶部"><i class="lalaksks lalaksks-ic-backtotop"></i></a>
   </div> -->
@@ -103,15 +100,6 @@
 wp_footer();
 ?>
 <script>
-  // let klSkeleton = new Vue({
-  //   el: "#kl-skeleton",
-  //   data() {
-  //     return {
-  //       ifShowPost: false,
-  //     }
-  //   }
-  // })
-
   let mainPage = new Vue({
     el: '#app',
     created() {

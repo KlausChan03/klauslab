@@ -114,7 +114,7 @@ const index_module = new Vue({
             params.per_page = this.per_page
             params.orderby = this.orderby
             if (this.page === 1) {
-                axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/posts?_embed&sticky=1`)
+                axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/posts?_embed&sticky=true`,{params:params})
                     .then(res_sticky => {
                         this.listOfArticle = res_sticky.data;
                         //获取顶置文章 IDs 以在获取其余文章时排除
@@ -136,7 +136,7 @@ const index_module = new Vue({
                         })
                     })
             } else {
-                axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/posts?_embed`, {
+                axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/posts?_embed&sticky=false&exclude=${this.posts_id_sticky}`, {
                     params: params
                 }).then(res => {
                     this.totalOfArticle = parseInt(res.headers['x-wp-total'])

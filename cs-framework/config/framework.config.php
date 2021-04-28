@@ -10,7 +10,7 @@ $settings           = array(
   'menu_slug'       => 'cs-framework',
   'ajax_save'       => false,
   'show_reset_all'  => false,
-  'framework_title' => 'Wordpress Theme KlausLab <small>by <a href="https://klauslaura.cn">KlausChan</a></small> V'.wp_get_theme()->get('Version'),
+  'framework_title' => 'Wordpress Theme KlausLab <small>by <a href="https://klauslaura.cn">KlausChan</a></small> v'.wp_get_theme()->get('Version'),
 );
 
 // ===============================================================================================
@@ -109,11 +109,11 @@ $options[]      = array(
     //   'type'      => 'image',
     //   'title'     => '支付宝打赏二维码',
     // ),
-    // array(
-    //   'id'        => 'memory_wechat_image',
-    //   'type'      => 'image',
-    //   'title'     => '微信打赏二维码',
-    // ),
+    array(
+      'id'        => 'memory_wechat_image',
+      'type'      => 'image',
+      'title'     => '微信打赏二维码',
+    ),
 
   ), // end: fields
 );

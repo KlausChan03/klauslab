@@ -27,7 +27,7 @@ Vue.component('quick-comment', {
     // 'quick-comment-item' : quickCommentItem
 },
   template: `
-  <div id="comments" v-loading="!ifShowCommentAll" class="comment-container" style="margin: 0; padding: 1.0rem 1.6rem; position: relative; border-top: 1px solid #eee;">
+  <div id="comments" v-loading="!ifShowCommentAll" class="comment-container" style="margin: 0; padding: 1.6rem; position: relative; border-top: 1px solid #eee;">
       <quick-comment-item :comment-data="commentData"></quick-comment-item>    
       <div class="flex-hc-vc m-tb-10" v-if="postData.totalOfComment > 10">
         <el-pagination layout="prev, pager, next, jumper" background :total="postData.totalOfComment" :pager-count="getPaperSize" :page-size="per_page" :current-page.sync="page" @current-change="handleCommentCurrentChange"> </el-pagination>

@@ -8,6 +8,13 @@
  * -----------------------------------------------------------
  *
  */
+
+ /* @import '../../../style.css'; */
+
+ fieldset {
+  border: none;
+}
+
 /* @group Base */
 .chosen-container {
   position: relative;
@@ -519,11 +526,15 @@
 }
 .cs-framework .cs-header {
   position: relative;
-  background-color: #050505;
+  background-color: #48e;
   padding: 25px;
   -moz-border-radius: 2px 2px 0 0;
   -webkit-border-radius: 2px;
-  border-radius: 2px 2px 0 0;
+  border-radius: 8px 8px 0 0;
+}
+.cs-framework .cs-header *:not(input),.cs-framework .cs-footer *{
+  color: #fff;
+
 }
 .cs-framework .cs-header h1 {
   color: #fff;
@@ -708,10 +719,10 @@
   color: #555;
   text-align: right;
   font-size: 11px;
-  background-color: #050505;
+  background-color: #48e;
   -moz-border-radius: 0 0 2px 2px;
   -webkit-border-radius: 0;
-  border-radius: 0 0 2px 2px;
+  border-radius: 0 0 8px 8px;
 }
 .cs-framework .cs-show-all .cs-nav-background,
 .cs-framework .cs-show-all .cs-nav {
