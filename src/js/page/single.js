@@ -14,6 +14,7 @@ const index_module = new Vue({
                     comments_num: 0,
                 }
             },
+            ifShowPayImage: true,
         }
     },
     created() {
@@ -91,7 +92,6 @@ const index_module = new Vue({
                 if (edit) $('#comment').after('<input type="text" name="edit_id" id="edit_id" value="' + edit + '" style="display:none;" />');
                 // Ajax
                 console.log($(this).serialize())
-                debugger
                 $.ajax({
                     url: KlausLabConfig.ajaxUrl,
                     data: $(this).serialize() + "&action=ajax_comment",
@@ -242,5 +242,8 @@ const index_module = new Vue({
                 }
             } // End CountDown
         },
+        changeChoose(){
+            this.ifShowPayImage = !this.ifShowPayImage
+        }
     }
 })

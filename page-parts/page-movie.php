@@ -8,6 +8,9 @@
 get_header();
 ?>
 
+<script>
+    window.db_id = "<?php echo cs_get_option('klausLab_db_id') ?>";
+</script>
 
 <div id="primary" class="main-area w-1">
     <main id="main" class="main-content" role="main">
@@ -56,10 +59,8 @@ get_header();
                             <kl-empty description="暂无数据"></kl-empty>
                         </template>
                     </div>
-
                 </el-card>
             </article>
-
     </main>
 <?php endif; ?>
 
@@ -112,31 +113,49 @@ get_header();
             },
 
             loadMovies: function() {
-                debugger
                 this.loadingAll = true;
                 if ($("#douban-movie-list").length < 1) return;
-                axios.post(GLOBAL.ajaxSourceUrl + "/douban/douban.php?type=movie&from=" + String(this.curMovies)).then(result => {
-                    if (result.data.data.length < this.pageSize) {
-                        // this.$refs.getMoreButton.$el.setAttribute("disabled",true)
-                        // this.$refs.getMoreButton.$el.innerHTML = "已加载完毕"  
-                        this.ifShowMore = false
-                    } else {
-                        this.ifShowMore = true
-                    }
-                    this.list = this.list.concat(result.data.data);
-                    if (this.currDevice().mobile === true) {
-                        this.list.forEach(item => {
-                            item.img = item.img.replace(/s_ratio_poster/g, 'm_ratio_poster')
-                        });
-                    }
-                    this.count = result.data.total;
-                    if (this.list[0].name === '') {
-                        this.count = 0
-                    }
-                    this.curMovies += this.pageSize;
-                    setTimeout(() => {
+                let params = {}
+                params.db_id = window.db_id;
+                axios.post(GLOBAL.ajaxSourceUrl + "/douban/douban.php?type=movie&from=" + String(this.curMovies) + '&db_id=' + window.db_id).then(res => {
+                    let result = res.data
+                    if (result.code === "1") {
+                        console.log(this.pageSize,result.data.length)
+                        if (result.data && (result.data.length < this.pageSize)) {
+                            // this.$refs.getMoreButton.$el.setAttribute("disabled",true)
+                            // this.$refs.getMoreButton.$el.innerHTML = "已加载完毕"  
+                            this.ifShowMore = false
+                           
+                        } else {
+                            this.ifShowMore = true
+                        }
+                        this.list = this.list.concat(result.data);
+                            if (this.currDevice().mobile === true) {
+                                this.list.forEach(item => {
+                                    item.img = item.img.replace(/s_ratio_poster/g, 'm_ratio_poster')
+                                });
+                            }
+                            this.count = result.total;
+                            if (this.list[0].name === '') {
+                                this.count = 0
+                            }
+                            this.curMovies += this.pageSize;
                         this.loadingAll = false;
-                    }, 1000);
+                    } else if (result.code === "0") {
+                        this.loadingAll = false;
+                        this.$message({
+                            type: 'error',
+                            message: result.msg,
+                        })
+                    } else {
+                        this.loadingAll = false;
+
+                        this.$message({
+                            type: 'error',
+                            message: "请求有误",
+                        })
+                    }
+
                 });
             }
         },
@@ -197,52 +216,7 @@ get_header();
         }
     })
 </script>
-<style>
-    .mh-100 {
-        min-height: 100px;
-    }
 
-    .bor-b-1 {
-        border-bottom: 1px solid #ddd;
-    }
-
-    .style-18 {
-        background-color: transparent;
-        box-shadow: none;
-    }
-
-    .style-18 .entry-title {
-        padding-bottom: 15px;
-    }
-
-    .style-18 .el-loading-mask {
-        background-color: transparent;
-    }
-
-    .style-18 .archive-filter button.active {
-        color: #409EFF;
-        border-color: #c6e2ff;
-        background-color: #ecf5ff;
-    }
-
-    .style-18 .el-form-item {
-        margin-bottom: 5px;
-    }
-
-    .style-18 .entry-content {
-        padding: 0;
-    }
-
-    .style-18 .entry-content hr {
-        margin: 40px auto;
-        border-top: 1px solid #ddd;
-        width: 50%;
-    }
-
-    .style-18 .entry-content hr:first-child {
-        display: none;
-    }
-</style>
 <style>
     .doubanboard-list {
         padding: 10px 0;
@@ -364,7 +338,6 @@ get_header();
     .card-f .inner p {
         color: #fff
     }
-
 
     .card-f-y {
         transform: rotateY(-180deg);

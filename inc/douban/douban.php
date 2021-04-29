@@ -42,7 +42,9 @@ class DoubanAPI
      */
     public static function updateMovieCacheAndReturn($UserID, $PageSize, $From, $ValidTimeSpan)
     {
-        if (!$UserID) return json_encode(array());
+        if (!$UserID){
+            return json_encode(array( 'code' => '0' , 'data' => '' , 'msg' => '请在后台填写豆瓣用户ID'));
+        }
         $expired = self::__isCacheExpired(__DIR__ . '/cache/movie.json', $ValidTimeSpan);
         if ($expired != 0) {
             $oldData = json_decode(file_get_contents(__DIR__ . '/cache/movie.json'))->data;
@@ -60,7 +62,7 @@ class DoubanAPI
                 for ($index = $From; $index < $end; $index++) {
                     array_push($out, $data[$index]);
                 }
-                return json_encode(array( 'data' => $out , 'total' => $total));
+                return json_encode(array(  'code' => '1' ,'data' => $out , 'total' => $total));
             }
         } else {
             $data = json_decode(file_get_contents(__DIR__ . '/cache/movie.json'))->data;
@@ -72,7 +74,7 @@ class DoubanAPI
                 for ($index = $From; $index < $end; $index++) {
                     array_push($out, $data[$index]);
                 }
-                return json_encode(array( 'data' => $out , 'total' => $total));
+                return json_encode(array( 'code' => '1' ,'data' => $out , 'total' => $total));
             }
         }
     }
@@ -89,7 +91,7 @@ class DoubanAPI
         $file = fopen($FilePath, "r");
         if (!$file) {
             $file = fopen($FilePath, "w");
-            fwrite($file, json_encode(array('time' => '946656000', 'data' => array(array("name" => "", "img" => "", "url" => "", "remark" => "", "date" => "",  "mark_myself" => "", "mark_douban" => "")))));
+            fwrite($file, json_encode(array('code' => '1' ,'time' => '946656000', 'data' => array(array("name" => "", "img" => "", "url" => "", "remark" => "", "date" => "",  "mark_myself" => "", "mark_douban" => "")))));
             return -1;
         }
         $content = json_decode(fread($file, filesize($FilePath)));
@@ -529,11 +531,14 @@ class ParserDom
         return $node->parentNode;
     }
 }
-$UserID = "65077635";
 $PageSize = 20;
 $ValidTimeSpan = 60 * 60 * 24;
 $From = $_GET['from'];
-if ($_GET['type'] == 'movie') {
+$UserID =$_GET['db_id'];
+
+$Type = $_GET['type'];
+
+if ($Type == 'movie') {
     header("Content-type: application/json");
     echo DoubanAPI::updateMovieCacheAndReturn($UserID, $PageSize, $From, $ValidTimeSpan);
 } else {

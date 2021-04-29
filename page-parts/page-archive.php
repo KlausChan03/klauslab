@@ -50,52 +50,7 @@ get_header();
     </main>
 </div>
 
-<style>
-    .mh-100 {
-        min-height: 100px;
-    }
 
-    .bor-b-1 {
-        border-bottom: 1px solid #ddd;
-    }
-
-    .style-18 {
-        background-color: transparent;
-        box-shadow: none;
-    }
-
-    .style-18 .entry-title {
-        padding-bottom: 15px;
-    }
-
-    .style-18 .el-loading-mask {
-        background-color: transparent;
-    }
-
-    .style-18 .archive-filter button.active {
-        color: #409EFF;
-        border-color: #c6e2ff;
-        background-color: #ecf5ff;
-    }
-
-    .style-18 .el-form-item {
-        margin-bottom: 5px;
-    }
-
-    .style-18 .entry-content {
-        padding: 0;
-    }
-
-    .style-18 .entry-content hr {
-        margin: 40px auto;
-        border-top: 1px solid #ddd;
-        width: 50%;
-    }
-
-    .style-18 .entry-content hr:first-child {
-        display: none;
-    }
-</style>
 <script>
     let archiveFilter = new Vue({
         el: '#archive-main',

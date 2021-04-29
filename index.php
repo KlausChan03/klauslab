@@ -139,12 +139,11 @@ get_header();
   }
 </style>
 <script>
-
-  window.post_count = <?php $count_posts = wp_count_posts();
-                      echo $published_posts = $count_posts->publish; ?>
+  window.post_count = "<?php wp_count_posts(); ?>";
+  <?php echo boolval(cs_get_option('klausLab_sideBar_switcher')) ?>
 </script>
 
-<div id="primary" class="main-area w-1">
+<div id="primary" class="main-area <?php $is_show_sidebar = is_bool(cs_get_option('klausLab_sideBar_switcher')); echo($is_show_sidebar == 1 ? '' : 'w-1'); ?>">
   <main id="main" class="main-content" role="main">
     <!-- 文章列表 -->
     <div class="main-container pos-r" v-block>
@@ -268,6 +267,7 @@ get_header();
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickComment.js"></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/index.js"></script>
 <?php
-// get_sidebar();
+  $is_show_sidebar == 1 ?  get_sidebar() : ''
+ 
 ?>
 <?php get_footer(); ?>

@@ -25,7 +25,7 @@ get_header(); ?>
 			margin-left: 8%;
 		}
 
-		.article-container{
+		.article-container {
 			overflow: hidden;
 		}
 
@@ -58,6 +58,32 @@ get_header(); ?>
 		margin-top: 30px;
 
 	}
+
+	.pay-chose button {
+		width: 120px ;
+		height: 45px;
+		text-align: center;
+		border: 1px solid #e6e6e6;
+		border-radius: 2px;
+		display: inline-block;
+		line-height: 40px;
+		cursor: pointer;
+	}
+
+	.pay-chose button img {
+		height: 25px;
+		vertical-align: sub;
+	}
+
+	.pay-chose button.chosen {
+		border-color: #0092ee;
+	}
+
+	.pay-body .alipay, .pay-body .wechatpay {
+		width: 220px;
+		height: 220px;
+	}
+
 </style>
 <div id="primary" class="main-area">
 	<main id="main" class="main-content" role="main" v-block>
@@ -81,7 +107,40 @@ get_header(); ?>
 					<!-- <div id="banner-bg" class="featured-header-image bgc-primary" v-html="posts.post_metas.thumbnail"> </div> -->
 				</div>
 				<div class="entry-content" v-html="posts.content.rendered"></div>
-			</div>			
+				<div class="entry-footer flex-hc-vc">
+
+					<el-popover placement="top" title="请作者喝杯咖啡☕" width="280" trigger="click">
+						<div class="pay-body">
+							<?php            
+							$alipay_image_id = cs_get_option( 'alipay_image' );
+							$alipay_attachment = wp_get_attachment_image_src($alipay_image_id, 'full');
+							$wechat_image_id = cs_get_option('wechat_image');
+							$wechat_attachment = wp_get_attachment_image_src($wechat_image_id, 'full');
+
+							if (cs_get_option('alipay_image') && cs_get_option('wechat_image')) { ?>
+								<h4 class="flex-hc-vc m-tb-10">扫一扫支付</h4>
+								<div class="flex-hc-vc">
+									<img class="alipay" src="<?php echo $alipay_attachment[0]; ?>"  v-show="ifShowPayImage" />
+									<img class="wechatpay" src="<?php echo $wechat_attachment[0]; ?>" v-show="!ifShowPayImage" />
+								</div>
+								<div class="pay-chose flex-hb-vc mt-15">
+									<button class="alibutton" :class="{'chosen':ifShowPayImage}" :disabled="ifShowPayImage" ref="alibutton" @click="changeChoose"><img src="<?php echo KL_THEME_URI; ?>/img/alipay.png" /></button>
+									<button class="wechatbutton" :class="{'chosen':!ifShowPayImage}" :disabled="!ifShowPayImage" ref="wechatbutton" @click="changeChoose"><img src="<?php echo KL_THEME_URI; ?>/img/wechat.png" /></button>
+								</div>
+							<?php } else if (cs_get_option('alipay_image') && !cs_get_option('wechat_image')) { ?>
+								<h4 class="flex-hc-vc m-tb-10">扫一扫支付</h4>
+								<img class="alipay" src="<?php echo $alipay_attachment[0]; ?>" />
+							<?php } else if (!cs_get_option('alipay_image') && cs_get_option('wechat_image')) { ?>
+								<h4 class="flex-hc-vc m-tb-10">扫一扫支付</h4>
+								<img class="wechatpay" src="<?php echo $wechat_attachment[0]; ?>" />
+							<?php } else { ?>
+								<h4 class="flex-hc-vc m-tb-10">作者尚未添加打赏二维码！</h4>
+							<?php } ?>
+						</div>
+						<el-button slot="reference" circle><i class="el-icon-coffee fs-20"></i></el-button>
+					</el-popover>
+				</div>
+			</div>
 		</article>
 		<div class="comment-container">
 			<?php
@@ -92,7 +151,7 @@ get_header(); ?>
 			?>
 		</div>
 	</main>
-	
+
 
 	<!-- #main -->
 </div>

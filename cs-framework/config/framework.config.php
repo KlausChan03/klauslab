@@ -1,4 +1,6 @@
-<?php if ( ! defined( 'ABSPATH' ) ) { die; } // Cannot access pages directly.
+<?php if (!defined('ABSPATH')) {
+  die;
+} // Cannot access pages directly.
 // ===============================================================================================
 // -----------------------------------------------------------------------------------------------
 // FRAMEWORK SETTINGS
@@ -10,7 +12,7 @@ $settings           = array(
   'menu_slug'       => 'cs-framework',
   'ajax_save'       => false,
   'show_reset_all'  => false,
-  'framework_title' => 'Wordpress Theme KlausLab <small>by <a href="https://klauslaura.cn">KlausChan</a></small> v'.wp_get_theme()->get('Version'),
+  'framework_title' => 'Wordpress Theme KlausLab <small>by <a href="https://klauslaura.cn">KlausChan</a></small> v' . wp_get_theme()->get('Version'),
 );
 
 // ===============================================================================================
@@ -22,10 +24,10 @@ $options        = array();
 // Just get the display name of users (e.g John Smith)
 
 $user_names = array();
-$all_users = get_users( array( 'fields' => array( 'user_login' ) ) );
-foreach ( $all_users as $user ):
-  $user =  esc_html( $user->user_login );
-  $user_names[ $user ] = $user; 
+$all_users = get_users(array('fields' => array('user_login')));
+foreach ($all_users as $user) :
+  $user =  esc_html($user->user_login);
+  $user_names[$user] = $user;
 endforeach;
 
 // $options[] = array(
@@ -43,47 +45,60 @@ $options[]      = array(
   'title'       => '基础设置',
   'icon'        => 'fa fa-institution',
   'fields'      => array(
-    // array(
-    //   'type'    => 'notice',
-    //   'class'   => 'info',
-    //   'content' => '这部分内容为博主的相关信息。',
-    // ),
-	// array(
-  //     'id'      => 'memory_bloger_user',
-  //     'type'    => 'select',
-  //     'title'   => '博主',
-  //     'options' => $user_names,
-	//  ),
+    array(
+      'type'    => 'notice',
+      'class'   => 'info',
+      'content' => '这部分内容为博主的相关信息。',
+    ),
+    array(
+      'id'      => 'klausLab_bloger_host',
+      'type'    => 'select',
+      'title'   => '博主本人🙋‍♂️',
+      'options' => $user_names,
+    ),
+    array(
+      'id'      => 'klausLab_bloger_hostess',
+      'type'    => 'select',
+      'title'   => '博主夫人🙋‍♀️',
+      'options' => $user_names,
+    ),
     array(
       'type'    => 'notice',
       'class'   => 'info',
       'content' => '这部分内容为博客的相关信息。',
     ),
-    // array( 
-    //   'id'      => 'memory_start_time', 
-    //   'type'    => 'text', 
-    //   'title'   => '博客建立日期', 
-    //   'attributes' => array( 'type' => 'date', ), 
-    //   'default' =>  date('Y-m-d',time()),
-    // ),
+
     array(
       'id'      => 'klausLab_description',
-      'type'    => 'text',
+      'type'    => 'textarea',
       'title'   => '博客的描述',
     ),
+
     array(
       'id'      => 'klausLab_keywords',
-      'type'    => 'text',
+      'type'    => 'textarea',
       'title'   => '关键词',
       'desc'    => '博客的关键词，用英文逗号分割。',
     ),
+
+    array( 
+      'id'      => 'klausLab_start_time', 
+      'type'    => 'text', 
+      'title'   => '博客建立日期', 
+      'attributes' => array( 'type' => 'date', ), 
+      'default' =>  date('Y-m-d',time()),
+    ),
+
+
+
     // array(
-    //   'id'      => 'memory_record',
+    //   'id'      => 'klausLab_record',
     //   'type'    => 'text',
     //   'title'   => '备案号',
     //   'desc'    => '展现在主题页脚的备案号。',
     //   'default' => '未备案',
     // ),
+
     // array(
     //   'id'      => 'memory_copyright',
     //   'type'    => 'text',
@@ -91,11 +106,18 @@ $options[]      = array(
     //   'desc'    => '展现在主题页脚的©符号后面的内容。',
     //   'default' =>  date('Y',time()),
     // ),
-    // array(
-    //   'type'    => 'notice',
-    //   'class'   => 'info',
-    //   'content' => '这部分内容为博客部分功能的设置。',
-    // ),    
+    array(
+      'type'    => 'notice',
+      'class'   => 'info',
+      'content' => '这部分内容为博客部分功能的设置。',
+    ),    
+
+    array(
+      'id'      => 'klausLab_db_id',
+      'type'    => 'text',
+      'title'   => '豆瓣ID',
+      'desc'    => '博客的豆瓣功能页的用户ID。',
+    ),
     // array(
     //   'id'        => 'memory_post_image',
     //   'type'      => 'image',
@@ -104,13 +126,19 @@ $options[]      = array(
     //   'validate'  => 'required',
     //   'desc'      => '首页的文章配图，必填项。',
     // ),
-    // array(
-    //   'id'        => 'memory_alipay_image',
-    //   'type'      => 'image',
-    //   'title'     => '支付宝打赏二维码',
-    // ),
     array(
-      'id'        => 'memory_wechat_image',
+      'type'    => 'notice',
+      'class'   => 'info',
+      'content' => '这部分内容为博客收入来源。',
+    ),
+
+    array(
+      'id'        => 'alipay_image',
+      'type'      => 'image',
+      'title'     => '支付宝打赏二维码',
+    ),
+    array(
+      'id'        => 'wechat_image',
       'type'      => 'image',
       'title'     => '微信打赏二维码',
     ),
@@ -168,81 +196,81 @@ $options[]      = array(
 //   )
 // );
 
-// $options[]      = array(
-//   'name'        => 'memory_style_config',
-//   'title'       => '布局样式',
-//   'icon'        => 'fa fa-dashboard',
-//   'fields'      => array(
-//     array(
-//       'id'      => 'memory_breadcrumbs',
-//       'type'    => 'switcher',
-//       'title'   => '面包屑导航',
-//       'desc'    => '开启该功能后会在页面（除首页外）头部出现一个模块用于显示你当前所在位置。有利于归档，请尽量开启。',
-//     ),
-//     array(
-//       'id'      => 'memory_opacity',
-//       'type'    => 'text',
-//       'title'   => '模块透明度',
-//       'default' => '1',
-//       'desc'    => '模块透明度，取值0~1，默认不透明，值为1，取0则完全透明。',
-//     ),
-//     array(
-//       'id'    => 'memory_background',
-//       'type'  => 'background',
-//       'title' => '背景图片',
-//       'desc'  => '可自行调整样式，如不选择图片则使用颜色填充，您可以在颜色选择器内选择背景色，默认#f5f5f5。',
-//       'help'  => '存在疑问？请查询css背景样式相关知识。',
-//       'default' => array(
-//           'image'      => '',
-//           'repeat'     => 'no-repeat',
-//           'position'   => 'center center',
-//           'attachment' => 'scroll',
-//     	  'size'       => 'cover',
-//           'color'      => '#f5f5f5',
-//       ),
-//     ),
-//     array(
-//       'id'      => 'memory_certify_color',
-//       'type'    => 'color_picker',
-//       'title'   => '认证图标颜色',
-//       'default' => '#ffba50',
-//       'desc'    => '认证图标颜色，推荐#49c7ff和#ffba50。',
-//     ),
-//     array(
-//       'id'      => 'memory_footer_color',
-//       'type'    => 'color_picker',
-//       'title'   => '页脚字体颜色',
-//       'default' => '#000',
-//       'desc'    => '页脚字体颜色，默认黑色。',
-//     ),
-//     array(
-//       'id'    => 'memory_card_background',
-//       'type'  => 'background',
-//       'title' => 'PC端名片背景图',
-//       'desc'  => '可自行调整样式，如不选择图片则默认用颜色填充。',
-//       'help'  => '存在疑问？请查询css背景样式相关知识。',
-//       'default' => array(
-//           'image'      => get_template_directory_uri() .'/img/default_bg.jpg',
-//           'repeat'     => 'no-repeat',
-//           'position'   => 'center center',
-//           'attachment' => 'scroll',
-//     	  'size'       => 'cover',
-//           'color'      => '#f5f5f5',
-//       ),
-//     ),
-//     array(
-//       'id'    => 'memory_user_css',
-//       'type'  => 'textarea',
-//       'title' => '自定义css',
-//     ),    
-//     array(
-//       'id'    => 'memory_user_js',
-//       'type'  => 'textarea',
-//       'title' => '自定义js',
-//       'desc'  => '注：本主题使用jQuery版本为3.2.1。',
-//     ),
-//   ), // end: fields
-// );
+$options[]      = array(
+  'name'        => 'memory_style_config',
+  'title'       => '布局样式',
+  'icon'        => 'fa fa-dashboard',
+  'fields'      => array(
+    array(
+      'id'      => 'klausLab_sideBar_switcher',
+      'type'    => 'switcher',
+      'title'   => '首页是否显示侧边栏',
+      'desc'    => '开启后首页将显示侧边栏。',
+    ),
+    // array(
+    //   'id'      => 'memory_opacity',
+    //   'type'    => 'text',
+    //   'title'   => '模块透明度',
+    //   'default' => '1',
+    //   'desc'    => '模块透明度，取值0~1，默认不透明，值为1，取0则完全透明。',
+    // ),
+    // array(
+    //   'id'    => 'memory_background',
+    //   'type'  => 'background',
+    //   'title' => '背景图片',
+    //   'desc'  => '可自行调整样式，如不选择图片则使用颜色填充，您可以在颜色选择器内选择背景色，默认#f5f5f5。',
+    //   'help'  => '存在疑问？请查询css背景样式相关知识。',
+    //   'default' => array(
+    //       'image'      => '',
+    //       'repeat'     => 'no-repeat',
+    //       'position'   => 'center center',
+    //       'attachment' => 'scroll',
+    // 	  'size'       => 'cover',
+    //       'color'      => '#f5f5f5',
+    //   ),
+    // ),
+    // array(
+    //   'id'      => 'memory_certify_color',
+    //   'type'    => 'color_picker',
+    //   'title'   => '认证图标颜色',
+    //   'default' => '#ffba50',
+    //   'desc'    => '认证图标颜色，推荐#49c7ff和#ffba50。',
+    // ),
+    // array(
+    //   'id'      => 'memory_footer_color',
+    //   'type'    => 'color_picker',
+    //   'title'   => '页脚字体颜色',
+    //   'default' => '#000',
+    //   'desc'    => '页脚字体颜色，默认黑色。',
+    // ),
+    // array(
+    //   'id'    => 'memory_card_background',
+    //   'type'  => 'background',
+    //   'title' => 'PC端名片背景图',
+    //   'desc'  => '可自行调整样式，如不选择图片则默认用颜色填充。',
+    //   'help'  => '存在疑问？请查询css背景样式相关知识。',
+    //   'default' => array(
+    //       'image'      => get_template_directory_uri() .'/img/default_bg.jpg',
+    //       'repeat'     => 'no-repeat',
+    //       'position'   => 'center center',
+    //       'attachment' => 'scroll',
+    // 	  'size'       => 'cover',
+    //       'color'      => '#f5f5f5',
+    //   ),
+    // ),
+    // array(
+    //   'id'    => 'memory_user_css',
+    //   'type'  => 'textarea',
+    //   'title' => '自定义css',
+    // ),    
+    // array(
+    //   'id'    => 'memory_user_js',
+    //   'type'  => 'textarea',
+    //   'title' => '自定义js',
+    //   'desc'  => '注：本主题使用jQuery版本为3.2.1。',
+    // ),
+  ), // end: fields
+);
 
 // $options[]      = array(
 //   'name'        => 'memory_comment_config',
@@ -352,4 +380,4 @@ $options[]      = array(
 //   )
 // );
 
-CSFramework::instance( $settings, $options );
+CSFramework::instance($settings, $options);

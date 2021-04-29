@@ -4,7 +4,7 @@ Theme Name: KlausLab
 Theme URI: https://www.klauslaura.cn
 Description: KlausLab is a beautiful WordPress blogging theme, The theme has been designed to look perfect on all size screens, from mobiles to widescreen displays. Theme Upgrades and Customer Support for this theme at https://www.klauslaura.cn
 Tags: two-columns, blog, photography, custom-logo, custom-menu, full-width-template
-Version: 2.0.0
+Version: 1.0.0
 Author: Klaus
 Author URI: https://www.klauslaura.cn
 Text Domain: KlausLab
@@ -6062,4 +6062,49 @@ div[itemprop="description"] {
   to {
     background-position: 480px 0;
   }
+}
+
+.mh-100 {
+  min-height: 100px;
+}
+
+.bor-b-1 {
+  border-bottom: 1px solid #ddd;
+}
+
+.style-18 {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.style-18 .entry-title {
+  padding-bottom: 15px;
+}
+
+.style-18 .el-loading-mask {
+  background-color: transparent;
+}
+
+.style-18 .archive-filter button.active {
+  color: #409EFF;
+  border-color: #c6e2ff;
+  background-color: #ecf5ff;
+}
+
+.style-18 .el-form-item {
+  margin-bottom: 5px;
+}
+
+.style-18 .entry-content {
+  padding: 0;
+}
+
+.style-18 .entry-content hr {
+  margin: 40px auto;
+  border-top: 1px solid #ddd;
+  width: 50%;
+}
+
+.style-18 .entry-content hr:first-child {
+  display: none;
 }

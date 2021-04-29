@@ -12,12 +12,17 @@
 </div>
 <!-- #content -->
 </div>
+
+<script>
+  window.start_time = new Date("<?php echo cs_get_option('klausLab_start_time'); ?>").getFullYear();
+</script>
+
 <!-- .wrap  -->
 <footer id="colophon" class="site-footer flex-hc-vc" role="contentinfo">
   <div id="created-time">{{content}}</div>
   <div class="site-info">
     <p><span>Theme KlausLab By Klaus | All Rights Reserved</span></p>
-    <p>版权所有 © 2016-<span id="thisYear"></span>
+    <p>版权所有 © {{window.start_time}}-<span id="thisYear"></span>
       <!-- <a href="http://www.miitbeian.gov.cn/" rel="nofollow noopener noreferrer" target="_blank"> 粤 ICP 备17095567号</a> -->
       <a href="http://beian.miit.gov.cn" rel="nofollow" target="_blank">
         <?php echo get_option('zh_cn_l10n_icp_num'); ?> 号
@@ -100,6 +105,10 @@
 wp_footer();
 ?>
 <script>
+  new Vue({
+    el: '#colophon',
+  })
+
   let mainPage = new Vue({
     el: '#app',
     created() {
