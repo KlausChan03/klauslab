@@ -36,8 +36,8 @@
 		window._nonce = "<?php echo wp_create_nonce('wp_rest'); ?>";
 		window.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
 		window.site_url = '<?php echo site_url() ?>';
-		window.ajaxSourceUrl = window.site_url + '/wp-content/themes/klausLab/inc'
-		window.homeSourceUrl = window.site_url + '/wp-content/themes/klausLab/dist'
+		window.ajaxSourceUrl = window.site_url + '/wp-content/themes/KlausLab/inc'
+		window.homeSourceUrl = window.site_url + '/wp-content/themes/KlausLab/dist'
 		window.start_time = new Date("<?php echo cs_get_option('klausLab_start_time'); ?>").getFullYear();
 	</script>
 	<div id="page" class="hfeed site">
