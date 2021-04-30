@@ -34,8 +34,7 @@
 <body <?php body_class(); ?>>
 	<script>
 		window._nonce = "<?php echo wp_create_nonce('wp_rest'); ?>";
-		window.ifMobileDevice = document.body.offsetWidth <= 720 ? true : false
-
+		window.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
 	</script>
 	<div id="page" class="hfeed site">
 		<header id="masthead" class="site-header" role="banner" v-block>
@@ -63,14 +62,16 @@
 				);
 				?>
 				<div class="flex-hl-vc" v-if="!ifMobileDevice">
-					<svg class="icon icon-title mr-10" aria-hidden="true">
+					<svg class="icon icon-title mr-10 fs-20" aria-hidden="true">
 						<use xlink:href="#lalaksks21-search-1"></use>
 					</svg>
 					<el-input size="small" placeholder="请输入搜索内容" @focus="showSearch"></el-input>
 				</div>
-				<div id="menu-avatar" class="menu-avatar pos-r m-lr-15 <?php if (is_user_logged_in()) { echo 'have-login'; } ?>">
+				<div id="menu-avatar" class="menu-avatar pos-r m-lr-15 <?php if (is_user_logged_in()) {
+																			echo 'have-login';
+																		} ?>">
 					<?php global $current_user;
-						echo get_avatar($current_user->user_email, 48);
+					echo get_avatar($current_user->user_email, 48);
 					?>
 					<div id="personal-menu">
 						<ul>
@@ -101,7 +102,10 @@
 					}
 				},
 				mounted() {
-					console.log(this.ifMobileDevice)
+					window.onresize = () => {
+						console.log(document.body.clientWidth)
+						this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
+					}
 				},
 				methods: {
 					showSearch() {
@@ -112,7 +116,6 @@
 					},
 					closeSearch() {
 						this.ifShowSearch = false
-
 					}
 				},
 

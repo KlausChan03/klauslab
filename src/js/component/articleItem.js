@@ -14,7 +14,7 @@ Vue.component('article-item', {
   // </el-tooltip>`,
   template: `
   <div>
-    <div class="entry-header flex-hl-vc" :class="{'sticky': postData.sticky }">
+    <div class="entry-header flex-hl-vc flex-hw" :class="{'sticky': postData.sticky }">
       <h5 class="entry-title mr-10">
         <a :href="postData.link"> {{postData.title.rendered}} </a>       
       </h5>

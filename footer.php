@@ -19,7 +19,6 @@
 
 <!-- .wrap  -->
 <footer id="colophon" class="site-footer flex-hc-vc" role="contentinfo">
-  <div id="created-time">{{content}}</div>
   <div class="site-info">
     <p><span>Theme KlausLab By Klaus | All Rights Reserved</span></p>
     <p>版权所有 © {{window.start_time}}-<span id="thisYear"></span>
@@ -40,10 +39,10 @@
 
 <!-- 固定小工具 -->
 <div id="fixed-plugins" class="fixed-plugins flex-v flex-hl-vc">
-  <el-backtop style="position:static" target=".site" :bottom="220" :right="15" >
-    <el-tooltip content="返回顶部" effect="dark" placement="left">
+  <el-backtop style="position:static" target=".site" :bottom="220" :right="15">
+    <!-- <el-tooltip content="返回顶部" effect="dark" placement="left"> -->
       <div class="fp-items"><i class="lalaksks lalaksks-ic-backtotop"></i></div>
-    </el-tooltip>
+    <!-- </el-tooltip> -->
   </el-backtop>
   <div class="fp-user pos-r" style="margin-top:3px">
     <?php if (is_user_logged_in()) : global $current_user; ?>
@@ -53,16 +52,16 @@
         </div>
       </el-tooltip>
     <?php else : ?>
-      <el-tooltip content="注册" effect="dark" placement="bottom">
+      <!-- <el-tooltip content="注册" effect="dark" placement="bottom"> -->
         <div class="fp-items fp-register hide pos-a" style="right: 45px">
           <a href="<?php echo wp_registration_url() ?>" class="register-btn"><i class="lalaksks lalaksks-ic-register"></i></a>
         </div>
-      </el-tooltip>
-      <el-tooltip content="登录" effect="dark" placement="bottom">
+      <!-- </el-tooltip> -->
+      <!-- <el-tooltip content="登录" effect="dark" placement="bottom"> -->
         <div class="fp-items fp-login">
           <a href="<?php echo wp_login_url() ?>" class="login-btn"><i class="lalaksks lalaksks-ic-login"></i></a>
         </div>
-      </el-tooltip>
+      <!-- </el-tooltip> -->
     <?php endif ?>
   </div>
 
@@ -71,7 +70,7 @@
     <a title="浅色模式" class="fp-day"><i class="lalaksks lalaksks-ic-day"></i></a>
     <a title="浅色模式" class="fp-night hide"><i class="lalaksks lalaksks-ic-night"></i></a>
   </div>
-  
+
 
   <!-- <el-tooltip content="搜索" effect="dark" placement="top">
     <div class="flex-hl-vc fp-search pos-r">
@@ -105,75 +104,72 @@
 wp_footer();
 ?>
 <script>
-  new Vue({
+  let footerPart = new Vue({
     el: '#colophon',
-  })
-
-  let mainPage = new Vue({
-    el: '#app',
-    created() {
-      // 活动,设置cookie存储时间
-      // this.getTimeSetCookieFun()
-    },
-    data() {
-      return {
-        ifShowOurMemory: false,
-        ourDate: []
-      }
+    mounted: function() {
+      let blog_create_time, our_love_time, our_info, photo_container = document.querySelector('.photo-container');
+      let _this = this
+      const h = this.$createElement;
+      let params = new FormData;
+      params.append('action', 'love_time');
+      axios.post(`${GLOBAL.homeUrl}/wp-admin/admin-ajax.php`, params).then((res) => {
+        blog_create_time = res.data[0].user_registered; // 博客建立时间（根据第一个用户诞生时间）
+        our_love_time = `2015-05-23 20:00:00`; // 恋爱时间
+        our_info = [res.data[1].nickname, res.data[1].img, res.data[2].nickname, res.data[2].img];
+        if (photo_container) {
+          photo_container.innerHTML = ` <span class="m-lr-10"><img src="https://${our_info[1]}"></span> <i class="lalaksks lalaksks-ic-heart-2 throb"></i> <span class="m-lr-10"><img src="https://${our_info[3]}"></span> `;
+        }
+        if (document.getElementById("createtime")) {
+          window.showCreateTime = setInterval(() => {
+            _this.kl_count(blog_create_time, '#createtime', '它已经运作了')
+          }, 1000);
+        }
+        if (document.getElementById("lovetime")) {
+          window.showLoveTime = setInterval(() => {
+            _this.kl_count(our_love_time, '#lovetime', '他与她相恋了')
+          }, 1000);
+        }
+        if (document.querySelector("#thisYear")) {
+          const thisYear = document.querySelector("#thisYear");
+          thisYear.innerHTML = new Date().getFullYear();
+        }
+      })
     },
     methods: {
-      getTimeSetCookieFun() {
-        let day = this.getCookieFun('day') ? this.getCookieFun('day') : ''; //cookie记录日期
-        let newTime = new Date().getDate(); //今天日期
-        console.log(day, newTime)
-        // 判断是否有cookie记录日期
-        if (!day) {
-          this.setcookieTimeFun('day', newTime, 1)
-          this.$notify({
-            message: '游客，欢迎到此一游。'
-          });
-        } else {
-          if (newTime > day) {
-            this.setcookieTimeFun('day', newTime, 1)
-          }
+      kl_count(_time, _dom, _content) {
+        if (_time) {
+          _time = _time.replace(/-/g, "/");
+          // 计算出相差毫秒
+          var create_time = new Date(_time);
+          var now_time = new Date();
+          var count_time = now_time.getTime() - create_time.getTime()
+
+          //计算出相差天数
+          var days = Math.floor(count_time / (24 * 3600 * 1000))
+
+          //计算出相差小时数
+          var leave = count_time % (24 * 3600 * 1000)
+          var hours = Math.floor(leave / (3600 * 1000))
+          hours = hours >= 10 ? hours : "0" + hours
+
+          //计算相差分钟数
+          var leave = leave % (3600 * 1000)
+          var minutes = Math.floor(leave / (60 * 1000))
+          minutes = minutes >= 10 ? minutes : "0" + minutes
+
+
+          //计算相差秒数
+          var leave = leave % (60 * 1000)
+          var seconds = Math.round(leave / 1000)
+          seconds = seconds >= 10 ? seconds : "0" + seconds
+
+          var _time = days + " 天 " + hours + " 时 " + minutes + " 分 " + seconds + " 秒 ";
+          var _final = _content + _time;
+          document.querySelector(_dom).innerHTML = _final;
         }
-      },
-
-      // 设置cookie时间
-      setcookieTimeFun(name, value, Days) {
-        value = new Date().getDate();
-        var exp = new Date();
-        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-        document.cookie = name + "=" + value + ";expires=" + exp.toGMTString();
-      },
-
-      // 取出设置的cookie时间,存在就返回获取到的值,不存在返回''
-      getCookieFun(c_name) {
-        if (document.cookie.length > 0) {
-          let c_start = document.cookie.indexOf(c_name + "=");
-          if (c_start != -1) {
-            c_start = c_start + c_name.length + 1;
-            let c_end = document.cookie.indexOf(";", c_start)
-            if (c_end == -1) {
-              c_end = document.cookie.length;
-            }
-            return decodeURIComponent(document.cookie.substring(c_start, c_end));
-          }
-        }
-        return "";
-      },
-
-      //移除某一个cookie
-      delTimeCookie(name) {
-        var exp = new Date();
-        exp.setTime(exp.getTime() - 1);
-        var cval = this.getCookieFun(name);
-        if (cval != null)
-          document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
       }
-    }
-
-  });
+    },
+  })
 </script>
 </body>
 

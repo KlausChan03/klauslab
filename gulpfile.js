@@ -37,11 +37,12 @@ const dir = {
     concat = require('gulp-concat'),
     rev = require('gulp-rev'),
     revCollector = require('gulp-rev-collector'),
+    preprocess = require('gulp-preprocess'),
     minimist = require('minimist');
 
 // let FILTERJS = [dir.src + '/js/*.js', '!' + dir.src + '/js/*.min.js', '!' + dir.src + '/js/**/canvas.js', '!' + dir.src + '/js/**/fixed-plugins.js'];
 let HEADERJS = [dir.src + '/js/options.js'];
-let FOOTERJS = [dir.src + '/js/navigation.js', dir.src + '/js/support.js', dir.src + '/js/common.js' ];
+let FOOTERJS = [dir.src + '/js/navigation.js', dir.src + '/js/support.js', dir.src + '/js/common.js', dir.src + '/js/utils.js' ];
 let COPYJS = [dir.src + '/js/**/*.min.js',dir.src + '/js/page/*.js',dir.src + '/js/plugin/*.js',dir.src + '/js/component/*.js', dir.src + '/js/**/canvas.js', dir.src + '/js/**/fixed-plugins.js', dir.src + '/js/flexible.js', dir.src+ '/js/login.js'];
 let FILTERCSS = [dir.src + '/css/*.css', '!' + dir.src + '/css/*.min.css' ]
 let FILTERSCSS = [dir.src + '/css/*.scss']
@@ -59,13 +60,18 @@ var knowOptions = {
 
 // PHP
 const php = {
-    src: dir.src + 'template-parts/**/*.php',
-    build: dir.build + 'template-parts'
+    src: dir.src + '/functions/**/*.php',
+    build: dir.build + 'functions'
 };
 
 // 复制 PHP 文件
 gulp.task('php', () => {
     return gulp.src(php.src)
+        .pipe(preprocess({
+            context:{
+                NODE_ENV: process.env.NODE_ENV || 'prod'
+            }
+        }))
         .pipe(newer(php.build))
         .pipe(gulp.dest(php.build));
 });
@@ -171,7 +177,7 @@ gulp.task('footerJs', function () {
         .pipe(uglify({
             compress: true
         }))
-        .pipe(concat('common.js'))
+        .pipe(concat('app.js'))
         .pipe(gulp.dest(js.build))
 });
 
@@ -194,7 +200,7 @@ gulp.task('footerJs', function () {
 
 
 gulp.task('clean', function () {
-    return promiseddel(['dist']);
+    return promiseddel(['dist','functions']);
 });
 
 gulp.task('copy', () => {

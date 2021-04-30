@@ -23,7 +23,7 @@ if (post_password_required()) {
   <?php // You can start editing here -- including this comment! 
   ?>
   <?php if (have_comments()) : ?>
-    <h3 class="comments-title">
+    <div class="tips comments-title">
       <?php
       printf( // WPCS: XSS OK.
         esc_html(_nx('%1$s &nbsp;条回应', '%1$s &nbsp;条回应', get_comments_number(), 'comments title', 'KlausLab')),
@@ -31,7 +31,7 @@ if (post_password_required()) {
         '<span>' . get_the_title() . '</span>'
       );
       ?>
-    </h3>
+    </div>
     <?php if (get_comment_pages_count() > 1 && get_option('page_comments')) : // Are there comments to navigate through? 
     ?>
       <nav id="comment-nav-above" class="navigation comment-navigation" role="navigation">
@@ -115,7 +115,7 @@ if (post_password_required()) {
           <div class="comment-s flex-1">
             <textarea class="text-input error" id="comment" name="comment" rows="8" cols="45" aria-required="true" placeholder="一言：<?php hitokoto(); ?>"></textarea>
             <div class="flex-hb-vc p-tb-10">
-              <div class="OwO no-touch kl-btn kl-btn-sm kl-btn-pink">测试</div>
+              <div class="OwO no-touch kl-btn kl-btn-sm kl-btn-pink">emoji</div>
               <div class="comment-action flex-hr-vc">
                 <span class="comment-cancel"><?php cancel_comment_reply_link('取消评论') ?></span>
                 <button type="submit" name="submit" class="comment-submit push-status kl-btn kl-btn-sm kl-btn-normal">发表评论</button>
