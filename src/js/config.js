@@ -1,1 +1,0 @@
-GLOBAL = {"homeUrl":"http://localhost/dashboard/klausLab","homeSourceUrl":"http://localhost/dashboard/klausLab/wp-content/themes/klausLab/dist","ajaxSourceUrl":"http://localhost/dashboard/klausLab/wp-content/themes/klausLab/inc"}

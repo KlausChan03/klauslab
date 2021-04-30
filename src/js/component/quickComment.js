@@ -75,7 +75,7 @@ Vue.component('quick-comment', {
   methods: {
     commitComment(){
       this.hasCommitFinish = true
-      axios.post(`${GLOBAL.homeUrl}/wp-json/wp/v2/comments`, {
+      axios.post(`${window.site_url}/wp-json/wp/v2/comments`, {
         post:this.postData.id,
         content: this.commentContent,
         parent: this.commentInfo.parentId ? this.commentInfo.parentId : "0",

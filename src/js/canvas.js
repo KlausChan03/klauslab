@@ -3245,7 +3245,7 @@ Animation.snow = (seasons,imageNumber) => {
                 windowHalfX = window.innerWidth / 2, windowHalfY = window.innerHeight / 2, particles = [],
                 particleImage =
                 new Image, particleImage.src =
-                `${GLOBAL.homeSourceUrl}/img/${seasons?seasons:"snow"}.png`, snowNum =
+                `${window.homeSourceUrl}/img/${seasons?seasons:"snow"}.png`, snowNum =
                 imageNumber, init())
         })
     }();

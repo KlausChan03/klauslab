@@ -8,7 +8,12 @@
 
  
 // 定义目录变量
-define('FE_ENV', "Development");
+// @if NODE_ENV = 'prod'
+define('FE_ENV', "Production");
+// @endif
+// @if NODE_ENV = 'dev'
+// define('FE_ENV', "Development");
+// @endif
 
 if (FE_ENV !== "Development") {
     define('KL_THEME_DIR', get_template_directory() . '/dist');
@@ -246,9 +251,6 @@ if (!function_exists('KlausLab_comments')) :
 
 endif;
 
-require KL_DIR . '/ajax-comment/main.php';
-
-
 /**
  * Custom template tags for this theme.
  */
@@ -272,7 +274,7 @@ function normal_style_script()
         wp_enqueue_style('main', KL_THEME_URI . '/css/main.css', array(), '1.0', false);
     } else {
         // 导航
-        wp_enqueue_script('navigation', KL_THEME_URI . '/js/navigation.js', false, '1.0', array('jquery'));
+        // wp_enqueue_script('navigationNew', KL_THEME_URI . '/js/navigation.js', false, '1.0', array('jquery'));
         // 媒体查询样式
         // wp_enqueue_style('mediaCss', KL_THEME_URI . '/css/media.css', array(), '1.0', false);
         // 动画库样式
@@ -301,7 +303,7 @@ function normal_style_script()
     wp_enqueue_script('axios', KL_THEME_URI . '/js/lib/axios.min.js', array(), '0.19.0', false);
 
     // 全局变量配置
-    wp_enqueue_script('myConfig', KL_THEME_URI . '/js/config.js', array(), '1.0', false);
+    // wp_enqueue_script('myConfig', KL_THEME_URI . '/js/config.js', array(), '1.0', false);
     // 配置
     wp_enqueue_script('myOptions', KL_THEME_URI . '/js/options.js', array(), '1.0', false);
     
@@ -326,11 +328,13 @@ function footer_script()
 
     if (FE_ENV !== "Development") {
         // 通过js判断当前环境
-        // 集合
+        // 通用
         wp_enqueue_script('app', KL_THEME_URI . '/js/app.js', array(), '1.0', false);  
+        // wp_enqueue_script('main', KL_THEME_URI . '/js/common.js', array(), '1.0', false);
+
     } else {
         // 通用
-        wp_enqueue_script('common', KL_THEME_URI . '/js/common.js', array(), '1.0', false);
+        wp_enqueue_script('main', KL_THEME_URI . '/js/common.js', array(), '1.0', false);
     }
 
     // 动画

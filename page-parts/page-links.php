@@ -12,12 +12,12 @@ setPostViews(get_the_ID()); ?>
     <?php if (have_posts()) : the_post(); ?>
       <article id="link-main" class="post-<?php the_ID(); ?> page-main style-18">
         <el-card>
-          <h2 class="entry-title bor-b-1">
-            <svg class="icon icon-title mr-5" aria-hidden="true">
+          <div class="entry-title flex-hl-vc bor-b-1">
+            <svg class="icon icon-title mr-10" aria-hidden="true">
               <use xlink:href="#lalaksks21-browsers-1"></use>
             </svg>
-            <?php the_title(); ?>
-          </h2>
+            <h2><?php the_title(); ?></h2>
+          </div>
           <div class="entry-content page-content">
             <template v-if="true">
               <div class="entry-content-list"><?php echo (get_link_items());  ?></div>
@@ -25,7 +25,7 @@ setPostViews(get_the_ID()); ?>
             <template v-else>
               <kl-empty description="暂无数据"></kl-empty>
             </template>
-            
+
           </div>
           <!-- <?php edit_post_link(esc_html__('Edit', 'KlausLab'), '<footer class="entry-footer clear"><span class="edit-link">', '</span></footer>.entry-footer'); ?> -->
         </el-card>

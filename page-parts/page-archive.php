@@ -13,13 +13,12 @@ get_header();
             update_post_caches($posts); ?>
             <article id="archive-main" class="post-<?php the_ID(); ?> page-main style-18" v-block>
                 <el-card>
-                    <h2 class="entry-title bor-b-1">
-                        <!-- <i class="lalaksks21 lalaksks21-worldwide mr-5"></i> -->
-                        <svg class="icon icon-title mr-5" aria-hidden="true">
+                    <div class="entry-title flex-hl-vc bor-b-1">
+                        <svg class="icon icon-title mr-10" aria-hidden="true">
                             <use xlink:href="#lalaksks21-worldwide"></use>
                         </svg>
-                        <?php the_title(); ?>
-                    </h2>
+                        <h2><?php the_title(); ?></h2>
+                    </div>
                     <el-form id="archive-filter" class="archive-filter mt-15">
                         <el-form-item class="filter-author" label="作者">
                             <el-button :class="{active:filterArr[1] === ''}" size="mini" data-author="" @click="choose($event)">全部</el-button>
@@ -83,7 +82,7 @@ get_header();
                 params.append('action', 'filter_archive');
                 params.append('filter', this.filterArr);
                 console.log(params)
-                axios.post(`${GLOBAL.homeUrl}/wp-admin/admin-ajax.php`, params).then((res) => {
+                axios.post(`${window.site_url}/wp-admin/admin-ajax.php`, params).then((res) => {
                     this.archiveContent = res.data;
                     this.ifGetList = true
                 })

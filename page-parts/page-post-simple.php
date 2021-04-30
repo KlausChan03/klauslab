@@ -20,7 +20,7 @@ get_header();
             <div>
 
                 <el-popover placement="bottom" width="400" trigger="click">
-                    <el-upload class="upload-demo" drag :action=`${GLOBAL.homeUrl}/wp-json/wp/v2/media` :on-success="handleUploadSuccess" :headers="{'X-WP-Nonce': window._nonce}" multiple>
+                    <el-upload class="upload-demo" drag :action=`${window.site_url}/wp-json/wp/v2/media` :on-success="handleUploadSuccess" :headers="{'X-WP-Nonce': window._nonce}" multiple>
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                         <!-- <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div> -->
@@ -137,13 +137,13 @@ get_header();
         },
         methods: {
             getTags() {
-                axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/tags`).then(res => {
+                axios.get(`${window.site_url}/wp-json/wp/v2/tags`).then(res => {
                     console.log(res)
                     this.tagList = res.data
                 })
             },
             getCategories() {
-                axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/categories`).then(res => {
+                axios.get(`${window.site_url}/wp-json/wp/v2/categories`).then(res => {
                     this.categoryListOrigin = res.data
 
                     this.categoryList = transData(res.data, 'id', 'parent', 'children')
@@ -165,7 +165,7 @@ get_header();
 
                 let params = this.posts;
                 // params.categories = this.$refs.categoryTree.getCheckedKeys()
-                axios.post(`${GLOBAL.homeUrl}/wp-json/wp/v2/posts`, params, {
+                axios.post(`${window.site_url}/wp-json/wp/v2/posts`, params, {
                     headers: {
                         'X-WP-Nonce': window._nonce
                     }

@@ -55,7 +55,7 @@ Vue.component('chat-item', {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          axios.post(`${GLOBAL.homeUrl}/wp-json/wp/v2/likePost`, params, {
+          axios.post(`${window.site_url}/wp-json/wp/v2/likePost`, params, {
             headers: {
               'X-WP-Nonce': _nonce
             }
@@ -75,7 +75,7 @@ Vue.component('chat-item', {
           return false
         });
       } else {
-        axios.post(`${GLOBAL.homeUrl}/wp-json/wp/v2/likePost`, params, {
+        axios.post(`${window.site_url}/wp-json/wp/v2/likePost`, params, {
           headers: {
             'X-WP-Nonce': _nonce
           }

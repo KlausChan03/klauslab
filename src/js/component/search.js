@@ -49,7 +49,7 @@ Vue.component('kl-search', {
             this.loading_ph = true;
 
             var s = this.search_key;
-            axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/search?search=${s}`)
+            axios.get(`${window.site_url}/wp-json/wp/v2/search?search=${s}`)
                 .then(response => {
                     this.search_content = response.data;
                     this.loading_ph = false;

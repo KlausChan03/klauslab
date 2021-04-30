@@ -18,12 +18,12 @@ get_header();
 
             <article id="movie-main" class="post-<?php the_ID(); ?> page-main style-18">
                 <el-card>
-                    <h2 class="entry-title bor-b-1">
-                        <svg class="icon icon-title mr-5" aria-hidden="true">
+                    <div class="entry-title flex-hl-vc bor-b-1">
+                        <svg class="icon icon-title mr-10" aria-hidden="true">
                             <use xlink:href="#lalaksks21-views"></use>
                         </svg>
-                        <?php the_title(); ?>
-                    </h2>
+                        <h2><?php the_title(); ?></h2>
+                    </div>
                     <div class="tips mt-15" v-if="count">
                         <span>记录阅片数量：{{count}}</span>
                     </div>
@@ -117,13 +117,10 @@ get_header();
                 if ($("#douban-movie-list").length < 1) return;
                 let params = {}
                 params.db_id = window.db_id;
-                axios.post(GLOBAL.ajaxSourceUrl + "/douban/douban.php?type=movie&from=" + String(this.curMovies) + '&db_id=' + window.db_id).then(res => {
+                axios.post(window.ajaxSourceUrl + "/douban/douban.php?type=movie&from=" + String(this.curMovies) + '&db_id=' + window.db_id).then(res => {
                     let result = res.data
                     if (result.code === "1") {
-                        console.log(this.pageSize,result.data.length)
-                        if (result.data && (result.data.length < this.pageSize)) {
-                            // this.$refs.getMoreButton.$el.setAttribute("disabled",true)
-                            // this.$refs.getMoreButton.$el.innerHTML = "已加载完毕"  
+                        if (result.data && (result.data.length < this.pageSize)) { 
                             this.ifShowMore = false
                            
                         } else {
@@ -140,21 +137,13 @@ get_header();
                                 this.count = 0
                             }
                             this.curMovies += this.pageSize;
-                        this.loadingAll = false;
                     } else if (result.code === "0") {
-                        this.loadingAll = false;
                         this.$message({
                             type: 'error',
                             message: result.msg,
                         })
-                    } else {
-                        this.loadingAll = false;
-
-                        this.$message({
-                            type: 'error',
-                            message: "请求有误",
-                        })
                     }
+                    this.loadingAll = false;
 
                 });
             }

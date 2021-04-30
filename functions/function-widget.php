@@ -127,7 +127,7 @@ function widget_newVersionTips()
 		<script>
 			let new_version_tips = document.getElementById("new_version_tips");
 			let new_version_img = new_version_tips.querySelectorAll('img')[0];
-			new_version_img.src = `${GLOBAL.homeSourceUrl}/img/undraw_Code_thinking_re_gka2.png`
+			new_version_img.src = `${window.homeSourceUrl}/img/undraw_Code_thinking_re_gka2.png`
 			new_version_img.className = ''
 		</script>
 

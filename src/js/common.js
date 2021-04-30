@@ -1,39 +1,251 @@
-$(document).on("click", ".collapse-btn", function () {
-    var this_ = $(this),
-        this_dom = $(this).parent().parent().siblings(".entry-main").find(".entry-main-excerpt");
+let headerPart = new Vue({
+    el: '#header',
+    data() {
+        return {
+            ifShowSearch: false,
+            ifMobileDevice: window.ifMobileDevice
+        }
+    },
+    mounted() {
+        window.onresize = () => {
+            this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
+        }
+        $(document).on("click", "#menu-avatar", function (e) {
+            var theEvent = window.event || e;
+            theEvent.stopPropagation();
+            $('#personal-menu').fadeToggle(250);
+        });
 
-    this_dom.removeClass("hide");
-    this_dom.siblings().addClass("hide");
+        (function () {
+            var header, container, button, menu, links, subMenus, socialMenu;
 
-    this_.siblings().removeClass("hide").addClass("show");
-    this_.removeClass("show").addClass("hide");
-});
+            container = document.getElementById('site-navigation');
+            if (!container) {
+                return;
+            }
 
-$(document).on("click", ".expand-btn", function () {
-    var this_ = $(this),
-        this_id = $(this).data("id"),
-        this_action = $(this).data("action"),
-        this_dom = $(this).parent().parent().siblings(".entry-main").find(".entry-main-detail");
+            header = document.getElementsByClassName('menu-touch')[0];
+            if (!header) {
+                return;
+            }
 
-    var req = {
-        action: "preview_post",
-        um_id: this_id,
-        um_action: this_action
-    };
-    $.post(`${GLOBAL.homeUrl}/wp-admin/admin-ajax.php`, req, function (res) {
-        var content = res;
-        this_dom.removeClass("hide").html(content);
-        this_dom.siblings().addClass("hide");
-        this_.siblings().removeClass("hide").addClass("show");
-        this_.removeClass("show").addClass("hide");
-    });
-});
+            button = document.getElementsByClassName('menu-toggle')[0];
+            if ('undefined' === typeof button) {
+                return;
+            }
 
-$(document).on("click", "#menu-avatar", function (e) {
-    var theEvent = window.event || e;
-    theEvent.stopPropagation();
-    $('#personal-menu').fadeToggle(250);
-});
+            menu = container.getElementsByClassName('menu')[0];
+            socialMenu = container.getElementsByTagName('ul')[1];
+            // Hide menu toggle button if both menus are empty and return early.
+            if ('undefined' === typeof menu && 'undefined' === typeof socialMenu) {
+                button.style.display = 'none';
+                return;
+            }
+
+            menu.setAttribute('aria-expanded', 'false');
+            if (-1 === menu.className.indexOf('nav-menu')) {
+                menu.className += ' nav-menu';
+            }
+            button.onclick = function () {
+                debugger
+                if (-1 !== container.className.indexOf('toggled')) {
+                    container.className = container.className.replace('toggled', '');
+                    header.className = header.className.replace('toggled', '');
+                    button.setAttribute('aria-expanded', 'false');
+                    menu.setAttribute('aria-expanded', 'false');
+                    socialMenu.setAttribute('aria-expanded', 'false');
+                } else {
+                    container.className += ' toggled';
+                    header.className += ' toggled';
+                    button.setAttribute('aria-expanded', 'true');
+                    menu.setAttribute('aria-expanded', 'true');
+                    socialMenu.setAttribute('aria-expanded', 'true');
+                }
+            };
+
+            // Get all the link elements within the menu.
+            links = menu.getElementsByTagName('a');
+            subMenus = menu.getElementsByTagName('ul');
+
+            // Set menu items with submenus to aria-haspopup="true".
+            for (var i = 0, len = subMenus.length; i < len; i++) {
+                subMenus[i].parentNode.setAttribute('aria-haspopup', 'true');
+            }
+
+            // Each time a menu link is focused or blurred, toggle focus.
+            for (i = 0, len = links.length; i < len; i++) {
+                links[i].addEventListener('focus', toggleFocus, true);
+                links[i].addEventListener('blur', toggleFocus, true);
+            }
+
+            /**
+             * Sets or removes .focus class on an element.
+             */
+            function toggleFocus() {
+                var self = this;
+
+                // Move up through the ancestors of the current link until we hit .nav-menu.
+                while (-1 === self.className.indexOf('nav-menu')) {
+
+                    // On li elements toggle the class .focus.
+                    if ('li' === self.tagName.toLowerCase()) {
+                        if (-1 !== self.className.indexOf('focus')) {
+                            self.className = self.className.replace(' focus', '');
+                        } else {
+                            self.className += ' focus';
+                        }
+                    }
+
+                    self = self.parentElement;
+                }
+            }
+
+            // Fix child menus for touch devices.
+            function fixMenuTouchTaps(container) {
+                var touchStartFn,
+                    parentLink = container.querySelectorAll('.menu-item-has-children > a, .page_item_has_children > a');
+
+                if ('ontouchstart' in window) {
+                    touchStartFn = function (e) {
+                        var menuItem = this.parentNode;
+
+                        if (!menuItem.classList.contains('focus')) {
+                            e.preventDefault();
+                            for (var i = 0; i < menuItem.parentNode.children.length; ++i) {
+                                if (menuItem === menuItem.parentNode.children[i]) {
+                                    continue;
+                                }
+                                menuItem.parentNode.children[i].classList.remove('focus');
+                            }
+                            menuItem.classList.add('focus');
+                        } else {
+                            menuItem.classList.remove('focus');
+                        }
+                    };
+
+                    for (var i = 0; i < parentLink.length; ++i) {
+                        parentLink[i].addEventListener('touchstart', touchStartFn, false)
+                    }
+                }
+            }
+
+            fixMenuTouchTaps(container);
+        })();
+
+    },
+    methods: {
+        showSearch() {
+            this.ifShowSearch = true
+            this.$nextTick(() => {
+                this.$refs.searchMain.$refs.searchInput.focus()
+            })
+        },
+        closeSearch() {
+            this.ifShowSearch = false
+        }
+    },
+})
+
+let footerPart = new Vue({
+    el: '#footer',
+    mounted: function () {
+        let blog_create_time, our_love_time, our_info, photo_container = document.querySelector('.photo-container');
+        let _this = this
+        const h = this.$createElement;
+        let params = new FormData;
+        params.append('action', 'love_time');
+        axios.post(`${window.site_url}/wp-admin/admin-ajax.php`, params).then((res) => {
+            blog_create_time = res.data[0].user_registered; // 博客建立时间（根据第一个用户诞生时间）
+            our_love_time = `2015-05-23 20:00:00`; // 恋爱时间
+            our_info = [res.data[1].nickname, res.data[1].img, res.data[2].nickname, res.data[2].img];
+            if (photo_container) {
+                photo_container.innerHTML = ` <span class="m-lr-10"><img src="https://${our_info[1]}"></span> <i class="lalaksks lalaksks-ic-heart-2 throb"></i> <span class="m-lr-10"><img src="https://${our_info[3]}"></span> `;
+            }
+            if (document.getElementById("createtime")) {
+                window.showCreateTime = setInterval(() => {
+                    _this.kl_count(blog_create_time, '#createtime', '它已经运作了')
+                }, 1000);
+            }
+            if (document.getElementById("lovetime")) {
+                window.showLoveTime = setInterval(() => {
+                    _this.kl_count(our_love_time, '#lovetime', '他与她相恋了')
+                }, 1000);
+            }
+            if (document.querySelector("#thisYear")) {
+                const thisYear = document.querySelector("#thisYear");
+                thisYear.innerHTML = new Date().getFullYear();
+            }
+        })
+    },
+    methods: {
+        kl_count(_time, _dom, _content) {
+            if (_time) {
+                _time = _time.replace(/-/g, "/");
+                // 计算出相差毫秒
+                var create_time = new Date(_time);
+                var now_time = new Date();
+                var count_time = now_time.getTime() - create_time.getTime()
+
+                //计算出相差天数
+                var days = Math.floor(count_time / (24 * 3600 * 1000))
+
+                //计算出相差小时数
+                var leave = count_time % (24 * 3600 * 1000)
+                var hours = Math.floor(leave / (3600 * 1000))
+                hours = hours >= 10 ? hours : "0" + hours
+
+                //计算相差分钟数
+                var leave = leave % (3600 * 1000)
+                var minutes = Math.floor(leave / (60 * 1000))
+                minutes = minutes >= 10 ? minutes : "0" + minutes
+
+
+                //计算相差秒数
+                var leave = leave % (60 * 1000)
+                var seconds = Math.round(leave / 1000)
+                seconds = seconds >= 10 ? seconds : "0" + seconds
+
+                var _time = days + " 天 " + hours + " 时 " + minutes + " 分 " + seconds + " 秒 ";
+                var _final = _content + _time;
+                document.querySelector(_dom).innerHTML = _final;
+            }
+        }
+    },
+})
+
+
+
+
+// $(document).on("click", ".collapse-btn", function () {
+//     var this_ = $(this),
+//         this_dom = $(this).parent().parent().siblings(".entry-main").find(".entry-main-excerpt");
+
+//     this_dom.removeClass("hide");
+//     this_dom.siblings().addClass("hide");
+
+//     this_.siblings().removeClass("hide").addClass("show");
+//     this_.removeClass("show").addClass("hide");
+// });
+
+// $(document).on("click", ".expand-btn", function () {
+//     var this_ = $(this),
+//         this_id = $(this).data("id"),
+//         this_action = $(this).data("action"),
+//         this_dom = $(this).parent().parent().siblings(".entry-main").find(".entry-main-detail");
+
+//     var req = {
+//         action: "preview_post",
+//         um_id: this_id,
+//         um_action: this_action
+//     };
+//     $.post(`${window.site_url}/wp-admin/admin-ajax.php`, req, function (res) {
+//         var content = res;
+//         this_dom.removeClass("hide").html(content);
+//         this_dom.siblings().addClass("hide");
+//         this_.siblings().removeClass("hide").addClass("show");
+//         this_.removeClass("show").addClass("hide");
+//     });
+// });
 
 // $(document).on("click", "#Addlike", function () {
 //     if ($(this).hasClass("actived")) {
@@ -48,7 +260,7 @@ $(document).on("click", "#menu-avatar", function (e) {
 //             um_id: z,
 //             um_action: y
 //         };
-//         $.post(`${GLOBAL.homeUrl}/wp-admin/admin-ajax.php`, w, function (res) {
+//         $.post(`${window.site_url}/wp-admin/admin-ajax.php`, w, function (res) {
 //             console.log(res)
 
 //         });

@@ -2709,7 +2709,6 @@ body {
 
 #menu-avatar {
   cursor: pointer;
-  min-width: 80px;
   text-align: center;
 }
 
@@ -2806,7 +2805,7 @@ body {
 
 .site-content {
   border: none;
-  min-height: calc(100vh - 65px - 90px);
+  min-height: calc(100vh - 65px - 80px);
 }
 
 /* .page-content, .entry-content{margin:0; padding:5% 1em;} */
@@ -4914,6 +4913,7 @@ div[itemprop="description"] {
 
   .site-content {
     padding: 20px;
+    padding-bottom: 0;
   }
 
   .main-area {
@@ -5090,6 +5090,7 @@ div[itemprop="description"] {
 
   .site-content {
     padding: 20px;
+    padding-bottom: 0;
   }
 
   .content-content,

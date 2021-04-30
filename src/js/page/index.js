@@ -99,7 +99,7 @@ const index_module = new Vue({
             let params = {};
             params.per_page = window.post_count
             params.sticky = true
-            return axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/posts?_embed`, {
+            return axios.get(`${window.site_url}/wp-json/wp/v2/posts?_embed`, {
                 params: params
             }).then(res => {
                 this.listOfRecommend = res.data
@@ -114,7 +114,7 @@ const index_module = new Vue({
             params.per_page = this.per_page
             params.orderby = this.orderby
             if (this.page === 1) {
-                axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/posts?_embed&sticky=true`,{params:params})
+                axios.get(`${window.site_url}/wp-json/wp/v2/posts?_embed&sticky=true`,{params:params})
                     .then(res_sticky => {
                         this.listOfArticle = res_sticky.data;
                         //获取顶置文章 IDs 以在获取其余文章时排除
@@ -123,7 +123,7 @@ const index_module = new Vue({
                         }
                         params.per_page = this.per_page - this.listOfArticle.length
                         params.exclude = this.posts_id_sticky
-                        axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/posts?_embed`, {
+                        axios.get(`${window.site_url}/wp-json/wp/v2/posts?_embed`, {
                             params: params
                         }).then(res => {
                             this.totalOfArticle = parseInt(res.headers['x-wp-total'])
@@ -136,7 +136,7 @@ const index_module = new Vue({
                         })
                     })
             } else {
-                axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/posts?_embed&sticky=false&exclude=${this.posts_id_sticky}`, {
+                axios.get(`${window.site_url}/wp-json/wp/v2/posts?_embed&sticky=false&exclude=${this.posts_id_sticky}`, {
                     params: params
                 }).then(res => {
                     this.totalOfArticle = parseInt(res.headers['x-wp-total'])
@@ -155,7 +155,7 @@ const index_module = new Vue({
             params.page = this.page
             params.per_page = this.per_page
             params.orderby = this.orderby
-            axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/shuoshuo?_embed`, {
+            axios.get(`${window.site_url}/wp-json/wp/v2/shuoshuo?_embed`, {
                 params: params
             }).then(res => {
                 this.totalOfChat = parseInt(res.headers['x-wp-total'])
@@ -229,7 +229,7 @@ const index_module = new Vue({
             let params = {}
             params.post = id
             params.page = page
-            axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/comments`, {
+            axios.get(`${window.site_url}/wp-json/wp/v2/comments`, {
                 params: params
             }, {
                 headers: {

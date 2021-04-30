@@ -35,9 +35,13 @@
 	<script>
 		window._nonce = "<?php echo wp_create_nonce('wp_rest'); ?>";
 		window.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
+		window.site_url = '<?php echo site_url() ?>';
+		window.ajaxSourceUrl = window.site_url + '/wp-content/themes/klausLab/inc'
+		window.homeSourceUrl = window.site_url + '/wp-content/themes/klausLab/dist'
+		window.start_time = new Date("<?php echo cs_get_option('klausLab_start_time'); ?>").getFullYear();
 	</script>
 	<div id="page" class="hfeed site">
-		<header id="masthead" class="site-header" role="banner" v-block>
+		<header id="header" class="site-header" role="banner" v-block>
 			<div id="site-touch-header" class="menu-touch">
 				<div class="menu-toggle flex-hc-vc" aria-controls="primary-menu" aria-expanded="">
 					<i class="lalaksks lalaksks-ic-menu"></i>
@@ -61,66 +65,36 @@
 					)
 				);
 				?>
-				<div class="flex-hl-vc" v-if="!ifMobileDevice">
-					<svg class="icon icon-title mr-10 fs-20" aria-hidden="true">
-						<use xlink:href="#lalaksks21-search-1"></use>
-					</svg>
-					<el-input size="small" placeholder="请输入搜索内容" @focus="showSearch"></el-input>
-				</div>
-				<div id="menu-avatar" class="menu-avatar pos-r m-lr-15 <?php if (is_user_logged_in()) {
-																			echo 'have-login';
-																		} ?>">
-					<?php global $current_user;
-					echo get_avatar($current_user->user_email, 48);
-					?>
-					<div id="personal-menu">
-						<ul>
-							<?php if (is_user_logged_in()) { ?>
-								<li><a href="<?php echo get_option('home'); ?>/wp-admin"><i class="lalaksks lalaksks-ic-dashboard m-lr-5"></i>后台</a></li>
-								<li><a href="<?php echo get_option('home'); ?>/page-post-simple"><i class="lalaksks lalaksks-ic-create m-lr-5"></i>快捷发布</a></li>
-								<li><a href="<?php echo get_option('home'); ?>/wp-admin/post-new.php"><i class="lalaksks lalaksks-ic-addArticle m-lr-5"></i>发布文章</a></li>
-								<li><a href="<?php echo get_option('home'); ?>/wp-admin/post-new.php?post_type=shuoshuo"><i class="lalaksks lalaksks-ic-addTalk m-lr-5"></i>发布说说</a></li>
-								<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=logout"><i class="lalaksks lalaksks-ic-logout m-lr-5"></i>登出</a></li>
-							<?php } else { ?>
-								<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=login"><i class="lalaksks lalaksks-ic-login m-lr-5"></i>登录</a></li>
-							<?php } ?>
-						</ul>
+				<div class="menu-right" :class="{'flex-hr-vc':!ifMobileDevice}">
+					<div class="menu-search flex-hl-vc" v-if="!ifMobileDevice">
+						<svg class="icon icon-title mr-10 fs-20" aria-hidden="true">
+							<use xlink:href="#lalaksks21-search-1"></use>
+						</svg>
+						<el-input size="small" placeholder="请输入搜索内容" @focus="showSearch"></el-input>
+					</div>
+					<div id="menu-avatar" :class="{'flex-hc-vc':ifMobileDevice}" class="menu-avatar pos-r m-lr-15 <?php if (is_user_logged_in()) {
+																							echo 'have-login';
+																						} ?>">
+						<?php global $current_user;
+						echo get_avatar($current_user->user_email, 48);
+						?>
+						<div id="personal-menu">
+							<ul>
+								<?php if (is_user_logged_in()) { ?>
+									<li><a href="<?php echo get_option('home'); ?>/wp-admin"><i class="lalaksks lalaksks-ic-dashboard m-lr-5"></i>后台</a></li>
+									<li><a href="<?php echo get_option('home'); ?>/page-post-simple"><i class="lalaksks lalaksks-ic-create m-lr-5"></i>快捷发布</a></li>
+									<li><a href="<?php echo get_option('home'); ?>/wp-admin/post-new.php"><i class="lalaksks lalaksks-ic-addArticle m-lr-5"></i>发布文章</a></li>
+									<li><a href="<?php echo get_option('home'); ?>/wp-admin/post-new.php?post_type=shuoshuo"><i class="lalaksks lalaksks-ic-addTalk m-lr-5"></i>发布说说</a></li>
+									<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=logout"><i class="lalaksks lalaksks-ic-logout m-lr-5"></i>登出</a></li>
+								<?php } else { ?>
+									<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=login"><i class="lalaksks lalaksks-ic-login m-lr-5"></i>登录</a></li>
+								<?php } ?>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</nav><!-- #site-navigation -->
-
 			<kl-search ref="searchMain" v-show="ifShowSearch" @close-search="closeSearch"></kl-search>
-		</header><!-- #masthead -->
-
-		<script>
-			new Vue({
-				el: '#masthead',
-				data() {
-					return {
-						ifShowSearch: false,
-						ifMobileDevice: window.ifMobileDevice
-					}
-				},
-				mounted() {
-					window.onresize = () => {
-						console.log(document.body.clientWidth)
-						this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
-					}
-				},
-				methods: {
-					showSearch() {
-						this.ifShowSearch = true
-						this.$nextTick(() => {
-							this.$refs.searchMain.$refs.searchInput.focus()
-						})
-					},
-					closeSearch() {
-						this.ifShowSearch = false
-					}
-				},
-
-			})
-		</script>
-
+		</header><!-- #header -->
 		<div id="content" class="site-content">
 			<div class="wrap clear">

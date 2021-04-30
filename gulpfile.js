@@ -42,7 +42,7 @@ const dir = {
 
 // let FILTERJS = [dir.src + '/js/*.js', '!' + dir.src + '/js/*.min.js', '!' + dir.src + '/js/**/canvas.js', '!' + dir.src + '/js/**/fixed-plugins.js'];
 let HEADERJS = [dir.src + '/js/options.js'];
-let FOOTERJS = [dir.src + '/js/navigation.js', dir.src + '/js/support.js', dir.src + '/js/common.js', dir.src + '/js/utils.js' ];
+let FOOTERJS = [ dir.src + '/js/support.js', dir.src + '/js/common.js', dir.src + '/js/utils.js' ];
 let COPYJS = [dir.src + '/js/**/*.min.js',dir.src + '/js/page/*.js',dir.src + '/js/plugin/*.js',dir.src + '/js/component/*.js', dir.src + '/js/**/canvas.js', dir.src + '/js/**/fixed-plugins.js', dir.src + '/js/flexible.js', dir.src+ '/js/login.js'];
 let FILTERCSS = [dir.src + '/css/*.css', '!' + dir.src + '/css/*.min.css' ]
 let FILTERSCSS = [dir.src + '/css/*.scss']
@@ -59,22 +59,22 @@ var knowOptions = {
 };
 
 // PHP
-const php = {
-    src: dir.src + '/functions/**/*.php',
-    build: dir.build + 'functions'
-};
+// const php = {
+//     src: dir.src + '/functions/**/*.php',
+//     build: dir.build + 'functions'
+// };
 
-// 复制 PHP 文件
-gulp.task('php', () => {
-    return gulp.src(php.src)
-        .pipe(preprocess({
-            context:{
-                NODE_ENV: process.env.NODE_ENV || 'prod'
-            }
-        }))
-        .pipe(newer(php.build))
-        .pipe(gulp.dest(php.build));
-});
+// // 复制 PHP 文件
+// gulp.task('php', () => {
+//     return gulp.src(php.src)
+//         .pipe(preprocess({
+//             context:{
+//                 NODE_ENV: process.env.NODE_ENV || 'prod'
+//             }
+//         }))
+//         .pipe(newer(php.build))
+//         .pipe(gulp.dest(php.build));
+// });
 
 // 图像处理
 const images = {
@@ -200,7 +200,7 @@ gulp.task('footerJs', function () {
 
 
 gulp.task('clean', function () {
-    return promiseddel(['dist','functions']);
+    return promiseddel(['dist']);
 });
 
 gulp.task('copy', () => {
@@ -240,27 +240,5 @@ gulp.task('constants', function () {
         .pipe(gulp.dest(js.build))
 });
 
-
-// 监视
-// gulp.task('watch', gulp.parallel('browsersync', () => {
-//     console.log('watch......');
-//     // 页面改变
-//     gulp.watch(php.src, gulp.parallel('php')).on('change', () => {
-//         browsersync ? browsersync.reload : {};
-//     });
-
-//     // 图像改变
-//     gulp.watch(images.src, gulp.parallel('images')).on('change', browsersync ? browsersync.reload : gutil.noop);
-
-//     // css 改变
-//     gulp.watch(css.watch, gulp.parallel('css'));
-
-//     // js 改变
-//     gulp.watch(js.src, gulp.parallel('js')).on('change', browsersync ? browsersync.reload : gutil.noop);
-// }));
-
-// gulp.task('default', gulp.series('clean', 'php', 'headerJs','footerJs', 'css', 'scss','images', 'copy', 'constants'));
-gulp.task('default', gulp.series('clean', 'php', 'headerJs','footerJs', 'css', 'scss','copy', 'constants'));
+gulp.task('default', gulp.series('clean', 'headerJs','footerJs', 'css', 'scss','copy'));
  
-// default task
-// gulp.task('default', gulp.series('build', 'watch'));

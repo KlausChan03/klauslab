@@ -12,13 +12,8 @@
 </div>
 <!-- #content -->
 </div>
-
-<script>
-  window.start_time = new Date("<?php echo cs_get_option('klausLab_start_time'); ?>").getFullYear();
-</script>
-
 <!-- .wrap  -->
-<footer id="colophon" class="site-footer flex-hc-vc" role="contentinfo">
+<footer id="footer" class="site-footer flex-hc-vc" role="contentinfo">
   <div class="site-info">
     <p><span>Theme KlausLab By Klaus | All Rights Reserved</span></p>
     <p>版权所有 © {{window.start_time}}-<span id="thisYear"></span>
@@ -46,11 +41,11 @@
   </el-backtop>
   <div class="fp-user pos-r" style="margin-top:3px">
     <?php if (is_user_logged_in()) : global $current_user; ?>
-      <el-tooltip content="登出" effect="dark" placement="bottom">
+      <!-- <el-tooltip content="登出" effect="dark" placement="bottom"> -->
         <div class="fp-items fp-logout">
           <a href="<?php echo wp_logout_url() ?>" class="logout-btn"><i class="lalaksks lalaksks-ic-logout"></i></a>
         </div>
-      </el-tooltip>
+      <!-- </el-tooltip> -->
     <?php else : ?>
       <!-- <el-tooltip content="注册" effect="dark" placement="bottom"> -->
         <div class="fp-items fp-register hide pos-a" style="right: 45px">
@@ -103,74 +98,7 @@
 <?php
 wp_footer();
 ?>
-<script>
-  let footerPart = new Vue({
-    el: '#colophon',
-    mounted: function() {
-      let blog_create_time, our_love_time, our_info, photo_container = document.querySelector('.photo-container');
-      let _this = this
-      const h = this.$createElement;
-      let params = new FormData;
-      params.append('action', 'love_time');
-      axios.post(`${GLOBAL.homeUrl}/wp-admin/admin-ajax.php`, params).then((res) => {
-        blog_create_time = res.data[0].user_registered; // 博客建立时间（根据第一个用户诞生时间）
-        our_love_time = `2015-05-23 20:00:00`; // 恋爱时间
-        our_info = [res.data[1].nickname, res.data[1].img, res.data[2].nickname, res.data[2].img];
-        if (photo_container) {
-          photo_container.innerHTML = ` <span class="m-lr-10"><img src="https://${our_info[1]}"></span> <i class="lalaksks lalaksks-ic-heart-2 throb"></i> <span class="m-lr-10"><img src="https://${our_info[3]}"></span> `;
-        }
-        if (document.getElementById("createtime")) {
-          window.showCreateTime = setInterval(() => {
-            _this.kl_count(blog_create_time, '#createtime', '它已经运作了')
-          }, 1000);
-        }
-        if (document.getElementById("lovetime")) {
-          window.showLoveTime = setInterval(() => {
-            _this.kl_count(our_love_time, '#lovetime', '他与她相恋了')
-          }, 1000);
-        }
-        if (document.querySelector("#thisYear")) {
-          const thisYear = document.querySelector("#thisYear");
-          thisYear.innerHTML = new Date().getFullYear();
-        }
-      })
-    },
-    methods: {
-      kl_count(_time, _dom, _content) {
-        if (_time) {
-          _time = _time.replace(/-/g, "/");
-          // 计算出相差毫秒
-          var create_time = new Date(_time);
-          var now_time = new Date();
-          var count_time = now_time.getTime() - create_time.getTime()
 
-          //计算出相差天数
-          var days = Math.floor(count_time / (24 * 3600 * 1000))
-
-          //计算出相差小时数
-          var leave = count_time % (24 * 3600 * 1000)
-          var hours = Math.floor(leave / (3600 * 1000))
-          hours = hours >= 10 ? hours : "0" + hours
-
-          //计算相差分钟数
-          var leave = leave % (3600 * 1000)
-          var minutes = Math.floor(leave / (60 * 1000))
-          minutes = minutes >= 10 ? minutes : "0" + minutes
-
-
-          //计算相差秒数
-          var leave = leave % (60 * 1000)
-          var seconds = Math.round(leave / 1000)
-          seconds = seconds >= 10 ? seconds : "0" + seconds
-
-          var _time = days + " 天 " + hours + " 时 " + minutes + " 分 " + seconds + " 秒 ";
-          var _final = _content + _time;
-          document.querySelector(_dom).innerHTML = _final;
-        }
-      }
-    },
-  })
-</script>
 </body>
 
 </html>

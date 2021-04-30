@@ -32,7 +32,7 @@ const index_module = new Vue({
         getAllArticles() {
             this.ifShowSingle = false
             let params = {};
-            return axios.get(`${GLOBAL.homeUrl}/wp-json/wp/v2/posts/${this.post_id}`, {
+            return axios.get(`${window.site_url}/wp-json/wp/v2/posts/${this.post_id}`, {
                 params: params
             }).then(res => {
                 console.error(this.posts)
@@ -64,7 +64,7 @@ const index_module = new Vue({
                     position: 'down',
                     width: '400px',
                     maxHeight: '200px',
-                    api: GLOBAL.homeSourceUrl + "/emoji/OwO.min.json"
+                    api: window.homeSourceUrl + "/emoji/OwO.min.json"
                 });
             });
         },
