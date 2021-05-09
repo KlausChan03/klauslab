@@ -40,6 +40,11 @@ const index_module = new Vue({
         this.getAllArticles()
 
     },
+    mounted() {
+        window.onresize = () => {
+            this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
+        }
+    },
     computed: {
         getOrderby() {
             let _this = this
@@ -131,6 +136,13 @@ const index_module = new Vue({
                             this.listOfArticle.forEach(element => {
                                 element.ifShowAll = false
                                 element.ifShowComment = false
+                                if(element.date && Number(dayjs(new Date()).diff(dayjs(element.date), 'week')) === 0 ){
+                                    element.newest = true
+                                }
+                                if(element.post_metas.comments_num >= 10 || element.post_metas.zan_num >= 10){
+                                    element.hotest = true
+                                }
+
                             });
                             this.ifShowPost = false
                         })
@@ -142,6 +154,16 @@ const index_module = new Vue({
                     this.totalOfArticle = parseInt(res.headers['x-wp-total'])
                     this.listOfArticle = res.data
                     this.ifShowPost = false
+                    this.listOfArticle.forEach(element => {
+                        element.ifShowAll = false
+                        element.ifShowComment = false
+                        if(element.date && Number(dayjs(new Date()).diff(dayjs(element.date), 'week')) === 0 ){
+                            element.newest = true
+                        }
+                        if(element.post_metas.comments_num >= 10 || element.post_metas.zan_num >= 10){
+                            element.hotest = true
+                        }
+                    });
                 })
             }
 
@@ -161,8 +183,14 @@ const index_module = new Vue({
                 this.totalOfChat = parseInt(res.headers['x-wp-total'])
                 this.listOfChat = res.data
                 this.ifShowChat = false
-                this.listOfArticle.forEach(element => {
+                this.listOfChat.forEach(element => {
                     element.ifShowComment = false
+                    if(element.date && Number(dayjs(new Date()).diff(dayjs(element.date), 'week')) === 0 ){
+                        element.newest = true
+                    }
+                    if(element.post_metas.comments_num >= 10 || element.post_metas.zan_num >= 10){
+                        element.hotest = true
+                    }
                 });
 
             })

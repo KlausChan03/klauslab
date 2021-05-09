@@ -47,7 +47,6 @@ let headerPart = new Vue({
                 menu.className += ' nav-menu';
             }
             button.onclick = function () {
-                debugger
                 if (-1 !== container.className.indexOf('toggled')) {
                     container.className = container.className.replace('toggled', '');
                     header.className = header.className.replace('toggled', '');

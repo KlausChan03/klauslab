@@ -3,7 +3,14 @@ Vue.component('chat-item', {
   template: `
   <div>
     <div class="entry-main" >
-      <p class="col-">#{{postData.title.rendered}}#</p>
+      <div class="flex-hb-vc flex-hw">
+        <h5 v-if="postData.title.rendered" >#{{postData.title.rendered}}#</h5>
+        <div>
+          <el-tag class="ml-10" size="small" type="danger" v-if="postData.sticky">Top</el-tag>
+          <el-tag class="ml-10" size="small" type="danger" v-if="postData.newest">New</el-tag>
+          <el-tag class="ml-10" size="small" type="danger" v-if="postData.hotest">Hot</el-tag>
+        </div>       
+      </div>     
       <p class="entry-summary" v-html="postData.content.rendered" :id="postData.id"> </p>
     </div>
     <div class="entry-footer flex-hb-vc flex-hw">

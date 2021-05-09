@@ -567,13 +567,13 @@ textarea:focus {
 
 input {
 
-  &[type="text"],
-  &[type="email"],
-  &[type="url"],
-  &[type="tel"],
-  &[type="password"] {
-    padding: .8em;
-  }
+  // &[type="text"],
+  // &[type="email"],
+  // &[type="url"],
+  // &[type="tel"],
+  // &[type="password"] {
+  //   padding: .8em;
+  // }
 
   &[type="search"] {
     padding: .8em;
@@ -3771,20 +3771,20 @@ img.avatar{
     }
   }
 
-  .entry-header {
-    &::after{
-      position: absolute;
-      right: -2px;
-      top: -5px;
-      color: #48e;
-      font-family: "lalaksks";
-      font-size: 40px;
-    }
+  // .entry-header {
+  //   &::after{
+  //     position: absolute;
+  //     right: -2px;
+  //     top: -5px;
+  //     color: #48e;
+  //     font-family: "lalaksks";
+  //     font-size: 40px;
+  //   }
 
-    &.sticky::after {
-      content: "\e63e";
-    }
-  }
+  //   &.sticky::after {
+  //     content: "\e63e";
+  //   }
+  // }
   
 
   // &.tag-37 .entry-header::after {

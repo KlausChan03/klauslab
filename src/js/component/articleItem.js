@@ -14,16 +14,22 @@ Vue.component('article-item', {
   // </el-tooltip>`,
   template: `
   <div>
-    <div class="entry-header flex-hl-vc flex-hw" :class="{'sticky': postData.sticky }">
-      <h5 class="entry-title mr-10">
+    <div class="entry-header flex-hb-vc flex-hw">
+      <h5 class="entry-title">
         <a :href="postData.link"> {{postData.title.rendered}} </a>       
       </h5>
-      <el-tag class="mr-10" size="small" v-for="(item,index) in postData.post_metas.tag_name">
-        {{item}}
-      </el-tag>
-      <el-tag type="warning" class="mr-10" size="small" v-for="(item,index) in postData.post_metas.cat_name">
-        {{item}}
-      </el-tag>
+      <div>
+        <el-tag class="ml-10" size="small" type="danger" v-if="postData.sticky">Top</el-tag>
+        <el-tag class="ml-10" size="small" type="danger" v-if="postData.newest">New</el-tag>
+        <el-tag class="ml-10" size="small" type="danger" v-if="postData.hotest">Hot</el-tag>
+        <el-tag class="ml-10" size="small" v-for="(item,index) in postData.post_metas.tag_name">
+          {{item}}
+        </el-tag>
+        <el-tag type="warning" class="ml-10" size="small" v-for="(item,index) in postData.post_metas.cat_name">
+          {{item}}
+        </el-tag>
+      </div>
+     
     </div>
     <div class="entry-main flex-hl-vl flex-hw" :class="{'has-image' : postData._embedded['wp:featuredmedia']}" v-if="postData.content.rendered || postData.excerpt.rendered">
       <div class="featured-image" v-if="postData._embedded['wp:featuredmedia']">
@@ -164,7 +170,11 @@ Vue.component('article-item', {
 
     },
   },
-  mounted() {},
+  mounted() {
+    window.onresize = () => {
+      this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
+    }
+  },
   filters: {
     formateDate: (value) => {
       return dayjs(value).fromNow()

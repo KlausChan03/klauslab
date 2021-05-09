@@ -171,9 +171,10 @@ function get_post_meta_for_api($post)
     $post_meta['thumbnail'] = get_the_post_thumbnail($post['id'], 'Full');
     $tagList = get_the_tags($post['id']);
     $post_meta['tag_name'] = array_column( $tagList, 'name');
-
     $catList = get_the_category($post['id']);
     $post_meta['cat_name'] = array_column( $catList, 'name');
+    // $post_meta['newest'] = get_the_date('ID', $post['author'])->display_name;
+
     return $post_meta;
 }
 
