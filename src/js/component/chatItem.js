@@ -2,17 +2,21 @@ Vue.component('chat-item', {
   props: ['postData'],
   template: `
   <div>
+   
+
     <div class="entry-main" >
-      <div class="flex-hb-vc flex-hw">
+      <div class="flex-hb-vc flex-hw mb-10">
         <h5 v-if="postData.title.rendered" >#{{postData.title.rendered}}#</h5>
-        <div>
+        <div :class="{'w-1': !postData.title.rendered, 'flex-hr-vc': !postData.title.rendered}">
           <el-tag class="ml-10" size="small" type="danger" v-if="postData.sticky">Top</el-tag>
           <el-tag class="ml-10" size="small" type="danger" v-if="postData.newest">New</el-tag>
           <el-tag class="ml-10" size="small" type="danger" v-if="postData.hotest">Hot</el-tag>
         </div>       
-      </div>     
+      </div>       
+
       <p class="entry-summary" v-html="postData.content.rendered" :id="postData.id"> </p>
     </div>
+    
     <div class="entry-footer flex-hb-vc flex-hw">
       <div class="entry-action flex-hb-vc w-1">
         <div class="entry-author fs-16 flex-hl-vc w-04">

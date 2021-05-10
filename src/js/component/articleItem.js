@@ -31,9 +31,9 @@ Vue.component('article-item', {
       </div>
      
     </div>
-    <div class="entry-main flex-hl-vl flex-hw" :class="{'has-image' : postData._embedded['wp:featuredmedia']}" v-if="postData.content.rendered || postData.excerpt.rendered">
-      <div class="featured-image" v-if="postData._embedded['wp:featuredmedia']">
-        <img :src="postData._embedded['wp:featuredmedia']['0'].source_url" alt="">
+    <div class="entry-main flex-hl-vl flex-hw" :class="{'has-image' : postData.post_metas.thumbnail}" v-if="postData.content.rendered || postData.excerpt.rendered">
+      <div class="featured-image" v-if="postData.post_metas.thumbnail">
+        <div v-html='postData.post_metas.thumbnail'></div>
       </div>
       <span class="entry-summary" v-html="postData.ifShowAll ? postData.content.rendered : postData.excerpt.rendered" :id="postData.id"></span>
     </div>
