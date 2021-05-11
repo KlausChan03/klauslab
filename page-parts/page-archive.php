@@ -12,7 +12,7 @@ get_header();
         <?php if (have_posts()) : the_post();
             update_post_caches($posts); ?>
             <article id="archive-main" class="post-<?php the_ID(); ?> page-main style-18" v-block>
-                <el-card>
+                <el-card shadow="hover">
                     <div class="entry-title flex-hl-vc bor-b-1">
                         <svg class="icon icon-title mr-10" aria-hidden="true">
                             <use xlink:href="#lalaksks21-worldwide"></use>

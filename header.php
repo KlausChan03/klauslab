@@ -30,7 +30,7 @@
 	<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/empty.js"></script>
 	<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/search.js"></script>
 
-	<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+	<!-- <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script> -->
 </head>
 
 <body <?php body_class(); ?>>

@@ -78,6 +78,7 @@ Text Domain: KlausLab
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   font-family: Play, "Microsoft Yahei", "Hiragino Sans GB", "Helvetica Neue", Helvetica, tahoma, arial, "WenQuanYi Micro Hei", Verdana, sans-serif, "\5B8B\4F53";
+  font-display: swap;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -520,11 +521,11 @@ textarea {
 }
 
 /* 阴影样式 */
-nav,
-article,
-aside,
-button.kl-btn,
-textarea {
+nav:hover,
+article:hover,
+aside:hover,
+button.kl-btn:hover,
+textarea:hover {
   -webkit-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
   -moz-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
   box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
@@ -723,7 +724,7 @@ img {
 
 #nep_call_panel {
   background: none !important;
-  bottom: 10px !important;
+  bottom: 10px;
   right: 5px !important;
 }
 
@@ -1964,19 +1965,19 @@ body {
 
 /* margin-10 */
 .mt-10 {
-  margin-top: 10px !important;
+  margin-top: 10px;
 }
 
 .mb-10 {
-  margin-bottom: 10px !important;
+  margin-bottom: 10px;
 }
 
 .ml-10 {
-  margin-left: 10px !important;
+  margin-left: 10px;
 }
 
 .mr-10 {
-  margin-right: 10px !important;
+  margin-right: 10px;
 }
 
 .m-tb-10 {
@@ -2044,19 +2045,19 @@ body {
 
 /* padding-10 */
 .pt-10 {
-  padding-top: 10px !important;
+  padding-top: 10px;
 }
 
 .pb-10 {
-  padding-bottom: 10px !important;
+  padding-bottom: 10px;
 }
 
 .pl-10 {
-  padding-left: 10px !important;
+  padding-left: 10px;
 }
 
 .pr-10 {
-  padding-right: 10px !important;
+  padding-right: 10px;
 }
 
 .p-tb-10 {
@@ -2109,7 +2110,7 @@ body {
 }
 
 .p-10 {
-  padding: 10px !important;
+  padding: 10px;
 }
 
 .mt-30 {
@@ -3501,19 +3502,6 @@ img.avatar {
   margin: 10px auto;
 }
 
-.article-list .entry-header::after {
-  position: absolute;
-  right: -2px;
-  top: -5px;
-  color: #48e;
-  font-family: "lalaksks";
-  font-size: 40px;
-}
-
-.article-list .entry-header.sticky::after {
-  content: "\e63e";
-}
-
 .article-list .entry-main ul,
 .article-list .entry-main ol {
   display: block;
@@ -4477,7 +4465,7 @@ div[itemprop="description"] {
     height: 50px;
   }
   .site-content {
-    padding: 20px;
+    padding: 10px;
     padding-bottom: 0;
   }
   .main-area {
@@ -4618,7 +4606,7 @@ div[itemprop="description"] {
     width: 100%;
   }
   .site-content {
-    padding: 20px;
+    padding: 10px;
     padding-bottom: 0;
   }
   .content-content,

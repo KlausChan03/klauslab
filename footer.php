@@ -15,7 +15,7 @@
 <!-- .wrap  -->
 <footer id="footer" class="site-footer flex-hc-vc" role="contentinfo">
   <div class="site-info">
-    <p><span>Theme KlausLab By Klaus | All Rights Reserved</span></p>
+    <p><span>Theme KlausLab designed by Klaus & Laura | All Rights Reserved</span></p>
     <p>版权所有 © {{window.start_time}}-<span id="thisYear"></span>
       <!-- <a href="http://www.miitbeian.gov.cn/" rel="nofollow noopener noreferrer" target="_blank"> 粤 ICP 备17095567号</a> -->
       <a href="http://beian.miit.gov.cn" rel="nofollow" target="_blank">

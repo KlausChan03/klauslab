@@ -11,7 +11,7 @@ setPostViews(get_the_ID()); ?>
   <main id="main" class="main-content" role="main">
     <?php if (have_posts()) : the_post(); ?>
       <article id="link-main" class="post-<?php the_ID(); ?> page-main style-18">
-        <el-card>
+        <el-card shadow="hover">
           <div class="entry-title flex-hl-vc bor-b-1">
             <svg class="icon icon-title mr-10" aria-hidden="true">
               <use xlink:href="#lalaksks21-browsers-1"></use>

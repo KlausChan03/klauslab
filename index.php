@@ -24,8 +24,9 @@ get_header();
 
   .article-list .entry-action .entry-action-main span {
     display: inline-block;
-    width: 30px;
+    max-width: 30px;
     line-height: 30px;
+    margin-left: 5px;
     /* text-align: left; */
   }
 
@@ -71,6 +72,14 @@ get_header();
   .article-list .entry-action-main .entry-cai .lalaksks-ic-zan:hover {
     background-color: #856D72;
     color:#36292F
+  }
+
+  .article-list .el-tag:first-child {
+    margin-left: 0;
+  }
+
+  .article-list .entry-header{
+    line-height: 1.6;
   }
 
   .setting-part {
@@ -250,8 +259,8 @@ get_header();
         </el-dropdown>
       </div>
 
-      <el-card class="flex-hc-vc mt-15">
-        <el-pagination layout="prev, pager, next, jumper" background :pager-count="getPaperSize" :page-size="per_page" :current-page.sync="page" :total="getTotal" :hide-on-single-page="judgeCount" @current-change="handleCurrentChange">
+      <el-card class="flex-hc-vc mt-15" shadow="hover">
+        <el-pagination layout="prev, pager, next" background :pager-count="getPaperSize" :page-size="per_page" :current-page.sync="page" :total="getTotal" :hide-on-single-page="judgeCount" @current-change="handleCurrentChange">
         </el-pagination>
       </el-card>
     </div>
@@ -260,12 +269,12 @@ get_header();
 </div>
 <!-- #primary -->
 <!-- <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/lib/tinymce-vue.min.js"></script> -->
-<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/skeleton.js"></script>
-<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/articleItem.js"></script>
-<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/chatItem.js"></script>
-<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickCommentItem.js"></script>
-<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickComment.js"></script>
-<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/index.js"></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/skeleton.js" defer></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/articleItem.js" defer></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/chatItem.js" defer></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickCommentItem.js" defer></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickComment.js" defer></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/index.js" defer></script>
 <?php
   $is_show_sidebar == 1 ?  get_sidebar() : ''
  

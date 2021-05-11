@@ -18,7 +18,7 @@ Vue.component('article-item', {
       <h5 class="entry-title">
         <a :href="postData.link"> {{postData.title.rendered}} </a>       
       </h5>
-      <div>
+      <div class="entry-tag">
         <el-tag class="ml-10" size="small" type="danger" v-if="postData.sticky">Top</el-tag>
         <el-tag class="ml-10" size="small" type="danger" v-if="postData.newest">New</el-tag>
         <el-tag class="ml-10" size="small" type="danger" v-if="postData.hotest">Hot</el-tag>

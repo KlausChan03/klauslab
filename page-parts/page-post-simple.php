@@ -31,13 +31,14 @@ get_header();
         height: 80px;
     }
 </style>
-<!-- <p>hello world</p> -->
+<script src="https://cdn.tiny.cloud/1/7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
 <div class="post-main" id="post-page">
     <el-form>
         <div class="flex-hb-vc">
             <div>
-                <el-popover placement="bottom" width="400" trigger="click">
-                    <el-upload ref="upload" class="upload" list-type="picture-card" :limit="1" :on-exceed="handleExceed" :action=`${window.site_url}/wp-json/wp/v2/media` :on-success="handleUploadSuccess" :headers="{'X-WP-Nonce': window._nonce}" multiple>
+                <el-popover placement="bottom" width="400" trigger="click" v-if="format === false">
+                    <el-upload ref="upload" class="upload" list-type="picture-card" :limit="1" :on-exceed="handleExceed" :action=`${window.site_url}/wp-json/wp/v2/media` :on-progress="handleUploadBegin" :on-success="handleUploadSuccess" :headers="{'X-WP-Nonce': window._nonce}" multiple>
                         <i slot="default" class="el-icon-plus"></i>
                         <!-- <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div> -->
                         <div slot="file" slot-scope="{file}">
@@ -62,22 +63,22 @@ get_header();
             </div>
             <div class="flex-hb-vc">
                 <div class="commit-type flex-v flex-ha-vc">
-                    <el-switch class="mr-10" v-model="format" active-text="说说" inactive-text="文章" active-color="#13ce66" @change=""> </el-switch>
-                    <el-switch class="mr-10" v-model="status" active-text="正式" inactive-text="草稿" active-color="#13ce66"> </el-switch>
+                    <el-switch v-model="format" active-text="说说" inactive-text="文章" active-color="#13ce66" @change=""> </el-switch>
+                    <el-switch v-model="status" active-text="正式" inactive-text="草稿" active-color="#13ce66"> </el-switch>
                 </div>
-                <el-button class="commit-button" size="small" type="primary" @click="commitPost()" :loading="hasCommitFinish">立即发布</el-button>
+                <el-button class="commit-button ml-15" size="small" type="primary" @click="commitPost()" :loading="hasCommitFinish">立即发布</el-button>
             </div>
         </div>
-        <el-card class="mt-10">
+        <el-card class="mt-10" shadow="hover">
             <el-form-item>
                 <el-input v-model="posts.title" :placeholder="format === true ? '#话题#' : '标题'"></el-input>
             </el-form-item>
-            <editor :api-key="tinyKey" cloud-channel="5" :disabled=false id="uuid" :setting="{inline: false}" :init="{
-                 height: 360, 
-                 menubar: true}" initial-value="" :inline=false model-events="" plugins="image,table,codesample,advlist autolink lists link image charmap print preview anchor, searchreplace visualblocks code fullscreen, insertdatetime media table paste code help wordcount, lists code emoticons" tag-name="div" toolbar=" undo redo | formatselect | media table | emoticons | help " v-model="posts.content" />
-            </editor>
+            <!-- <editor :api-key="tinyKey" cloud-channel="5" :disabled=false id="uuid" :setting="{inline: false}" :init="{ height: 360, menubar: true, paste_data_images: true, language: 'zh_CN', file_picker_types: 'file image media' ,images_upload_credentials: true, branding: true, statusbar: true,  }" initial-value="" :inline=false model-events="" 
+            plugins="codesample,advlist autolink lists link image charmap print preview anchor, searchreplace visualblocks  fullscreen, insertdatetime media table paste  help wordcount,  code emoticons" tag-name="div" toolbar=" undo redo | formatselect | image media table | emoticons | help " v-model="posts.content" />
+            </editor> -->
+            <textarea id="editor" v-model="tinymceHtml"></textarea>
         </el-card>
-        <el-card class="mt-10">
+        <el-card class="mt-10" shadow="hover">
             <el-collapse accordion>
                 <el-collapse-item>
                     <template slot="title">
@@ -144,6 +145,7 @@ get_header();
             }
         },
         data() {
+            const ide = Date.now()
             return {
                 tinyKey: '7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j',
                 status: true,
@@ -166,14 +168,59 @@ get_header();
                 hasCommitFinish: false,
                 dialogImageUrl: '',
                 dialogVisible: false,
-                disabled: false
+                disabled: false,
+
+                tinymceHtml: '',
+                defaultInit: {
+                    language: "zh_CN", //语言设置
+                    height: 360, //高度
+                    menubar: false, // 隐藏最上方menu菜单
+                    toolbar: true, //false禁用工具栏（隐藏工具栏）
+                    browser_spellcheck: true, // 拼写检查
+                    branding: false, // 去水印
+                    statusbar: false, // 隐藏编辑器底部的状态栏
+                    elementpath: false, //禁用下角的当前标签路径
+                    paste_data_images: true, // 允许粘贴图像
+                    toolbar: ['bold italic underline strikethrough blockquote|forecolor backcolor|formatselect | fontsizeselect  | alignleft aligncenter alignright alignjustify | outdent indent |codeformat blockformats| removeformat undo redo bullist numlist toc pastetext | codesample charmap  hr insertdatetime | lists image media table link unlink | emoticons |code searchreplace fullscreen help '
+                    ],
+                    plugins: 'emoticons lists image media table wordcount code fullscreen help codesample toc insertdatetime  searchreplace  link charmap paste hr',
+                }
+
             }
         },
         mounted() {
             this.getTags()
             this.getCategories()
+            this.init()
         },
         methods: {
+
+            init() {
+                const self = this
+                window.tinymce.init({
+                    // 默认配置
+                    ...this.defaultInit,
+                    // 图片上传
+                    images_upload_handler: function(blobInfo, success, failure) {
+                        let formData = new FormData()
+                        formData.append('file', blobInfo.blob())
+                        axios.post(`${window.site_url}/wp-json/wp/v2/media`, formData, {
+                                headers: {
+                                    'X-WP-Nonce': window._nonce
+                                }
+                            })
+                            .then(response => {
+                                if (response.status == 201) {
+                                    success(response.data['source_url'])
+                                } else {
+                                    failure('上传失败！')
+                                }
+                            })
+                    },
+                    // 挂载的DOM对象
+                    selector: `#editor`,
+                })
+            },
             getTags() {
                 axios.get(`${window.site_url}/wp-json/wp/v2/tags`).then(res => {
                     this.tagList = res.data
@@ -187,10 +234,14 @@ get_header();
                 })
             },
             handleExceed(files, fileList) {
-                this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+                this.$message.warning(`当前限制选择 1 个特色图像，本次选择了 ${files.length} 个文件`);
+            },
+            handleUploadBegin(){
+                this.hasCommitFinish = true
             },
             handleUploadSuccess(res, file) {
                 this.posts.featured_media = res.id
+                this.hasCommitFinish = false
             },
             handleCheckChange(data, checked, indeterminate) {
                 this.posts.categories = this.$refs.categoryTree.getCheckedKeys()

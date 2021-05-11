@@ -93,6 +93,7 @@ Text Domain: KlausLab
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   font-family: Play, "Microsoft Yahei", "Hiragino Sans GB", "Helvetica Neue", Helvetica, tahoma, arial, "WenQuanYi Micro Hei", Verdana, sans-serif, "\5B8B\4F53";
+  font-display: swap;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
@@ -607,9 +608,12 @@ aside,
 // input,
 button.kl-btn,
 textarea {
-  -webkit-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
-  -moz-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
-  box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
+  &:hover{
+    -webkit-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
+    -moz-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
+    box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
+  }
+  
 }
 
 img.img-shadow {
@@ -808,7 +812,7 @@ img {
 
 #nep_call_panel {
   background: none !important;
-  bottom: 10px !important;
+  bottom: 10px ;
   right: 5px !important;
 
   &::before {
@@ -2186,19 +2190,19 @@ body {
 /* margin-10 */
 
 .mt-10 {
-  margin-top: 10px !important;
+  margin-top: 10px ;
 }
 
 .mb-10 {
-  margin-bottom: 10px !important;
+  margin-bottom: 10px ;
 }
 
 .ml-10 {
-  margin-left: 10px !important;
+  margin-left: 10px ;
 }
 
 .mr-10 {
-  margin-right: 10px !important;
+  margin-right: 10px ;
 }
 
 .m-tb-10 {
@@ -2270,19 +2274,19 @@ body {
 /* padding-10 */
 
 .pt-10 {
-  padding-top: 10px !important;
+  padding-top: 10px ;
 }
 
 .pb-10 {
-  padding-bottom: 10px !important;
+  padding-bottom: 10px ;
 }
 
 .pl-10 {
-  padding-left: 10px !important;
+  padding-left: 10px ;
 }
 
 .pr-10 {
-  padding-right: 10px !important;
+  padding-right: 10px ;
 }
 
 .p-tb-10 {
@@ -2336,7 +2340,7 @@ body {
 }
 
 .p-10 {
-  padding: 10px !important;
+  padding: 10px ;
 }
 
 .mt-30 {
@@ -4912,7 +4916,7 @@ div[itemprop="description"] {
   }
 
   .site-content {
-    padding: 20px;
+    padding: 10px;
     padding-bottom: 0;
   }
 
@@ -5089,7 +5093,7 @@ div[itemprop="description"] {
   }
 
   .site-content {
-    padding: 20px;
+    padding: 10px;
     padding-bottom: 0;
   }
 
