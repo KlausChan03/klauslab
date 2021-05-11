@@ -608,6 +608,7 @@ aside,
 // input,
 button.kl-btn,
 textarea {
+  transition: 0.2s;
   &:hover{
     -webkit-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
     -moz-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
@@ -4097,9 +4098,11 @@ img.avatar{
   .borderr-main-4 {
     background-color: #f5f5f5;
     border-bottom: 1px solid #eee;
-    -webkit-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
-    -moz-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
-    box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
+    &:hover{
+      -webkit-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
+      -moz-box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
+      box-shadow: 0 10px 20px 0 rgba(160, 160, 160, 0.2);
+    }
   }
 
   .link-item {

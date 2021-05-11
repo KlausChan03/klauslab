@@ -16,7 +16,7 @@ get_header();
     <main id="main" class="main-content" role="main">
         <?php if (have_posts()) : the_post(); ?>
 
-            <article id="movie-main" class="post-<?php the_ID(); ?> page-main style-18">
+            <div id="movie-main" class="post-<?php the_ID(); ?> page-main style-18">
                 <el-card shadow="hover">
                     <div class="entry-title flex-hl-vc bor-b-1">
                         <svg class="icon icon-title mr-10" aria-hidden="true">
@@ -60,7 +60,7 @@ get_header();
                         </template>
                     </div>
                 </el-card>
-            </article>
+            </div>
     </main>
 <?php endif; ?>
 
@@ -120,23 +120,23 @@ get_header();
                 axios.post(window.ajaxSourceUrl + "/douban/douban.php?type=movie&from=" + String(this.curMovies) + '&db_id=' + window.db_id).then(res => {
                     let result = res.data
                     if (result.code === "1") {
-                        if (result.data && (result.data.length < this.pageSize)) { 
+                        if (result.data && (result.data.length < this.pageSize)) {
                             this.ifShowMore = false
-                           
+
                         } else {
                             this.ifShowMore = true
                         }
                         this.list = this.list.concat(result.data);
-                            if (this.currDevice().mobile === true) {
-                                this.list.forEach(item => {
-                                    item.img = item.img.replace(/s_ratio_poster/g, 'm_ratio_poster')
-                                });
-                            }
-                            this.count = result.total;
-                            if (this.list[0].name === '') {
-                                this.count = 0
-                            }
-                            this.curMovies += this.pageSize;
+                        if (this.currDevice().mobile === true) {
+                            this.list.forEach(item => {
+                                item.img = item.img.replace(/s_ratio_poster/g, 'm_ratio_poster')
+                            });
+                        }
+                        this.count = result.total;
+                        if (this.list[0].name === '') {
+                            this.count = 0
+                        }
+                        this.curMovies += this.pageSize;
                     } else if (result.code === "0") {
                         this.$message({
                             type: 'error',

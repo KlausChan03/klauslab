@@ -10,7 +10,7 @@ setPostViews(get_the_ID()); ?>
 <div id="primary" class="main-area w-1">
   <main id="main" class="main-content" role="main">
     <?php if (have_posts()) : the_post(); ?>
-      <article id="link-main" class="post-<?php the_ID(); ?> page-main style-18">
+      <div id="link-main" class="post-<?php the_ID(); ?> page-main style-18">
         <el-card shadow="hover">
           <div class="entry-title flex-hl-vc bor-b-1">
             <svg class="icon icon-title mr-10" aria-hidden="true">
@@ -29,7 +29,7 @@ setPostViews(get_the_ID()); ?>
           </div>
           <!-- <?php edit_post_link(esc_html__('Edit', 'KlausLab'), '<footer class="entry-footer clear"><span class="edit-link">', '</span></footer>.entry-footer'); ?> -->
         </el-card>
-      </article>
+      </div>
 
       <?php
       // If comments are open or we have at least one comment, load up the comment template.

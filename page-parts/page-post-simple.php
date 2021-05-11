@@ -69,14 +69,16 @@ get_header();
                 <el-button class="commit-button ml-15" size="small" type="primary" @click="commitPost()" :loading="hasCommitFinish">立即发布</el-button>
             </div>
         </div>
-        <el-card class="mt-10" shadow="hover">
+        <el-card class="mt-10" shadow="hover" >
             <el-form-item>
                 <el-input v-model="posts.title" :placeholder="format === true ? '#话题#' : '标题'"></el-input>
             </el-form-item>
             <!-- <editor :api-key="tinyKey" cloud-channel="5" :disabled=false id="uuid" :setting="{inline: false}" :init="{ height: 360, menubar: true, paste_data_images: true, language: 'zh_CN', file_picker_types: 'file image media' ,images_upload_credentials: true, branding: true, statusbar: true,  }" initial-value="" :inline=false model-events="" 
             plugins="codesample,advlist autolink lists link image charmap print preview anchor, searchreplace visualblocks  fullscreen, insertdatetime media table paste  help wordcount,  code emoticons" tag-name="div" toolbar=" undo redo | formatselect | image media table | emoticons | help " v-model="posts.content" />
             </editor> -->
-            <textarea id="editor" v-model="tinymceHtml"></textarea>
+            <el-form-item v-loading="editorLoading" style="height: 360px">
+                <textarea id="editor" v-model="posts.content" ></textarea>
+            </el-form-item>
         </el-card>
         <el-card class="mt-10" shadow="hover">
             <el-collapse accordion>
@@ -147,7 +149,9 @@ get_header();
         data() {
             const ide = Date.now()
             return {
-                tinyKey: '7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j',
+                // tinyKey: '7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j',
+                editorLoading: false,
+
                 status: true,
                 format: true,
                 posts: {
@@ -170,7 +174,6 @@ get_header();
                 dialogVisible: false,
                 disabled: false,
 
-                tinymceHtml: '',
                 defaultInit: {
                     language: "zh_CN", //语言设置
                     height: 360, //高度
@@ -197,9 +200,15 @@ get_header();
 
             init() {
                 const self = this
+                self.editorLoading = true
+
                 window.tinymce.init({
                     // 默认配置
                     ...this.defaultInit,
+                    // 初始化完成
+                    init_instance_callback : function(editor) {
+                        self.editorLoading = false
+                    },
                     // 图片上传
                     images_upload_handler: function(blobInfo, success, failure) {
                         let formData = new FormData()
@@ -247,19 +256,17 @@ get_header();
                 this.posts.categories = this.$refs.categoryTree.getCheckedKeys()
             },
             handleRemove(file, fileList) {
-                console.log(file, fileList);
                 this.$refs.upload.handleRemove(file)
             },
             handlePictureCardPreview(file) {
                 this.dialogImageUrl = file.url;
                 this.dialogVisible = true;
             },
-            handleDownload(file) {
-                console.log(file);
-            },
+            handleDownload(file) { },
             commitPost() {
                 this.hasCommitFinish = true
                 this.posts.status = this.status === true ? 'publish' : 'draft'
+                this.posts.content = window.tinymce.get('editor').getContent()
                 let format = this.format === true ? 'shuoshuo' : 'posts'
                 let params = this.posts;
                 axios.post(`${window.site_url}/wp-json/wp/v2/${format}`, params, {
@@ -274,7 +281,7 @@ get_header();
                         })
                         setTimeout(() => {
                             this.hasCommitFinish = false
-                            history.go(-1)
+                            window.location.href =  window.site_url
                         }, 1500);
                     }
 

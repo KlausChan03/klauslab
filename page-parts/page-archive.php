@@ -11,7 +11,7 @@ get_header();
     <main id="main" class="main-content" role="main">
         <?php if (have_posts()) : the_post();
             update_post_caches($posts); ?>
-            <article id="archive-main" class="post-<?php the_ID(); ?> page-main style-18" v-block>
+            <div id="archive-main" class="post-<?php the_ID(); ?> page-main style-18" v-block>
                 <el-card shadow="hover">
                     <div class="entry-title flex-hl-vc bor-b-1">
                         <svg class="icon icon-title mr-10" aria-hidden="true">
@@ -35,7 +35,7 @@ get_header();
                         </el-form-item>
                     </el-form>
                 </el-card>
-                <el-card class="mt-15">
+                <el-card shadow="hover" class="mt-15">
                     <template v-if="archiveContent">
                         <div class="mh-100 entry-content" v-loading="!ifGetList" v-html="archiveContent"> </div>
                     </template>                    
@@ -44,7 +44,7 @@ get_header();
                     </template>
                 </el-card>
                 <!-- <?php edit_post_link(esc_html__('Edit', 'KlausLab'), '<footer class="entry-footer clear"><span class="edit-link">', '</span></footer>.entry-footer'); ?> -->
-            </article>
+            </div>
         <?php endif; ?>
     </main>
 </div>
