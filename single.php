@@ -7,6 +7,9 @@
  */
 
 get_header(); ?>
+<script>
+	window.post_id = <?php echo get_the_ID(); ?>;
+</script>
 <style>
 	@media screen and (min-width: 720px) and (max-width: 1000px) {
 		.widget-content {
@@ -32,7 +35,7 @@ get_header(); ?>
 		.article-panel {
 			position: fixed;
 			margin-left: -5rem;
-			top: 15vh;
+			top: 100px;
 		}
 	}
 
@@ -54,13 +57,13 @@ get_header(); ?>
 		padding: 10px;
 	}
 
-	.article-panel-item:not(first-child) {
+	.article-panel-item:not(:first-child) {
 		margin-top: 30px;
 
 	}
 
 	.pay-chose button {
-		width: 120px ;
+		width: 120px;
 		height: 45px;
 		text-align: center;
 		border: 1px solid #e6e6e6;
@@ -79,10 +82,12 @@ get_header(); ?>
 		border-color: #0092ee;
 	}
 
-	.pay-body .alipay, .pay-body .wechatpay {
+	.pay-body .alipay,
+	.pay-body .wechatpay {
 		width: 220px;
 		height: 220px;
 	}
+
 
 </style>
 <div id="primary" class="main-area">
@@ -111,8 +116,8 @@ get_header(); ?>
 
 					<el-popover placement="top" title="请作者喝杯咖啡☕" width="280" trigger="click">
 						<div class="pay-body">
-							<?php            
-							$alipay_image_id = cs_get_option( 'alipay_image' );
+							<?php
+							$alipay_image_id = cs_get_option('alipay_image');
 							$alipay_attachment = wp_get_attachment_image_src($alipay_image_id, 'full');
 							$wechat_image_id = cs_get_option('wechat_image');
 							$wechat_attachment = wp_get_attachment_image_src($wechat_image_id, 'full');
@@ -120,7 +125,7 @@ get_header(); ?>
 							if (cs_get_option('alipay_image') && cs_get_option('wechat_image')) { ?>
 								<h4 class="flex-hc-vc m-tb-10">扫一扫支付</h4>
 								<div class="flex-hc-vc">
-									<img class="alipay" src="<?php echo $alipay_attachment[0]; ?>"  v-show="ifShowPayImage" />
+									<img class="alipay" src="<?php echo $alipay_attachment[0]; ?>" v-show="ifShowPayImage" />
 									<img class="wechatpay" src="<?php echo $wechat_attachment[0]; ?>" v-show="!ifShowPayImage" />
 								</div>
 								<div class="pay-chose flex-hb-vc mt-15">
@@ -142,27 +147,25 @@ get_header(); ?>
 				</div>
 			</div>
 		</article>
-		<div class="comment-container">
-			<?php
-			// If comments are open or we have at least one comment, load up the comment template.
-			if (comments_open() || get_comments_number()) :
-				comments_template();
-			endif;
-			?>
-		</div>
+		<aside class="comment-container mt-10" >
+			<h3 class="tips-header"><i class="lalaksks lalaksks-pinglun fs-20 mr-10"></i>评论区</h3>
+			<template v-if="posts.comment_status === 'open'">
+				<quick-comment :post-data="posts" v-if=""></quick-comment>
+			</template>
+			<template v-else>
+				<kl-empty description="暂不开放"></kl-empty>
+			</template>
+			
+		</aside>
 	</main>
-
-
 	<!-- #main -->
 </div>
 <!-- #primary -->
-<!-- 全局配置 -->
-<script>
-	window.post_id = <?php echo get_the_ID(); ?>;
-</script>
-<!-- 全局配置 -->
+
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/skeleton.js"></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/single.js"></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickCommentItem.js" defer></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickComment.js" defer></script>
 <?php setPostViews(get_the_ID()); ?>
 
 <?php get_sidebar(); ?>

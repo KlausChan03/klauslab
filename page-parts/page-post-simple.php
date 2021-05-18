@@ -28,16 +28,15 @@ get_header();
     }
 
     .commit-type {
-        height: 80px;
+        height: 60px;
     }
 </style>
-<script src="https://cdn.tiny.cloud/1/7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
-<div class="post-main" id="post-page">
+<div class="post-main" id="post-page" v-block>
     <el-form>
-        <div class="flex-hb-vc">
-            <div>
-                <el-popover placement="bottom" width="400" trigger="click" v-if="format === false">
+        <div class="post-header flex-hb-vc flex-hw">
+            <div class="post-header-left">
+                <el-popover placement="bottom" width="400" trigger="click" >
                     <el-upload ref="upload" class="upload" list-type="picture-card" :limit="1" :on-exceed="handleExceed" :action=`${window.site_url}/wp-json/wp/v2/media` :on-progress="handleUploadBegin" :on-success="handleUploadSuccess" :headers="{'X-WP-Nonce': window._nonce}" multiple>
                         <i slot="default" class="el-icon-plus"></i>
                         <!-- <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div> -->
@@ -56,17 +55,17 @@ get_header();
                             </span>
                         </div>
                     </el-upload>
-                    <el-button class="upload-button mr-10" size="small" slot="reference"><i class="lalaksks lalaksks-palette mr-10"></i>背景图</el-button>
+                    <el-button :disabled="format === true" class="upload-button mr-10" size="small" slot="reference"><i class="lalaksks lalaksks-palette mr-10"></i>背景图</el-button>
                 </el-popover>
                 <el-tag class="mr-10" size="small" v-for="(item,index) in tagNameList"> {{item}} </el-tag>
                 <el-tag type="warning" class="mr-10" size="small" v-for="(item,index) in categoryNameList"> {{item}} </el-tag>
             </div>
-            <div class="flex-hb-vc">
-                <div class="commit-type flex-v flex-ha-vc">
+            <div class="post-header-right flex-hb-vc">
+                <div class="commit-type flex-v flex-ha-vc m-lr-15">
                     <el-switch v-model="format" active-text="说说" inactive-text="文章" active-color="#13ce66" @change=""> </el-switch>
                     <el-switch v-model="status" active-text="正式" inactive-text="草稿" active-color="#13ce66"> </el-switch>
                 </div>
-                <el-button class="commit-button ml-15" size="small" type="primary" @click="commitPost()" :loading="hasCommitFinish">立即发布</el-button>
+                <el-button class="commit-button" size="small" type="primary" @click="commitPost()" :loading="hasCommitFinish">发布</el-button>
             </div>
         </div>
         <el-card class="mt-10" shadow="hover" >
@@ -114,6 +113,8 @@ get_header();
         </el-dialog>
     </el-form>
 </div>
+<script src="https://cdn.tiny.cloud/1/7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
 <script>
     new Vue({
         el: '#post-page',

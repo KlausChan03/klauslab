@@ -7,6 +7,8 @@
  */
 ?>
 
+
+
 <div id="secondary" class="widget-area sidebar" role="complementary">
 	<div class="widget-content">
 		<?php dynamic_sidebar('sidebar-1'); ?>
@@ -14,13 +16,26 @@
 </div>
 <!-- #secondary -->
 
+<style>
+	.widget-area .widget .widget-user-container .user-info-main{
+		padding: 1.0rem  1.6rem;
+		/* margin-top: 50px; */
+	}
+	.widget-area .widget .widget-user-container .user-bg,.widget-area .widget .widget-user-container .user-bg{
+		height: 120px;
+	}
+	.col-b2bbbe{
+		color: #b2bbbe;
+	}
+</style>
+
 <script>
 	let secondaryPart = new Vue({
 		el: '#secondary',
 		mounted: function() {
 			let blog_create_time, our_love_time, our_info, photo_container = document.querySelector('.photo-container');
 			let _this = this
-			const h = this.$createElement;
+			// const h = this.$createElement;
 			let params = new FormData;
 			params.append('action', 'love_time');
 			axios.post(`${window.site_url}/wp-admin/admin-ajax.php`, params).then((res) => {
@@ -28,7 +43,7 @@
 				our_love_time = `2015-05-23 20:00:00`; // 恋爱时间
 				our_info = [res.data[1].nickname, res.data[1].img, res.data[2].nickname, res.data[2].img];
 				if (photo_container) {
-					photo_container.innerHTML = ` <span class="m-lr-10"><img src="https://${our_info[1]}"></span> <i class="lalaksks lalaksks-ic-heart-2 throb"></i> <span class="m-lr-10"><img src="https://${our_info[3]}"></span> `;
+					photo_container.innerHTML = ` <span class="m-lr-10">${res.data[1].img}</span> <i class="lalaksks lalaksks-ic-heart-2 throb"></i> <span class="m-lr-10">${res.data[2].img}</span> `;
 				}
 				if (document.getElementById("createtime")) {
 					window.showCreateTime = setInterval(() => {
@@ -40,10 +55,7 @@
 						_this.kl_count(our_love_time, '#lovetime', '他与她相恋了')
 					}, 1000);
 				}
-				if (document.querySelector("#thisYear")) {
-					const thisYear = document.querySelector("#thisYear");
-					thisYear.innerHTML = new Date().getFullYear();
-				}
+
 			})
 		},
 		methods: {

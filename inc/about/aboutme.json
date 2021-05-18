@@ -1,0 +1,54 @@
+[{
+        "name": "博主简介",
+        "type": "text",
+        "value": [
+            "欢迎来到我的博客，我是KlausChan。",
+            "我是一个重度拖延症兼轻度强迫症患者，所幸遇到她，一个急性子的女汉子。",
+            "我是一个前端开发工程师，在这条路上已经披荆斩棘5年，从事且热衷开发、设计。",
+            "如果你对我的博客内容感兴趣，可以留言交换友链或者通过RSS订阅我。"
+        ]
+    }, {
+        "name": "个人喜好",
+        "type": "simple",
+        "value": [
+            "📑 写博客", "🏓 打乒乓球", "🎾 打网球", "🎬 看电影", "🎮 玩电子游戏（WarIII、LOL、三国志11、三国杀）<br/>",
+            "💊 养宠物，目前是一群🐢、🐟的饲养员", "🍳 烹饪<br/>",
+            "🌞 晒太阳"
+        ]
+    },
+    {
+        "name": "联系方式",
+        "type": "list",
+        "value": ["微信：peRFect_ctx (合作请联系)", "QQ: 405471103", "知乎：klauschan", "GitHub：<a href='https://github.com/KlausChan03'>@KlausChan03</a>"]
+    },
+    {
+        "name": "电子产品",
+        "type": "complexList",
+        "value": [{
+            "item": "iPhone SE（第二代）",
+            "params": "A13 3GB+128GB 4.7 英寸",
+            "tips": "主力机"
+
+        }, {
+            "item": "Mi 6",
+            "params": "骁龙835 6GB+128GB 5.15 英寸",
+            "tips": "辅助机"
+
+        }, {
+            "item": "小米笔记本电脑 Air 13",
+            "params": "i7-8550 8GB+250GB 13 英寸",
+            "tips": "生产力"
+
+        }, {
+            "item": "AirPods",
+            "params": "入耳式 8g+38g",
+            "tips": "最佳搭档"
+
+        }]
+    },
+    {
+        "name": "个人简历",
+        "type": "list",
+        "value": ""
+    }
+]

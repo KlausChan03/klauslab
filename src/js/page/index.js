@@ -6,7 +6,6 @@ const index_module = new Vue({
 
     data() {
         return {
-            tinyKey: '7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j',
             listOfAll: [],
             listOfArticle: [],
             listOfChat: [],
@@ -33,7 +32,6 @@ const index_module = new Vue({
                 }
             ],
             currentCommentId: '',
-            commentPage: 1,
         }
     },
     created() {
@@ -47,9 +45,9 @@ const index_module = new Vue({
     },
     computed: {
         getOrderby() {
-            let _this = this
+            let self = this
             let _item = this.orderbyList.filter(item => {
-                return item.type === _this.orderby
+                return item.type === self.orderby
             })
             return _item[0].name
         },
@@ -83,19 +81,19 @@ const index_module = new Vue({
 
     methods: {
         getAllTypePost() {
-            let _this = this
-            _this.per_page = _this.per_page / 2
-            _this.ifShowAll = true
-            _this.total = 0
+            let self = this
+            self.per_page = self.per_page / 2
+            self.ifShowAll = true
+            self.total = 0
             axios.all([this.getAllArticles(), this.getAllChat()])
                 .then(axios.spread(function () {
-                    _this.listOfAll = _this.listOfArticle.concat(_this.listOfChat)
-                    _this.listOfAll = _this.listOfAll.sort((a, b) => {
+                    self.listOfAll = self.listOfArticle.concat(self.listOfChat)
+                    self.listOfAll = self.listOfAll.sort((a, b) => {
                         return new Date(b.date).getTime() - new Date(a.date).getTime()
                     })
-                    _this.ifShowAll = false
-                    _this.per_page = _this.per_page * 2
-                    _this.total = _this.totalOfArticle + _this.totalOfChat
+                    self.ifShowAll = false
+                    self.per_page = self.per_page * 2
+                    self.total = self.totalOfArticle + self.totalOfChat
                 }))
         },
 
@@ -119,7 +117,9 @@ const index_module = new Vue({
             params.per_page = this.per_page
             params.orderby = this.orderby
             if (this.page === 1) {
-                axios.get(`${window.site_url}/wp-json/wp/v2/posts?_embed&sticky=true`,{params:params})
+                axios.get(`${window.site_url}/wp-json/wp/v2/posts?_embed&sticky=true`, {
+                        params: params
+                    })
                     .then(res_sticky => {
                         this.listOfArticle = res_sticky.data;
                         //获取顶置文章 IDs 以在获取其余文章时排除
@@ -136,10 +136,10 @@ const index_module = new Vue({
                             this.listOfArticle.forEach(element => {
                                 element.ifShowAll = false
                                 element.ifShowComment = false
-                                if(element.date && Number(dayjs(new Date()).diff(dayjs(element.date), 'week')) === 0 ){
+                                if (element.date && Number(dayjs(new Date()).diff(dayjs(element.date), 'week')) === 0) {
                                     element.newest = true
                                 }
-                                if(element.post_metas.comments_num >= 10 || element.post_metas.zan_num >= 10){
+                                if (element.post_metas.comments_num >= 10 || element.post_metas.zan_num >= 10) {
                                     element.hotest = true
                                 }
 
@@ -157,18 +157,15 @@ const index_module = new Vue({
                     this.listOfArticle.forEach(element => {
                         element.ifShowAll = false
                         element.ifShowComment = false
-                        if(element.date && Number(dayjs(new Date()).diff(dayjs(element.date), 'week')) === 0 ){
+                        if (element.date && Number(dayjs(new Date()).diff(dayjs(element.date), 'week')) === 0) {
                             element.newest = true
                         }
-                        if(element.post_metas.comments_num >= 10 || element.post_metas.zan_num >= 10){
+                        if (element.post_metas.comments_num >= 10 || element.post_metas.zan_num >= 10) {
                             element.hotest = true
                         }
                     });
                 })
             }
-
-
-
         },
 
         getAllChat() {
@@ -185,10 +182,10 @@ const index_module = new Vue({
                 this.ifShowChat = false
                 this.listOfChat.forEach(element => {
                     element.ifShowComment = false
-                    if(element.date && Number(dayjs(new Date()).diff(dayjs(element.date), 'week')) === 0 ){
+                    if (element.date && Number(dayjs(new Date()).diff(dayjs(element.date), 'week')) === 0) {
                         element.newest = true
                     }
-                    if(element.post_metas.comments_num >= 10 || element.post_metas.zan_num >= 10){
+                    if (element.post_metas.comments_num >= 10 || element.post_metas.zan_num >= 10) {
                         element.hotest = true
                     }
                 });
@@ -202,11 +199,6 @@ const index_module = new Vue({
             this.$nextTick(() => {
                 document.querySelectorAll("#page")[0].scrollTop = 0
             })
-        },
-
-        changeCommentCurrent(val) {
-            this.commentPage = val
-            this.getListOfComment(this.currentCommentId)
         },
 
         changeType(tab, event) {
@@ -236,96 +228,79 @@ const index_module = new Vue({
         },
 
         showItemComment(id) {
-            this[this.postType === "article" ? 'listOfArticle' : 'listOfChat'].forEach(element => {
+            let self = this
+            this[this.postType === "article" ? 'listOfArticle' : 'listOfChat'].forEach((element, index) => {
                 if (element.id === id) {
-                    this.currentCommentId = id
+                    // this.currentCommentId = id
                     if (element.ifShowComment === false) {
-                        this.getListOfComment(this.currentCommentId)
+                        element.ifShowComment = true
+                        this.$nextTick(() => {
+                            setTimeout(() => {
+                                this.$refs['quickComment-' + id][0].getListOfComment(id)                            
+                            }, 20);
+                        })
                     } else {
                         element.ifShowComment = false
                     }
+                    
                 } else {
                     element.ifShowComment = false
                 }
+               
                 this.$forceUpdate()
+                
             })
-            
+
         },
 
-        getListOfComment(id, page = this.commentPage) {
-            var _nonce = "<?php echo wp_create_nonce( 'wp_rest' ); ?>";
-            let params = {}
-            params.post = id
-            params.page = page
-            axios.get(`${window.site_url}/wp-json/wp/v2/comments`, {
-                params: params
-            }, {
-                headers: {
-                    'X-WP-Nonce': _nonce
-                }
-            }).then(res => {
-                this[this.postType === "article" ? 'listOfArticle' : 'listOfChat'].forEach(element => {
-                    if (element.id === id) {
-                        this.$nextTick(() => {
-                            element.totalOfComment = parseInt(res.headers['x-wp-total'])
-                            element.ifShowComment = true
-                            let jsonDataTree = this.transData(res.data, 'id', 'parent', 'children');
-                            element.listOfComment = jsonDataTree
-                        })
-                    }
-                })                
-                this.$forceUpdate()
+        // getListOfComment(id, page = this.commentPage) {
+        //     let params = {}
+        //     params.post = id
+        //     params.page = page
+        //     axios.get(`${window.site_url}/wp-json/wp/v2/comments`, {
+        //         params: params
+        //     }, {
+        //         headers: {
+        //             'X-WP-Nonce': window._nonce
+        //         }
+        //     }).then(res => {
+        //         this[this.postType === "article" ? 'listOfArticle' : 'listOfChat'].forEach(element => {
+        //             if (element.id === id) {
+        //                 this.$nextTick(() => {
+        //                     element.totalOfComment = parseInt(res.headers['x-wp-total'])
+        //                     element.ifShowComment = true
+        //                     let jsonDataTree = transData(res.data, 'id', 'parent', 'children');
+        //                     element.listOfComment = jsonDataTree
+        //                 })
+        //             }
+        //         })
+        //         this.$forceUpdate()
 
-            })
-        },
+        //     })
+        // },
 
         handleCommand(type) {
             this.orderby = type
-            let _this = this
+            let self = this
             let getList = () => {
-                _this.getListByType(_this.postType)
+                self.getListByType(self.postType)
             }
-            let showNotify = () => {
-                    this.$notify({
-                        message: '切换成功',
-                        duration: 3000,
-                        type: 'success',
-                        showClose: false,
-                        // offset: 70
-                    });
-                }
-                (async () => {
-                    await getList();
-                    await showNotify();
-                })();
+            getList();
+
+            // let showNotify = () => {
+            //         this.$notify({
+            //             message: '切换成功',
+            //             duration: 3000,
+            //             type: 'success',
+            //             showClose: false,
+            //             // offset: 70
+            //         });
+            //     }
+            //     (async () => {
+            //         await getList();
+            //         await showNotify();
+            //     })();
         },
 
-        // 转换 json - tree
-        transData(a, idStr, pidStr, chindrenStr) {
-            var r = [];
-            var hash = {};
-            var id = idStr;
-            var pid = pidStr;
-            var children = chindrenStr;
-            var i = 0;
-            var j = 0;
-            var len = a.length;
-            for (; i < len; i++) {
-                hash[a[i][id]] = a[i];
-            }
-            for (; j < len; j++) {
-                var aVal = a[j];
-                aVal.level = 1;
-                var hashVP = hash[aVal[pid]];
-                if (hashVP) {
-                    aVal.level++
-                        !hashVP[children] && (hashVP[children] = []);
-                    hashVP[children].push(aVal);
-                } else {
-                    r.push(aVal);
-                }
-            }
-            return r;
-        }
     }
 })

@@ -13,7 +13,7 @@ Vue.component('quick-comment-item', {
         <li v-for="(item,index) in commentData" :id="'comment-' + item.id" :key="item.id" class="comment-item" >
           <div class="comment-item-main flex-hl-vl">
             <div class="commentator-avatar">
-              <img alt="avatar" :src="item.author_avatar_urls[48]"  height="32" width="32" class="avatar avatar-32 photo">
+              <img alt="avatar" :src="item.author_avatar_urls ? item.author_avatar_urls[48] : ''"  height="32" width="32" class="avatar avatar-32 photo">
             </div>
             <div class="commentator-content">
               <span class="commentator-name">
@@ -25,7 +25,7 @@ Vue.component('quick-comment-item', {
               <div class="comment-chat">
                 <div class="comment-comment">
                   <p v-html="item.content.rendered"></p> 
-                  <div class="comment-info">
+                  <div class="comment-info flex-hb-vc">
                     <span class="comment-time">{{item.date | formateDate}}</span> 
                     <span class="reply flex-hr-vc">
                       <a @click="replyToThis(item)" rel="nofollow"  data-respondelement="respond" aria-label="" class="comment-reply-link">

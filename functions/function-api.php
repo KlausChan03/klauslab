@@ -162,6 +162,10 @@ function get_post_meta_for_api($post)
     $post_meta['author'] = get_user_by('ID', $post['author'])->display_name;
     $post_meta['link'] = get_post_meta($post['id'], 'link', true);
     $post_meta['img'] = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full');
+    $post_meta['avatar'] = get_avatar(get_user_by('ID', $post['author'])->user_email, '36');
+    // $post_meta['test'] = get_user_by('ID', $post['author'])->dat;
+
+    // $post_meta['avatar'] = get_the_author_meta( $field, $userID );
     $post_meta['title'] = get_the_title($post['id']);
     $post_meta['comments_num'] = get_comments_number($post['id']);
     $post_meta['zan_num'] = get_post_meta($post['id'], 'like', true);
@@ -173,7 +177,6 @@ function get_post_meta_for_api($post)
     $post_meta['tag_name'] = array_column( $tagList, 'name');
     $catList = get_the_category($post['id']);
     $post_meta['cat_name'] = array_column( $catList, 'name');
-    // $post_meta['newest'] = get_the_date('ID', $post['author'])->display_name;
 
     return $post_meta;
 }
@@ -192,7 +195,7 @@ function get_comment_meta_for_api($comment){
     if ($comment->author == '1') {
         $comment_meta['level'] = '<span class="vip level_Max">博主</span>';
     } else {
-        $comment_meta['level'] =  get_author_class_for_api($commentData->comment_author_email,'');
+        $comment_meta['level'] =  get_author_class_for_api($commentData->comment_author_email);
     } 
 
     return $comment_meta;
@@ -200,7 +203,7 @@ function get_comment_meta_for_api($comment){
 }
 
 // 开启用户等级-评论模块
-function get_author_class_for_api($comment_author_email, $user_id)
+function get_author_class_for_api($comment_author_email)
 {
     global $wpdb;
     $author_count = count($wpdb->get_results(

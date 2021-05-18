@@ -40,31 +40,31 @@ function widget_userinfo()
 {
 	global $current_user;
 ?>
+
 	<div class="widget-user-container">
 		<div class="user-bg"></div>
 		<div class="user-main">
-			<div class="user-avatar flex-hc-vc mb-10">
+			<div class="user-avatar flex-hc-vc">
 				<?php if (function_exists('get_avatar')) {
-					echo get_avatar($current_user->user_email, 72);
+					echo get_avatar($current_user->user_email, 64);
 				} ?>
 			</div>
-			<div class="user-info flex-hl-vc">
-				<p>
+			<div class="user-default flex-v" style="padding-left: 90px; line-height: 1.5"> 
+				<span class="fs-16"><?php echo($current_user->display_name); ?></span>
+				<span><?php echo get_author_class_for_api($current_user->user_email); ?></span>
+			</div>
+			<div class="user-info-main flex-hb-vc">
 					<?php global $user_ID;
 					if (!$current_user->display_name && $user_ID === 0) : ?>
-						<?php echo ('游客，欢迎到此一游。'); ?>
+						<span> <?php echo ('游客，欢迎到此一游。'); ?> </span>
 					<?php else : ?>
-						<?php
-						echo ('你好，' . $current_user->display_name . '。');
-						echo ('你在本站留下了'
-							. get_comments('count=true&user_id=' . $user_ID) . '条评论，'
-							. count_user_posts($user_ID, 'post') . '篇文章，'
-							. count_user_posts($user_ID, 'shuoshuo') . '篇说说。');
-						?>
+						<p class="flex-hc-vc flex-v"> <span><?php echo(count_user_posts($user_ID, 'post')); ?> 篇</span><span>文章</span></p>
+						<span class="flex-hc-vc col-b2bbbe">/</span>
+						<p class="flex-hc-vc flex-v"><span> <?php echo(count_user_posts($user_ID, 'shuoshuo')); ?> 篇</span><span>说说</span></p>
+						<span class="flex-hc-vc col-b2bbbe">/</span>
+						<p class="flex-hc-vc flex-v"><span> <?php echo(get_comments('count=true&user_id=' . $user_ID)); ?> 条</span><span>评论</span></p>
 					<?php endif; ?>
-					<!-- <?php echo ($current_user->display_name); ?>，</span><span>你在本站留下了<?php global $user_ID;
-																							echo get_comments('count=true&user_id=' . $user_ID); ?>条评论。 -->
-				</p>
+
 
 			</div>
 		</div>

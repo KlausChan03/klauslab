@@ -18,7 +18,10 @@ Vue.component('kl-empty', {
         }
     },
     props: {
-        description: String,
+        description: {
+            type: String,
+            default: '暂无数据',
+        },
         image: {
             type: String,
             default: 'default',

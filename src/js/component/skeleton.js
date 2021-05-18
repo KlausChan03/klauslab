@@ -6,7 +6,7 @@ Vue.component('kl-skeleton', {
       default: 'post'
     },
     randomList: {
-      type: Number,
+      type: Array,
       default: Math.round(Math.random() * 2) + 1,
     }
 
@@ -30,6 +30,21 @@ Vue.component('kl-skeleton', {
     <div  v-else-if="type === 'single'" class="kl-skeleton kl-skeleton-animated" id="kl-skeleton" >
       <div class="kl-skeleton-title-container flex-hc-vc">
         <div class="kl-skeleton-title-line">Loading</div>
+      </div>
+      <div class="kl-skeleton-item">
+        <div class="kl-skeleton-content">        
+          <div class="kl-skeleton-line"></div>
+          <div class="kl-skeleton-line"></div>
+          <div class="kl-skeleton-line"></div>
+          <div class="kl-skeleton-line"></div>
+        </div>
+      </div>
+    </div>
+    <div  v-else-if="type === 'comment'" class="kl-skeleton kl-skeleton-animated" id="kl-skeleton" >
+      <div class="kl-skeleton-item">
+        <div class="kl-skeleton-content"> 
+          <div class="kl-skeleton-line" style="height:160px; width:100%;"></div>
+        </div>
       </div>
       <div class="kl-skeleton-item">
         <div class="kl-skeleton-content">        

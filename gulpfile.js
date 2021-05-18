@@ -42,7 +42,7 @@ const dir = {
 
 // let FILTERJS = [dir.src + '/js/*.js', '!' + dir.src + '/js/*.min.js', '!' + dir.src + '/js/**/canvas.js', '!' + dir.src + '/js/**/fixed-plugins.js'];
 let HEADERJS = [dir.src + '/js/options.js'];
-let FOOTERJS = [ dir.src + '/js/support.js', dir.src + '/js/common.js', dir.src + '/js/utils.js' ];
+let FOOTERJS = [ dir.src + '/js/common.js', dir.src + '/js/utils.js' ];
 let COPYJS = [dir.src + '/js/**/*.min.js',dir.src + '/js/page/*.js',dir.src + '/js/plugin/*.js',dir.src + '/js/component/*.js', dir.src + '/js/**/canvas.js', dir.src + '/js/**/fixed-plugins.js', dir.src + '/js/flexible.js', dir.src+ '/js/login.js'];
 let FILTERCSS = [dir.src + '/css/*.css', '!' + dir.src + '/css/*.min.css' ]
 let FILTERSCSS = [dir.src + '/css/*.scss']

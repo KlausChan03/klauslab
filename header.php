@@ -40,7 +40,11 @@
 		window.site_url = '<?php echo site_url() ?>';
 		window.ajaxSourceUrl = window.site_url + '/wp-content/themes/KlausLab/inc'
 		window.homeSourceUrl = window.site_url + '/wp-content/themes/KlausLab/dist'
-		window.start_time = new Date("<?php echo cs_get_option('klausLab_start_time'); ?>").getFullYear();
+		window.start_time = '<?php echo cs_get_option('klausLab_start_time'); ?>';
+		window.start_full_year = start_time ? new Date(start_time).getFullYear() : new Date().getFullYear();
+		window.now_full_year = new Date().getFullYear();
+		window.icp_num = '<?php echo get_option('zh_cn_l10n_icp_num') ?>';
+		window.tinyKey ="7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j"
 	</script>
 	<div id="page" class="hfeed site">
 		<header id="header" class="site-header" role="banner" v-block>

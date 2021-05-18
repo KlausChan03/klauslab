@@ -65,32 +65,33 @@ get_header();
 
   .article-list .entry-action-main .entry-zan .lalaksks-ic-zan:hover {
     background-color: #F5B4A7;
-    color:#DD4422
-
+    color: #DD4422
   }
 
   .article-list .entry-action-main .entry-cai .lalaksks-ic-zan:hover {
     background-color: #856D72;
-    color:#36292F
+    color: #36292F
   }
 
   .article-list .el-tag:first-child {
     margin-left: 0;
   }
 
-  .article-list .entry-header{
+  .article-list .entry-header {
     line-height: 1.6;
   }
 
   .setting-part {
     top: 10px;
-    right: 10px;
+    right: 1.6rem;
   }
-  .comment-list,.comment-input{
+
+  .comment-list,
+  .comment-input {
     position: relative;
   }
 
-  #comments > .comment-list:before{
+  #comments>.comment-list:before {
     position: absolute;
     content: '评论列表';
     background: #42A5F5;
@@ -105,7 +106,7 @@ get_header();
     padding: 4px;
   }
 
-  #comments > .comment-input:before{
+  #comments>.comment-input:before {
     position: absolute;
     content: '评论发布';
     background: #42A5F5;
@@ -152,7 +153,8 @@ get_header();
   <?php echo boolval(cs_get_option('klausLab_sideBar_switcher')) ?>
 </script>
 
-<div id="primary" class="main-area <?php $is_show_sidebar = is_bool(cs_get_option('klausLab_sideBar_switcher')); echo($is_show_sidebar == 1 ? '' : 'w-1'); ?>">
+<div id="primary" class="main-area <?php $is_show_sidebar = is_bool(cs_get_option('klausLab_sideBar_switcher'));
+                                    echo ($is_show_sidebar == 1 ? '' : 'w-1'); ?>">
   <main id="main" class="main-content" role="main">
     <!-- 文章列表 -->
     <div class="main-container pos-r" v-block>
@@ -232,9 +234,8 @@ get_header();
           <kl-skeleton v-if="ifShowPost" type="post"></kl-skeleton>
           <div class="article-list" v-if="!ifShowPost">
             <article class="article-item hentry" v-for="(item,index) in listOfArticle" :key="index">
-              <article-item :post-data="item" @change-type="changeItemType" @show-comment="showItemComment" ></article-item>
-              <quick-comment :comment-data="item.listOfComment" :post-data="item" :tiny-key="tinyKey" v-if="item.ifShowComment" @change="changeCommentCurrent"></quick-comment>
-              
+              <article-item :post-data="item" @change-type="changeItemType" @show-comment="showItemComment"></article-item>
+              <quick-comment :ref="'quickComment-'+item.id" callback="true" :comment-data="item.listOfComment" :post-data="item" v-if="item.ifShowComment"></quick-comment>
             </article>
           </div>
         </el-tab-pane>
@@ -244,7 +245,7 @@ get_header();
           <div class="article-list" v-if="!ifShowChat">
             <article class="article-item hentry" v-for="(item,index) in listOfChat" :key="index">
               <chat-item :post-data="item" @show-comment="showItemComment"></chat-item>
-              <quick-comment :comment-data="item.listOfComment" :post-data="item" :tiny-key="tinyKey" v-if="item.ifShowComment" @change="changeCommentCurrent"></quick-comment>
+              <quick-comment :ref="'quickComment-'+item.id" callback="true" :comment-data="item.listOfComment" :post-data="item" v-if="item.ifShowComment"></quick-comment>
 
             </article>
           </div>
@@ -258,7 +259,6 @@ get_header();
           </el-dropdown-menu>
         </el-dropdown>
       </div>
-
       <el-card class="flex-hc-vc mt-15" shadow="hover">
         <el-pagination layout="prev, pager, next" background :pager-count="getPaperSize" :page-size="per_page" :current-page.sync="page" :total="getTotal" :hide-on-single-page="judgeCount" @current-change="handleCurrentChange">
         </el-pagination>
@@ -276,7 +276,7 @@ get_header();
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickComment.js" defer></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/index.js" defer></script>
 <?php
-  $is_show_sidebar == 1 ?  get_sidebar() : ''
- 
+$is_show_sidebar == 1 ?  get_sidebar() : ''
+
 ?>
 <?php get_footer(); ?>

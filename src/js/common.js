@@ -273,14 +273,14 @@ let footPart = new Vue({
 // })
 
 // $(document).on("mouseover mouseout", "img", function (event) {
-//     var _this = $(this);
-//     console.log(_this.css("width"), $(this).css("width"))
-//     var _this_parent = $(this).parent();
+//     var self = $(this);
+//     console.log(self.css("width"), $(this).css("width"))
+//     var self_parent = $(this).parent();
 //     if (event.type == "mouseover") {
-//         _this_parent.css({"width":_this.css("width"),"height":_this.css("height"),"overflow":"hidden","display":"inline-block"})
-//         _this.addClass("extend-img");
+//         self_parent.css({"width":self.css("width"),"height":self.css("height"),"overflow":"hidden","display":"inline-block"})
+//         self.addClass("extend-img");
 //     } else {
-//         _this_parent.css({"width":"auto","height":"auto","overflow":"visible"})
-//         _this.removeClass("extend-img");
+//         self_parent.css({"width":"auto","height":"auto","overflow":"visible"})
+//         self.removeClass("extend-img");
 //     }
 // })

@@ -34,7 +34,7 @@ let fixedPlugins = new Vue({
         }
     },
     mounted() {
-        let _this = this
+        let self = this
         this.init()
 
 
@@ -59,7 +59,7 @@ let fixedPlugins = new Vue({
             background_out.querySelectorAll('li')[0].onclick = function (event) {
                 Animation.closeGravity();
                 Animation.closeSnow();
-                Animation.snow(_this.mascot[_this.season], 88);
+                Animation.snow(self.mascot[self.season], 88);
             }
             background_out.querySelectorAll('li')[0].ondblclick = function (event) {
                 Animation.closeSnow();

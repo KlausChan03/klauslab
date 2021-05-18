@@ -2344,6 +2344,10 @@ body {
   padding: 10px ;
 }
 
+.p-15 {
+  padding: 15px ;
+}
+
 .mt-30 {
   margin-top: 30px;
 }
@@ -2778,7 +2782,7 @@ body {
 .site-footer {
   width: 100%;
   border-radius: 2px;
-  min-height: 80px;
+  min-height: 100px;
 
   .site-info {
     >p {
@@ -3007,7 +3011,7 @@ body {
   }
 
   .widget {
-    padding: 1rem;
+    padding: 1rem 1.6rem;
     margin-bottom: .8rem;
     &:last-child {
       margin-bottom: 0;
@@ -3084,11 +3088,10 @@ body {
         }
       }
       .user-main{
-        min-height: 80px;
         .user-avatar{
           position: absolute;
           left: 15px;
-          top: 160px;
+          top: calc( 50% - 14px );
         }
         .user-info{
           padding-left: calc(72px + 15px + .8em);
@@ -3151,13 +3154,13 @@ body {
 }
 
 /* 公共模块 */
-img.avatar{
-  border-radius: 4px;
-  -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.1), 1px 1px 1px rgba(0,0,0,0.1), 1px 1px 1px rgba(0,0,0,0.1);
-  box-shadow: 1px 1px 1px rgba(0,0,0,.1), 1px 1px 1px rgba(0,0,0,0.1), 1px 1px 1px rgba(0,0,0,0.1);
-  border: 2px solid #fff;
-  padding: 2px;
-}
+// img.avatar{
+//   border-radius: 4px;
+//   -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.1), 1px 1px 1px rgba(0,0,0,0.1), 1px 1px 1px rgba(0,0,0,0.1);
+//   box-shadow: 1px 1px 1px rgba(0,0,0,.1), 1px 1px 1px rgba(0,0,0,0.1), 1px 1px 1px rgba(0,0,0,0.1);
+//   border: 2px solid #fff;
+//   padding: 2px;
+// }
 
 /* 自定义模块 */
 
@@ -4722,14 +4725,20 @@ div[itemprop="description"] {
   .comment-comment {
     font-size: 14px;
     background-color: #fbf9f9;
-    padding: 10px 15px;
+    padding: 10px;
     margin: 5px 0;
     border-radius: 0 4px 4px;
     border: 1px solid #e3e8e8;
-    display: inline-block;
-    min-width: 120px;
-    .comment-info .comment-time {
-      color: #999;
+    min-width: 150px;
+    .comment-info{
+      margin-top: 5px;
+      * {
+        font-size: 12px;
+
+      }
+      .comment-time {
+        color: #999;
+      }
     }
   }
 
@@ -6822,9 +6831,9 @@ div[itemprop="description"] {
   padding-bottom: 15px;
 }
 
-.style-18 .el-loading-mask {
-  background-color: transparent;
-}
+// .style-18 .el-loading-mask {
+//   background-color: transparent;
+// }
 
 .style-18 .archive-filter button.active {
   color: #409EFF;
@@ -6848,5 +6857,13 @@ div[itemprop="description"] {
 
 .style-18 .entry-content hr:first-child {
   display: none;
+}
+
+.tips-header {
+  color: #333333;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 2;
+  padding: .5rem 1.5rem;
 }
 

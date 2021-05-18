@@ -6,7 +6,7 @@
  * @package KlausLab
  */
 
- 
+
 // 定义目录变量
 // @if NODE_ENV = 'prod'
 // define('FE_ENV', "Production");
@@ -280,14 +280,13 @@ function normal_style_script()
         // 动画库样式
         wp_enqueue_style('animate', KL_THEME_URI . '/css/animate.min.css', array(), '3.5.1', false);
         // 支持
-        wp_enqueue_script('supportJs', KL_THEME_URI . '/js/support.js', false, '1.0', array('jquery'));
+        // wp_enqueue_script('supportJs', KL_THEME_URI . '/js/support.js', false, '1.0', array('jquery'));
         // 基础方法
         wp_enqueue_script('myUtil', KL_THEME_URI . '/js/utils.js', array(), '1.0', false);
         // 插件样式
         wp_enqueue_style('supportCss', KL_THEME_URI . '/css/support.css', array(), '1.0', false);
         // element-css 自定义样式
         wp_enqueue_style('extra', KL_THEME_URI . '/css/element-ui-extra.css', array(), '1.0', false);
-
     }
 
     // dayjs.min.js
@@ -306,7 +305,7 @@ function normal_style_script()
     // wp_enqueue_script('myConfig', KL_THEME_URI . '/js/config.js', array(), '1.0', false);
     // 配置
     wp_enqueue_script('myOptions', KL_THEME_URI . '/js/options.js', array(), '1.0', false);
-    
+
 
     // ElementUI
     wp_enqueue_script('element-ui-js', KL_THEME_URI . '/js/lib/element-ui.min.js', array(), '1.0', false);
@@ -329,7 +328,7 @@ function footer_script()
     if (FE_ENV !== "Development") {
         // 通过js判断当前环境
         // 通用
-        wp_enqueue_script('app', KL_THEME_URI . '/js/app.js', array(), '1.0', false);  
+        wp_enqueue_script('app', KL_THEME_URI . '/js/app.js', array(), '1.0', false);
         // wp_enqueue_script('main', KL_THEME_URI . '/js/common.js', array(), '1.0', false);
 
     } else {
@@ -345,13 +344,13 @@ function footer_script()
     wp_enqueue_script('fixedPlugins', KL_THEME_URI . '/js/fixed-plugins.js', array(), '1.0', false);
     // 先将ajaxurl变数设定好
     // wp_localize_script('ajax', 'my_ajax_obj', array('ajaxurl' => admin_url('admin-ajax.php')));
-    wp_localize_script('fixedPlugins', 'KlausLabConfig', array(
-        'siteUrl' => get_stylesheet_directory_uri(),
-        'siteStartTime' => cs_get_option('memory_start_time'),
-        'ajaxUrl' => admin_url('admin-ajax.php'),
-        'commentEditAgain' => cs_get_option('memory_comment_edit'),
-        'loadPjax' => cs_get_option('memory_pjax'),
-    ));
+    // wp_localize_script('fixedPlugins', 'KlausLabConfig', array(
+    //     'siteUrl' => get_stylesheet_directory_uri(),
+    //     'siteStartTime' => cs_get_option('memory_start_time'),
+    //     'ajaxUrl' => admin_url('admin-ajax.php'),
+    //     'commentEditAgain' => cs_get_option('memory_comment_edit'),
+    //     'loadPjax' => cs_get_option('memory_pjax'),
+    // ));
 }
 
 function my_custom_login()
@@ -729,10 +728,13 @@ function love_time()
     global $wpdb, $post;
     $action = $_POST["action"];
     $user_first = $wpdb->get_row("SELECT user_nicename,user_registered FROM $wpdb->users WHERE ID=1");
-    $user_hero = $wpdb->get_row("SELECT nickname,img FROM {$wpdb->prefix}xh_social_channel_wechat WHERE ID=1");
-    $user_heroine = $wpdb->get_row("SELECT nickname,img FROM {$wpdb->prefix}xh_social_channel_wechat WHERE ID=2");
-
-    $return_arr = array($user_first, $user_hero, $user_heroine);
+    $user_host_name = cs_get_option('klausLab_bloger_host');
+    $user_hostess_name = cs_get_option('klausLab_bloger_hostess');
+    $user_host = $wpdb->get_row("SELECT display_name,user_email FROM $wpdb->users WHERE user_login='$user_host_name'");
+    $user_hostess = $wpdb->get_row("SELECT display_name,user_email FROM $wpdb->users WHERE user_login='$user_hostess_name'");
+    $user_host->img = get_avatar($user_host->user_email, '50');
+    $user_hostess->img = get_avatar($user_hostess->user_email, '50');
+    $return_arr = array($user_first, $user_host, $user_hostess);
     wp_send_json($return_arr);
 }
 add_action('wp_ajax_nopriv_love_time', 'love_time');
@@ -1265,73 +1267,73 @@ function ajax_comment_callback()
 
 
 
-    // function my_avatar($avatar)
-    // {
-
-    //     $tmp = strpos($avatar, 'http');
-    //     $g = substr($avatar, $tmp, strpos($avatar, "'", $tmp) - $tmp);
-    //     $tmp = strpos($g, 'avatar/') + 7;
-    //     $f = substr($g, $tmp, strpos($g, "?", $tmp) - $tmp);
-    //     $w = get_bloginfo('wpurl');
-    //     $e = ABSPATH . 'avatar/' . $f . '.jpg';
-    //     $t = 1209600; //設定14天, 單位:秒
-    //     if (!is_file($e) || (time() - filemtime($e)) > $t) { //當頭像不存在或文件超過14天才更新
-    //         copy(htmlspecialchars_decode($g), $e);
-    //     } else $avatar = strtr($avatar, array($g => $w . '/avatar/' . $f . '.jpg'));
-    //     if (filesize($e) < 500) copy($w . '/avatar/default.jpg', $e);
-    //     return $avatar;
-    // }
-
-    // add_filter('get_avatar', 'my_avatar');
-
-
-    function my_avatar($email = 'klauschan007@gmail.com', $size = '50', $default = '', $alt = '')
+    function my_avatar($avatar)
     {
-        // 设置$email默认值为一个不存在的aaaaa@aaaaaa.com
-        // 防止空的$email导致出错
-        $f = md5(strtolower($email));
 
-        // 以下代码将头像缓存到wp-content目录下
-        $a = WP_CONTENT_URL . '/avatar/' . $f . $size . '.png';
-        $e = WP_CONTENT_DIR . '/avatar/' . $f . $size . '.png';
-        $d = WP_CONTENT_DIR . '/avatar/' . $f . '-d.png';
-
-        // 如果要将头像缓存到当前主题目录下，请将上面3行代码改成：
-        // $a = get_bloginfo('template_url') . '/avatar/'. $f . $size . '.png';
-        // $e = get_template_directory() . '/avatar/' . $f . $size . '.png';
-        // $d = get_template_directory() . '/avatar/' . $f . '-d.png';
-
-        if ($default == '')
-            $default = content_url() . '/avatar/default.jpg';
-
-        $t = 2592000; // 缓存有效期30天, 这里单位:秒
-        if (!is_file($e) || (time() - filemtime($e)) > $t) {
-            if (!is_file($d) || (time() - filemtime($d)) > $t) {
-                // 验证是否有头像
-                $uri = 'http://www.gravatar.com/avatar/' . $f . '?d=404';
-                $headers = @get_headers($uri);
-                if (!preg_match("|200|", $headers[0])) {
-                    // 没有头像，则新建一个空白文件作为标记
-                    $handle = fopen($d, 'w');
-                    fclose($handle);
-
-                    $a = $default;
-                } else {
-                    // 有头像且不存在则更新
-                    $r = get_option('avatar_rating');
-                    $g = 'http://www.gravatar.com/avatar/' . $f . '?s=' . $size . '&r=' . $r;
-                    copy($g, $e);
-                }
-            } else {
-                $a = $default;
-            }
-        }
-
-        $avatar = "<img alt='{$alt}' src='{$a}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
-        return apply_filters('my_avatar', $avatar, $email, $size, $default, $alt);
+        $avatar = preg_replace("/http:\/\/(www|\d).gravatar.com/", "https://gravatar.loli.net", $avatar);
+        // $avatar = str_replace(array("www.gravatar.com", "0.gravatar.com", "1.gravatar.com", "2.gravatar.com"), "secure.gravatar.com", $avatar);
+        //~ 替换为 https 协议
+        $avatar = str_replace("http://", "https://", $avatar);
+        return $avatar;
     }
 
-    // add_filter('get_avatar', 'my_avatar');
+    add_filter('get_avatar', 'my_avatar');
+
+
+    
+
+    // function get_avatar($email = 'klauschan007@gmail.com', $size = '48', $default = '', $alt = '')
+    // {
+    //     // 设置$email默认值为一个不存在的email
+    //     // 防止空的$email导致出错
+    //     $f = md5(strtolower($email));
+    //     $n = $email;
+    //     // 以下代码将头像缓存到wp-content目录下
+    //     $a = WP_CONTENT_URL . '/avatar/' . $f . $size . '.png';
+    //     $e = WP_CONTENT_DIR . '/avatar/' . $f . $size . '.png';
+    //     $d = WP_CONTENT_DIR . '/avatar/' . $f . '-d.png';
+
+    //     // 如果要将头像缓存到当前主题目录下，请将上面3行代码改成：
+    //     // $a = get_bloginfo('template_url') . '/avatar/'. $f . $size . '.png';
+    //     // $e = get_template_directory() . '/avatar/' . $f . $size . '.png';
+    //     // $d = get_template_directory() . '/avatar/' . $f . '-d.png';
+    //     $test = '';
+    //     if ($default == '')
+    //         $default = content_url() . '/avatar/default.jpg';
+
+    //         $t = 2592000; // 缓存有效期30天, 这里单位:秒
+    //         if ( !is_file($e) || (time() - filemtime($e)) > $t ) {
+    //           if ( !is_file($d) || (time() - filemtime($d)) > $t ) {
+    //             // 验证是否有头像
+    //             $uri = 'http://www.gravatar.com/avatar/' . $f . '?d=404';
+    //             $headers = @get_headers($uri);
+    //             if (!preg_match("|200|", $headers[0])) {
+    //               // 没有头像，则新建一个空白文件作为标记
+    //               $handle = fopen($d, 'w');
+    //               fclose($handle);
+    //               $test = '1';
+    //               $a = $default;
+    //             }
+    //             else {
+    //               // 有头像且不存在则更新
+    //               $r = get_option('avatar_rating');
+    //               $g = 'http://www.gravatar.com/avatar/'. $f. '?s='. $size. '&r=' . $r;
+    //               copy($g, $e);
+    //               $test = '2';
+
+    //             }
+    //           }
+    //           else {
+    //             $a = $default;
+    //             $test = '3';
+
+    //           }
+    //         }
+    //     $avatar = "<img alt='{$alt}' email='{$test}' src='{$a}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+    //     return apply_filters('get_avatar', $avatar, $email, $size, $default, $alt);
+    // }
+
+    // add_filter('get_avatar', 'get_avatar');
 
     // 增加个人简介信息
     function my_new_contactmethods($contactmethods)
@@ -1554,6 +1556,7 @@ function ajax_comment_callback()
             init_add_page('映象', 'page-movie', page_template_directory . 'page-movie.php');
             init_add_page('链集', 'page-links', page_template_directory . 'page-links.php', 'open');
             init_add_page('归档', 'page-archive', page_template_directory . 'page-archive.php');
+            init_add_page('关于', 'page-about', page_template_directory . 'page-about.php');
             init_add_page('快捷发布', 'page-post-simple', page_template_directory . '/page-post-simple.php');
         }
     }
