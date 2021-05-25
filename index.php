@@ -263,6 +263,7 @@ get_header();
         <el-pagination layout="prev, pager, next" background :pager-count="getPaperSize" :page-size="per_page" :current-page.sync="page" :total="getTotal" :hide-on-single-page="judgeCount" @current-change="handleCurrentChange">
         </el-pagination>
       </el-card>
+      <el-image v-if="imgList && imgList.length > 0"></el-image>
     </div>
   </main>
   <!-- #main -->

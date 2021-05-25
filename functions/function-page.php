@@ -159,7 +159,7 @@ function get_link_items(){
 	$result = '';
     if ( !empty($linkcats) ) {
         foreach( $linkcats as $linkcat){            
-            $result .=  '<h2 class="p-tb-10 mt-15">'.$linkcat->name.'</h2>';
+            $result .=  '<h2 class="p-10 mt-15">'.$linkcat->name.'</h2>';
             if( $linkcat->description ) $result .= '<div class="link-description">' . $linkcat->description . '</div>';
             $result .=  get_the_link_items($linkcat->term_id,$linkcat->name);
         }

@@ -202,6 +202,8 @@ function get_comment_meta_for_api($comment){
 
 }
 
+
+
 // 开启用户等级-评论模块
 function get_author_class_for_api($comment_author_email)
 {
@@ -209,7 +211,8 @@ function get_author_class_for_api($comment_author_email)
     $author_count = count($wpdb->get_results(
         "SELECT comment_ID as author_count FROM $wpdb->comments WHERE comment_author_email = '$comment_author_email' "
     ));
-    if ($author_count >= 1 && $author_count <= 10) //数字可自行修改，代表评论次数。
+    // if(is_user_logged_in()){
+        if ($author_count >= 1 && $author_count <= 10) //数字可自行修改，代表评论次数。
         return '<span class="vip level_1">LV.1</span>';
     else if ($author_count >= 11 && $author_count <= 20)
     return '<span class="vip level_2">LV.2</span>';
@@ -223,6 +226,11 @@ function get_author_class_for_api($comment_author_email)
     return '<span class="vip level_6">LV.6</span>';
     else if ($author_count >= 321)
     return '<span class="vip level_Max">LV.7</span>';
+    // } else {
+    //     return '<span class="vip">LV.0</span>';
+
+    // }
+   
 }
 
 function get_post_img_for_api($post)

@@ -12,7 +12,9 @@ function KlausLab_tag_cloud_widget($args)
 
 add_filter('widget_tag_cloud_args', 'KlausLab_tag_cloud_widget');
 
-add_action('widgets_init', function(){register_widget("UserInfo");});
+add_action('widgets_init', function () {
+	register_widget("UserInfo");
+});
 class UserInfo extends WP_Widget
 {
 
@@ -49,21 +51,21 @@ function widget_userinfo()
 					echo get_avatar($current_user->user_email, 64);
 				} ?>
 			</div>
-			<div class="user-default flex-v" style="padding-left: 90px; line-height: 1.5"> 
-				<span class="fs-16"><?php echo($current_user->display_name); ?></span>
-				<span><?php echo get_author_class_for_api($current_user->user_email); ?></span>
+			<div class="user-default flex-v" style="padding-left: 90px; line-height: 1.5">
+				<span class="fs-16"><?php echo ($current_user->display_name); ?></span>
+				<span><?php echo get_author_class($current_user->user_email); ?></span>
 			</div>
 			<div class="user-info-main flex-hb-vc">
-					<?php global $user_ID;
-					if (!$current_user->display_name && $user_ID === 0) : ?>
-						<span> <?php echo ('游客，欢迎到此一游。'); ?> </span>
-					<?php else : ?>
-						<p class="flex-hc-vc flex-v"> <span><?php echo(count_user_posts($user_ID, 'post')); ?> 篇</span><span>文章</span></p>
-						<span class="flex-hc-vc col-b2bbbe">/</span>
-						<p class="flex-hc-vc flex-v"><span> <?php echo(count_user_posts($user_ID, 'shuoshuo')); ?> 篇</span><span>说说</span></p>
-						<span class="flex-hc-vc col-b2bbbe">/</span>
-						<p class="flex-hc-vc flex-v"><span> <?php echo(get_comments('count=true&user_id=' . $user_ID)); ?> 条</span><span>评论</span></p>
-					<?php endif; ?>
+				<?php global $user_ID;
+				if (!$current_user->display_name && $user_ID === 0) : ?>
+					<span> <?php echo ('游客，欢迎到此一游。'); ?> </span>
+				<?php else : ?>
+					<p class="flex-hc-vc flex-v"> <span><?php echo (count_user_posts($user_ID, 'post')); ?> 篇</span><span>文章</span></p>
+					<span class="flex-hc-vc col-b2bbbe">/</span>
+					<p class="flex-hc-vc flex-v"><span> <?php echo (count_user_posts($user_ID, 'shuoshuo')); ?> 篇</span><span>说说</span></p>
+					<span class="flex-hc-vc col-b2bbbe">/</span>
+					<p class="flex-hc-vc flex-v"><span> <?php echo (get_comments('count=true&user_id=' . $user_ID)); ?> 条</span><span>评论</span></p>
+				<?php endif; ?>
 
 
 			</div>
@@ -73,7 +75,9 @@ function widget_userinfo()
 	<?php
 }
 
-add_action('widgets_init', function(){register_widget("NewVersionTips");});
+add_action('widgets_init', function () {
+	register_widget("NewVersionTips");
+});
 class NewVersionTips extends WP_Widget
 {
 
@@ -112,7 +116,7 @@ class NewVersionTips extends WP_Widget
 		// if ($title)
 		// 	echo $before_title . $title . $after_title;
 		echo $before_widget;
-		echo '<h1 class="widget-title">'.$instance['title'].'</h1>';
+		echo '<h1 class="widget-title">' . $instance['title'] . '</h1>';
 		echo widget_newVersionTips();
 		echo $after_widget;
 	}
@@ -136,7 +140,9 @@ function widget_newVersionTips()
 
 
 
-add_action('widgets_init', function(){register_widget("AuthorInfo");});
+add_action('widgets_init', function () {
+	register_widget("AuthorInfo");
+});
 class AuthorInfo extends WP_Widget
 {
 
@@ -173,7 +179,7 @@ function widget_authorinfo()
 				<!-- <a href="<?php echo get_author_posts_url(get_the_author_meta('ID')) ?>" target="_blank">(<?php the_author_posts(); ?>篇文章)</a> -->
 				<p><?php the_author_meta('description'); ?></p>
 			</div>
-			<div class="author-social flex-hb-vc flex-hw mt-15">
+			<div class="author-social flex-hb-vc flex-hw mt-15" v-if="false">
 				<span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">
 					<a href="<?php the_author_meta('user_url'); ?>" title="我的站点" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-menu"></i></a>
 				</span>
@@ -189,15 +195,15 @@ function widget_authorinfo()
 				<span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">
 					<a href="<?php the_author_meta('github'); ?>" title="github" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-github"></i></a>
 				</span>
-				<!-- <span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">				
-				<a href="<?php the_author_meta('juejin'); ?>" title="掘金" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-github"></i></a>
-			</span>
-			<span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">				
-				<a href="<?php the_author_meta('facebook'); ?>" title="facebook" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-github"></i></a>
-			</span>
-			<span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">				
-				<a href="<?php the_author_meta('bilibili'); ?>" title="bilibili" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-github"></i></a>
-			</span> -->
+				<span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">
+					<a href="<?php the_author_meta('juejin'); ?>" title="掘金" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-github"></i></a>
+				</span>
+				<span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">
+					<a href="<?php the_author_meta('facebook'); ?>" title="facebook" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-github"></i></a>
+				</span>
+				<span class="kl-btn kl-btn-primary kl-btn-fill kl-btn-sm">
+					<a href="<?php the_author_meta('bilibili'); ?>" title="bilibili" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-github"></i></a>
+				</span>
 			</div>
 		</div>
 	<?php

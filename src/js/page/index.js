@@ -32,6 +32,7 @@ const index_module = new Vue({
                 }
             ],
             currentCommentId: '',
+            imgList: [],
         }
     },
     created() {
@@ -41,6 +42,23 @@ const index_module = new Vue({
     mounted() {
         window.onresize = () => {
             this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
+        }
+
+    },
+    updated() {
+        let self = this
+        let imgList = document.querySelectorAll(".entry-summary img");
+        for (let index = 0; index < imgList.length; index++) {
+            const element = imgList[index];
+            element.addEventListener("click", function (e) {
+                e.preventDefault()
+                self.$alert(`<div class="p-10 flex-hc-vc">${element.outerHTML}</div>`, {
+                    dangerouslyUseHTMLString: true,
+                    closeOnClickModal: true,
+                    closeOnPressEscape: true,
+                    showConfirmButton: false,
+                  });
+            })
         }
     },
     computed: {
@@ -236,19 +254,19 @@ const index_module = new Vue({
                         element.ifShowComment = true
                         this.$nextTick(() => {
                             setTimeout(() => {
-                                this.$refs['quickComment-' + id][0].getListOfComment(id)                            
+                                this.$refs['quickComment-' + id][0].getListOfComment(id)
                             }, 20);
                         })
                     } else {
                         element.ifShowComment = false
                     }
-                    
+
                 } else {
                     element.ifShowComment = false
                 }
-               
+
                 this.$forceUpdate()
-                
+
             })
 
         },

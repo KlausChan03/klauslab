@@ -27,22 +27,35 @@
         "value": [{
             "item": "iPhone SE（第二代）",
             "params": "A13 3GB+128GB 4.7 英寸",
-            "tips": "主力机"
+            "tips": "主力机",
+            "rate": 3.5
+
 
         }, {
             "item": "Mi 6",
             "params": "骁龙835 6GB+128GB 5.15 英寸",
-            "tips": "辅助机"
+            "tips": "辅助机",
+            "rate": 4
+
 
         }, {
             "item": "小米笔记本电脑 Air 13",
             "params": "i7-8550 8GB+250GB 13 英寸",
-            "tips": "生产力"
+            "tips": "生产力",
+            "rate": 3.5
+
 
         }, {
             "item": "AirPods",
             "params": "入耳式 8g+38g",
-            "tips": "最佳搭档"
+            "tips": "最佳搭档",
+            "rate": 4.5
+
+        }, {
+            "item": "米家投影仪 青春版2",
+            "params": "自动校准 远场语音",
+            "tips": "一呼即应的桌面高清影院、哪里有墙就可以上场",
+            "rate": 4.5
 
         }]
     },

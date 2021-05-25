@@ -130,6 +130,7 @@ gulp.task('css', function () {
 
 gulp.task('scss', function () {
     return gulp.src(FILTERSCSS)
+        .pipe(concat('style.css'))
         .pipe(sourcemaps.init())
         .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
         .pipe(rename({           

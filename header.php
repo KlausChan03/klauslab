@@ -35,6 +35,7 @@
 
 <body <?php body_class(); ?>>
 	<script>
+		window.isLogin = "<?php echo is_user_logged_in(); ?>";
 		window._nonce = "<?php echo wp_create_nonce('wp_rest'); ?>";
 		window.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
 		window.site_url = '<?php echo site_url() ?>';
@@ -86,15 +87,17 @@
 						?>
 						<div id="personal-menu">
 							<ul>
-								<?php if (is_user_logged_in()) { ?>
+								<template v-if="window.isLogin">
 									<li><a href="<?php echo get_option('home'); ?>/wp-admin"><i class="lalaksks lalaksks-ic-dashboard m-lr-5"></i>后台</a></li>
 									<li><a href="<?php echo get_option('home'); ?>/page-post-simple"><i class="lalaksks lalaksks-rocket m-lr-5"></i>快捷发布</a></li>
 									<li><a href="<?php echo get_option('home'); ?>/wp-admin/post-new.php"><i class="lalaksks lalaksks-ic-create m-lr-5"></i>发布文章</a></li>
 									<li><a href="<?php echo get_option('home'); ?>/wp-admin/post-new.php?post_type=shuoshuo"><i class="lalaksks lalaksks-ic-create m-lr-5"></i>发布说说</a></li>
 									<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=logout"><i class="lalaksks lalaksks-ic-logout m-lr-5"></i>登出</a></li>
-								<?php } else { ?>
+								</template>
+								<template v-else>																						
 									<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=login"><i class="lalaksks lalaksks-ic-login m-lr-5"></i>登录</a></li>
-								<?php } ?>
+								</template>
+
 							</ul>
 						</div>
 					</div>

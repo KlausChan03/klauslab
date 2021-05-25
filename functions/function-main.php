@@ -170,7 +170,7 @@ if (!function_exists('KlausLab_comments')) :
                 ?>
             </div>
             <div class="commentator-comment" id="comment-<?php comment_ID(); ?>"><span class="commentator-name"><?php printf(__('<span class="author-name">%s</span> '), get_comment_author_link());
-                                                                                                                if ($comment->user_id == '1') { ?><i class="memory memory-certify"></i><?php } ?></span> <?php echo get_author_class($comment->comment_author_email, $comment->user_id); ?>
+                                                                                                                if ($comment->user_id == '1') { ?><i class="memory memory-certify"></i><?php } ?></span> <?php echo get_author_class($comment->comment_author_email); ?>
                            <div class="comment-chat">
                     <div class="comment-comment">
                         <?php if ($comment->comment_approved == '0') : ?><p>你的评论正在审核，稍后会显示出来！</p><?php endif; ?>
@@ -205,7 +205,7 @@ if (!function_exists('KlausLab_comments')) :
                                     <?php if ($comment->user_id == '1') {
                                         echo '<span class="vip level_Max">博主</span>';
                                     } else {
-                                        echo get_author_class($comment->comment_author_email, $comment->user_id);
+                                        echo get_author_class($comment->comment_author_email);
                                     } ?>
                                 </div>
                                 <!-- 评论时间 -->
@@ -286,7 +286,7 @@ function normal_style_script()
         // 插件样式
         wp_enqueue_style('supportCss', KL_THEME_URI . '/css/support.css', array(), '1.0', false);
         // element-css 自定义样式
-        wp_enqueue_style('extra', KL_THEME_URI . '/css/element-ui-extra.css', array(), '1.0', false);
+        // wp_enqueue_style('extra', KL_THEME_URI . '/css/element-ui-extra.css', array(), '1.0', false);
     }
 
     // dayjs.min.js
@@ -365,11 +365,6 @@ function my_custom_login()
     wp_enqueue_script('myLogin', KL_THEME_URI . '/js/login.js', array(), '1.0', false);
 }
 
-function is_login()
-{
-    return in_array($GLOBALS['pagenow'], array('wp-login.php', 'wp-register.php'));
-}
-
 
 function styles_scripts()
 {
@@ -380,7 +375,7 @@ function styles_scripts()
         // wp_register_script('jquery', '//code.jquery.com/jquery.min.js', array(), 'lastest', false);
         // 提交加载 jquery 脚本
         wp_enqueue_script('jquery');
-        if (is_mobile() === true && is_login() === false) {
+        if (is_mobile() === true && is_user_logged_in() === false) {
             wp_enqueue_script('flexible', KL_THEME_URI . '/js/flexible.js', array(), 'lastet', false);
         }
     } else { // 后台加载的脚本与样式表
@@ -620,26 +615,31 @@ add_action('future_to_publish', 'autoset_featured');
 
 
 // 开启用户等级-评论模块
-function get_author_class($comment_author_email, $user_id)
+function get_author_class($comment_author_email)
 {
     global $wpdb;
     $author_count = count($wpdb->get_results(
         "SELECT comment_ID as author_count FROM $wpdb->comments WHERE comment_author_email = '$comment_author_email' "
     ));
-    if ($author_count >= 1 && $author_count <= 10) //数字可自行修改，代表评论次数。
+    if(is_user_logged_in()){
+        if ($author_count >= 1 && $author_count <= 10) //数字可自行修改，代表评论次数。
         echo '<span class="vip level_1">LV.1</span>';
-    else if ($author_count >= 11 && $author_count <= 20)
-        echo '<span class="vip level_2">LV.2</span>';
-    else if ($author_count >= 21 && $author_count <= 40)
-        echo '<span class="vip level_3">LV.3</span>';
-    else if ($author_count >= 41 && $author_count <= 80)
-        echo '<span class="vip level_4">LV.4</span>';
-    else if ($author_count >= 81 && $author_count <= 160)
-        echo '<span class="vip level_5">LV.5</span>';
-    else if ($author_count >= 161 && $author_count <= 320)
-        echo '<span class="vip level_6">LV.6</span>';
-    else if ($author_count >= 321)
-        echo '<span class="vip level_Max">LV.7</span>';
+        else if ($author_count >= 11 && $author_count <= 20)
+            echo '<span class="vip level_2">LV.2</span>';
+        else if ($author_count >= 21 && $author_count <= 40)
+            echo '<span class="vip level_3">LV.3</span>';
+        else if ($author_count >= 41 && $author_count <= 80)
+            echo '<span class="vip level_4">LV.4</span>';
+        else if ($author_count >= 81 && $author_count <= 160)
+            echo '<span class="vip level_5">LV.5</span>';
+        else if ($author_count >= 161 && $author_count <= 320)
+            echo '<span class="vip level_6">LV.6</span>';
+        else if ($author_count >= 321)
+            echo '<span class="vip level_Max">LV.7</span>';
+    } else {
+        echo '<span class="vip level_0">LV.0</span>';
+    }
+    
 }
 
 // 根据设备类型自定义文章摘要长度
@@ -1563,6 +1563,11 @@ function ajax_comment_callback()
 
     add_action('load-themes.php', 'init_add_pages');
 
+
+    function filter_rest_allow_anonymous_comments() {
+        return true;
+    }
+    add_filter('rest_allow_anonymous_comments','filter_rest_allow_anonymous_comments');
 
 // 2018-8-14 引入
 // function translate_chinese_post_title_to_en_for_slug( $title ) {

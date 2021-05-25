@@ -1,9 +1,7 @@
 Vue.component('chat-item', {
   props: ['postData'],
   template: `
-  <div>
-   
-
+  <div>  
     <div class="entry-main" >
       <div class="flex-hb-vc flex-hw mb-10">
         <h5 v-if="postData.title.rendered" >#{{postData.title.rendered}}#</h5>
@@ -13,9 +11,8 @@ Vue.component('chat-item', {
           <el-tag class="ml-10" size="small" type="danger" v-if="postData.hotest">Hot</el-tag>
         </div>       
       </div>       
-      <p class="entry-summary" v-html="postData.content.rendered" :id="postData.id"> </p>
-    </div>
-    
+      <p ref="entrysummary" class="entry-summary" v-html="postData.content.rendered" :id="postData.id"> </p>
+    </div>    
     <div class="entry-footer flex-hb-vc flex-hw">
       <div class="entry-action flex-hb-vc w-1">
         <div class="entry-author fs-16 flex-hl-vc w-04">
@@ -44,6 +41,10 @@ Vue.component('chat-item', {
     </div>
     </div>
     `,
+  mounted() {
+    
+
+  },
   methods: {
     showComment(id) {
       this.$emit('show-comment', id)

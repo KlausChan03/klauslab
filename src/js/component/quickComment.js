@@ -19,6 +19,9 @@ Vue.component('quick-comment', {
         parentId: '',
       },
       totalOfComment: '',
+      commentAuthor: '',
+      commentEmail: '',
+      commentUrl: '',
 
     }
   },
@@ -32,29 +35,36 @@ Vue.component('quick-comment', {
   },
   template: `
   <div id="comments" style="margin: 0; padding: 1.5rem; position: relative; border-top: 1px solid #eee;">
-    <template v-if="listOfComment" >
-      <div class="comment-input mb-10" id="comment-input" v-loading="!ifShowEditor">
-        <editor  @onInit="changeShowStatus" :api-key="tinyKey" cloud-channel="5" :disabled=false :id="'uuid' + postData.id" :setting="{inline: false}" :init="{  
-          height: 180,
-          menubar: false,        
-          plugins: [
-            'advlist autolink lists link image charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount',
-            'lists code emoticons'
-          ],
-          
-          toolbar:
-            'undo redo | formatselect | emoticons | \
-            bullist numlist  | help'}" initial-value="" :inline=false model-events="" plugins="" tag-name="div" toolbar="" v-model="commentContent"  />
-          <div class="flex-hb-vc mt-10">
-            <span class="col-aaa">{{commentInfo.replyTo ? '@' + commentInfo.replyTo : ''}}</span>
-            <span>
-              <el-button size="mini" type="default" @click="cancelReply()" v-show="commentInfo.parentId">取消回复</el-button>
-              <el-button size="mini" type="primary" @click="commitComment()" :loading="hasCommitFinish">提交</el-button>
-            </span>        
-        </div>
+    <template v-if="!window.isLogin">
+      <div  class="flex-hb-vc mb-10">
+        <el-input type="text" name="author" v-model="commentAuthor" class="text-input text-top" id="comment-author" placeholder="昵称 *"></el-input>
+        <el-input type="text" name="email" v-model="commentEmail" class="text-input ml-5" id="comment-email" placeholder="邮箱 *"></el-input>
+        <el-input type="text" name="url" v-model="commentUrl" class="text-input ml-5" id="comment-url" placeholder="网址"></el-input>
       </div>
+    </template> 
+    <div class="comment-input mb-10" id="comment-input" v-loading="!ifShowEditor">
+      <editor  @onInit="changeShowStatus" :api-key="tinyKey" cloud-channel="5" :disabled=false :id="'uuid' + postData.id" :setting="{inline: false}" :init="{  
+        height: 180,
+        menubar: false,        
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount',
+          'lists code emoticons'
+        ],
+        
+        toolbar:
+          'undo redo | formatselect | emoticons | \
+          bullist numlist  | help'}" initial-value="" :inline=false model-events="" plugins="" tag-name="div" toolbar="" v-model="commentContent"  />
+        <div class="flex-hb-vc mt-10">
+          <span class="col-aaa">{{commentInfo.replyTo ? '@' + commentInfo.replyTo : ''}}</span>
+          <span>
+            <el-button size="mini" type="default" @click="cancelReply()" v-show="commentInfo.parentId">取消回复</el-button>
+            <el-button size="mini" type="primary" @click="commitComment()" :loading="hasCommitFinish">提交</el-button>
+          </span>        
+      </div>
+    </div>
+    <template v-if="listOfComment" >     
       <quick-comment-item  :comment-data="commentData ? commentData : listOfComment"></quick-comment-item>    
       <div class="flex-hc-vc m-tb-10" v-if="(postData.totalOfComment ? postData.totalOfComment : totalOfComment) > 10">
         <el-pagination layout="prev, pager, next, jumper" background :total="postData.totalOfComment ? postData.totalOfComment : totalOfComment" :pager-count="getPaperSize" :page-size="per_page" :current-page.sync="page" @current-change="handleCommentCurrentChange"> </el-pagination>
@@ -107,13 +117,26 @@ Vue.component('quick-comment', {
 
     commitComment() {
       this.hasCommitFinish = true
+      let params = {}
+      params.post = this.postData.id
+      params.content = this.commentContent
+      params.parent = this.commentInfo.parentId ? this.commentInfo.parentId : "0"
+      if(!window.isLogin){
+        params.author_name = this.commentAuthor
+        params.author_email = this.commentEmail
+        params.author_url = this.commentUrl
+      }
+
       axios.post(`${window.site_url}/wp-json/wp/v2/comments`, {
         post: this.postData.id,
         content: this.commentContent,
         parent: this.commentInfo.parentId ? this.commentInfo.parentId : "0",
-
-      }, {
-        headers: {
+        author_name: this.commentAuthor,
+        author_email: this.commentEmail,
+        author_url: this.commentUrl,
+      }
+      , {
+        headers:{
           'X-WP-Nonce': window._nonce
         }
       }).then(res => {

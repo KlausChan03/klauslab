@@ -38,8 +38,9 @@ setPostViews(get_the_ID()); ?>
                                 </template>
                                 <template v-else-if="item.type === 'complexList'">
                                     <ul>
-                                        <li v-for="(sonItem,sonIndex) in item.value">
+                                        <li v-for="(sonItem,sonIndex) in item.value" class="flex-hl-vc flex-hw">
                                             <span :title="sonItem.tips">{{sonItem.item}}<label class="ml-10">{{sonItem.params}}</label></span>
+                                            <el-rate v-model="sonItem.rate"  disabled   show-score text-color="#ff9900" score-template="{value}" ></el-rate>
                                         </li>
                                     </ul>
                                 </template>
@@ -119,7 +120,12 @@ setPostViews(get_the_ID()); ?>
     .info-main label {
         color: #999999;
         font-size: 12px;
+    }
 
+    .info-main .el-rate {
+        height: 24px;
+        line-height: 1;
+        margin-left: 10px;
     }
 </style>
 
@@ -141,7 +147,7 @@ setPostViews(get_the_ID()); ?>
                 posts: {
                     id: window.post_id,
                     comment_status: 'open'
-                }
+                },
 
             }
         },

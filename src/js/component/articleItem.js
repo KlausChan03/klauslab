@@ -167,7 +167,6 @@ Vue.component('article-item', {
           })
         })
       }
-
     },
   },
   mounted() {

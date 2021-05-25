@@ -9,7 +9,7 @@ const index_module = new Vue({
             ifMobileDevice: window.ifMobileDevice,
             post_id: window.post_id,
             posts: {
-                post_metas:{
+                post_metas: {
                     zan_num: 0,
                     comments_num: 0,
                 }
@@ -22,12 +22,23 @@ const index_module = new Vue({
     created() {
         this.getAllArticles()
     },
-    mounted() {
-        // setTimeout(() => {
-        //     this.owoEmoji();
-        //     this.commentsSubmit();
-            
-        // }, 3000);
+    
+    updated() {
+        let self = this
+        let imgList = document.querySelectorAll(".entry-content img");
+        for (let index = 0; index < imgList.length; index++) {
+            const element = imgList[index];
+            element.addEventListener("click", function (e) {
+                e.preventDefault()
+                self.$alert(`<div class="p-10 flex-hc-vc">${element.outerHTML}</div>`, {
+                    dangerouslyUseHTMLString: true,
+                    closeOnClickModal: true,
+                    closeOnPressEscape: true,
+                    showConfirmButton: false,
+                  });
+            })
+        }
+       
     },
     methods: {
 
@@ -55,7 +66,64 @@ const index_module = new Vue({
 
         },
 
-        changeChoose(){
+        likeOrDislikePost(item, action) {
+            debugger
+            let params = {}
+            params.id = item.id
+            params.action = action
+            if (item.post_metas.has_zan || item.post_metas.has_cai) {
+                this.$message({
+                    message: "你已经评价过！",
+                    type: 'warning'
+                })
+                return false
+            }
+            if (action === "dislike") {
+                this.$confirm('点踩会打击作者的创作积极性, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios.post(`${window.site_url}/wp-json/wp/v2/likePost`, params, {
+                        headers: {
+                            'X-WP-Nonce': _nonce
+                        }
+                    }).then(res => {
+                        this.$nextTick(() => {
+                            console.log(this.posts.post_metas)
+                            this.$set(this.posts.post_metas, action === 'like' ? 'zan_num' : 'cai_num', res.data)
+                            this.$set(this.posts.post_metas, action === 'like' ? 'has_zan' : 'has_cai', true)
+                            this.$message({
+                                message: action === 'like' ? "点赞成功！" : "点踩成功！",
+                                type: 'success'
+                            })
+
+                        })
+                    })
+                }).catch(() => {
+                    return false
+                });
+            } else {
+                axios.post(`${window.site_url}/wp-json/wp/v2/likePost`, params, {
+                    headers: {
+                        'X-WP-Nonce': _nonce
+                    }
+                }).then(res => {
+                    this.$nextTick(() => {
+                        console.log(this.posts.post_metas)
+                        this.$set(this.posts.post_metas, action === 'like' ? 'zan_num' : 'cai_num', res.data)
+                        this.$set(this.posts.post_metas, action === 'like' ? 'has_zan' : 'has_cai', true)
+                        this.$message({
+                            message: action === 'like' ? "点赞成功！" : "点踩成功！",
+                            type: 'success'
+                        })
+
+                    })
+                })
+            }
+        },
+
+        changeChoose() {
             this.ifShowPayImage = !this.ifShowPayImage
         }
     }
