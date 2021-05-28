@@ -53,7 +53,7 @@ add_action('save_post', 'clear_cache'); // 新发表文章/修改文章时
 // add_action('save_post', 'clear_cache');
 
 //说说
-function create_shuoshuo() { 
+function create_moments() { 
 	$labels = array( 
 		'name' 					=> '说说',
 		'singular_name' 		=> '说说',
@@ -83,12 +83,12 @@ function create_shuoshuo() {
 		'has_archive' => true, 
 		'hierarchical' => false, 
 		'menu_position' => null, 
-		'taxonomies'=>array('shuoshuo'),
+		'taxonomies'=>array('moments'),
 		'supports' => array('title','editor','author','comments','custom-fields', 'thumbnail') 
 	); 
-	register_post_type('shuoshuo',$args); 
+	register_post_type('moments',$args); 
 }
-add_action('init', 'create_shuoshuo');
+add_action('init', 'create_moments');
 
 
 //友情链接
@@ -112,6 +112,21 @@ function bookmarks($rel){
     return $bms; // 返回二维数组
 }
 
+function get_gravatar($email, $s = 96, $d = 'mp', $r = 'g', $img = false, $atts = array())
+{
+    $url = '//www.gravatar.com/avatar/';
+    $url .= md5(strtolower(trim($email)));
+    $url .= "?s=$s&d=$d&r=$r";
+    if ($img) {
+        $url = '<img src="' . $url . '"';
+        foreach ($atts as $key => $val)
+            $url .= ' ' . $key . '="' . $val . '"';
+        $url .= ' />';
+    }
+    return $url;
+}
+
+
 function get_the_link_items($id = null,$cat){
     $bookmarks = get_bookmarks('orderby=date&category='.$id );
     $output = '';
@@ -130,7 +145,7 @@ function get_the_link_items($id = null,$cat){
 			}elseif( $link_image == '' and  $link_rss == '' and  $link_notes != ''){
 				$imgUrl = '<img src="//www.google.com/s2/favicons?domain=' . $link_notes . '"/>' ;
 			}elseif( $link_image == '' and  $link_notes == '' and  $link_rss != '' ){
-				$imgUrl  = '<img src="'.getGravatar(str_replace("http://","",$link_rss)).'"/>';
+				$imgUrl  = '<img src="'.get_gravatar(str_replace("http://","",$link_rss)).'"/>';
 			}else{
 				$imgUrl = '';
 			}			

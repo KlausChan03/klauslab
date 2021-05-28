@@ -138,6 +138,19 @@ footer.site-footer {
   z-index: 13;
 }
 
+header.site-header {
+  z-index: 13;
+  position: fixed!important;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+  transition-duration: .15s;
+  margin: 0 auto;
+  left: 50%;
+  transform: translate(-50%);
+  width: 100%;
+  background: #fff;
+}
+
 article,
 aside {
   border: none;
@@ -606,7 +619,7 @@ textarea {
 
 /* 阴影样式 */
 
-nav,
+header,
 article,
 aside,
 // input,
@@ -2273,6 +2286,10 @@ body {
   margin-right: 15px !important;
 }
 
+.mr-30 {
+  margin-right: 30px !important;
+}
+
 .m-tb-15 {
   margin: 15px 0;
 }
@@ -2857,7 +2874,8 @@ body {
 
 .site-content {
   border: none;
-  min-height: calc(100vh - 65px - 80px);
+  min-height: calc(100vh - 60px - 80px);
+  margin-top: 60px;
 }
 
 /* .page-content, .entry-content{margin:0; padding:5% 1em;} */
@@ -2922,7 +2940,7 @@ body {
   box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 8px;
   padding: 40px;
   padding-bottom: 50px;
-  max-height: calc(100% - 150px);
+  height: calc(100vh - 150px);
   overflow-y: auto;
   transition: all .2s;
   /* display: none; */
@@ -3127,27 +3145,27 @@ body {
 
         .user-bg {
           height: 140px;
-          background-size: cover;
-          background-image: url('./dist/img/bg-normal.jpg');
-          background-position: center center;
+        //   background-size: cover;
+        //   background-image: url('./dist/img/bg-normal.jpg');
+        //   background-position: center center;
           border-top-left-radius: 4px;
           border-top-right-radius: 4px;
 
-          &.christmas-bg {
-            background-image: url('./dist/img/bg-christmas.png');
+        //   &.christmas-bg {
+        //     background-image: url('./dist/img/bg-christmas.png');
+
+        //     * {
+        //       color: #fff;
+        //     }
+        //   }
+
+        //   &.newYear-bg {
+        //     background-image: url('./dist/img/bg-2021.jpg');
 
             * {
               color: #fff;
             }
-          }
-
-          &.newYear-bg {
-            background-image: url('./dist/img/bg-2021.jpg');
-
-            * {
-              color: #fff;
-            }
-          }
+        //   }
         }
 
         .user-main {
@@ -4179,8 +4197,8 @@ body {
 
   .link-avatar img {
     position: relative;
-    width: 24px;
-    height: 24px;
+    width: 36px;
+    height: 36px;
   }
 
   .borderr-main-4 {
@@ -4881,9 +4899,10 @@ div[itemprop="description"] {
   .site-header {
     .main-navigation {
       float: none;
-      height: 65px;
+      height: 60px;
       max-width: 1200px;
       margin: 0 auto;
+      width: 100%;
 
     }
 
@@ -4895,8 +4914,8 @@ div[itemprop="description"] {
         position: relative;
         display: inline-block;
         margin: 0;
-        height: 65px;
-        line-height: 65px;
+        height: 60px;
+        line-height: 60px;
         width: auto;
 
         a {
@@ -4973,7 +4992,7 @@ div[itemprop="description"] {
 
       &.current-menu-item,
       &.current-menu-parent {
-        border-bottom: 3px solid #48e;
+        border-bottom: 4px solid #48e;
       }
     }
 
@@ -4982,8 +5001,8 @@ div[itemprop="description"] {
 
       // for logo_v4
       .custom-logo {
-        width: 150px;
-        height: 50px;
+        width: auto;
+        height: 45px;
       }
     }
   }
@@ -5029,15 +5048,15 @@ div[itemprop="description"] {
     justify-content: space-between;
     align-items: center;
     padding: 0 2.5%;
-    height: 45px;
-    line-height: 45px;
+    height: 60px;
+    line-height: 60px;
 
     &.toggled {
       -webkit-transform: translate3D(300px, 0, 0);
       transform: translate3D(300px, 0, 0);
     }
 
-    div {
+    > div {
       &:first-child {
         width: 5%;
       }
@@ -6922,9 +6941,8 @@ div[itemprop="description"] {
 }
 
 .tips-header {
-  color: #333333;
-  font-weight: 600;
-  font-size: 20px;
+  color: var(--regularText);
+  font-size: 18px;
   line-height: 2;
   padding: .5rem 1.5rem;
 }

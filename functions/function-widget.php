@@ -41,8 +41,8 @@ class UserInfo extends WP_Widget
 function widget_userinfo()
 {
 	global $current_user;
-?>
-
+	
+	?>
 	<div class="widget-user-container">
 		<div class="user-bg"></div>
 		<div class="user-main">
@@ -62,9 +62,19 @@ function widget_userinfo()
 				<?php else : ?>
 					<p class="flex-hc-vc flex-v"> <span><?php echo (count_user_posts($user_ID, 'post')); ?> 篇</span><span>文章</span></p>
 					<span class="flex-hc-vc col-b2bbbe">/</span>
-					<p class="flex-hc-vc flex-v"><span> <?php echo (count_user_posts($user_ID, 'shuoshuo')); ?> 篇</span><span>说说</span></p>
+					<p class="flex-hc-vc flex-v"><span> <?php echo (count_user_posts($user_ID, 'moments')); ?> 篇</span><span>说说</span></p>
 					<span class="flex-hc-vc col-b2bbbe">/</span>
 					<p class="flex-hc-vc flex-v"><span> <?php echo (get_comments('count=true&user_id=' . $user_ID)); ?> 条</span><span>评论</span></p>
+					
+					<?php 
+						if(in_array( 'administrator', $current_user->roles )){
+							$movie_data = json_decode(file_get_contents(get_template_directory() . '/inc/douban/cache/movie.json'))->data; 
+							$movoe_data_lengh = sizeof($movie_data);
+							echo ('<span class="flex-hc-vc col-b2bbbe">/</span> <p class="flex-hc-vc flex-v"><span> '. $movoe_data_lengh .' 条</span><span>影评</span></p> ');
+						}						
+					?>
+
+
 				<?php endif; ?>
 
 

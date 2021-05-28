@@ -36,10 +36,10 @@ Vue.component('quick-comment', {
   template: `
   <div id="comments" style="margin: 0; padding: 1.5rem; position: relative; border-top: 1px solid #eee;">
     <template v-if="!window.isLogin">
-      <div  class="flex-hb-vc mb-10">
-        <el-input type="text" name="author" v-model="commentAuthor" class="text-input text-top" id="comment-author" placeholder="昵称 *"></el-input>
-        <el-input type="text" name="email" v-model="commentEmail" class="text-input ml-5" id="comment-email" placeholder="邮箱 *"></el-input>
-        <el-input type="text" name="url" v-model="commentUrl" class="text-input ml-5" id="comment-url" placeholder="网址"></el-input>
+      <div  class="flex-hb-vc flex-hw mb-10">
+        <el-input type="text" name="author" v-model="commentAuthor" class="text-input" id="comment-author" placeholder="昵称 *"></el-input>
+        <el-input type="text" name="email" v-model="commentEmail" class="text-input" id="comment-email" placeholder="邮箱 *"></el-input>
+        <el-input type="text" name="url" v-model="commentUrl" class="text-input" id="comment-url" placeholder="网址"></el-input>
       </div>
     </template> 
     <div class="comment-input mb-10" id="comment-input" v-loading="!ifShowEditor">

@@ -19,6 +19,7 @@
 	// 去除不必要的空格和HTML标签
 	$description = trim(strip_tags($description));
 	$keywords = trim(strip_tags($keywords));
+
 	?>
 
 	<meta name="description" content="<?php echo $description; ?>" />
@@ -29,13 +30,18 @@
 	<?php wp_head(); ?>
 	<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/empty.js"></script>
 	<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/search.js"></script>
-
+	
 	<!-- <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script> -->
 </head>
 
 <body <?php body_class(); ?>>
+	<?php global $current_user; ?>
 	<script>
 		window.isLogin = "<?php echo is_user_logged_in(); ?>";
+		window.the_custom_logo = `<?php echo the_custom_logo(); ?>`;
+		window.the_avatar = `<?php echo get_avatar($current_user->user_email, 38); ?>`;
+		window.the_bloginfo_name = `<?php echo get_bloginfo('name'); ?>`;
+		window.home_url = `<?php echo get_option('home') ?>`;
 		window._nonce = "<?php echo wp_create_nonce('wp_rest'); ?>";
 		window.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
 		window.site_url = '<?php echo site_url() ?>';
@@ -45,61 +51,127 @@
 		window.start_full_year = start_time ? new Date(start_time).getFullYear() : new Date().getFullYear();
 		window.now_full_year = new Date().getFullYear();
 		window.icp_num = '<?php echo get_option('zh_cn_l10n_icp_num') ?>';
-		window.tinyKey ="7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j"
+		window.tinyKey = "7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j"
 	</script>
 	<div id="page" class="hfeed site">
 		<header id="header" class="site-header" role="banner" v-block>
-			<div id="site-touch-header" class="menu-touch">
-				<div class="menu-toggle flex-hc-vc" aria-controls="primary-menu" aria-expanded="">
+			<div v-if="ifMobileDevice" id="site-touch-header" class="menu-touch">
+				<div class="menu-toggle flex-hc-vc" @click="changeMenu">
 					<i class="lalaksks lalaksks-ic-menu"></i>
-				</div>
+				</div>				
 				<div class="flex-hc-vc">
-					<h2 class="m-0"><?php echo get_bloginfo('name'); ?></h2>
+					<h2 class="m-0" v-html="window.the_bloginfo_name"></h2>
 				</div>
 				<div class="flex-hc-vc">
 					<i class="lalaksks lalaksks-ic-search" @click="showSearch"></i>
 				</div>
+				<el-menu v-show="ifShowMenu" class="el-menu-vertical" :default-active="activeIndex" >	
+					<div class="flex-hb-vc p-10">
+						<el-button class="w-1" icon="el-icon-magic-stick" @click="goToPage('page-post-simple',true)" type="primary" size="medium">发布</el-button>
+						<el-button class="w-1" icon="el-icon-search"  @click="showSearch" type="primary" size="medium">搜索</el-button>
+						<el-button class="w-1" icon="el-icon-position"  @click="goToPage('feed',true)" type="primary" size="medium">订阅</el-button>
+					</div>					
+					<template v-for="(item,index) in menuList" :key="item.ID">
+						<el-menu-item v-if="!item.children || item.children.length === 0" :index="item.ID" @click="goToPage(item.url)"><i v-if="item.iconName" :class="item.iconName"></i><span>{{item.title}}</span></el-menu-item>
+						<template v-if="item.children && item.children.length > 0">
+							<el-submenu  :index="item.ID" :key="item.ID" > 
+								<template slot="title" > <i v-if="item.iconName" :class="item.iconName"></i><span @click="goToPage(item.url)">{{item.title}} </span></template>
+								<template v-for="(sonItem,sonIndex) in item.children" :key="sonItem.ID" >
+									<el-menu-item v-if="!sonItem.children || sonItem.children.length === 0"  @click="goToPage(sonItem.url)"><span>{{sonItem.title}}</span></el-menu-item>
+									<template v-if="sonItem.children && sonItem.children.length > 0" >
+										<template v-for="(grandsonItem,grandsonIndex) in sonItem.children" :key="grandsonItem.ID">
+											<el-submenu :index="sonItem.ID" > 
+												<template slot="title" > <span @click="goToPage(sonItem.url)">{{sonItem.title}} </span></template>
+												<el-menu-item :key="grandsonItem.ID"  @click="goToPage(grandsonItem.url)">{{grandsonItem.title}}</el-menu-item>
+											</el-submenu>
+										</template>												
+									</template>		
+								</template>																		
+							</el-submenu>
+						</template>
+					</template>						
+				</el-menu>
 			</div>
-			<nav id="site-navigation" class="menu-pc main-navigation flex-hb-vc" role="navigation">
-				<div class="menu-logo m-lr-15">
-					<?php echo the_custom_logo(); ?>
-				</div>
-				<?php
-				wp_nav_menu(
-					array(
-						'theme_location' => 'primary',
-						'menu_id' => 'primary-menu',
-					)
-				);
-				?>
-				<div class="menu-right" :class="{'flex-hr-vc':!ifMobileDevice}">
-					<div class="menu-search flex-hl-vc" v-if="!ifMobileDevice">
-						<svg class="icon icon-title mr-10 fs-20" aria-hidden="true">
-							<use xlink:href="#lalaksks21-search-1"></use>
-						</svg>
-						<el-input size="small" placeholder="请输入搜索内容" @focus="showSearch"></el-input>
+			<nav v-if="!ifMobileDevice" id="site-navigation" class="menu-pc main-navigation flex-hb-vc" role="navigation">
+				<div class="menu-left" :class="{'flex-hl-vc':!ifMobileDevice}">
+					<div class="menu-logo m-lr-15">
+						<div v-html="window.the_custom_logo"> </div>
 					</div>
-					<div id="menu-avatar" :class="{'flex-hc-vc':ifMobileDevice}" class="menu-avatar pos-r m-lr-15 <?php if (is_user_logged_in()) {
-																							echo 'have-login';
-																						} ?>">
-						<?php global $current_user;
-						echo get_avatar($current_user->user_email, 48);
-						?>
+					<div class="ml-15">
+						<!-- <?php
+						wp_nav_menu(
+							array(
+								'theme_location' => 'primary',
+								'menu_id' => 'primary-menu',
+							)
+						);
+						?> -->
+						<el-menu class="el-menu-horizontal" mode="horizontal" :default-active="activeIndex" >	
+							<template v-for="(item,index) in menuList" :key="item.ID">
+								<el-menu-item v-if="!item.children || item.children.length === 0" :index="item.ID" @click="goToPage(item.url)"><i v-if="item.iconName" :class="item.iconName"></i><span>{{item.title}}</span></el-menu-item>
+								<template v-if="item.children && item.children.length > 0">
+									<el-submenu  :index="item.ID" :key="item.ID" > 
+										<template slot="title" ><i v-if="item.iconName" :class="item.iconName"></i> <span @click="goToPage(item.url)">{{item.title}} </span></template>
+										<template v-for="(sonItem,sonIndex) in item.children" :key="sonItem.ID" >
+											<el-menu-item v-if="!sonItem.children || sonItem.children.length === 0"  @click="goToPage(sonItem.url)"><span>{{sonItem.title}}</span></el-menu-item>
+											<template v-if="sonItem.children && sonItem.children.length > 0" >
+												<template v-for="(grandsonItem,grandsonIndex) in sonItem.children" :key="grandsonItem.ID">
+													<el-submenu :index="sonItem.ID" > 
+														<template slot="title" > <span @click="goToPage(sonItem.url)">{{sonItem.title}} </span></template>
+														<el-menu-item :key="grandsonItem.ID"  @click="goToPage(grandsonItem.url)">{{grandsonItem.title}}</el-menu-item>
+													</el-submenu>
+												</template>												
+											</template>		
+										</template>																		
+									</el-submenu>
+								</template>
+							</template>						
+						</el-menu>
+					</div>
+				</div>
+				<div class="menu-right" :class="{'flex-hr-vc':!ifMobileDevice}">
+					<div class="menu-publish mr-30">
+						<el-button icon="el-icon-position" type="text" @click="goToPage('feed',true)" size="medium">订阅</el-button>
+					</div>
+					<div class="menu-search mr-30">
+						<el-button icon="el-icon-search" type="text" @click="showSearch" size="medium">搜索</el-button>
+					</div>
+					<div class="menu-publish mr-30" v-if="window.isLogin">
+						<el-button icon="el-icon-magic-stick" type="text" @click="goToPage('page-post-simple',true)" size="medium">发布</el-button>
+					</div>
+
+					<div id="menu-avatar" :class="{'flex-hc-vc':ifMobileDevice,'has-login':window.isLogin}" class="menu-avatar pos-r m-lr-15">
+						<!-- <div v-html="window.the_avatar"> </div>
 						<div id="personal-menu">
 							<ul>
 								<template v-if="window.isLogin">
 									<li><a href="<?php echo get_option('home'); ?>/wp-admin"><i class="lalaksks lalaksks-ic-dashboard m-lr-5"></i>后台</a></li>
 									<li><a href="<?php echo get_option('home'); ?>/page-post-simple"><i class="lalaksks lalaksks-rocket m-lr-5"></i>快捷发布</a></li>
 									<li><a href="<?php echo get_option('home'); ?>/wp-admin/post-new.php"><i class="lalaksks lalaksks-ic-create m-lr-5"></i>发布文章</a></li>
-									<li><a href="<?php echo get_option('home'); ?>/wp-admin/post-new.php?post_type=shuoshuo"><i class="lalaksks lalaksks-ic-create m-lr-5"></i>发布说说</a></li>
+									<li><a href="<?php echo get_option('home'); ?>/wp-admin/post-new.php?post_type=moments"><i class="lalaksks lalaksks-ic-create m-lr-5"></i>发布说说</a></li>
 									<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=logout"><i class="lalaksks lalaksks-ic-logout m-lr-5"></i>登出</a></li>
 								</template>
-								<template v-else>																						
+								<template v-else>
 									<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=login"><i class="lalaksks lalaksks-ic-login m-lr-5"></i>登录</a></li>
 								</template>
 
 							</ul>
-						</div>
+						</div> -->
+						<el-dropdown @command="handleCommand">
+							<span class="el-dropdown-link">
+								<div v-html="window.the_avatar"> </div>
+							</span>
+							<el-dropdown-menu slot="dropdown">
+								<template v-if="window.isLogin">
+									<el-dropdown-item><a :href="window.home_url + '/wp-admin'"><i class="lalaksks lalaksks-ic-dashboard m-lr-5"></i>后台</a></el-dropdown-item>
+									<el-dropdown-item command="/wp-login.php?action=logout" divided ><i class="lalaksks lalaksks-ic-logout m-lr-5"></i>登出</el-dropdown-item>
+								</template>
+								<template v-else>
+									<el-dropdown-item command="/wp-login.php?action=login" divided ><i class="lalaksks lalaksks-ic-login m-lr-5"></i>登录</el-dropdown-item>
+								</template>
+
+							</el-dropdown-menu>
+						</el-dropdown>
 					</div>
 				</div>
 			</nav><!-- #site-navigation -->

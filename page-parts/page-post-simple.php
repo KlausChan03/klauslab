@@ -15,14 +15,14 @@ get_header();
 
     .upload-button {
         /* width: 60px; */
-        height: 60px;
+        height: 50px;
         font-size: 18px;
 
     }
 
     .commit-button {
         /* width: 112px; */
-        height: 60px;
+        height: 50px;
         font-size: 18px;
         /* letter-spacing: 10px; */
     }
@@ -174,7 +174,8 @@ get_header();
                 dialogImageUrl: '',
                 dialogVisible: false,
                 disabled: false,
-
+                toolbar_simple: ['undo redo | emoticons'],
+                toolbar_default: ['bold italic underline strikethrough blockquote|forecolor backcolor|formatselect | fontsizeselect  | alignleft aligncenter alignright alignjustify | outdent indent |codeformat blockformats| removeformat undo redo bullist numlist toc pastetext | codesample charmap  hr insertdatetime | lists image media table link unlink | emoticons |code searchreplace fullscreen help ' ],
                 defaultInit: {
                     language: "zh_CN", //语言设置
                     height: 360, //高度
@@ -185,8 +186,8 @@ get_header();
                     statusbar: false, // 隐藏编辑器底部的状态栏
                     elementpath: false, //禁用下角的当前标签路径
                     paste_data_images: true, // 允许粘贴图像
-                    toolbar: ['bold italic underline strikethrough blockquote|forecolor backcolor|formatselect | fontsizeselect  | alignleft aligncenter alignright alignjustify | outdent indent |codeformat blockformats| removeformat undo redo bullist numlist toc pastetext | codesample charmap  hr insertdatetime | lists image media table link unlink | emoticons |code searchreplace fullscreen help '
-                    ],
+                    // toolbar: this.format === false ? this.toolbar_default : this.toolbar_simple,
+                    toolbar:  ['bold italic underline strikethrough blockquote|forecolor backcolor|formatselect | fontsizeselect  | alignleft aligncenter alignright alignjustify | outdent indent |codeformat blockformats| removeformat undo redo bullist numlist toc pastetext | codesample charmap  hr insertdatetime | lists image media table link unlink | emoticons |code searchreplace fullscreen help ' ],
                     plugins: 'emoticons lists image media table wordcount code fullscreen help codesample toc insertdatetime  searchreplace  link charmap paste hr',
                 }
 
@@ -268,8 +269,19 @@ get_header();
                 this.hasCommitFinish = true
                 this.posts.status = this.status === true ? 'publish' : 'draft'
                 this.posts.content = window.tinymce.get('editor').getContent()
-                let format = this.format === true ? 'shuoshuo' : 'posts'
+                let format = this.format === true ? 'moments' : 'posts'
                 let params = this.posts;
+                if(!params.title && format === "posts"){
+                    this.$message({message:"标题不能为空！",type:'warning'})
+                    this.hasCommitFinish = false
+                    return false;
+                }
+                if(!params.content){
+                    this.$message({message:"内容不能为空！",type:'warning'})
+                    this.hasCommitFinish = false
+                    return false;
+                }
+                
                 axios.post(`${window.site_url}/wp-json/wp/v2/${format}`, params, {
                     headers: {
                         'X-WP-Nonce': window._nonce

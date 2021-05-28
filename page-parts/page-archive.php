@@ -28,7 +28,7 @@ get_header();
                         <el-form-item class="filter-type" label="类型">
                             <el-button :class="{active:filterArr[0] === ''}" size="mini" data-type="" @click="choose($event)">全部</el-button>
                             <el-button :class="{active:filterArr[0] === 'post'}" size="mini" data-type="post" @click="choose($event)">文章</el-button>
-                            <el-button :class="{active:filterArr[0] === 'shuoshuo'}" size="mini" data-type="shuoshuo" @click="choose($event)">说说</el-button>
+                            <el-button :class="{active:filterArr[0] === 'moments'}" size="mini" data-type="moments" @click="choose($event)">说说</el-button>
                         </el-form-item>
                         <el-form-item class="filter-chosed" label="当前选择">
                             <el-tag type="success" v-for="(item,index) in filterName" :key="item" class="mr-5">{{item}}</el-tag>

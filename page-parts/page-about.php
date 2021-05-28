@@ -91,7 +91,7 @@ setPostViews(get_the_ID()); ?>
             </el-card>
             <!-- <kl-skeleton v-if="!listOfComment" class="article-skeleton mt-10" type="comment"></kl-skeleton> -->
             <aside class="comment-container mt-10" v-if="posts.comment_status === 'open'">
-                <h3 class="tips-header"><i class="lalaksks lalaksks-pinglun fs-20 mr-10"></i>评论区</h3>
+                <h3 class="tips-header flex-hl-vc"><i class="el-icon-chat-line-round fs-24 mr-10"></i>评论区</h3>
                 <quick-comment :post-data="posts"></quick-comment>
             </aside>
         </div>

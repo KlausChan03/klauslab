@@ -8,6 +8,41 @@
 ?>
 
 
+<style>
+	.widget-area .widget .widget-user-container .user-info-main {
+		padding: 1.0rem 1.6rem;
+		/* margin-top: 50px; */
+	}
+
+	.widget-area .widget .widget-user-container .user-bg,
+	.widget-area .widget .widget-user-container .user-bg {
+		height: 120px;
+	}
+
+	.col-b2bbbe {
+		color: #b2bbbe;
+	}
+
+	<?php
+	$memorybg = cs_get_option('memory_background');
+	if ($memorybg != null) {
+		if (isset($memorybg["image"]) && $memorybg["image"] != '') { ?>#secondary .user-bg {
+		background-image: url(<?php echo $memorybg["image"]; ?>);
+		background-position: <?php echo $memorybg["position"]; ?>;
+		background-repeat: <?php echo $memorybg["repeat"]; ?>;
+		background-attachment: <?php if ($memorybg["attachment"] == '') echo 'scroll';
+								else echo $memorybg["attachment"]; ?>;
+		background-size: <?php echo $memorybg["size"]; ?>;
+	}
+
+	<?php } else { ?>.user-bg {
+		background: <?php echo $memorybg["color"]; ?>;
+	}
+
+	<?php }
+	}
+	?>
+</style>
 
 <div id="secondary" class="widget-area sidebar" role="complementary">
 	<div class="widget-content">
@@ -15,19 +50,6 @@
 	</div>
 </div>
 <!-- #secondary -->
-
-<style>
-	.widget-area .widget .widget-user-container .user-info-main{
-		padding: 1.0rem  1.6rem;
-		/* margin-top: 50px; */
-	}
-	.widget-area .widget .widget-user-container .user-bg,.widget-area .widget .widget-user-container .user-bg{
-		height: 120px;
-	}
-	.col-b2bbbe{
-		color: #b2bbbe;
-	}
-</style>
 
 <script>
 	let secondaryPart = new Vue({

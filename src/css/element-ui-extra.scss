@@ -1,4 +1,29 @@
 body{
+    .el-menu.el-menu-vertical{
+        position: fixed;
+        top: 70px;
+        min-width: 310px!important;
+    }
+    .el-menu.el-menu-horizontal{
+        max-width: 640px;
+        overflow-x: auto;
+        display: flex;
+        &::-webkit-scrollbar {
+            width: auto;
+            height: 5px;
+          }
+        
+          &::-webkit-scrollbar-thumb {
+            background: var(--secondaryText);
+            border-radius: 3px;
+            border: 0;
+          }
+        
+          &::-webkit-scrollbar-track-piece {
+            background-color: #e7eaf1;
+            border-radius: 3px;
+          }
+    }
     .el-tabs__nav-wrap {
         background: #fff;
         padding: .8rem 1.6rem;

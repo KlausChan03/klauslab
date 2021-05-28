@@ -168,11 +168,13 @@ Vue.component('article-item', {
         })
       }
     },
-  },
-  mounted() {
-    window.onresize = () => {
+    
+    resizeHandler(){
       this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
     }
+  },
+  mounted() {
+    window.addEventListener("resize", this.resizeHandler);
   },
   filters: {
     formateDate: (value) => {

@@ -356,11 +356,11 @@ function footer_script()
 function my_custom_login()
 {
     // vue.min.js   
-    wp_enqueue_script('vue', KL_THEME_URI . '/js/vue.min.js', array(), '2.6.0', false);
+    // wp_enqueue_script('vue', KL_THEME_URI . '/js/vue.min.js', array(), '2.6.0', false);
     // 全局变量配置
-    wp_enqueue_script('myConfig', KL_THEME_URI . '/js/config.js', array(), '1.0', false);
+    // wp_enqueue_script('myConfig', KL_THEME_URI . '/js/config.js', array(), '1.0', false);
     // 配置
-    wp_enqueue_script('myOptions', KL_THEME_URI . '/js/options.js', array(), '1.0', false);
+    // wp_enqueue_script('myOptions', KL_THEME_URI . '/js/options.js', array(), '1.0', false);
     wp_enqueue_style('myLogin', KL_THEME_URI . '/css/login.css', array(), '1.0', false);
     wp_enqueue_script('myLogin', KL_THEME_URI . '/js/login.js', array(), '1.0', false);
 }
@@ -375,9 +375,9 @@ function styles_scripts()
         // wp_register_script('jquery', '//code.jquery.com/jquery.min.js', array(), 'lastest', false);
         // 提交加载 jquery 脚本
         wp_enqueue_script('jquery');
-        if (is_mobile() === true && is_user_logged_in() === false) {
-            wp_enqueue_script('flexible', KL_THEME_URI . '/js/flexible.js', array(), 'lastet', false);
-        }
+        // if (is_mobile() === true && is_user_logged_in() === false) {
+        //     wp_enqueue_script('flexible', KL_THEME_URI . '/js/flexible.js', array(), 'lastet', false);
+        // }
     } else { // 后台加载的脚本与样式表
         // 取消加载 jquery 脚本
         wp_dequeue_script('jquery');
@@ -517,18 +517,16 @@ function wpb_new_gravatar($avatar_defaults)
     return $avatar_defaults;
 }
 
-function getGravatar($email, $s = 96, $d = 'mp', $r = 'g', $img = false, $atts = array())
-{
-    $url = '//www.gravatar.com/avatar/';
-    $url .= md5(strtolower(trim($email)));
-    $url .= "?s=$s&d=$d&r=$r";
-    if ($img) {
-        $url = '<img src="' . $url . '"';
-        foreach ($atts as $key => $val)
-            $url .= ' ' . $key . '="' . $val . '"';
-        $url .= ' />';
-    }
-    return $url;
+
+
+// ajax头像更新
+add_action( 'init', 'ajax_avatar_url' );
+function ajax_avatar_url() {
+	if( @$_GET['action'] == 'ajax_avatar_get' && 'GET' == $_SERVER['REQUEST_METHOD'] ) {
+		$email = $_GET['email'];
+		echo get_avatar_url( $email, array( 'size'=>48 ) ); // size 指定头像大小
+		die();
+	}else { return; }
 }
 
 
@@ -1352,8 +1350,8 @@ function ajax_comment_callback()
     // 添加首页支持的文体格式
     function themename_custom_post_formats_setup()
     {
-        // 添加文章形式支持到说说类型 'shuoshuo'
-        add_post_type_support('shuoshuo', 'post-formats');
+        // 添加文章形式支持到说说类型 'moments'
+        add_post_type_support('moments', 'post-formats');
 
         // 添加文章形式支持到自定义文章类型 'my_custom_post_type'
         // add_post_type_support( 'my_custom_post_type', 'post-formats' );
@@ -1362,7 +1360,7 @@ function ajax_comment_callback()
 
     function themename_post_formats_setup()
     {
-        add_theme_support('post-formats', array('shuoshuo'));
+        add_theme_support('post-formats', array('moments'));
     }
     add_action('after_setup_theme', 'themename_post_formats_setup');
 

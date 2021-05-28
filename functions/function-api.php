@@ -65,7 +65,7 @@ function wp_rest_insert_tag_links()
         )
     );
     register_rest_field(
-        'shuoshuo',
+        'moments',
         'post_metas',
         array(
             'get_callback' => 'get_post_meta_for_api',

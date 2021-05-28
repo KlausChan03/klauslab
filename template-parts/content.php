@@ -12,7 +12,7 @@
 		<?php the_title( sprintf( '<h3 class="entry-title mr-5"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h3>' ); ?>	
 		<?php 
 			$post_type = $post -> post_type;
-			if($post_type === "shuoshuo"){
+			if($post_type === "moments"){
 				echo '<i class="lalaksks lalaksks-ic-create"></i>发布了一条说说';
 			} else if($post_type === "page"){
 				echo '<i class="lalaksks lalaksks-ic-create"></i>新增了一个页面';

@@ -40,9 +40,8 @@ const index_module = new Vue({
 
     },
     mounted() {
-        window.onresize = () => {
-            this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
-        }
+        window.addEventListener("resize", this.resizeHandler);
+
 
     },
     updated() {
@@ -192,7 +191,7 @@ const index_module = new Vue({
             params.page = this.page
             params.per_page = this.per_page
             params.orderby = this.orderby
-            axios.get(`${window.site_url}/wp-json/wp/v2/shuoshuo?_embed`, {
+            axios.get(`${window.site_url}/wp-json/wp/v2/moments?_embed`, {
                 params: params
             }).then(res => {
                 this.totalOfChat = parseInt(res.headers['x-wp-total'])
@@ -319,6 +318,11 @@ const index_module = new Vue({
             //         await showNotify();
             //     })();
         },
+
+        
+        resizeHandler(){
+            this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
+        }
 
     }
 })

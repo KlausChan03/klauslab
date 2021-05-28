@@ -88,6 +88,21 @@ $options[]      = array(
       'attributes' => array( 'type' => 'date', ), 
       'default' =>  date('Y-m-d',time()),
     ),
+    array(
+      'id'    => 'memory_background',
+      'type'  => 'background',
+      'title' => '背景图片',
+      'desc'  => '可自行调整样式，如不选择图片则使用颜色填充，您可以在颜色选择器内选择背景色，默认#f5f5f5。',
+      'help'  => '存在疑问？请查询css背景样式相关知识。',
+      'default' => array(
+          'image'      => '',
+          'repeat'     => 'no-repeat',
+          'position'   => 'center center',
+          'attachment' => 'scroll',
+    	  'size'       => 'cover',
+          'color'      => '#f5f5f5',
+      ),
+    ),
 
 
 
