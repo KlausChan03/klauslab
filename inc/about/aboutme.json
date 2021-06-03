@@ -1,11 +1,11 @@
 [{
         "name": "博主简介",
-        "type": "text",
+        "type": "introduction",
         "value": [
             "欢迎来到我的博客，我是KlausChan。",
             "我是一个重度拖延症兼轻度强迫症患者，所幸遇到她，一个急性子的女汉子。",
             "我是一个前端开发工程师，在这条路上已经披荆斩棘5年，从事且热衷开发、设计。",
-            "如果你对我的博客内容感兴趣，可以留言交换友链或者通过RSS订阅我。"
+            "如果你对我的博客内容感兴趣，可以<a class='link' href='#comment-part'>留言交换友链</a>或者通过<a class='link' href='./feed'>RSS订阅</a>我。"
         ]
     }, {
         "name": "个人喜好",
@@ -61,7 +61,93 @@
     },
     {
         "name": "个人简历",
-        "type": "list",
-        "value": ""
+        "type": "resume",
+        "value": "在职ing"
+    },
+    {
+        "name": "我的项目",
+        "type": "project",
+        "value": [
+            {
+                "item":"hi钓友",
+                "type":"mini-program",
+                "url": "https://klauslaura-1253164303.cos.ap-guangzhou.myqcloud.com/wp-content/uploads/2021/06/gh_9bfbf8315fa8_258.jpg"
+            }
+        ]
+    },
+    {
+        "name":"主题版本",
+        "type":"version-timeline",
+        "value":[
+            {
+                "version": "v2.4.1_beta",
+                "versionName": "",
+                "description": "改造'瞬间'发布操作流程及渲染效果，用以简化使用，进行开放测试。'关于'页面新增'主题版本'和'我的项目'模块。",
+                "author": "KlausChan",
+                "date": "2021-06-03T10:42:10Z"
+            },{                
+                "version": "v2.3",
+                "versionName": "",
+                "description": "重构Header模块。优化其他若干细节。发布稳定版本。",
+                "author": "KlausChan",
+                "date": "2021-05-28T02:42:10Z"
+            },{                
+                "version": "v2.2",
+                "versionName": "",
+                "description": "完善评论模块，支持未登录用户发布评论。支持详情页和说说列表预览大图。优化其他若干细节。",
+                "author": "KlausChan",
+                "date": "2021-05-25T09:26:31Z"
+            },{                
+                "version": "v2.1",
+                "versionName": "",
+                "description": "新增'关于'页面，优化评论模块，设为全局使用。修复Gravatar造成的阻塞，采用替换Gravatar头像镜像为国内源。优化其他若干细节。",
+                "author": "KlausChan",
+                "date": "2021-05-18T02:41:45Z"
+            },{                
+                "version": "v2.0",
+                "versionName": "Sectum sempra",
+                "description": "修复和优化快捷发布页面。",
+                "author": "KlausChan",
+                "date": "2021-05-11T08:50:37Z"
+            },{                
+                "version": "v1.5",
+                "versionName": "",
+                "description": "fix: 修复样式bug。发布稳定版本。",
+                "author": "KlausChan",
+                "date": "2021-01-29T09:20:38Z"
+            },{                
+                "version": "v1.4",
+                "versionName": "",
+                "description": "发布生产后修复细节问题。",
+                "author": "KlausChan",
+                "date": "2020-01-20T09:46:56Z"
+            },{                
+                "version": "v1.3",
+                "versionName": "",
+                "description": "主题anissa → KlausLab，主题正式发布。",
+                "author": "KlausChan",
+                "date": "2020-01-20T09:46:56Z"
+            },{                
+                "version": "v1.2",
+                "versionName": "",
+                "description": "更新结构，发布稳定版本。",
+                "author": "KlausChan",
+                "date": "2018-12-21T02:24:06Z"
+            },{                
+                "version": "v1.1",
+                "versionName": "",
+                "description": "优化菜单模块。",
+                "author": "KlausChan",
+                "date": "2018-09-27T00:14:21Z"
+            },{                
+                "version": "v1.0",
+                "versionName": "Reparo",
+                "description": "首次提交，基于anissa主题进行二次开发。",
+                "author": "KlausChan",
+                "date": "2018-09-18T03:04:41Z"
+            }
+            
+            
+        ]
     }
 ]

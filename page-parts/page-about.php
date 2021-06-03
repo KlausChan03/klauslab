@@ -22,7 +22,72 @@ setPostViews(get_the_ID()); ?>
                 </div>
                 <div class="entry-content page-content" v-loading="!ifShowAll" style="min-height: 300px">
                     <template v-if="info">
-                        <div class="info-main" v-for="(item,index) in info" :key="item.name">
+                        <el-collapse v-model="activeNames" @change="handleChange" class="info-main" v-for="(item,index) in info" :key="item.name">
+                            <el-collapse-item :name="index">
+                                <template slot="title">
+                                    <h3>{{item.name}}</h3>
+                                </template>
+                                <template v-if="item.value && item.value.length > 0">
+                                    <template v-if="item.type === 'simple'">
+                                        <template v-for="(sonItem,sonIndex) in item.value" :key="sonIndex">
+                                            <span v-html="sonItem"> </span>
+                                            <span class="m-lr-5" style="font-weight: bold" v-if="(sonIndex < item.value.length - 1) && (sonItem.indexOf('br') < 0)">|</span>
+                                        </template>
+                                    </template>
+
+                                    <template v-else-if="item.type === 'complexList'">
+                                        <ul>
+                                            <li v-for="(sonItem,sonIndex) in item.value" class="flex-hl-vc flex-hw">
+                                                <span :title="sonItem.tips">{{sonItem.item}}<label class="ml-10">{{sonItem.params}}</label></span>
+                                                <el-rate v-model="sonItem.rate" disabled show-score text-color="#ff9900" score-template="{value}"></el-rate>
+                                            </li>
+                                        </ul>
+                                    </template>
+                                    <template v-else-if="item.type === 'list'">
+                                        <ul>
+                                            <li v-for="(sonItem,sonIndex) in item.value" v-html="sonItem"></li>
+                                        </ul>
+                                    </template>
+                                    <template v-else-if="item.type === 'introduction'">
+                                        <p v-for="(sonItem,sonIndex) in item.value" :key="sonIndex" v-html="sonItem"></p>
+                                    </template>
+                                    <template v-else-if="item.type === 'version-timeline'">
+                                        <el-timeline>
+                                            <template v-for="(sonItem,sonIndex) in item.value" :key="sonIndex">
+                                                <el-timeline-item :timestamp="dayjs(new Date(sonItem.date)).format('YYYY-MM-DD')" placement="top">
+                                                    <el-card shadow="hover">
+                                                        <h4>{{sonItem.version}}{{sonItem.versionName}}</h4>
+                                                        <p>{{sonItem.description}}</p>
+                                                        <p v-if="sonItem.author && sonItem.date">{{sonItem.author}} 提交于 {{dayjs(new Date(sonItem.date)).format('YYYY-MM-DD hh:mm:ss')}}</p>
+                                                    </el-card>
+                                            </template>
+                                        </el-timeline>
+                                    </template>
+                                    <template v-else-if="item.type === 'project'">
+                                        <div class="flex-hl-vc block" v-for="(sonItem,sonIndex) in item.value" :key="sonIndex">
+                                            <div class="flex-hc-vc flex-v">
+                                                <el-image style="width: 100px; height: 100px" :src="sonItem.url" fit="cover"></el-image>
+                                                <span class="mt-5">{{ sonItem.item }}</span>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template v-else-if="item.type === 'resume'">
+                                        <template v-if="Array.isArray(item.value) && item.value.length > 0">
+                                            <ul>
+                                                <li v-for="(sonItem,sonIndex) in item.value" v-html="sonItem"></li>
+                                            </ul>
+                                        </template>
+                                        <template v-else>
+                                            <p>{{item.value}}</p>
+                                        </template>
+                                    </template>
+                                </template>
+                                <template v-else>
+                                    <kl-empty description="暂无数据"></kl-empty>
+                                </template>
+                            </el-collapse-item>
+                        </el-collapse>
+                        <!-- <div class="info-main" v-for="(item,index) in info" :key="item.name">
                             <h3>{{item.name}}</h3>
                             <template v-if="item.value && item.value.length > 0">
                                 <template v-if="item.type === 'simple'">
@@ -40,18 +105,30 @@ setPostViews(get_the_ID()); ?>
                                     <ul>
                                         <li v-for="(sonItem,sonIndex) in item.value" class="flex-hl-vc flex-hw">
                                             <span :title="sonItem.tips">{{sonItem.item}}<label class="ml-10">{{sonItem.params}}</label></span>
-                                            <el-rate v-model="sonItem.rate"  disabled   show-score text-color="#ff9900" score-template="{value}" ></el-rate>
+                                            <el-rate v-model="sonItem.rate" disabled show-score text-color="#ff9900" score-template="{value}"></el-rate>
                                         </li>
                                     </ul>
                                 </template>
                                 <template v-else-if="item.type === 'text'">
                                     <p v-for="(sonItem,sonIndex) in item.value" :key="sonIndex">{{sonItem}}</p>
                                 </template>
+                                <template v-else-if="item.type === 'version-timeline'">
+                                    <el-timeline>
+                                        <template v-for="(sonItem,sonIndex) in item.value" :key="sonIndex">
+                                            <el-timeline-item :timestamp="dayjs(new Date(sonItem.date)).format('YYYY-MM-DD')" placement="top">
+                                                <el-card shadow="hover">
+                                                    <h4>{{sonItem.version}}{{sonItem.versionName}}</h4>
+                                                    <p>{{sonItem.description}}</p>
+                                                    <p v-if="sonItem.author && sonItem.date">{{sonItem.author}} 提交于 {{dayjs(new Date(sonItem.date)).format('YYYY-MM-DD hh:mm:ss')}}</p>
+                                                </el-card>
+                                        </template>
+                                    </el-timeline>
+                                </template>
                             </template>
                             <template v-else>
                                 <kl-empty description="暂无数据"></kl-empty>
                             </template>
-                        </div>
+                        </div> -->
                     </template>
                     <template v-else>
                         <kl-empty description="暂无数据"></kl-empty>
@@ -90,9 +167,11 @@ setPostViews(get_the_ID()); ?>
                 </div>
             </el-card>
             <!-- <kl-skeleton v-if="!listOfComment" class="article-skeleton mt-10" type="comment"></kl-skeleton> -->
-            <aside class="comment-container mt-10" v-if="posts.comment_status === 'open'">
-                <h3 class="tips-header flex-hl-vc"><i class="el-icon-chat-line-round fs-24 mr-10"></i>评论区</h3>
-                <quick-comment :post-data="posts"></quick-comment>
+            <aside id="comment-part" class="comment-container mt-10">
+                <template v-if="posts.comment_status === 'open'">
+                    <h3 class="tips-header flex-hl-vc"><i class="el-icon-chat-line-round fs-24 mr-10"></i>评论区</h3>
+                    <quick-comment :post-data="posts"></quick-comment>
+                </template>
             </aside>
         </div>
 
@@ -104,8 +183,7 @@ setPostViews(get_the_ID()); ?>
         color: #333333;
         font-weight: 600;
         font-size: 20px;
-        margin-top: 2rem;
-        margin-bottom: .5rem;
+        padding: 1.5rem 0;
         line-height: 2;
     }
 
@@ -127,6 +205,11 @@ setPostViews(get_the_ID()); ?>
         line-height: 1;
         margin-left: 10px;
     }
+
+    /* a.link{
+        font-family: "lalaksks";
+
+    } */
 </style>
 
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/skeleton.js"></script>
@@ -148,6 +231,8 @@ setPostViews(get_the_ID()); ?>
                     id: window.post_id,
                     comment_status: 'open'
                 },
+                activeNames: [0, 1, 2, 3],
+                fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
 
             }
         },
@@ -155,6 +240,14 @@ setPostViews(get_the_ID()); ?>
             this.getInfo()
         },
         methods: {
+            goToPage(route, params = false) {
+                if (params) {
+                    window.location.href = `${window.home_url}/${route}`
+
+                } else {
+                    window.location.href = route
+                }
+            },
             getInfo() {
                 let self = this
                 self.ifShowAll = false
@@ -165,6 +258,9 @@ setPostViews(get_the_ID()); ?>
             },
             changeChoose() {
                 this.ifShowPayImage = !this.ifShowPayImage
+            },
+            handleChange() {
+
             },
         }
 

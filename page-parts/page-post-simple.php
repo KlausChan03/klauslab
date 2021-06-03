@@ -30,16 +30,18 @@ get_header();
     .commit-type {
         height: 60px;
     }
+
 </style>
 
 <div class="post-main" id="post-page" v-block>
     <el-form>
         <div class="post-header flex-hb-vc flex-hw">
             <div class="post-header-left">
-                <el-popover placement="bottom" width="400" trigger="click" >
+                <el-popover placement="bottom" width="400" trigger="click" v-if="format === false">
                     <el-upload ref="upload" class="upload" list-type="picture-card" :limit="1" :on-exceed="handleExceed" :action=`${window.site_url}/wp-json/wp/v2/media` :on-progress="handleUploadBegin" :on-success="handleUploadSuccess" :headers="{'X-WP-Nonce': window._nonce}" multiple>
-                        <i slot="default" class="el-icon-plus"></i>
-                        <!-- <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div> -->
+                        
+                    <i slot="default" class="el-icon-plus"></i>
+                        <div slot="tip" class="el-upload__tip">文章的背景</em></div>
                         <div slot="file" slot-scope="{file}">
                             <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
                             <span class="el-upload-list__item-actions">
@@ -55,14 +57,35 @@ get_header();
                             </span>
                         </div>
                     </el-upload>
-                    <el-button :disabled="format === true" class="upload-button mr-10" size="small" slot="reference"><i class="lalaksks lalaksks-palette mr-10"></i>背景图</el-button>
+                    <el-button  class="upload-button mr-10" size="small" slot="reference"><i class="fs-20 el-icon-picture-outline fs-20 mr-10"></i>背景</el-button>
+                </el-popover>
+                <el-popover placement="bottom" width="400" trigger="click" v-if="format === true">
+                    <el-upload ref="upload" class="upload" list-type="picture-card" :limit="9" :on-exceed="handleExceed" :action=`${window.site_url}/wp-json/wp/v2/media` :on-progress="handleUploadBegin" :on-success="handleUploadSuccess" :headers="{'X-WP-Nonce': window._nonce}" multiple>
+                        <i slot="default" class="el-icon-plus"></i>
+                        <div slot="tip" class="el-upload__tip">瞬间的印象，支持最多九张图</em></div>
+                        <div slot="file" slot-scope="{file}">
+                            <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
+                            <span class="el-upload-list__item-actions">
+                                <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
+                                    <i class="el-icon-zoom-in"></i>
+                                </span>
+                                <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleDownload(file)">
+                                    <i class="el-icon-download"></i>
+                                </span>
+                                <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
+                                    <i class="el-icon-delete"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </el-upload>
+                    <el-button  class="upload-button mr-10" size="small" slot="reference"><i class="el-icon-picture-outline fs-20 mr-10"></i>印象</el-button>
                 </el-popover>
                 <el-tag class="mr-10" size="small" v-for="(item,index) in tagNameList"> {{item}} </el-tag>
                 <el-tag type="warning" class="mr-10" size="small" v-for="(item,index) in categoryNameList"> {{item}} </el-tag>
             </div>
             <div class="post-header-right flex-hb-vc">
                 <div class="commit-type flex-v flex-ha-vc m-lr-15">
-                    <el-switch v-model="format" active-text="说说" inactive-text="文章" active-color="#13ce66" @change=""> </el-switch>
+                    <el-switch v-model="format" active-text="瞬间" inactive-text="文章" active-color="#13ce66" @change="changePostType"> </el-switch>
                     <el-switch v-model="status" active-text="正式" inactive-text="草稿" active-color="#13ce66"> </el-switch>
                 </div>
                 <el-button class="commit-button" size="small" type="primary" @click="commitPost()" :loading="hasCommitFinish">发布</el-button>
@@ -163,6 +186,7 @@ get_header();
                     categories: [],
 
                 },
+                pictureList: [],
                 tagList: [],
                 categoryList: [],
                 categoryListOrigin: [],
@@ -186,8 +210,8 @@ get_header();
                     statusbar: false, // 隐藏编辑器底部的状态栏
                     elementpath: false, //禁用下角的当前标签路径
                     paste_data_images: true, // 允许粘贴图像
-                    // toolbar: this.format === false ? this.toolbar_default : this.toolbar_simple,
-                    toolbar:  ['bold italic underline strikethrough blockquote|forecolor backcolor|formatselect | fontsizeselect  | alignleft aligncenter alignright alignjustify | outdent indent |codeformat blockformats| removeformat undo redo bullist numlist toc pastetext | codesample charmap  hr insertdatetime | lists image media table link unlink | emoticons |code searchreplace fullscreen help ' ],
+                    toolbar: this.format === false ?  ['bold italic underline strikethrough blockquote|forecolor backcolor|formatselect | fontsizeselect  | alignleft aligncenter alignright alignjustify | outdent indent |codeformat blockformats| removeformat undo redo bullist numlist toc pastetext | codesample charmap  hr insertdatetime | lists image media table link unlink | emoticons |code searchreplace fullscreen help ' ] : ['undo redo | emoticons'],
+                    // toolbar:  ['bold italic underline strikethrough blockquote|forecolor backcolor|formatselect | fontsizeselect  | alignleft aligncenter alignright alignjustify | outdent indent |codeformat blockformats| removeformat undo redo bullist numlist toc pastetext | codesample charmap  hr insertdatetime | lists image media table link unlink | emoticons |code searchreplace fullscreen help ' ],
                     plugins: 'emoticons lists image media table wordcount code fullscreen help codesample toc insertdatetime  searchreplace  link charmap paste hr',
                 }
 
@@ -203,7 +227,6 @@ get_header();
             init() {
                 const self = this
                 self.editorLoading = true
-
                 window.tinymce.init({
                     // 默认配置
                     ...this.defaultInit,
@@ -232,6 +255,13 @@ get_header();
                     selector: `#editor`,
                 })
             },
+
+            changePostType(){
+                window.tinymce.remove()
+                // this.
+                this.defaultInit.toolbar = this.format === true ? this.toolbar_simple : this.toolbar_default
+                this.init()
+            },
             getTags() {
                 axios.get(`${window.site_url}/wp-json/wp/v2/tags`).then(res => {
                     this.tagList = res.data
@@ -251,7 +281,13 @@ get_header();
                 this.hasCommitFinish = true
             },
             handleUploadSuccess(res, file) {
-                this.posts.featured_media = res.id
+                if(this.format === true){
+                    this.pictureList.push({id: res.id, dom: res.description.rendered})
+                } else {
+                    this.posts.featured_media = res.id
+
+                }
+                debugger
                 this.hasCommitFinish = false
             },
             handleCheckChange(data, checked, indeterminate) {
@@ -259,6 +295,18 @@ get_header();
             },
             handleRemove(file, fileList) {
                 this.$refs.upload.handleRemove(file)
+                if(this.format === false){
+                    for (let index = 0; index < this.pictureList.length; index++) {
+                        const element = array[index];
+                        if(Number(element.id) === Number(file.response.id)){
+                            this.pictureList = this.pictureList.splice(index,1)
+                        }
+                        
+                    }
+                } else {
+                    this.posts.featured_media = ''
+
+                }
             },
             handlePictureCardPreview(file) {
                 this.dialogImageUrl = file.url;
@@ -269,6 +317,14 @@ get_header();
                 this.hasCommitFinish = true
                 this.posts.status = this.status === true ? 'publish' : 'draft'
                 this.posts.content = window.tinymce.get('editor').getContent()
+                if(this.format === true){
+                    let imgDom = ''
+                    for (let index = 0; index < this.pictureList.length; index++) {
+                        const element = this.pictureList[index];
+                        imgDom += element.dom                        
+                    }
+                    this.posts.content += `<div class="moment-gallery flex-hb-vc flex-hw">${imgDom}</div>`
+                }
                 let format = this.format === true ? 'moments' : 'posts'
                 let params = this.posts;
                 if(!params.title && format === "posts"){

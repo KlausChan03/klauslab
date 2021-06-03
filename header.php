@@ -67,8 +67,8 @@
 				</div>
 				<el-menu v-show="ifShowMenu" class="el-menu-vertical" :default-active="activeIndex" >	
 					<div class="flex-hb-vc p-10">
-						<el-button class="w-1" icon="el-icon-magic-stick" @click="goToPage('page-post-simple',true)" type="primary" size="medium">发布</el-button>
-						<el-button class="w-1" icon="el-icon-search"  @click="showSearch" type="primary" size="medium">搜索</el-button>
+						<el-button v-if="window.isLogin" class="w-1" icon="el-icon-magic-stick" @click="goToPage('page-post-simple',true)" type="primary" size="medium">发布</el-button>
+						<!-- <el-button class="w-1" icon="el-icon-search"  @click="showSearch" type="primary" size="medium">搜索</el-button> -->
 						<el-button class="w-1" icon="el-icon-position"  @click="goToPage('feed',true)" type="primary" size="medium">订阅</el-button>
 					</div>					
 					<template v-for="(item,index) in menuList" :key="item.ID">

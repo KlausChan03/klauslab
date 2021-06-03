@@ -121,6 +121,19 @@ get_header();
     padding: 4px;
   }
 
+  .moment-gallery>* {
+    flex: 1 0 auto;
+    min-width: 30%;
+  }
+
+  
+  .moment-gallery img{
+    height: 240px;
+    width: 240px;
+    object-fit: cover;
+  }
+
+
   @media screen and (max-width: 720px) {
     .article-list .entry-main .featured-image {
       width: 100%;
@@ -145,6 +158,9 @@ get_header();
       text-align: justify;
       /* text-align-last: justify; */
     }
+
+
+
 
   }
 </style>
@@ -240,7 +256,7 @@ get_header();
           </div>
         </el-tab-pane>
         <el-tab-pane label="chat">
-          <span slot="label"><i class="el-icon-connection mr-5" ></i>瞬间</span>
+          <span slot="label"><i class="el-icon-connection mr-5"></i>瞬间</span>
           <kl-skeleton v-if="ifShowChat" type="post"></kl-skeleton>
           <div class="article-list" v-if="!ifShowChat">
             <article class="article-item hentry" v-for="(item,index) in listOfChat" :key="index">

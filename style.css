@@ -80,7 +80,7 @@ body .el-message-box {
   width: auto;
   max-width: 80vw;
   max-height: 80vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 body .el-message-box::-webkit-scrollbar {
@@ -97,6 +97,15 @@ body .el-message-box::-webkit-scrollbar-thumb {
 body .el-message-box::-webkit-scrollbar-track-piece {
   background-color: #e7eaf1;
   border-radius: 3px;
+}
+
+body .el-collapse-item__header {
+  height: auto;
+  line-height: inherit;
+}
+
+body .el-menu.el-menu--horizontal {
+  border-bottom: none;
 }
 
 /*
@@ -307,6 +316,16 @@ a {
   cursor: pointer;
   outline: none;
   blr: expression(this.onFocus=this.blur());
+}
+
+a.link {
+  font-size: inhert;
+  margin: 0 5px;
+}
+
+a.link::before {
+  font-family: "lalaksks";
+  content: "\e60c";
 }
 
 area {
@@ -3594,8 +3613,6 @@ body {
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
   margin-top: 5px;
-  width: 150px;
-  height: 150px;
   object-fit: cover;
 }
 
