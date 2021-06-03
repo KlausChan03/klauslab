@@ -80,7 +80,7 @@
         "type":"version-timeline",
         "value":[
             {
-                "version": "v2.4.1_beta",
+                "version": "v2.3.1_beta",
                 "versionName": "",
                 "description": "改造'瞬间'发布操作流程及渲染效果，用以简化使用，进行开放测试。'关于'页面新增'主题版本'和'我的项目'模块。",
                 "author": "KlausChan",
