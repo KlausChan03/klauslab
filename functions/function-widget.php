@@ -41,8 +41,8 @@ class UserInfo extends WP_Widget
 function widget_userinfo()
 {
 	global $current_user;
-	
-	?>
+
+?>
 	<div class="widget-user-container">
 		<div class="user-bg"></div>
 		<div class="user-main">
@@ -65,13 +65,13 @@ function widget_userinfo()
 					<p class="flex-hc-vc flex-v"><span> <?php echo (count_user_posts($user_ID, 'moments')); ?> 篇</span><span>说说</span></p>
 					<span class="flex-hc-vc col-b2bbbe">/</span>
 					<p class="flex-hc-vc flex-v"><span> <?php echo (get_comments('count=true&user_id=' . $user_ID)); ?> 条</span><span>评论</span></p>
-					
-					<?php 
-						if(in_array( 'administrator', $current_user->roles )){
-							$movie_data = json_decode(file_get_contents(get_template_directory() . '/inc/douban/cache/movie.json'))->data; 
-							$movoe_data_lengh = sizeof($movie_data);
-							echo ('<span class="flex-hc-vc col-b2bbbe">/</span> <p class="flex-hc-vc flex-v"><span> '. $movoe_data_lengh .' 条</span><span>影评</span></p> ');
-						}						
+
+					<?php
+					if (in_array('administrator', $current_user->roles)) {
+						$movie_data = json_decode(file_get_contents(get_template_directory() . '/inc/douban/cache/movie.json'))->data;
+						$movoe_data_lengh = sizeof($movie_data);
+						echo ('<span class="flex-hc-vc col-b2bbbe">/</span> <p class="flex-hc-vc flex-v"><span> ' . $movoe_data_lengh . ' 条</span><span>影评</span></p> ');
+					}
 					?>
 
 
@@ -219,6 +219,26 @@ function widget_authorinfo()
 	<?php
 }
 
+
+// 最近访客
+function most_active_friends($friends_num = 10)
+{
+	global $wpdb;
+	$counts = $wpdb->get_results("SELECT * FROM (SELECT * FROM $wpdb->comments WHERE user_id!='1' AND comment_approved='1' ORDER BY comment_date DESC) AS tempcmt GROUP BY comment_author_email ORDER BY comment_date DESC LIMIT $friends_num");
+	$mostactive = '';
+	$el_start = ' <el-tooltip class="item" effect="light"  placement="top">';
+	$el_end = '</el-tooltip>';
+
+	foreach ($counts as $count) {
+		$c_url = $count->comment_author_url;
+		$c_name = $count->comment_author;
+		$c_vip = get_author_class_for_api($count->comment_author_email);
+		$c_avatar = get_avatar($count, 40);
+		$c_avatar_default = '<img src="//en.gravatar.com/userimage/125992477/fcde332c16644204fc0be461a5b36857?size=40" />';
+		$mostactive .= '<li class="widget-visitor flex" style="flex: 0 1 auto; border: none; margin:0; padding: 5px 8px">' . $el_start . '<div slot="content"><div class="flex-hc-vc flex-v" style="line-height:2; min-width:40px">' . $c_name .  $c_vip . '</div></div><a href="' . ($c_url ?  $c_url : '#') . '" >' . ($c_avatar ? $c_avatar : $c_avatar_default) . '</a>' . $el_end . '</li>';
+	}
+	return $mostactive;
+}
 
 
 	?>

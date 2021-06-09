@@ -80,6 +80,13 @@
         "type":"version-timeline",
         "value":[
             {
+                "version": "v2.3.2_beta",
+                "versionName": "",
+                "description": "继续优化'瞬间'的展示效果，引入'最近访客'小组件",
+                "author": "KlausChan",
+                "date": "2021-06-03T10:42:10Z"
+            },
+            {
                 "version": "v2.3.1_beta",
                 "versionName": "",
                 "description": "改造'瞬间'发布操作流程及渲染效果，用以简化使用，进行开放测试。'关于'页面新增'主题版本'和'我的项目'模块。",

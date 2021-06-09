@@ -3860,7 +3860,7 @@ body {
         border-radius: 4px;
         box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
         -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
-        margin-top: 5px;
+        margin: 10px 0;
         // width: 150px;
         // height: 150px;
         object-fit: cover;
@@ -6956,4 +6956,19 @@ div[itemprop="description"] {
   font-size: 18px;
   line-height: 2;
   padding: .5rem 1.5rem;
+}
+
+.moment-gallery{
+  > *{
+    max-width: 33%;
+    margin-top: 5px;
+    flex: 1 0 auto;
+    &:not(:nth-child(3n)) {
+      margin-right: calc(1% / 2);      
+    }
+  }
+  img{
+    width: 100%;
+    height: 100%;
+  }
 }

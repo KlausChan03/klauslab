@@ -12,7 +12,7 @@ setPostViews(get_the_ID()); ?>
 </script>
 <div id="primary" class="main-area w-1">
     <main id="main" class="main-content" role="main">
-        <div id="about-main" class="post-<?php the_ID(); ?> page-main style-18 about-main">
+        <div id="about-main" class="post-<?php the_ID(); ?> page-main style-18 about-main" v-block>
             <el-card shadow="hover">
                 <div class="entry-title flex-hl-vc bor-b-1">
                     <svg class="icon icon-title mr-10" aria-hidden="true">
@@ -174,9 +174,7 @@ setPostViews(get_the_ID()); ?>
                 </template>
             </aside>
         </div>
-
     </main>
-
 </div>
 <style>
     .info-main h3 {

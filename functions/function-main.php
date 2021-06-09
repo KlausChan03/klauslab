@@ -520,13 +520,16 @@ function wpb_new_gravatar($avatar_defaults)
 
 
 // ajax头像更新
-add_action( 'init', 'ajax_avatar_url' );
-function ajax_avatar_url() {
-	if( @$_GET['action'] == 'ajax_avatar_get' && 'GET' == $_SERVER['REQUEST_METHOD'] ) {
-		$email = $_GET['email'];
-		echo get_avatar_url( $email, array( 'size'=>48 ) ); // size 指定头像大小
-		die();
-	}else { return; }
+add_action('init', 'ajax_avatar_url');
+function ajax_avatar_url()
+{
+    if (@$_GET['action'] == 'ajax_avatar_get' && 'GET' == $_SERVER['REQUEST_METHOD']) {
+        $email = $_GET['email'];
+        echo get_avatar_url($email, array('size' => 48)); // size 指定头像大小
+        die();
+    } else {
+        return;
+    }
 }
 
 
@@ -619,9 +622,9 @@ function get_author_class($comment_author_email)
     $author_count = count($wpdb->get_results(
         "SELECT comment_ID as author_count FROM $wpdb->comments WHERE comment_author_email = '$comment_author_email' "
     ));
-    if(is_user_logged_in()){
+    if (is_user_logged_in()) {
         if ($author_count >= 1 && $author_count <= 10) //数字可自行修改，代表评论次数。
-        echo '<span class="vip level_1">LV.1</span>';
+            echo '<span class="vip level_1">LV.1</span>';
         else if ($author_count >= 11 && $author_count <= 20)
             echo '<span class="vip level_2">LV.2</span>';
         else if ($author_count >= 21 && $author_count <= 40)
@@ -637,7 +640,6 @@ function get_author_class($comment_author_email)
     } else {
         echo '<span class="vip level_0">LV.0</span>';
     }
-    
 }
 
 // 根据设备类型自定义文章摘要长度
@@ -1278,7 +1280,7 @@ function ajax_comment_callback()
     add_filter('get_avatar', 'my_avatar');
 
 
-    
+
 
     // function get_avatar($email = 'klauschan007@gmail.com', $size = '48', $default = '', $alt = '')
     // {
@@ -1562,10 +1564,32 @@ function ajax_comment_callback()
     add_action('load-themes.php', 'init_add_pages');
 
 
-    function filter_rest_allow_anonymous_comments() {
+    function filter_rest_allow_anonymous_comments()
+    {
         return true;
     }
-    add_filter('rest_allow_anonymous_comments','filter_rest_allow_anonymous_comments');
+    add_filter('rest_allow_anonymous_comments', 'filter_rest_allow_anonymous_comments');
+
+
+    // 移除部分自带小工具
+    function remove_some_wp_widgets()
+    {
+        $unregister_widgets = array(
+            // 'Tag_Cloud',
+            // 'Recent_Comments',
+            // 'Recent_Posts',
+            'Links',
+            'Search',
+            'Meta',
+            'Categories',
+            'RSS'
+        );
+        foreach ($unregister_widgets as $widget)
+            unregister_widget('WP_Widget_' . $widget);
+        foreach (glob(get_template_directory() . '/widgets/widget-with-settings-*.php') as $file_path)
+            include($file_path);
+    }
+    add_action('widgets_init', 'remove_some_wp_widgets', 1);
 
 // 2018-8-14 引入
 // function translate_chinese_post_title_to_en_for_slug( $title ) {

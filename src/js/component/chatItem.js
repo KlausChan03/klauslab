@@ -6,9 +6,9 @@ Vue.component('chat-item', {
       <div class="flex-hb-vc flex-hw mb-10">
         <h5 v-if="postData.title.rendered" >#{{postData.title.rendered}}#</h5>
         <div  class="entry-tag" :class="{'w-1': !postData.title.rendered, 'flex-hr-vc': !postData.title.rendered}">
-          <el-tag class="ml-10" size="small" type="danger" v-if="postData.sticky">Top</el-tag>
-          <el-tag class="ml-10" size="small" type="danger" v-if="postData.newest">New</el-tag>
-          <el-tag class="ml-10" size="small" type="danger" v-if="postData.hotest">Hot</el-tag>
+          <el-tag class="ml-10" size="small" type="danger" v-if="postData.sticky">TOP</el-tag>
+          <el-tag class="ml-10" size="small" type="danger" v-if="postData.newest">NEW</el-tag>
+          <el-tag class="ml-10" size="small" type="danger" v-if="postData.hotest">HOT</el-tag>
         </div>       
       </div>       
       <p ref="entrysummary" class="entry-summary" v-html="postData.content.rendered" :id="postData.id"> </p>

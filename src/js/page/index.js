@@ -19,7 +19,7 @@ const index_module = new Vue({
             ifMobileDevice: window.ifMobileDevice,
             per_page: 10,
             page: 1,
-            postType: 'article',
+            postType: 'chat',
             posts_id_sticky: '',
             orderby: 'date',
             orderbyList: [{
@@ -36,7 +36,8 @@ const index_module = new Vue({
         }
     },
     created() {
-        this.getAllArticles()
+        // this.getAllArticles()
+        this.getAllChat()
 
     },
     mounted() {
@@ -44,22 +45,22 @@ const index_module = new Vue({
 
 
     },
-    updated() {
-        let self = this
-        let imgList = document.querySelectorAll(".entry-summary img");
-        for (let index = 0; index < imgList.length; index++) {
-            const element = imgList[index];
-            element.addEventListener("click", function (e) {
-                e.preventDefault()
-                self.$alert(`<div class="p-10 flex-hc-vc">${element.outerHTML}</div>`, {
-                    dangerouslyUseHTMLString: true,
-                    closeOnClickModal: true,
-                    closeOnPressEscape: true,
-                    showConfirmButton: false,
-                  });
-            })
-        }
-    },
+    // updated() {
+    //     let self = this
+    //     let imgList = document.querySelectorAll(".entry-summary img");
+    //     for (let index = 0; index < imgList.length; index++) {
+    //         const element = imgList[index];
+    //         element.addEventListener("click", function (e) {
+    //             e.preventDefault()
+    //             self.$alert(`<div class="p-10 flex-hc-vc">${element.outerHTML}</div>`, {
+    //                 dangerouslyUseHTMLString: true,
+    //                 closeOnClickModal: true,
+    //                 closeOnPressEscape: true,
+    //                 showConfirmButton: false,
+    //               });
+    //         })
+    //     }
+    // },
     computed: {
         getOrderby() {
             let self = this
@@ -197,13 +198,21 @@ const index_module = new Vue({
                 this.totalOfChat = parseInt(res.headers['x-wp-total'])
                 this.listOfChat = res.data
                 this.ifShowChat = false
-                this.listOfChat.forEach(element => {
+                this.listOfChat.forEach(element => {                    
                     element.ifShowComment = false
                     if (element.date && Number(dayjs(new Date()).diff(dayjs(element.date), 'week')) === 0) {
                         element.newest = true
                     }
                     if (element.post_metas.comments_num >= 10 || element.post_metas.zan_num >= 10) {
                         element.hotest = true
+                    }
+                    if(element.content.rendered.indexOf('img') > 0){
+                        // let dom = document.createElement('div')
+                        // dom.innerHTML = element.content.rendered
+                        // let imgList = dom.querySelectorAll('img')
+                        // let text = dom.querySelectorAll()
+                        // debugger
+                        element.content.rendered = element.content.rendered.replace(/(flex-hb-vc)/g, "flex")
                     }
                 });
 

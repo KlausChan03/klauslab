@@ -119,19 +119,7 @@ get_header();
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
     padding: 4px;
-  }
-
-  .moment-gallery>* {
-    flex: 1 0 auto;
-    min-width: 30%;
-  }
-
-  
-  .moment-gallery img{
-    height: 240px;
-    width: 240px;
-    object-fit: cover;
-  }
+  }  
 
 
   @media screen and (max-width: 720px) {
@@ -245,16 +233,6 @@ get_header();
             </article>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="article">
-          <span slot="label"><i class="el-icon-tickets mr-5"></i>文章</span>
-          <kl-skeleton v-if="ifShowPost" type="post"></kl-skeleton>
-          <div class="article-list" v-if="!ifShowPost">
-            <article class="article-item hentry" v-for="(item,index) in listOfArticle" :key="index">
-              <article-item :post-data="item" @change-type="changeItemType" @show-comment="showItemComment"></article-item>
-              <quick-comment :ref="'quickComment-'+item.id" callback="true" :comment-data="item.listOfComment" :post-data="item" v-if="item.ifShowComment"></quick-comment>
-            </article>
-          </div>
-        </el-tab-pane>
         <el-tab-pane label="chat">
           <span slot="label"><i class="el-icon-connection mr-5"></i>瞬间</span>
           <kl-skeleton v-if="ifShowChat" type="post"></kl-skeleton>
@@ -265,6 +243,17 @@ get_header();
             </article>
           </div>
         </el-tab-pane>
+        <el-tab-pane label="article">
+          <span slot="label"><i class="el-icon-tickets mr-5"></i>文章</span>
+          <kl-skeleton v-if="ifShowPost" type="post"></kl-skeleton>
+          <div class="article-list" v-if="!ifShowPost">
+            <article class="article-item hentry" v-for="(item,index) in listOfArticle" :key="index">
+              <article-item :post-data="item" @change-type="changeItemType" @show-comment="showItemComment"></article-item>
+              <quick-comment :ref="'quickComment-'+item.id" callback="true" :comment-data="item.listOfComment" :post-data="item" v-if="item.ifShowComment"></quick-comment>
+            </article>
+          </div>
+        </el-tab-pane>
+        
       </el-tabs>
       <div class="setting-part pos-a">
         <el-dropdown size="mini" trigger="click" split-button type="default" @command="handleCommand">
