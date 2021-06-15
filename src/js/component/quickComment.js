@@ -22,7 +22,7 @@ Vue.component('quick-comment', {
       commentAuthor: '',
       commentEmail: '',
       commentUrl: '',
-
+      // hitokoto:
     }
   },
   provide() {
@@ -43,14 +43,14 @@ Vue.component('quick-comment', {
       </div>
     </template> 
     <div class="comment-input mb-10" id="comment-input" v-loading="!ifShowEditor">
-      <editor  @onInit="changeShowStatus" :api-key="tinyKey" cloud-channel="5" :disabled=false :id="'uuid' + postData.id" :setting="{inline: false}" :init="{  
+      <editor  @onInit="changeShowStatus" :api-key="tinyKey" cloud-channel="5" :placeholder="hitokoto" :disabled=false :id="'uuid' + postData.id" :setting="{inline: false}" :init="{  
         height: 180,
         menubar: false,        
         plugins: [
           'advlist autolink lists link image charmap print preview anchor',
           'searchreplace visualblocks code fullscreen',
           'insertdatetime media table paste code help wordcount',
-          'lists code emoticons'
+          'lists code emoticons',
         ],
         
         toolbar:
@@ -85,10 +85,14 @@ Vue.component('quick-comment', {
   computed: {
     getPaperSize() {
       return window.ifMobileDevice === true ? 3 : 8
+    },
+    hitokoto() {
+      let hitokoto = window.localStorage.getItem('baseInfo') ? JSON.parse(window.localStorage.getItem('baseInfo')).hitokoto : ''
+      return hitokoto
     }
   },
   methods: {
-    changeShowStatus(){
+    changeShowStatus() {
       this.ifShowEditor = true
     },
     getListOfComment(id = window.post_id, page = this.commentPage) {
@@ -121,7 +125,7 @@ Vue.component('quick-comment', {
       params.post = this.postData.id
       params.content = this.commentContent
       params.parent = this.commentInfo.parentId ? this.commentInfo.parentId : "0"
-      if(!window.isLogin){
+      if (!window.isLogin) {
         params.author_name = this.commentAuthor
         params.author_email = this.commentEmail
         params.author_url = this.commentUrl
@@ -134,9 +138,8 @@ Vue.component('quick-comment', {
         author_name: this.commentAuthor,
         author_email: this.commentEmail,
         author_url: this.commentUrl,
-      }
-      , {
-        headers:{
+      }, {
+        headers: {
           'X-WP-Nonce': window._nonce
         }
       }).then(res => {

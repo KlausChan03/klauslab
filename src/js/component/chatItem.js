@@ -35,16 +35,13 @@ Vue.component('chat-item', {
               <i class="lalaksks lalaksks-ic-zan fs-16 cur-p" :style='{color:postData.post_metas.zan_num > 0 ? "#DD4422":"inhert", background: postData.post_metas.has_zan ? "#F5B4A7" : "inhert"}'></i>
               <span :style='{color:postData.post_metas.zan_num > 0 ? "#DD4422":"inhert"}'>{{postData.post_metas.zan_num > 0 ? postData.post_metas.zan_num : 0}}</span>
           </div>
-        </div>    
-        
+        </div>   
       </div>
     </div>
-    </div>
-    `,
-  mounted() {
-    
 
-  },
+  </div>
+    `,
+
   methods: {
     showComment(id) {
       this.$emit('show-comment', id)
@@ -105,6 +102,7 @@ Vue.component('chat-item', {
       }
 
     },
+    
   },
   filters: {
     formateDate: (value) => {

@@ -114,6 +114,9 @@ get_header();
                     <el-form-item label="置顶">
                         <el-switch v-model="posts.sticky" active-text="是" inactive-text="否"> </el-switch>
                     </el-form-item>
+                    <el-form-item label="打赏">
+                        <el-switch v-model="posts.post_meta_obj.reward" active-text="是" inactive-text="否"> </el-switch>
+                    </el-form-item>
                     <el-form-item label="标签" v-if="!format">
                         <el-select v-model="posts.tags" multiple filterable allow-create default-first-option placeholder="请选择文章标签">
                             <el-option v-for="item in tagList" :key="item.id" :label="item.name" :value="item.id">
@@ -184,6 +187,9 @@ get_header();
                     status: 'publish',
                     tags: [],
                     categories: [],
+                    post_meta_obj:{
+                        reward: true,
+                    }
 
                 },
                 pictureList: [],
@@ -317,6 +323,18 @@ get_header();
                 this.hasCommitFinish = true
                 this.posts.status = this.status === true ? 'publish' : 'draft'
                 this.posts.content = window.tinymce.get('editor').getContent()
+                this.posts.post_metas = []
+                for (const key in this.posts.post_meta_obj) {
+                    if (this.posts.post_meta_obj.hasOwnProperty(key)) {
+                        const element = this.posts.post_meta_obj[key];
+                        this.posts.post_metas.push(
+                            {
+                                'key':key,
+                                'value': element === true ? '1' : '0'
+                            }
+                        )
+                    }
+                }
                 if(this.format === true){
                     let imgDom = ''
                     for (let index = 0; index < this.pictureList.length; index++) {

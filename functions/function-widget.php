@@ -41,6 +41,7 @@ class UserInfo extends WP_Widget
 function widget_userinfo()
 {
 	global $current_user;
+	$user_name = $current_user->display_name;
 
 ?>
 	<div class="widget-user-container">
@@ -51,9 +52,9 @@ function widget_userinfo()
 					echo get_avatar($current_user->user_email, 64);
 				} ?>
 			</div>
-			<div class="user-default flex-v" style="padding-left: 90px; line-height: 1.5">
-				<span class="fs-16"><?php echo ($current_user->display_name); ?></span>
-				<span><?php echo get_author_class($current_user->user_email); ?></span>
+			<div class="user-default flex-hl-vc" style="padding-left: 90px; line-height: 32px">
+				<span class="fs-16"><?php echo ($user_name ? '@' . $user_name : ''); ?></span>
+				<span class="ml-5"><?php echo get_author_class($current_user->user_email); ?></span>
 			</div>
 			<div class="user-info-main flex-hb-vc">
 				<?php global $user_ID;

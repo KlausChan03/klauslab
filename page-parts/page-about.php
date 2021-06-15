@@ -6,19 +6,19 @@
  *  author: Klaus
  */
 get_header();
-setPostViews(get_the_ID()); ?>
+// setPostViews(get_the_ID()); ?>
 <script>
     window.post_id = '<?php echo get_the_ID(); ?>';
 </script>
 <div id="primary" class="main-area w-1">
     <main id="main" class="main-content" role="main">
-        <div id="about-main" class="post-<?php the_ID(); ?> page-main style-18 about-main" v-block>
+        <div id="about-main" :calss="'post-' + window.post_id" class="page-main style-18 about-main" v-block>
             <el-card shadow="hover">
                 <div class="entry-title flex-hl-vc bor-b-1">
                     <svg class="icon icon-title mr-10" aria-hidden="true">
                         <use xlink:href="#lalaksks21-stats"></use>
                     </svg>
-                    <h2><?php the_title(); ?></h2>
+                    <h2>{{pageInfo.title.rendered}}</h2>
                 </div>
                 <div class="entry-content page-content" v-loading="!ifShowAll" style="min-height: 300px">
                     <template v-if="info">
@@ -135,42 +135,16 @@ setPostViews(get_the_ID()); ?>
                     </template>
                 </div>
                 <div class="entry-footer flex-hc-vc">
-                    <el-popover placement="top" title="请作者喝杯咖啡☕" width="280" trigger="click">
-                        <div class="pay-body">
-                            <?php
-                            $alipay_image_id = cs_get_option('alipay_image');
-                            $alipay_attachment = wp_get_attachment_image_src($alipay_image_id, 'full');
-                            $wechat_image_id = cs_get_option('wechat_image');
-                            $wechat_attachment = wp_get_attachment_image_src($wechat_image_id, 'full');
-                            if (cs_get_option('alipay_image') && cs_get_option('wechat_image')) { ?>
-                                <h4 class="flex-hc-vc m-tb-10">扫一扫支付</h4>
-                                <div class="flex-hc-vc">
-                                    <img class="alipay" src="<?php echo $alipay_attachment[0]; ?>" v-show="ifShowPayImage" />
-                                    <img class="wechatpay" src="<?php echo $wechat_attachment[0]; ?>" v-show="!ifShowPayImage" />
-                                </div>
-                                <div class="pay-chose flex-hb-vc mt-15">
-                                    <button class="alibutton" :class="{'chosen':ifShowPayImage}" :disabled="ifShowPayImage" ref="alibutton" @click="changeChoose"><img src="<?php echo KL_THEME_URI; ?>/img/alipay.png" /></button>
-                                    <button class="wechatbutton" :class="{'chosen':!ifShowPayImage}" :disabled="!ifShowPayImage" ref="wechatbutton" @click="changeChoose"><img src="<?php echo KL_THEME_URI; ?>/img/wechat.png" /></button>
-                                </div>
-                            <?php } else if (cs_get_option('alipay_image') && !cs_get_option('wechat_image')) { ?>
-                                <h4 class="flex-hc-vc m-tb-10">扫一扫支付</h4>
-                                <img class="alipay" src="<?php echo $alipay_attachment[0]; ?>" />
-                            <?php } else if (!cs_get_option('alipay_image') && cs_get_option('wechat_image')) { ?>
-                                <h4 class="flex-hc-vc m-tb-10">扫一扫支付</h4>
-                                <img class="wechatpay" src="<?php echo $wechat_attachment[0]; ?>" />
-                            <?php } else { ?>
-                                <h4 class="flex-hc-vc m-tb-10">作者尚未添加打赏二维码！</h4>
-                            <?php } ?>
-                        </div>
-                        <el-button slot="reference" circle><i class="el-icon-coffee fs-20"></i></el-button>
-                    </el-popover>
+                    <template v-if="pageInfo.post_metas.reward === '0' ? false : true">
+                        <kl-reward></kl-reward>
+                    </template>
                 </div>
             </el-card>
             <!-- <kl-skeleton v-if="!listOfComment" class="article-skeleton mt-10" type="comment"></kl-skeleton> -->
             <aside id="comment-part" class="comment-container mt-10">
-                <template v-if="posts.comment_status === 'open'">
+                <template v-if="pageInfo.comment_status === 'open'">
                     <h3 class="tips-header flex-hl-vc"><i class="el-icon-chat-line-round fs-24 mr-10"></i>评论区</h3>
-                    <quick-comment :post-data="posts"></quick-comment>
+                    <quick-comment :post-data="pageInfo"></quick-comment>
                 </template>
             </aside>
         </div>
@@ -203,20 +177,19 @@ setPostViews(get_the_ID()); ?>
         line-height: 1;
         margin-left: 10px;
     }
-
-    /* a.link{
-        font-family: "lalaksks";
-
-    } */
 </style>
 
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/skeleton.js"></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/reward.js"></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/mixin/pageMixin.js"></script>
+
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickCommentItem.js" defer></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickComment.js" defer></script>
 
 <script>
     new Vue({
         el: '#about-main',
+        mixins:[pageMixin],
         data() {
             return {
                 listContent: '',
@@ -225,10 +198,7 @@ setPostViews(get_the_ID()); ?>
                 ifShowAll: false,
                 ifShowPayImage: true,
                 commentPage: 1,
-                posts: {
-                    id: window.post_id,
-                    comment_status: 'open'
-                },
+                
                 activeNames: [0, 1, 2, 3],
                 fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
 
@@ -236,6 +206,7 @@ setPostViews(get_the_ID()); ?>
         },
         mounted() {
             this.getInfo()
+            // this.getPage()
         },
         methods: {
             goToPage(route, params = false) {
@@ -246,6 +217,7 @@ setPostViews(get_the_ID()); ?>
                     window.location.href = route
                 }
             },
+           
             getInfo() {
                 let self = this
                 self.ifShowAll = false

@@ -3,6 +3,7 @@ dayjs.extend(window.dayjs_plugin_relativeTime)
 
 const index_module = new Vue({
     el: ".main-content",
+    // mixins:[reward_mixin],
     data() {
         return {
             ifShowSingle: false,
@@ -15,7 +16,7 @@ const index_module = new Vue({
                 }
             },
             listOfComment: "",
-            ifShowPayImage: true,
+            // ifShowPayImage: true,
             commentPage: 1,
         }
     },
@@ -123,8 +124,6 @@ const index_module = new Vue({
             }
         },
 
-        changeChoose() {
-            this.ifShowPayImage = !this.ifShowPayImage
-        }
+        
     }
 })

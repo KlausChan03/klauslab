@@ -233,6 +233,7 @@ a {
   &.link {
     font-size: inhert;
     margin: 0 5px;
+
     &::before {
       font-family: "lalaksks";
       content: "\e60c";
@@ -3154,35 +3155,18 @@ body {
 
         .user-bg {
           height: 140px;
-          //   background-size: cover;
-          //   background-image: url('./dist/img/bg-normal.jpg');
-          //   background-position: center center;
           border-top-left-radius: 4px;
           border-top-right-radius: 4px;
-
-          //   &.christmas-bg {
-          //     background-image: url('./dist/img/bg-christmas.png');
-
-          //     * {
-          //       color: #fff;
-          //     }
-          //   }
-
-          //   &.newYear-bg {
-          //     background-image: url('./dist/img/bg-2021.jpg');
-
           * {
             color: #fff;
           }
-
-          //   }
         }
 
         .user-main {
           .user-avatar {
             position: absolute;
             left: 15px;
-            top: calc(50%);
+            top: calc(140px - 32px);
           }
 
           .user-info {
@@ -6958,17 +6942,29 @@ div[itemprop="description"] {
   padding: .5rem 1.5rem;
 }
 
-.moment-gallery{
-  > *{
-    max-width: 33%;
+.moment-gallery {
+  >* {
+
+    max-width: 32%;
     margin-top: 5px;
     flex: 1 0 auto;
+
     &:not(:nth-child(3n)) {
-      margin-right: calc(1% / 2);      
+      margin-right: 2%;
+    }
+
+    &:nth-last-child(1):first-child {
+      width: 100%;
+      height: 100%;
+      flex: 1 1 auto;
     }
   }
-  img{
+
+  a {
+    display: flex;
+  }
+
+  img {
     width: 100%;
-    height: 100%;
   }
 }

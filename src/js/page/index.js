@@ -33,11 +33,15 @@ const index_module = new Vue({
             ],
             currentCommentId: '',
             imgList: [],
+
+            imageUrl: '',
+            imageUrls: []
         }
     },
-    created() {
+
+    async created() {
+        await this.getAllChat()
         // this.getAllArticles()
-        this.getAllChat()
 
     },
     mounted() {
@@ -163,6 +167,10 @@ const index_module = new Vue({
 
                             });
                             this.ifShowPost = false
+                            this.$nextTick(()=>{
+                                this.bindImagesLayer();
+                            })
+
                         })
                     })
             } else {
@@ -198,7 +206,7 @@ const index_module = new Vue({
                 this.totalOfChat = parseInt(res.headers['x-wp-total'])
                 this.listOfChat = res.data
                 this.ifShowChat = false
-                this.listOfChat.forEach(element => {                    
+                this.listOfChat.forEach(element => {
                     element.ifShowComment = false
                     if (element.date && Number(dayjs(new Date()).diff(dayjs(element.date), 'week')) === 0) {
                         element.newest = true
@@ -206,7 +214,7 @@ const index_module = new Vue({
                     if (element.post_metas.comments_num >= 10 || element.post_metas.zan_num >= 10) {
                         element.hotest = true
                     }
-                    if(element.content.rendered.indexOf('img') > 0){
+                    if (element.content.rendered.indexOf('img') > 0) {
                         // let dom = document.createElement('div')
                         // dom.innerHTML = element.content.rendered
                         // let imgList = dom.querySelectorAll('img')
@@ -215,6 +223,10 @@ const index_module = new Vue({
                         element.content.rendered = element.content.rendered.replace(/(flex-hb-vc)/g, "flex")
                     }
                 });
+                this.$nextTick(()=>{
+                    this.bindImagesLayer();
+                })
+
 
             })
         },
@@ -328,9 +340,33 @@ const index_module = new Vue({
             //     })();
         },
 
-        
-        resizeHandler(){
+
+        resizeHandler() {
             this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
+        },
+
+        bindImagesLayer() {
+            let self = this;
+            let imgList = document.querySelectorAll(".entry-summary img");
+            for (let index = 0; index < imgList.length; index++) {
+                const element = imgList[index];
+                element && element.addEventListener("click",function(){
+                    event.preventDefault()
+                    self.imageUrls = []
+                    let url = element.getAttribute("src")
+                    debugger
+                    if (!self.imageUrls.includes(url)) {
+                        self.imageUrls.push(url);
+                    }
+                    self.$nextTick(() => {
+                        self.imageUrl = url;
+    
+                    })
+                    setTimeout(() => {
+                        document.querySelectorAll(".image-part img")[0].click()
+                    }, 100);
+                })
+            }
         }
 
     }

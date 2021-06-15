@@ -80,11 +80,18 @@
         "type":"version-timeline",
         "value":[
             {
+                "version": "v2.3.3_beta",
+                "versionName": "",
+                "description": "新增文章详情页字数统计和阅读时长功能。封装打赏组件。新增图片预览功能。新增评论placeholder属性的'一句'。使用mixin封装page的公共方法。",
+                "author": "KlausChan",
+                "date": "2021-06-15T17:49:10Z"
+            },
+            {
                 "version": "v2.3.2_beta",
                 "versionName": "",
                 "description": "继续优化'瞬间'的展示效果，引入'最近访客'小组件",
                 "author": "KlausChan",
-                "date": "2021-06-03T10:42:10Z"
+                "date": "2021-06-09T10:42:10Z"
             },
             {
                 "version": "v2.3.1_beta",

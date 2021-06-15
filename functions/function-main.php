@@ -1233,6 +1233,7 @@ function ajax_comment_callback()
         echo paginate_links($pagination);
     }
 
+    // 经典语句，用于评论输入区域的placeholder
     function hitokoto()
     {
         $data  = KL_THEME_URI . '/json/one.json';
@@ -1246,14 +1247,14 @@ function ajax_comment_callback()
             $source = $array[$random]['source'];
             if ($hitokoto) {
                 // echo (!empty($author) ? ($hitokoto . " —— " . $author) : $hitokoto);
-                echo $hitokoto
+                return $hitokoto
                     . (!empty($author) ?  (" —— " . $author) : "")
                     . (!empty($source) ? ((!empty($author) ? "," : "——") . $source) : "");
             } else {
-                echo '彩蛋！你很幸运，刷到一条空白的内容，当前有 ' . (intval(count($array)) - 1) . " 条 '一言'";
+                return '彩蛋！你很幸运，刷到一条空白的内容，当前有 ' . (intval(count($array)) - 1) . " 条 '一言'";
             }
         } else {
-            echo '';
+            return '';
         }
     }
 
@@ -1590,6 +1591,23 @@ function ajax_comment_callback()
             include($file_path);
     }
     add_action('widgets_init', 'remove_some_wp_widgets', 1);
+
+
+
+// 允许post类型展示自定义字段
+$object_type = 'post';
+$meta_args = array( // Validate and sanitize the meta value.
+    // Note: currently (4.7) one of 'string', 'boolean', 'integer',
+    // 'number' must be used as 'type'. The default is 'string'.
+    'type'         => 'string',
+    // Shown in the schema for the meta key.
+    'description'  => 'A meta key associated with a string meta value.',
+    // Return a single value of the type.
+    'single'       => true,
+    // Show in the WP REST API response. Default: false.
+    'show_in_rest' => true,
+);
+register_meta( $object_type, 'my_meta_key', $meta_args );
 
 // 2018-8-14 引入
 // function translate_chinese_post_title_to_en_for_slug( $title ) {
