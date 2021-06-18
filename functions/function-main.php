@@ -1267,12 +1267,11 @@ function ajax_comment_callback()
     remove_filter('comment_text', 'wptexturize');
 
 
-
     function my_avatar($avatar)
     {
 
-        $avatar = preg_replace("/http:\/\/(www|\d).gravatar.com/", "https://gravatar.loli.net", $avatar);
-        // $avatar = str_replace(array("www.gravatar.com", "0.gravatar.com", "1.gravatar.com", "2.gravatar.com"), "secure.gravatar.com", $avatar);
+        // $avatar = preg_replace("/http:\/\/(www|\d).gravatar.com/", "https://gravatar.loli.net", $avatar);
+        $avatar = str_replace(array("www.gravatar.com", "0.gravatar.com", "1.gravatar.com", "2.gravatar.com","secure.gravatar.com"), "gravatar.loli.net" , $avatar);
         //~ 替换为 https 协议
         $avatar = str_replace("http://", "https://", $avatar);
         return $avatar;

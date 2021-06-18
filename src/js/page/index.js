@@ -17,7 +17,7 @@ const index_module = new Vue({
             ifShowChat: false,
             ifShowAll: true,
             ifMobileDevice: window.ifMobileDevice,
-            per_page: 10,
+            per_page: window.ifMobileDevice === true ? 6 : 10,
             page: 1,
             postType: 'chat',
             posts_id_sticky: '',
@@ -46,8 +46,6 @@ const index_module = new Vue({
     },
     mounted() {
         window.addEventListener("resize", this.resizeHandler);
-
-
     },
     // updated() {
     //     let self = this
@@ -243,6 +241,14 @@ const index_module = new Vue({
             this.page = 1
             this.postType = tab.label
             this.getListByType(this.postType)
+            debugger
+            // this.$router.push({
+            //     path: window.home_url,
+            //     query:{
+            //         type: this.postType
+            //     }
+            // })
+            url.searchParams.set('x', 42);
         },
 
         getListByType(type) {

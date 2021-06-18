@@ -235,11 +235,10 @@ function most_active_friends($friends_num = 10)
 		$c_name = $count->comment_author;
 		$c_vip = get_author_class_for_api($count->comment_author_email);
 		$c_avatar = get_avatar($count, 40);
-		$c_avatar_default = '<img src="//en.gravatar.com/userimage/125992477/fcde332c16644204fc0be461a5b36857?size=40" />';
+		$c_avatar_default = '<img src=" ' . KL_THEME_URI .'/img/wp-default-gravatar.png"  style="width: 40px; height: 40px; object-fit: cover;"/>';
 		$mostactive .= '<li class="widget-visitor flex" style="flex: 0 1 auto; border: none; margin:0; padding: 5px 8px">' . $el_start . '<div slot="content"><div class="flex-hc-vc flex-v" style="line-height:2; min-width:40px">' . $c_name .  $c_vip . '</div></div><a href="' . ($c_url ?  $c_url : '#') . '" >' . ($c_avatar ? $c_avatar : $c_avatar_default) . '</a>' . $el_end . '</li>';
 	}
 	return $mostactive;
 }
-
 
 	?>

@@ -1,4 +1,4 @@
-
+/* 
 .OwO {
     position: relative;
     -webkit-user-select: none;
@@ -647,7 +647,7 @@
         -webkit-transform: translate(0) rotate(0deg);
         transform: translate(0) rotate(0deg)
     }
-}
+} */
 
 /* kllog */
 
@@ -734,4 +734,8 @@
     color: #969799;
     font-size: 14px;
     line-height: 20px;
+}
+
+.widget-area .widget-content .widget.widget_blog_subscription #subscribe-submit button{
+    min-width: 60px;
 }
