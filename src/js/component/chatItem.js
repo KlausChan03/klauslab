@@ -1,5 +1,6 @@
 Vue.component('chat-item', {
   props: ['postData'],
+  mixins:[filterMixin],
   template: `
   <div>  
     <div class="entry-main" >
@@ -19,7 +20,9 @@ Vue.component('chat-item', {
           <div v-html="postData.post_metas.avatar" class="mr-10"></div>
           <div class="flex-v flex-hc-vt">
             <span class="fs-12">{{postData._embedded.author[0].name}}</span>
-            <span class="fs-12">{{postData.date | formateDate}}</span>
+            <el-tooltip class="item" effect="dark" :content="postData.date | formateDateMain" placement="bottom">
+              <span class="fs-12" >{{postData.date | formateDate}}</span>
+            </el-tooltip>
           </div>
         </div>
         <div class="entry-action-main flex-hb-vc w-06">
@@ -103,10 +106,5 @@ Vue.component('chat-item', {
 
     },
     
-  },
-  filters: {
-    formateDate: (value) => {
-      return dayjs(value).fromNow()
-    }
   }
 })

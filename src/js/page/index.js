@@ -1,9 +1,10 @@
 dayjs.locale('zh-cn')
 dayjs.extend(window.dayjs_plugin_relativeTime)
+dayjs.extend(window.dayjs_plugin_localizedFormat)
 
 const index_module = new Vue({
     el: ".main-container",
-
+    mixins:[filterMixin],
     data() {
         return {
             listOfAll: [],
@@ -118,9 +119,10 @@ const index_module = new Vue({
         },
 
         getTypeOfRecommend() {
+            let self = this
             this.ifShowAll = true
             let params = {};
-            params.per_page = window.post_count
+            params.per_page = self.per_paget
             params.sticky = true
             return axios.get(`${window.site_url}/wp-json/wp/v2/posts?_embed`, {
                 params: params
@@ -241,14 +243,14 @@ const index_module = new Vue({
             this.page = 1
             this.postType = tab.label
             this.getListByType(this.postType)
-            debugger
+            // debugger
             // this.$router.push({
             //     path: window.home_url,
             //     query:{
             //         type: this.postType
             //     }
             // })
-            url.searchParams.set('x', 42);
+            // url.searchParams.set('x', 42);
         },
 
         getListByType(type) {
@@ -262,6 +264,7 @@ const index_module = new Vue({
                 this.getTypeOfRecommend()
             }
         },
+        
         changeItemType(id) {
             this.listOfArticle.forEach(item => {
                 if (item.id === id) {

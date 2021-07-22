@@ -1,5 +1,6 @@
 Vue.component('article-item', {
   props: ['postData'],
+  mixins:[filterMixin],
   data() {
     return {
       ifMobileDevice: window.ifMobileDevice
@@ -42,7 +43,9 @@ Vue.component('article-item', {
           <div v-html="postData.post_metas.avatar" class="mr-10"></div>
           <div class="flex-v flex-hc-vt">
             <span class="fs-12">{{postData._embedded.author[0].name}}</span>
-            <span class="fs-12">{{postData.date | formateDate}}</span>
+            <el-tooltip class="item" effect="dark" :content="postData.date | formateDateMain" placement="bottom">
+              <span class="fs-12" >{{postData.date | formateDate}}</span>
+            </el-tooltip>
           </div>
         </div>
         <div class="entry-action-main flex-hb-vc" style="flex:1 0 auto">
@@ -75,7 +78,9 @@ Vue.component('article-item', {
 
             <div class="flex-v flex-hc-vt">
               <span class="fs-12">{{postData._embedded.author[0].name}}</span>
-              <span class="fs-12">{{postData.date | formateDate}}</span>
+              <el-tooltip class="item" effect="dark" :content="postData.date | formateDateMain" placement="bottom">
+                <span class="fs-12" >{{postData.date | formateDate}}</span>
+              </el-tooltip>
             </div>
           </div>
           <div class="entry-extra" style="min-width:100px;text-align:right">
@@ -175,10 +180,5 @@ Vue.component('article-item', {
   },
   mounted() {
     window.addEventListener("resize", this.resizeHandler);
-  },
-  filters: {
-    formateDate: (value) => {
-      return dayjs(value).fromNow()
-    }
   }
 })

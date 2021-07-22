@@ -120,12 +120,11 @@ Text Domain: KlausLab
 */
 /* 图标字体定义 */
 @font-face {
-  font-family: 'lalaksks';
-  /* project id 765116 */
-  src: url("//at.alicdn.com/t/font_765116_9anrc89egpd.eot");
-  src: url("//at.alicdn.com/t/font_765116_9anrc89egpd.eot?#iefix") format("embedded-opentype"), url("//at.alicdn.com/t/font_765116_9anrc89egpd.woff2") format("woff2"), url("//at.alicdn.com/t/font_765116_9anrc89egpd.woff") format("woff"), url("//at.alicdn.com/t/font_765116_9anrc89egpd.ttf") format("truetype"), url("//at.alicdn.com/t/font_765116_9anrc89egpd.svg#lalaksks") format("svg");
+  font-family: 'lalaksks';  /* Project id 765116 */
+  src: url('//at.alicdn.com/t/font_765116_mly7aa439a.woff2?t=1626245433174') format('woff2'),
+       url('//at.alicdn.com/t/font_765116_mly7aa439a.woff?t=1626245433174') format('woff'),
+       url('//at.alicdn.com/t/font_765116_mly7aa439a.ttf?t=1626245433174') format('truetype');
 }
-
 /*主要标签元素自定义设置*/
 :root {
   --primaryText: #222831;
@@ -6260,4 +6259,17 @@ div[itemprop="description"] {
 
 .moment-gallery img {
   width: 100%;
+}
+
+.swing-button:hover{
+  -webkit-animation: headShake 1.5s;
+  animation: headShake 1.5s;
+}
+
+.col-d42{
+  color: #d42;
+}
+
+.col-48e{
+  color: #48e;
 }

@@ -293,9 +293,11 @@ function normal_style_script()
     wp_enqueue_script('dayjs', KL_THEME_URI . '/js/lib/dayjs.min.js', array(), '1.10.4', false);
     // dayjs-plugin.js
     wp_enqueue_script('dayjs-relativeTime', KL_THEME_URI . '/js/plugin/relativeTime.js', array(), '1.10.4', false);
+    wp_enqueue_script('dayjs-localizedFormat', KL_THEME_URI . '/js/plugin/localizedFormat.js', array(), '1.10.4', false);
     wp_enqueue_script('dayjs-locale', KL_THEME_URI . '/js/plugin/zh-cn.js', array(), '1.10.4', false);
     // vue.min.js   
     wp_enqueue_script('vue', KL_THEME_URI . '/js/lib/vue.min.js', array(), '2.6.0', false);
+    // wp_enqueue_script('vue', KL_THEME_URI . '/js/lib/petite-vue.js', array(), '2.6.0', false);
     // jquery.min.js
     wp_enqueue_script('jquery', KL_THEME_URI . '/js/lib/jquery-3.1.1.min.js', array(), '3.1.1', false);
     // axios.min.js
@@ -312,7 +314,7 @@ function normal_style_script()
     wp_enqueue_style('element-ui-css', KL_THEME_URI . '/css/element-ui.min.css', array(), '1.0', false);
     wp_enqueue_script('tinymce-vue-js', KL_THEME_URI . '/js/lib/tinymce-vue.min.js', array(), '1.0', false);
     // elementUI额外样式
-    wp_enqueue_style('icon-font19', '//at.alicdn.com/t/font_765116_7hen7r27lco.css', array(), '1.0', false);
+    wp_enqueue_style('icon-font19', '//at.alicdn.com/t/font_765116_by9ipi65sw7.css', array(), '1.0', false);
     wp_enqueue_script('icon-font21', '//at.alicdn.com/t/font_1616851_1gtnw3vh59j.js', array(), '1.0', false);
 
     // MuseUI

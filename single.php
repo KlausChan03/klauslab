@@ -28,7 +28,7 @@ get_header(); ?>
 				</div>
 				<div class="article-panel-item">
 					<el-badge :value="posts.post_metas.cai_num > 0 ? posts.post_metas.cai_num : 0 " class="badge-item">
-						<el-button circle @click="likeOrDislikePost(posts,'like')" :style='{background: posts.post_metas.has_cai ? "#856D72" : "inhert"}'><i class="lalaksks lalaksks-ic-zan fs-16 flex-hc-vc" style="transform: rotateX(180deg);" :style='{color:posts.post_metas.cai_num > 0 ? "#36292F":"inhert"}'></i></el-button>
+						<el-button circle @click="likeOrDislikePost(posts,'dislike')" :style='{background: posts.post_metas.has_cai ? "#856D72" : "inhert"}'><i class="lalaksks lalaksks-ic-zan fs-16 flex-hc-vc" style="transform: rotateX(180deg);" :style='{color:posts.post_metas.cai_num > 0 ? "#36292F":"inhert"}'></i></el-button>
 					</el-badge>
 				</div>
 			</div>
@@ -47,6 +47,9 @@ get_header(); ?>
 				<div class="entry-footer flex-hc-vc">
 					<template v-if="posts.post_metas.reward === '0' ? false : true">
 						<kl-reward></kl-reward>
+					</template>
+					<template v-if="true">
+						<el-button circle @click="updatePost()"><i class="el-icon-toilet-paper fs-20"></i></el-button>
 					</template>
 				</div>
 			</div>
@@ -141,6 +144,10 @@ get_header(); ?>
 	.pay-body .wechatpay {
 		width: 220px;
 		height: 220px;
+	}
+
+	.entry-footer button:not(:first-child){
+		margin-left: 20px;
 	}
 </style>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/skeleton.js"></script>

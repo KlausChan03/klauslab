@@ -1,6 +1,7 @@
 
 Vue.component('quick-comment-item', {
   props: ['commentData'],
+  mixins:[filterMixin],
   data() {
     return {
       commentContent: '',
@@ -9,7 +10,7 @@ Vue.component('quick-comment-item', {
   inject: ["commentInfo"],
   template: `
   <template>
-    <ul class="comment-list">
+    <ul class="comment-list" v-if="commentData && commentData.length > 0">
         <li v-for="(item,index) in commentData" :id="'comment-' + item.id" :key="item.id" class="comment-item" >
           <div class="comment-item-main flex-hl-vl">
             <div class="commentator-avatar">
@@ -54,11 +55,6 @@ Vue.component('quick-comment-item', {
         this.commentInfo.replyTo = item.author_name
       })
       
-    }
-  },
-  filters: {
-    formateDate: (value) => {
-      return dayjs(value).fromNow()
     }
   }
 })

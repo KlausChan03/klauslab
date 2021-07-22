@@ -79,14 +79,26 @@ let headerPart = new Vue({
                 this.$refs.searchMain.$refs.searchInput.focus()
             })
         },
-        goToPage(route,params=false) {
-            if(params){
-                window.location.href = `${window.home_url}/${route}`
-
-            } else {
-                window.location.href = route
-            }
+        goToPage(route, domain = false, params = '') {
+            let url = ''
+            url += domain ? `${window.home_url}/${route}` : route
+            url += params ? `?${this.convertObj(params)}` : ''
+            window.location.href = url
         },
+        convertObj(data) {
+            var _result = [];
+            for (var key in data) {
+                var value = data[key];
+                if (value.constructor == Array) {
+                    value.forEach(function (_value) {
+                        _result.push(key + "=" + _value);
+                    });
+                } else {
+                    _result.push(key + '=' + value);
+                }
+            }
+            return _result.join('&');
+        },        
         handleCommand(command){
             if(!command) return
             this.goToPage(command,true)

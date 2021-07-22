@@ -146,10 +146,6 @@ get_header();
       text-align: justify;
       /* text-align-last: justify; */
     }
-
-
-
-
   }
 </style>
 <script>
@@ -252,8 +248,7 @@ get_header();
               <quick-comment :ref="'quickComment-'+item.id" callback="true" :comment-data="item.listOfComment" :post-data="item" v-if="item.ifShowComment"></quick-comment>
             </article>
           </div>
-        </el-tab-pane>
-        
+        </el-tab-pane>        
       </el-tabs>
       <div class="setting-part pos-a">
         <el-dropdown size="mini" trigger="click" split-button type="default" @command="handleCommand">
@@ -285,6 +280,5 @@ get_header();
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/index.js" defer></script>
 <?php
 $is_show_sidebar == 1 ?  get_sidebar() : ''
-
 ?>
 <?php get_footer(); ?>

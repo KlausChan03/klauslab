@@ -3,7 +3,6 @@ dayjs.extend(window.dayjs_plugin_relativeTime)
 
 const index_module = new Vue({
     el: ".main-content",
-    // mixins:[reward_mixin],
     data() {
         return {
             ifShowSingle: false,
@@ -16,14 +15,13 @@ const index_module = new Vue({
                 }
             },
             listOfComment: "",
-            // ifShowPayImage: true,
             commentPage: 1,
         }
     },
     created() {
         this.getAllArticles()
     },
-    
+
     updated() {
         let self = this
         let imgList = document.querySelectorAll(".entry-content img");
@@ -36,10 +34,10 @@ const index_module = new Vue({
                     closeOnClickModal: true,
                     closeOnPressEscape: true,
                     showConfirmButton: false,
-                  });
+                });
             })
         }
-       
+
     },
     methods: {
 
@@ -57,18 +55,44 @@ const index_module = new Vue({
         },
 
         goAnchor(selector) {
-            var anchor = this.$el.querySelector(selector) // 参数为要跳转到的元素id
+            const anchor = this.$el.querySelector(selector) // 参数为要跳转到的元素id
             this.$nextTick(() => {
-                console.log(anchor.offsetTop)
-                // document.body.scrollTop = anchor.offsetTop // chrome
                 document.documentElement.scrollTop = anchor.offsetTop // firefox
                 document.querySelectorAll("#page")[0].scrollTop = anchor.offsetTop
             })
 
         },
 
+        updatePost() {
+            this.goToPage('page-post-simple', true, {
+                type: 'modified',
+                id: this.post_id
+            })
+        },
+
+        goToPage(route, domain = false, params = '') {
+            let url = ''
+            url += domain ? `${window.home_url}/${route}` : route
+            url += params ? `?${this.convertObj(params)}` : ''
+            window.location.href = url
+        },
+
+        convertObj(data) {
+            var _result = [];
+            for (var key in data) {
+                var value = data[key];
+                if (value.constructor == Array) {
+                    value.forEach(function (_value) {
+                        _result.push(key + "=" + _value);
+                    });
+                } else {
+                    _result.push(key + '=' + value);
+                }
+            }
+            return _result.join('&');
+        },
+
         likeOrDislikePost(item, action) {
-            debugger
             let params = {}
             params.id = item.id
             params.action = action
@@ -124,6 +148,6 @@ const index_module = new Vue({
             }
         },
 
-        
+
     }
 })
