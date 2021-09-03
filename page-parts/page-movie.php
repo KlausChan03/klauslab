@@ -37,8 +37,8 @@ get_header();
                                                 <div class="doubanboard-title flex-hb-vc">
                                                     <a class="movie-title w-06" v-bind:href="item.url" v-bind:title="item.name" target="_blank">{{item.name}}</a>
                                                     <div class="movie-mark flex-hr-vc w-04">
-                                                        <span class="flex-hr-vc mr-5"><i class="lalaksks lalaksks-ic-tag"></i> {{item.mark_myself}}</span>
-                                                        <span class="flex-hr-vc"><i class="lalaksks lalaksks-ic-douban"></i> {{item.mark_douban}}</span>
+                                                        <span class="flex-hr-vc mr-5" v-if="item.mark_myself"><i class="lalaksks lalaksks-ic-tag"></i> {{item.mark_myself}}</span>
+                                                        <span class="flex-hr-vc" v-if="item.mark_douban"><i class="lalaksks lalaksks-ic-douban"></i> {{item.mark_douban}}</span>
                                                     </div>
                                                 </div>
                                             </div>

@@ -19,7 +19,7 @@ Vue.component('chat-item', {
         <div class="entry-author fs-16 flex-hl-vc w-04">
           <div v-html="postData.post_metas.avatar" class="mr-10"></div>
           <div class="flex-v flex-hc-vt">
-            <span class="fs-12">{{postData._embedded.author[0].name}}</span>
+            <span class="fs-12">{{postData.post_metas.author}}</span>
             <el-tooltip class="item" effect="dark" :content="postData.date | formateDateMain" placement="bottom">
               <span class="fs-12" >{{postData.date | formateDate}}</span>
             </el-tooltip>

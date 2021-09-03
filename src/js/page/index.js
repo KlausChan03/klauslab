@@ -20,7 +20,7 @@ const index_module = new Vue({
             ifMobileDevice: window.ifMobileDevice,
             per_page: window.ifMobileDevice === true ? 6 : 10,
             page: 1,
-            postType: 'chat',
+            postType: 'article',
             posts_id_sticky: '',
             orderby: 'date',
             orderbyList: [{
@@ -41,7 +41,8 @@ const index_module = new Vue({
     },
 
     async created() {
-        await this.getAllChat()
+        this.postType === 'article' ? await this.getAllArticles() : await this.getAllChat()
+        // await this.getAllChat()
         // this.getAllArticles()
 
     },
@@ -124,7 +125,7 @@ const index_module = new Vue({
             let params = {};
             params.per_page = self.per_paget
             params.sticky = true
-            return axios.get(`${window.site_url}/wp-json/wp/v2/posts?_embed`, {
+            return axios.get(`${window.site_url}/wp-json/wp/v2/posts`, {
                 params: params
             }).then(res => {
                 this.listOfRecommend = res.data
@@ -139,7 +140,7 @@ const index_module = new Vue({
             params.per_page = this.per_page
             params.orderby = this.orderby
             if (this.page === 1) {
-                axios.get(`${window.site_url}/wp-json/wp/v2/posts?_embed&sticky=true`, {
+                axios.get(`${window.site_url}/wp-json/wp/v2/posts?sticky=true`, {
                         params: params
                     })
                     .then(res_sticky => {
@@ -150,7 +151,7 @@ const index_module = new Vue({
                         }
                         params.per_page = this.per_page - this.listOfArticle.length
                         params.exclude = this.posts_id_sticky
-                        axios.get(`${window.site_url}/wp-json/wp/v2/posts?_embed`, {
+                        axios.get(`${window.site_url}/wp-json/wp/v2/posts`, {
                             params: params
                         }).then(res => {
                             this.totalOfArticle = parseInt(res.headers['x-wp-total'])
@@ -174,7 +175,7 @@ const index_module = new Vue({
                         })
                     })
             } else {
-                axios.get(`${window.site_url}/wp-json/wp/v2/posts?_embed&sticky=false&exclude=${this.posts_id_sticky}`, {
+                axios.get(`${window.site_url}/wp-json/wp/v2/posts?sticky=false&exclude=${this.posts_id_sticky}`, {
                     params: params
                 }).then(res => {
                     this.totalOfArticle = parseInt(res.headers['x-wp-total'])
@@ -200,7 +201,7 @@ const index_module = new Vue({
             params.page = this.page
             params.per_page = this.per_page
             params.orderby = this.orderby
-            axios.get(`${window.site_url}/wp-json/wp/v2/moments?_embed`, {
+            axios.get(`${window.site_url}/wp-json/wp/v2/moments`, {
                 params: params
             }).then(res => {
                 this.totalOfChat = parseInt(res.headers['x-wp-total'])

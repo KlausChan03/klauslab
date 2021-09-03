@@ -186,8 +186,8 @@ function widget_authorinfo()
 		<div class="author-info">
 			<div class="author-lover klaus-lover m-tb-10">
 				<div class="photo-container flex-hc-vc m-tb-10"> </div>
-				<div class="flex-hb-vc hw"><i class="lalaksks lalaksks-heart_3 col-d42 fs-18"></i><p id="lovetime" class="flex-hc-vc mb-5"></p></div>
-				<div class="flex-hb-vc hw"><i class="lalaksks lalaksks-Txu col-48e fs-18"></i><p id="createtime" class="flex-hc-vc"></p></div>
+				<div class="flex-hl-vr hw"><i class="lalaksks lalaksks-heart_3 col-d42 fs-32"></i><p id="lovetime" class="flex-hc-vc mb-5 ml-10"></p></div>
+				<div class="flex-hl-vr hw"><i class="lalaksks lalaksks-Txu col-48e fs-32"></i><p id="createtime" class="flex-hc-vc mb-5 ml-10"></p></div>
 			</div>
 			<div class="author-des m-tb-10">
 				<!-- <a href="<?php echo get_author_posts_url(get_the_author_meta('ID')) ?>" target="_blank">(<?php the_author_posts(); ?>篇文章)</a> -->

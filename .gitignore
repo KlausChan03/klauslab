@@ -5,5 +5,9 @@ src/js/useless/
 inc/douban/cache/
 src/css/temp/
 build_blog.sh
+
 /inc/douban/cache/movie.json
 /inc/douban/cache
+
+package-lock.json
+yarn.lock

@@ -31,7 +31,7 @@ function cut_str($str, $sign, $number)
 class DoubanAPI
 {
     /**
-     * 从本地读取缓存信息，若不存在则创建，若过期则更新。并返回格式化 JSON
+     * 从本地读取缓存信息，若不存在则创建，若过期则更新。并返回格式化 JtextContentSON
      * 
      * @access  public 
      * @param   string    $UserID             豆瓣ID
@@ -42,13 +42,15 @@ class DoubanAPI
      */
     public static function updateMovieCacheAndReturn($UserID, $PageSize, $From, $ValidTimeSpan)
     {
-        if (!$UserID){
-            return json_encode(array( 'code' => '0' , 'data' => '' , 'msg' => '请在后台填写豆瓣用户ID'));
+        if (!$UserID) {
+            return json_encode(array('code' => '0', 'data' => '', 'msg' => '请在后台填写豆瓣用户ID'));
         }
         $expired = self::__isCacheExpired(__DIR__ . '/cache/movie.json', $ValidTimeSpan);
+        // echo $expired;
         if ($expired != 0) {
             $oldData = json_decode(file_get_contents(__DIR__ . '/cache/movie.json'))->data;
             $data = self::__getMovieRawData($UserID, $oldData[0]->name);
+            // echo json_encode($data);
             array_splice($oldData, 0, 0, $data);
             $file = fopen(__DIR__ . '/cache/movie.json', "w");
             fwrite($file, json_encode(array('time' => time(), 'data' => $oldData)));
@@ -62,7 +64,7 @@ class DoubanAPI
                 for ($index = $From; $index < $end; $index++) {
                     array_push($out, $data[$index]);
                 }
-                return json_encode(array(  'code' => '1' ,'data' => $out , 'total' => $total));
+                return json_encode(array('code' => '1', 'data' => $out, 'total' => $total));
             }
         } else {
             $data = json_decode(file_get_contents(__DIR__ . '/cache/movie.json'))->data;
@@ -74,7 +76,7 @@ class DoubanAPI
                 for ($index = $From; $index < $end; $index++) {
                     array_push($out, $data[$index]);
                 }
-                return json_encode(array( 'code' => '1' ,'data' => $out , 'total' => $total));
+                return json_encode(array('code' => '1', 'data' => $out, 'total' => $total));
             }
         }
     }
@@ -91,7 +93,7 @@ class DoubanAPI
         $file = fopen($FilePath, "r");
         if (!$file) {
             $file = fopen($FilePath, "w");
-            fwrite($file, json_encode(array('code' => '1' ,'time' => '946656000', 'data' => array(array("name" => "", "img" => "", "url" => "", "remark" => "", "date" => "",  "mark_myself" => "", "mark_douban" => "")))));
+            fwrite($file, json_encode(array('code' => '1', 'time' => '946656000', 'data' => array(array("name" => "", "img" => "", "url" => "", "remark" => "", "date" => "",  "mark_myself" => "", "mark_douban" => "")))));
             return -1;
         }
         $content = json_decode(fread($file, filesize($FilePath)));
@@ -114,6 +116,7 @@ class DoubanAPI
         $data = array();
         while ($api != null) {
             $raw = self::curl_file_get_contents($api);
+            // echo $raw;
             if ($raw == null || $raw == "" || !$raw) break;
             $doc = new ParserDom($raw);
             $itemArray = $doc->find("div.item");
@@ -133,14 +136,20 @@ class DoubanAPI
                 $movie_img  = $v->find("div.pic a img", 0)->getAttr("src");
                 $movie_url  = $t->find("a", 0)->getAttr("href");
                 $movie_remark  = $r->find("span.comment", 0)->getPlainText();
-                $movie_mark_myself  = floatval(preg_replace('/[^0-9]/', '', $m->find("span", 0)->getAttr("class")) * 2);
+                // TODO: 临时注释
+                $movie_mark_myself  = '';
+                // $movie_mark_myself  = floatval(preg_replace('/[^0-9]/', '', $m->find("span", 0)->getAttr("class")) * 2);
                 $movie_date = str_replace("\"", "\'", $m->find("span", 1)->getPlainText());
                 // $movie_tags = str_replace("\"", "\'", $m->find("span", 2)->getPlainText());
-                $api_num = cut_str($movie_url, '/', -2);
-                $api_movie = 'https://movie.douban.com/subject/' . $api_num . '/';
-                $raw_movie = self::curl_file_get_contents($api_movie);
-                $doc_movie = new ParserDom($raw_movie);
-                $movie_mark_douban = floatval($doc_movie->find("strong.rating_num", 0)->getPlainText());
+                // TODO: 临时注释
+                // $api_num = cut_str($movie_url, '/', -2);
+                // $api_movie = 'https://movie.douban.com/subject/' . $api_num . '/';
+                // $raw_movie = self::curl_file_get_contents($api_movie);
+                // $doc_movie = new ParserDom($raw_movie);
+                // $doc_movie_detail = $doc_movie->find("strong.rating_num", 0);
+                $doc_movie_detail = '';
+                $movie_mark_douban = $doc_movie_detail ? floatval($doc_movie_detail->getPlainText()) : '';
+                // $movie_mark_douban = floatval($doc_movie->find("strong.rating_num", 0)->getPlainText());
 
                 if ($oldData == $movie_name) return $data;
                 $data[] = array("name" => $movie_name, "img" => 'https://images.weserv.nl/?url=' . $movie_img, "url" => $movie_url, "remark" => $movie_remark, "date" => $movie_date,  "mark_myself" => $movie_mark_myself, "mark_douban" => $movie_mark_douban);
@@ -534,7 +543,7 @@ class ParserDom
 $PageSize = 20;
 $ValidTimeSpan = 60 * 60 * 24;
 $From = $_GET['from'];
-$UserID =$_GET['db_id'];
+$UserID = $_GET['db_id'];
 
 $Type = $_GET['type'];
 

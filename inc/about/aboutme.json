@@ -80,6 +80,20 @@
         "type":"version-timeline",
         "value":[
             {
+                "version": "v2.3.5_beta",
+                "versionName": "",
+                "description": "新增文章插入标签功能，修复若干bug。",
+                "author": "KlausChan",
+                "date": "2021-07-22T15:49:10Z"
+            },
+            {
+                "version": "v2.3.4_beta",
+                "versionName": "",
+                "description": "新增文章编辑功能，待海量测试以便后续优化。优化后重新上线博主的社交信息。修复若干bug。",
+                "author": "KlausChan",
+                "date": "2021-07-22T15:49:10Z"
+            },
+            {
                 "version": "v2.3.3_beta",
                 "versionName": "",
                 "description": "新增文章详情页字数统计和阅读时长功能。封装打赏组件。新增图片预览功能。新增评论placeholder属性的'一句'。使用mixin封装page的公共方法。",

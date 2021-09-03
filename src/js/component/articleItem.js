@@ -1,19 +1,19 @@
 Vue.component('article-item', {
-  props: ['postData'],
-  mixins:[filterMixin],
-  data() {
-    return {
-      ifMobileDevice: window.ifMobileDevice
-    }
-  },
-  // template: ` 
-  // <el-tooltip content="开发中" effect="dark" placement="top">
-  //   <div class="entry-zan flex-hc-vc flex-1-3" style="cursor:not-allowed">
-  //       <i class="lalaksks lalaksks-ic-zan fs-16 " :style='{color:postData.post_metas.zan_num > 0 ? "#DD4422":"inhert"}'></i>
-  //       <span :style='{color:postData.post_metas.zan_num > 0 ? "#DD4422":"inhert"}'>{{postData.post_metas.zan_num > 0 ? postData.post_metas.zan_num : 0}}</span>
-  //   </div>
-  // </el-tooltip>`,
-  template: `
+	props: ['postData'],
+	mixins: [filterMixin],
+	data() {
+		return {
+			ifMobileDevice: window.ifMobileDevice,
+		}
+	},
+	// template: `
+	// <el-tooltip content="开发中" effect="dark" placement="top">
+	//   <div class="entry-zan flex-hc-vc flex-1-3" style="cursor:not-allowed">
+	//       <i class="lalaksks lalaksks-ic-zan fs-16 " :style='{color:postData.post_metas.zan_num > 0 ? "#DD4422":"inhert"}'></i>
+	//       <span :style='{color:postData.post_metas.zan_num > 0 ? "#DD4422":"inhert"}'>{{postData.post_metas.zan_num > 0 ? postData.post_metas.zan_num : 0}}</span>
+	//   </div>
+	// </el-tooltip>`,
+	template: `
   <div>
     <div class="entry-header flex-hb-vc flex-hw">
       <h5 class="entry-title">
@@ -42,7 +42,7 @@ Vue.component('article-item', {
         <div class="entry-author fs-16 flex-hl-vc">
           <div v-html="postData.post_metas.avatar" class="mr-10"></div>
           <div class="flex-v flex-hc-vt">
-            <span class="fs-12">{{postData._embedded.author[0].name}}</span>
+            <span class="fs-12">{{postData.post_metas.author}}</span>
             <el-tooltip class="item" effect="dark" :content="postData.date | formateDateMain" placement="bottom">
               <span class="fs-12" >{{postData.date | formateDate}}</span>
             </el-tooltip>
@@ -77,7 +77,7 @@ Vue.component('article-item', {
           <div v-html="postData.post_metas.avatar" class="mr-10"></div>
 
             <div class="flex-v flex-hc-vt">
-              <span class="fs-12">{{postData._embedded.author[0].name}}</span>
+              <span class="fs-12">{{postData.post_metas.author}}</span>
               <el-tooltip class="item" effect="dark" :content="postData.date | formateDateMain" placement="bottom">
                 <span class="fs-12" >{{postData.date | formateDate}}</span>
               </el-tooltip>
@@ -111,74 +111,94 @@ Vue.component('article-item', {
       </div>
     </div>
     `,
-  methods: {
-    changeIfShowAllToParent(id) {
-      this.$emit('change-type', id)
-    },
-    showComment(id) {
-      this.$emit('show-comment', id)
-    },
-    likeOrDislikePost(item, action) {
-      let params = {}
-      params.id = item.id
-      params.action = action
-      if (item.post_metas.has_zan || item.post_metas.has_cai) {
-        this.$message({
-          message: "你已经评价过！",
-          type: 'warning'
-        })
-        return false
-      }
-      if (action === "dislike") {
-        this.$confirm('点踩会打击作者的创作积极性, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          axios.post(`${window.site_url}/wp-json/wp/v2/likePost`, params, {
-            headers: {
-              'X-WP-Nonce': _nonce
-            }
-          }).then(res => {
-            this.$nextTick(() => {
-              console.log(this.postData.post_metas)
-              this.$set(this.postData.post_metas, action === 'like' ? 'zan_num' : 'cai_num', res.data)
-              this.$set(this.postData.post_metas, action === 'like' ? 'has_zan' : 'has_cai', true)
-              this.$message({
-                message: action === 'like' ? "点赞成功！" : "点踩成功！",
-                type: 'success'
-              })
+	methods: {
+		changeIfShowAllToParent(id) {
+			this.$emit('change-type', id)
+		},
+		showComment(id) {
+			this.$emit('show-comment', id)
+		},
+		likeOrDislikePost(item, action) {
+			let params = {}
+			params.id = item.id
+			params.action = action
+			if (item.post_metas.has_zan || item.post_metas.has_cai) {
+				this.$message({
+					message: '你已经评价过！',
+					type: 'warning',
+				})
+				return false
+			}
+			if (action === 'dislike') {
+				this.$confirm('点踩会打击作者的创作积极性, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning',
+				})
+					.then(() => {
+						axios
+							.post(`${window.site_url}/wp-json/wp/v2/likePost`, params, {
+								headers: {
+									'X-WP-Nonce': _nonce,
+								},
+							})
+							.then((res) => {
+								this.$nextTick(() => {
+									console.log(this.postData.post_metas)
+									this.$set(
+										this.postData.post_metas,
+										action === 'like' ? 'zan_num' : 'cai_num',
+										res.data
+									)
+									this.$set(
+										this.postData.post_metas,
+										action === 'like' ? 'has_zan' : 'has_cai',
+										true
+									)
+									this.$message({
+										message: action === 'like' ? '点赞成功！' : '点踩成功！',
+										type: 'success',
+									})
+								})
+							})
+					})
+					.catch(() => {
+						return false
+					})
+			} else {
+				axios
+					.post(`${window.site_url}/wp-json/wp/v2/likePost`, params, {
+						headers: {
+							'X-WP-Nonce': _nonce,
+						},
+					})
+					.then((res) => {
+						this.$nextTick(() => {
+							console.log(this.postData.post_metas)
+							this.$set(
+								this.postData.post_metas,
+								action === 'like' ? 'zan_num' : 'cai_num',
+								res.data
+							)
+							this.$set(
+								this.postData.post_metas,
+								action === 'like' ? 'has_zan' : 'has_cai',
+								true
+							)
+							this.$message({
+								message: action === 'like' ? '点赞成功！' : '点踩成功！',
+								type: 'success',
+							})
+						})
+					})
+			}
+		},
 
-            })
-          })
-        }).catch(() => {
-          return false
-        });
-      } else {
-        axios.post(`${window.site_url}/wp-json/wp/v2/likePost`, params, {
-          headers: {
-            'X-WP-Nonce': _nonce
-          }
-        }).then(res => {
-          this.$nextTick(() => {
-            console.log(this.postData.post_metas)
-            this.$set(this.postData.post_metas, action === 'like' ? 'zan_num' : 'cai_num', res.data)
-            this.$set(this.postData.post_metas, action === 'like' ? 'has_zan' : 'has_cai', true)
-            this.$message({
-              message: action === 'like' ? "点赞成功！" : "点踩成功！",
-              type: 'success'
-            })
-
-          })
-        })
-      }
-    },
-    
-    resizeHandler(){
-      this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
-    }
-  },
-  mounted() {
-    window.addEventListener("resize", this.resizeHandler);
-  }
+		resizeHandler() {
+			this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
+		},
+	},
+	mounted() {
+		window.addEventListener('resize', this.resizeHandler)
+	},
 })

@@ -102,13 +102,13 @@
 					</div>
 					<div class="ml-15">
 						<!-- <?php
-								wp_nav_menu(
-									array(
-										'theme_location' => 'primary',
-										'menu_id' => 'primary-menu',
-									)
-								);
-								?> -->
+									wp_nav_menu(
+										array(
+											'theme_location' => 'primary',
+											'menu_id' => 'primary-menu',
+										)
+									);
+									?> -->
 						<el-menu class="el-menu-horizontal" mode="horizontal" :default-active="activeIndex">
 							<template v-for="(item,index) in menuList" :key="item.ID">
 								<el-menu-item v-if="!item.children || item.children.length === 0" :index="item.ID" @click="goToPage(item.url)"><i v-if="item.iconName" :class="item.iconName"></i><span>{{item.title}}</span></el-menu-item>

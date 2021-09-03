@@ -220,12 +220,20 @@ get_header();
                   </h5>
                 </div>
                 <div class="entry-main flex-hl-vl flex-hw">
-                  <!-- <div class="featured-image" v-if="item._embedded['wp:featuredmedia']">
-                  <img :src="item._embedded['wp:featuredmedia']['0'].source_url" alt="">
-                </div> -->
                   <p class="entry-summary" v-html="item.content.rendered" :id="item.id"></p>
                 </div>
               </template>
+            </article>
+          </div>
+        </el-tab-pane>
+
+        <el-tab-pane label="article">
+          <span slot="label"><i class="el-icon-tickets mr-5"></i>文章</span>
+          <kl-skeleton v-if="ifShowPost" type="post"></kl-skeleton>
+          <div class="article-list" v-if="!ifShowPost">
+            <article class="article-item hentry" v-for="(item,index) in listOfArticle" :key="index">
+              <article-item :post-data="item" @change-type="changeItemType" @show-comment="showItemComment"></article-item>
+              <quick-comment :ref="'quickComment-'+item.id" callback="true" :comment-data="item.listOfComment" :post-data="item" v-if="item.ifShowComment"></quick-comment>
             </article>
           </div>
         </el-tab-pane>
@@ -238,17 +246,7 @@ get_header();
               <quick-comment :ref="'quickComment-'+item.id" callback="true" :comment-data="item.listOfComment" :post-data="item" v-if="item.ifShowComment"></quick-comment>
             </article>
           </div>
-        </el-tab-pane>
-        <el-tab-pane label="article">
-          <span slot="label"><i class="el-icon-tickets mr-5"></i>文章</span>
-          <kl-skeleton v-if="ifShowPost" type="post"></kl-skeleton>
-          <div class="article-list" v-if="!ifShowPost">
-            <article class="article-item hentry" v-for="(item,index) in listOfArticle" :key="index">
-              <article-item :post-data="item" @change-type="changeItemType" @show-comment="showItemComment"></article-item>
-              <quick-comment :ref="'quickComment-'+item.id" callback="true" :comment-data="item.listOfComment" :post-data="item" v-if="item.ifShowComment"></quick-comment>
-            </article>
-          </div>
-        </el-tab-pane>        
+        </el-tab-pane>    
       </el-tabs>
       <div class="setting-part pos-a">
         <el-dropdown size="mini" trigger="click" split-button type="default" @command="handleCommand">

@@ -1960,9 +1960,32 @@ body {
   -webkit-box-align: flex-start;
   -webkit-align-items: flex-start;
   -moz-align-items: flex-start;
-  -ms-align-items: center;
+  -ms-align-items: start;
   -o-align-items: flex-start;
   align-items: flex-start;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -moz-justify-content: start;
+  -ms-justify-content: start;
+  -o-justify-content: start;
+  justify-content: flex-start;
+}
+
+/*flex 水平居左&垂直居右 兼容写法*/
+
+.flex-hl-vr {
+  display: box;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: flex-end;
+  -webkit-align-items: flex-end;
+  -moz-align-items: flex-end;
+  -ms-align-items: end;
+  -o-align-items: flex-end;
+  align-items: flex-end;
   -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
   -moz-justify-content: start;
@@ -2196,6 +2219,31 @@ body {
 .fs-24 {
   font-size: 24px !important;
 }
+
+.fs-30 {
+  font-size: 30px !important;
+}
+
+.fs-32 {
+  font-size: 32px !important;
+}
+
+.fs-36 {
+  font-size: 36px !important;
+}
+
+.fs-40 {
+  font-size: 40px !important;
+}
+
+.fs-48 {
+  font-size: 8px !important;
+}
+
+.fs-64 {
+  font-size: 64px !important;
+}
+
 
 .h-0 {
   height: 0 !important;

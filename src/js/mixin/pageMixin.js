@@ -22,9 +22,8 @@ let pageMixin = {
             axios.get(`${window.site_url}/wp-json/wp/v2/pages/${this.id}`).then(res => {
                 if (true) {
                     this.pageInfo = res.data
-
                 }
-            }).catch(res => {
+            }).catch(() => {
                 // 失败返回（测试）
                 this.$message({
                     message: '请求失败',
