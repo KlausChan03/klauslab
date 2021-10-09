@@ -1,4 +1,31 @@
-﻿## [2.3.5_beta] - 2021/09/03
+﻿## Wordpress Theme KlausLab
+
+[![Version](https://img.shields.io/badge/version-2.3.5_beta-green.svg?style=flat-square)]()
+[![Author](https://img.shields.io/badge/author-KlausChan-blue.svg?style=flat-square)](https://shawnzeng.com)
+[![GitHub stars](https://img.shields.io/github/stars/KlausChan03/klauslab.svg?style=social)](https://github.com/KlausChan03/klauslab/stargazers)  
+[![GitHub forks](https://img.shields.io/github/forks/KlausChan03/klauslab.svg?style=social)](https://github.com/KlausChan03/klauslab/network/members)
+
+# Info
+
+- Theme Name: KlausLab
+- Theme URI: [https://github.com/KlausChan03/klauslab](https://github.com/KlausChan03/klauslab)
+- Description: Theme KlausLab by KlausChan (the free version)
+- Version: 2.3.5_beta
+- Author: KlausChan
+- Author URI: [https://klauslaura.cn](https://klauslaura.cn)
+
+# Use
+
+获取稳定版本分支的代码，放置在`wordpress`项目的`themes`目录下，通过`npm`安装 package.json 里的依赖后，再通过`npm run dev` or `npm run prod`进行编译打包，打包后的 dist 即静态资源。
+因为项目目前仅为个人开源主题，没有推广或者商用。建议使用者最好具备 nodejs 及相关 php 知识储备。如若遇到问题，建议通过 github 或者[作者博客](https://klauslaura.cn)咨询作者。
+
+# View
+
+![screenshot](https://github.com/KlausChan03/klauslab/blob/develop/screenshot.png)
+
+# Version
+
+## [2.3.5_beta] - 2021/09/03
 
 #### feat:
 
@@ -160,3 +187,5 @@
 #### feat:
 
 - 首次提交，基于 anissa 主题进行二次开发。
+
+MIT © [KlausChan](https://klauslaura.cn)
