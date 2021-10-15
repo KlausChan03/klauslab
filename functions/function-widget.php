@@ -1,5 +1,26 @@
 <?php
 
+
+// 新增部分自带小工具
+function add_some_wp_widgets(){
+	// $unregister_widgets = array(
+	// 	'Tag_Cloud',
+	// 	'Recent_Comments',
+	// 	'Recent_Posts',
+	// 	'Links',
+	// 	'Search',
+	// 	'Meta',		
+	// 	'Categories',
+	// 	'RSS'
+	// );
+	// foreach( $unregister_widgets as $widget )
+	// 	unregister_widget( 'WP_Widget_' . $widget );
+	foreach( glob( get_template_directory() . '/widgets/widget-*.php' ) as $file_path )
+		include( $file_path );
+}
+add_action( 'widgets_init' , 'add_some_wp_widgets' , 1 );
+
+
 // Style the Tag Cloud
 function KlausLab_tag_cloud_widget($args)
 {
@@ -186,8 +207,8 @@ function widget_authorinfo()
 		<div class="author-info">
 			<div class="author-lover klaus-lover m-tb-10">
 				<div class="photo-container flex-hc-vc m-tb-10"> </div>
-				<div class="flex-hl-vr hw"><i class="lalaksks lalaksks-heart_3 col-d42 fs-32"></i><p id="lovetime" class="flex-hc-vc mb-5 ml-10"></p></div>
-				<div class="flex-hl-vr hw"><i class="lalaksks lalaksks-Txu col-48e fs-32"></i><p id="createtime" class="flex-hc-vc mb-5 ml-10"></p></div>
+				<div class="flex-hl-vr hw"><p id="lovetime" class="flex-hc-vc mb-5 ml-10"></p></div>
+				<div class="flex-hl-vr hw"><p id="createtime" class="flex-hc-vc mb-5 ml-10"></p></div>
 			</div>
 			<div class="author-des m-tb-10">
 				<!-- <a href="<?php echo get_author_posts_url(get_the_author_meta('ID')) ?>" target="_blank">(<?php the_author_posts(); ?>篇文章)</a> -->

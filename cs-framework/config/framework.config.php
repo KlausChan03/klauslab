@@ -157,7 +157,11 @@ $options[]      = array(
       'type'      => 'image',
       'title'     => '微信打赏二维码',
     ),
-
+    array(
+      'id'        => 'red_envelope_code_image',
+      'type'      => 'image',
+      'title'     => '微信打赏二维码',
+    ),
   ), // end: fields
 );
 

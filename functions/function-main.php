@@ -1574,24 +1574,24 @@ function ajax_comment_callback()
 
 
     // 移除部分自带小工具
-    function remove_some_wp_widgets()
-    {
-        $unregister_widgets = array(
-            // 'Tag_Cloud',
-            // 'Recent_Comments',
-            // 'Recent_Posts',
-            'Links',
-            'Search',
-            'Meta',
-            'Categories',
-            'RSS'
-        );
-        foreach ($unregister_widgets as $widget)
-            unregister_widget('WP_Widget_' . $widget);
-        foreach (glob(get_template_directory() . '/widgets/widget-with-settings-*.php') as $file_path)
-            include($file_path);
-    }
-    add_action('widgets_init', 'remove_some_wp_widgets', 1);
+    // function remove_some_wp_widgets()
+    // {
+    //     $unregister_widgets = array(
+    //         // 'Tag_Cloud',
+    //         // 'Recent_Comments',
+    //         // 'Recent_Posts',
+    //         'Links',
+    //         'Search',
+    //         'Meta',
+    //         'Categories',
+    //         'RSS'
+    //     );
+    //     foreach ($unregister_widgets as $widget)
+    //         unregister_widget('WP_Widget_' . $widget);
+    //     foreach (glob(get_template_directory() . '/widgets/widget-with-settings-*.php') as $file_path)
+    //         include($file_path);
+    // }
+    // add_action('widgets_init', 'remove_some_wp_widgets', 1);
 
 
 
@@ -1609,6 +1609,9 @@ $meta_args = array( // Validate and sanitize the meta value.
     'show_in_rest' => true,
 );
 register_meta( $object_type, 'my_meta_key', $meta_args );
+
+
+
 
 // 2018-8-14 引入
 // function translate_chinese_post_title_to_en_for_slug( $title ) {

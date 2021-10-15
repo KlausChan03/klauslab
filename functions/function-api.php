@@ -308,7 +308,14 @@ function get_base_info(){
     $base_info['the_bloginfo_name'] = get_bloginfo('name');
     $base_info['home_url'] = get_option('home');
     $base_info['theme_url'] = get_template_directory_uri() . '/src';
+    $json_string = json_decode(file_get_contents(get_template_directory_uri() . '/inc/about/aboutme.json'),true);  
+    $base_info['changelog'] = array_values(array_filter($json_string, function($item){ 
+        return $item['type'] === 'version-timeline'; 
+    }))[0]['value'];
 
+    // 支付宝活动二维码
+    $base_info['red_envelope_code_id'] = cs_get_option('red_envelope_code_image');
+    $base_info['red_envelope_code_image'] = wp_get_attachment_image_src($base_info['red_envelope_code_id'], 'full');
     // 打赏图片信息
     $base_info['alipay_image_id'] = cs_get_option('alipay_image');
     $base_info['alipay_attachment'] = wp_get_attachment_image_src($base_info['alipay_image_id'], 'full');
