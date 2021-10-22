@@ -80,6 +80,13 @@
         "type":"version-timeline",
         "value":[
             {
+                "version": "v2.3.6",
+                "versionName": "",
+                "description": "全局开放loading动画，首页列表添加图片懒加载和加载失败显示，header头像改版，部分样式更新，发布稳定版本",
+                "author": "KlausChan",
+                "date": "2021-09-03T15:49:10Z"
+            },
+            {
                 "version": "v2.3.5_beta",
                 "versionName": "",
                 "description": "新增文章插入标签功能，修复若干bug。",
