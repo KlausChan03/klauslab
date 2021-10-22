@@ -1,124 +1,130 @@
 let headerPart = new Vue({
-    el: '#header',
-    data() {
-        return {
-            originMenuList: [],
-            menuList: [],
-            ifShowSearch: false,
-            ifShowMenu:false,
-            ifMobileDevice: window.ifMobileDevice,
-            menuIcon: [
-                {'className':'home','iconName':'el-icon-house'},
-                {'className':'memory','iconName':'el-icon-film'},
-                {'className':'link','iconName':'el-icon-link'},
-                {'className':'archive','iconName':'el-icon-date'},
-                {'className':'about','iconName':'el-icon-user'},
-            ]
-        }
-    },
-    mounted() {
-        let menuListFlag = window.localStorage.getItem("menuList") ? true : false
-        if(!menuListFlag) {
-            this.getMenuList()
-        } else {
-            this.originMenuList = this.menuList = JSON.parse(window.localStorage.getItem("menuList"))
-        }
-        this.getBaseInfo()
+	el: '#header',
+	data() {
+		return {
+			originMenuList: [],
+			menuList: [],
+			ifShowSearch: false,
+			ifShowMenu: false,
+			ifMobileDevice: window.ifMobileDevice,
+			menuIcon: [
+				{ className: 'home', iconName: 'el-icon-house' },
+				{ className: 'memory', iconName: 'el-icon-film' },
+				{ className: 'link', iconName: 'el-icon-link' },
+				{ className: 'archive', iconName: 'el-icon-date' },
+				{ className: 'about', iconName: 'el-icon-user' },
+			],
+		}
+	},
+	mounted() {
+		let sessionFlag =
+			window.localStorage.getItem('menuList') &&
+			window.localStorage.getItem('baseInfo')
+				? true
+				: false
+		if (!sessionFlag) {
+			this.getMenuList()
+			this.getBaseInfo()
+		} else {
+			this.originMenuList = this.menuList = JSON.parse(
+				window.localStorage.getItem('menuList')
+			)
+		}
+		window.addEventListener('resize', this.resizeHandler)
+	},
+	destroyed() {
+		window.onresize = null
+	},
+	computed: {
+		activeIndex() {
+			for (let index = 0; index < this.originMenuList.length; index++) {
+				const element = this.originMenuList[index]
+				if (window.location.href === element.url) {
+					return element.ID
+				}
+			}
+		},
+	},
+	methods: {
+		changeMenu() {
+			this.ifShowMenu = !this.ifShowMenu
+		},
 
-        window.addEventListener("resize", this.resizeHandler);       
-
-    },
-    destroyed() {
-        window.onresize = null;
-    },
-    computed: {
-        activeIndex(){
-            for (let index = 0; index < this.originMenuList.length; index++) {
-                const element = this.originMenuList[index];
-                if(window.location.href === element.url){
-                    return element.ID
-                }
-                
-            }
-        },
-    },
-    methods: {
-        changeMenu(){
-            this.ifShowMenu = !this.ifShowMenu
-        },
-
-        getBaseInfo(){
-            axios.get(`${window.site_url}/wp-json/wp/v2/info`).then(res=>{
-                let data = res.data
-                window.localStorage.setItem('baseInfo',JSON.stringify(data))
-                // debugger
-
-            }).catch({
-
-            })
-        },
-        getMenuList(){
-            axios.get(`${window.site_url}/wp-json/wp/v2/menu`).then( res => {                
-                this.originMenuList = res.data
-                this.menuList = transData(res.data, 'ID', 'menu_item_parent', 'children')
-                for (let i = 0; i < this.menuList.length; i++) {
-                    const element = this.menuList[i];
-                    for (let j = 0; j < this.menuIcon.length; j++) {
-                        const item = this.menuIcon[j];
-                        if(item.className === element.classes[0]){
-                            element.iconName = item.iconName
-                        }
-                    }   
-                }
-                window.localStorage.setItem('menuList',JSON.stringify(this.menuList))
-            }).catch()
-        },
-        showSearch() {
-            this.ifShowSearch = true
-            this.$nextTick(() => {
-                this.$refs.searchMain.$refs.searchInput.focus()
-            })
-        },
-        goToPage(route, domain = false, params = '') {
-            let url = ''
-            url += domain ? `${window.home_url}/${route}` : route
-            url += params ? `?${this.convertObj(params)}` : ''
-            window.location.href = url
-        },
-        convertObj(data) {
-            var _result = [];
-            for (var key in data) {
-                var value = data[key];
-                if (value.constructor == Array) {
-                    value.forEach(function (_value) {
-                        _result.push(key + "=" + _value);
-                    });
-                } else {
-                    _result.push(key + '=' + value);
-                }
-            }
-            return _result.join('&');
-        },        
-        handleCommand(command){
-            if(!command) return
-            this.goToPage(command,true)
-        },
-        closeSearch() {
-            this.ifShowSearch = false
-        },
-        resizeHandler(){
-            this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
-        }
-    },
+		getBaseInfo() {
+			axios
+				.get(`${window.site_url}/wp-json/wp/v2/info`)
+				.then((res) => {
+					let data = res.data
+					window.localStorage.setItem('baseInfo', JSON.stringify(data))
+				})
+				.catch({})
+		},
+		getMenuList() {
+			axios
+				.get(`${window.site_url}/wp-json/wp/v2/menu`)
+				.then((res) => {
+					this.originMenuList = res.data
+					this.menuList = transData(
+						res.data,
+						'ID',
+						'menu_item_parent',
+						'children'
+					)
+					for (let i = 0; i < this.menuList.length; i++) {
+						const element = this.menuList[i]
+						for (let j = 0; j < this.menuIcon.length; j++) {
+							const item = this.menuIcon[j]
+							if (item.className === element.classes[0]) {
+								element.iconName = item.iconName
+							}
+						}
+					}
+					window.localStorage.setItem('menuList', JSON.stringify(this.menuList))
+				})
+				.catch()
+		},
+		showSearch() {
+			this.ifShowSearch = true
+			this.$nextTick(() => {
+				this.$refs.searchMain.$refs.searchInput.focus()
+			})
+		},
+		goToPage(route, domain = false, params = '') {
+			let url = ''
+			url += domain ? `${window.home_url}/${route}` : route
+			url += params ? `?${this.convertObj(params)}` : ''
+			window.location.href = url
+		},
+		convertObj(data) {
+			var _result = []
+			for (var key in data) {
+				var value = data[key]
+				if (value.constructor == Array) {
+					value.forEach(function (_value) {
+						_result.push(key + '=' + _value)
+					})
+				} else {
+					_result.push(key + '=' + value)
+				}
+			}
+			return _result.join('&')
+		},
+		handleCommand(command) {
+			if (!command) return
+			this.goToPage(command, true)
+		},
+		closeSearch() {
+			this.ifShowSearch = false
+		},
+		resizeHandler() {
+			this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
+		},
+	},
 })
-
 
 let footPart = new Vue({
-    el: '#footer',
-
+	el: '#footer',
 })
-
-
 
 // $(document).on("click", ".collapse-btn", function () {
 //     var this_ = $(this),
@@ -171,8 +177,6 @@ let footPart = new Vue({
 //         return false;
 //     }
 // });
-
-
 
 // 滚动触发事件 (Sidebar固定、Header动画)
 // $(".widget-area .widget-content > aside").addClass("animated");

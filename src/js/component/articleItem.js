@@ -31,10 +31,12 @@ Vue.component('article-item', {
         </el-tag>
       </div>     
     </div>
-    <div class="entry-main flex-hl-vl flex-hw" :class="{'has-image' : postData.post_metas.thumbnail}" v-if="postData.content.rendered || postData.excerpt.rendered">
-      <div class="featured-image" v-if="postData.post_metas.thumbnail">
-        <div v-html='postData.post_metas.thumbnail'></div>
-      </div>
+    <div class="entry-main flex-hl-vl flex-hw" :class="{'has-image' : postData?.post_img?.url}" v-if="postData.content.rendered || postData.excerpt.rendered">
+			<el-image class="featured-image" :src="postData.post_img.url" lazy v-if="postData?.post_img?.url">
+				<div slot="error" class="image-slot">
+					<i class="el-icon-picture-outline fs-24"></i>
+				</div>
+			</el-image>
       <span class="entry-summary" v-html="postData.ifShowAll ? postData.content.rendered : postData.excerpt.rendered" :id="postData.id"></span>
     </div>
     <div class="entry-footer flex-hb-vc flex-hw">

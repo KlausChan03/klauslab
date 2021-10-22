@@ -150,11 +150,12 @@ function get_the_link_items($id = null,$cat){
 				$imgUrl = '';
 			}			
 			
-			$output .=  '<li class="link-item col-md-4"> <div class="p-0 borderr-main-4"> <div class="flex-hb-vc link-1 p-20 bgc-' 
+			$output .=  '<li class="link-item col-md-3"> <div class="p-0 borderr-main-4"> <div class="flex-hb-vc link-1 p-20 bgc-' 
 			. $arr_col[0] . $arr_num[0] . '"> <div class="w-085 p-0"> <strong><a title="'
 			. $bookmark->link_name . '" href="' 
 			. $bookmark->link_url . '" target="_blank" class="col-fff link-name">'
-			. $bookmark->link_name .'</a></strong> <p class="f12 col-fff text-overflow">' 
+			. $bookmark->link_name .'</a></strong> <p class="f12 col-fff text-overflow" title="' 
+			. $bookmark->link_url .'">' 
 			. $bookmark->link_url . '</p> </div> <div class="w-015 flex-hr-vc"><a title="'
 			. $bookmark->link_name .'" href="' 
 			. $bookmark->link_url . '" target="_blank" class="link-avatar col-aaa"> '

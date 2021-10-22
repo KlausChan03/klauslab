@@ -76,7 +76,20 @@ new Vue({
 				toolbar: ['undo redo | emoticons'],
 				// toolbar:  ['bold italic underline strikethrough blockquote|forecolor backcolor|formatselect | fontsizeselect  | alignleft aligncenter alignright alignjustify | outdent indent |codeformat blockformats| removeformat undo redo bullist numlist toc pastetext | codesample charmap  hr insertdatetime | lists image media table link unlink | emoticons |code searchreplace fullscreen help ' ],
 				plugins:
-					'emoticons lists image media table wordcount code fullscreen help codesample toc insertdatetime  searchreplace  link charmap paste hr anchor',
+					'emoticons lists image media table wordcount code fullscreen help codesample toc insertdatetime  searchreplace  link charmap paste hr anchor textpattern',
+					textpattern_patterns: [
+						{start: '*', end: '*', format: 'italic'},
+						{start: '**', end: '**', format: 'bold'},
+						{start: '#', format: 'h1'},
+						{start: '##', format: 'h2'},
+						{start: '###', format: 'h3'},
+						{start: '####', format: 'h4'},
+						{start: '#####', format: 'h5'},
+						{start: '######', format: 'h6'},
+						{start: '1. ', cmd: 'InsertOrderedList'},
+						{start: '* ', cmd: 'InsertUnorderedList'},
+						{start: '- ', cmd: 'InsertUnorderedList'}
+				 ]
 			},
 		}
 	},

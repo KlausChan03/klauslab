@@ -80,7 +80,7 @@ Text Domain: KlausLab
   }
 }
 
-* {
+body,aside,dl,dd,h1,h2,h3,h4,h5,h6,p,span,a,div,form,ol,ul,li {
   margin: 0;
   padding: 0;
   border: 0;
@@ -100,7 +100,7 @@ Text Domain: KlausLab
     box-sizing: inherit;
   }
 }
-
+// 解决vuejs未加载完成的元素渲染问题
 [v-block] {
   display: none;
 }
@@ -144,6 +144,22 @@ header.site-header {
   transform: translate(-50%);
   width: 100%;
   background: #fff;
+}
+
+.site-header .menu-avatar .header-user-avatar{
+  width: 40px;
+  height: 40px;
+  padding: 0;
+}
+
+.site-header .menu-avatar .header-user-avatar i {
+  font-size:18px;
+  color: #aaa;
+  display: inline-block;
+}
+.site-header .menu-avatar .header-user-avatar i + span {
+  font-size: 13px;
+  margin-left: 0
 }
 
 article,
@@ -223,8 +239,6 @@ h5 {
 a {
   cursor: pointer;
   outline: none;
-  blr: expression(this.onFocus=this.blur());
-
   &.link {
     font-size: inhert;
     margin: 0 5px;
@@ -238,7 +252,6 @@ a {
 
 area {
   outline: none;
-  blr: expression(this.onFocus=this.blur());
 }
 
 a {

@@ -30,11 +30,7 @@
 	<?php wp_head(); ?>
 	<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/empty.js"></script>
 	<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/search.js"></script>
-
-	<!-- <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
-	<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/router.js"></script> -->
 	<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/mixin/filterMixin.js" defer></script>
-
 </head>
 
 <body <?php body_class(); ?>>
@@ -54,8 +50,30 @@
 		window.start_full_year = start_time ? new Date(start_time).getFullYear() : new Date().getFullYear();
 		window.now_full_year = new Date().getFullYear();
 		window.icp_num = '<?php echo get_option('zh_cn_l10n_icp_num') ?>';
-		window.tinyKey = "7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j"
+		window.tinyKey = "7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j";
+		window.userFullName = `<?php echo $current_user->user_firstname; ?>`;
+		// 首屏Loading
+		const max_timer = 5
+		setTimeout(() => {
+			fadeout(document.getElementById('kl-loader'), 0, 1500);
+			document.getElementById("kl-loader-container").remove();
+		}, max_timer * 1000);
+		window.onload = function() {
+			fadeout(document.getElementById('kl-loader'), 0, 1500);
+			document.getElementById("kl-loader-container").remove();
+		}
 	</script>
+
+	<!-- <div id="kl-loader-container" class="kl-loader-container">
+		<span id="kl-loader" class="kl-loader">Load&nbsp;ng </span>
+	</div> -->
+
+	<div id="kl-loader-container" class="kl-loader-container">
+			<div class="loader-wrapper ☯-bg fadeOut animated">
+					<div class='☯'></div>
+			</div>
+	</div>
+
 	<div id="page" class="hfeed site">
 		<header id="header" class="site-header" role="banner" v-block>
 			<div v-if="ifMobileDevice" id="site-touch-header" class="menu-touch">
@@ -101,14 +119,6 @@
 						<div v-html="window.the_custom_logo"> </div>
 					</div>
 					<div class="ml-15">
-						<!-- <?php
-									wp_nav_menu(
-										array(
-											'theme_location' => 'primary',
-											'menu_id' => 'primary-menu',
-										)
-									);
-									?> -->
 						<el-menu class="el-menu-horizontal" mode="horizontal" :default-active="activeIndex">
 							<template v-for="(item,index) in menuList" :key="item.ID">
 								<el-menu-item v-if="!item.children || item.children.length === 0" :index="item.ID" @click="goToPage(item.url)"><i v-if="item.iconName" :class="item.iconName"></i><span>{{item.title}}</span></el-menu-item>
@@ -142,27 +152,10 @@
 					<div class="menu-publish mr-30" v-if="window.isLogin">
 						<el-button icon="el-icon-magic-stick" type="text" @click="goToPage('page-post-simple', true, {type:'new'})" size="medium">发布</el-button>
 					</div>
-
 					<div id="menu-avatar" :class="{'flex-hc-vc':ifMobileDevice,'has-login':window.isLogin}" class="menu-avatar pos-r m-lr-15">
-						<!-- <div v-html="window.the_avatar"> </div>
-						<div id="personal-menu">
-							<ul>
-								<template v-if="window.isLogin">
-									<li><a href="<?php echo get_option('home'); ?>/wp-admin"><i class="lalaksks lalaksks-ic-dashboard m-lr-5"></i>后台</a></li>
-									<li><a href="<?php echo get_option('home'); ?>/page-post-simple"><i class="lalaksks lalaksks-rocket m-lr-5"></i>快捷发布</a></li>
-									<li><a href="<?php echo get_option('home'); ?>/wp-admin/post-new.php"><i class="lalaksks lalaksks-ic-create m-lr-5"></i>发布文章</a></li>
-									<li><a href="<?php echo get_option('home'); ?>/wp-admin/post-new.php?post_type=moments"><i class="lalaksks lalaksks-ic-create m-lr-5"></i>发布说说</a></li>
-									<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=logout"><i class="lalaksks lalaksks-ic-logout m-lr-5"></i>登出</a></li>
-								</template>
-								<template v-else>
-									<li><a href="<?php echo get_option('home'); ?>/wp-login.php?action=login"><i class="lalaksks lalaksks-ic-login m-lr-5"></i>登录</a></li>
-								</template>
-
-							</ul>
-						</div> -->
 						<el-dropdown @command="handleCommand">
 							<span class="el-dropdown-link">
-								<div v-html="window.the_avatar"> </div>
+								<el-button class="header-user-avatar" :icon="window.userFullName || 'el-icon-user-solid'" circle>{{window.userFullName || ''}}</el-button>
 							</span>
 							<el-dropdown-menu slot="dropdown">
 								<template v-if="window.isLogin">

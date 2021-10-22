@@ -176,7 +176,7 @@ Text Domain: KlausLab
   vertical-align: -0.4em;
 }
 
-* {
+body, aside, dl, dd, h1, h2, h3, h4, h5, h6, p, span, a, div, form, ol, ul, li {
   margin: 0;
   padding: 0;
   border: 0;
@@ -191,7 +191,7 @@ Text Domain: KlausLab
   -moz-osx-font-smoothing: grayscale;
 }
 
-*:before, *:after {
+body:before, body:after, aside:before, aside:after, dl:before, dl:after, dd:before, dd:after, h1:before, h1:after, h2:before, h2:after, h3:before, h3:after, h4:before, h4:after, h5:before, h5:after, h6:before, h6:after, p:before, p:after, span:before, span:after, a:before, a:after, div:before, div:after, form:before, form:after, ol:before, ol:after, ul:before, ul:after, li:before, li:after {
   box-sizing: inherit;
 }
 
@@ -237,6 +237,23 @@ header.site-header {
   transform: translate(-50%);
   width: 100%;
   background: #fff;
+}
+
+.site-header .menu-avatar .header-user-avatar {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+}
+
+.site-header .menu-avatar .header-user-avatar i {
+  font-size: 18px;
+  color: #aaa;
+  display: inline-block;
+}
+
+.site-header .menu-avatar .header-user-avatar i + span {
+  font-size: 13px;
+  margin-left: 0;
 }
 
 article,
@@ -314,7 +331,6 @@ h5 {
 a {
   cursor: pointer;
   outline: none;
-  blr: expression(this.onFocus=this.blur());
 }
 
 a.link {
@@ -329,7 +345,6 @@ a.link::before {
 
 area {
   outline: none;
-  blr: expression(this.onFocus=this.blur());
 }
 
 a {
