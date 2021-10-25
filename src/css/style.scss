@@ -80,11 +80,10 @@ Text Domain: KlausLab
   }
 }
 
-body,aside,dl,dd,h1,h2,h3,h4,h5,h6,p,span,a,div,form,ol,ul,li,input {
+* {
   margin: 0;
   padding: 0;
   border: 0;
-  // color: var(--regularText);
   font-size: 15px;
   background: transparent;
   word-wrap: break-word;
