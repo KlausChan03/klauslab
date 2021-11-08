@@ -29,7 +29,7 @@ let fixedPlugins = new Vue({
             season: "spring",
             mascot: {
                 "spring": "sakura",
-                "winter": "snowflake",
+                "winter": "snow",
             }
         }
     },

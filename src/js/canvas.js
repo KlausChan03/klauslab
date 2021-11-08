@@ -3243,10 +3243,9 @@ Animation.snow = (seasons,imageNumber) => {
                 }), containerWidth = $(container).width(), containerHeight = $(container).height(),
                 mouseX = 0, mouseY = 0,
                 windowHalfX = window.innerWidth / 2, windowHalfY = window.innerHeight / 2, particles = [],
-                particleImage =
-                new Image, particleImage.src =
-                `${window.homeSourceUrl}/img/${seasons?seasons:"snow"}.png`, snowNum =
-                imageNumber, init())
+                particleImage = new Image, 
+                particleImage.src = `${window.homeSourceUrl}/img/${seasons?seasons:"snow"}.png`,
+                snowNum = imageNumber, init())
         })
     }();
 }
