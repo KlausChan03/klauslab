@@ -146,12 +146,28 @@ get_header(); ?>
 		height: 220px;
 	}
 
-	.entry-footer button:not(:first-child){
+	.entry-footer button:not(:first-child) {
 		margin-left: 20px;
+	}
+
+	.copyable {
+		position: relative;
+	}
+
+	.copy-code-btn {
+		position: absolute;
+		top: 5px;
+		right: 0;
+		background: #a1a1a1;
+		color: #fff;
+		border-radius: 4px;
+		padding: 0 4px;
+		cursor: pointer;
+		font-size: 12px;
 	}
 </style>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/skeleton.js"></script>
-<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/reward.js" ></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/reward.js"></script>
 
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/single.js"></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickCommentItem.js" defer></script>

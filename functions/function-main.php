@@ -1554,7 +1554,8 @@ function ajax_comment_callback()
         if ('themes.php' == $pagenow && isset($_GET['activated'])) {
             // ashu_add_page('登录页面','login','page-login.php');
             // ashu_add_page('注册页面','register','page-register.php');
-            //页面标题,别名,页面模板
+            // 页面标题,别名,页面模板
+            // TODO: 待优化名称
             init_add_page('映象', 'page-movie', page_template_directory . 'page-movie.php');
             init_add_page('链集', 'page-links', page_template_directory . 'page-links.php', 'open');
             init_add_page('归档', 'page-archive', page_template_directory . 'page-archive.php');

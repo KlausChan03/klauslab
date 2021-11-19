@@ -1,0 +1,14 @@
+.copyable{
+  position: relative;
+}
+
+.copy-code-btn {
+	position: absolute;
+	top: 5 px;
+	right: 0;
+	background: #a1a1a1;
+	color: #fff;
+	border-radius: 4 px;
+	padding: 0 4 px;
+	cursor: pointer;
+}
