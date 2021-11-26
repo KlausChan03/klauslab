@@ -20,6 +20,12 @@
   position: absolute;
 }
 
+.article-list .entry-main video {
+  object-fit: cover;
+  max-height: 400px;
+  width: 100%;
+}
+
 .article-list .entry-action .entry-action-main span {
   text-align: right;
 }
@@ -115,11 +121,6 @@
     height: 200px;
   }
 
-  .article-list .entry-main video {
-    max-height: 450px;
-    object-fit: cover;
-  }
-
   .article-list .entry-main.has-image .entry-summary {
     margin: 0;
     margin-top: 1rem;
@@ -129,6 +130,5 @@
 
   .article-list .entry-main .entry-summary {
     text-align: justify;
-    /* text-align-last: justify; */
   }
 }
