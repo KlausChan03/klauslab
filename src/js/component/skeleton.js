@@ -1,5 +1,4 @@
 Vue.component('kl-skeleton', {
-  // props:["type"],
   props:{
     type:{
       type: String,
@@ -11,14 +10,10 @@ Vue.component('kl-skeleton', {
     }
 
   },
-  data() {
-    return {
-    }
-  },
   template: `
   <template>
     <div v-if="type === 'post'" class="kl-skeleton kl-skeleton-animated" id="kl-skeleton" >
-      <div class="kl-skeleton-item" :style="{marginTop: Number(index) === 0 ? '0' : '0.8rem'}" v-for="(item,index) in randomList" >
+      <div class="kl-skeleton-item" :style="{marginTop: Number(index) === 0 ? '0' : '15px'}" v-for="(item,index) in randomList" >
         <div class="kl-skeleton-content">        
           <div class="kl-skeleton-line"></div>
           <div class="kl-skeleton-line"></div>

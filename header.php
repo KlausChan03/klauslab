@@ -36,6 +36,7 @@
 <body <?php body_class(); ?>>
 	<?php global $current_user; ?>
 	<script>
+		// 全局参数
 		window.isLogin = "<?php echo is_user_logged_in(); ?>";
 		window.the_custom_logo = `<?php echo the_custom_logo(); ?>`;
 		window.the_avatar = `<?php echo get_avatar($current_user->user_email, 38); ?>`;
@@ -53,20 +54,16 @@
 		window.tinyKey = "7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j";
 		window.userFullName = `<?php echo $current_user->user_firstname; ?>`;
 		// 首屏Loading
-		const max_timer = 5
+		const max_timer = 2
 		setTimeout(() => {
 			fadeout(document.getElementById('kl-loader'), 0, 1500);
-			document.getElementById("kl-loader-container").remove();
+			document.getElementById("kl-loader-container") && document.getElementById("kl-loader-container").remove();
 		}, max_timer * 1000);
 		window.onload = function() {
 			fadeout(document.getElementById('kl-loader'), 0, 1500);
-			document.getElementById("kl-loader-container").remove();
+			document.getElementById("kl-loader-container") && document.getElementById("kl-loader-container").remove();
 		}
 	</script>
-
-	<!-- <div id="kl-loader-container" class="kl-loader-container">
-		<span id="kl-loader" class="kl-loader">Load&nbsp;ng </span>
-	</div> -->
 
 	<div id="kl-loader-container" class="kl-loader-container">
 			<div class="loader-wrapper ☯-bg fadeOut animated">
@@ -155,7 +152,7 @@
 					<div id="menu-avatar" :class="{'flex-hc-vc':ifMobileDevice,'has-login':window.isLogin}" class="menu-avatar pos-r m-lr-15">
 						<el-dropdown @command="handleCommand">
 							<span class="el-dropdown-link">
-								<el-button class="header-user-avatar" :icon="window.userFullName || 'el-icon-user-solid'" circle>{{window.userFullName || ''}}</el-button>
+								<el-button class="header-user-avatar" :icon="window.userFullName || 'el-icon-user-solid'" >{{window.userFullName || ''}}</el-button>
 							</span>
 							<el-dropdown-menu slot="dropdown">
 								<template v-if="window.isLogin">
@@ -173,5 +170,4 @@
 			</nav><!-- #site-navigation -->
 			<kl-search ref="searchMain" v-show="ifShowSearch" @close-search="closeSearch"></kl-search>
 		</header><!-- #header -->
-		<div id="content" class="site-content">
-			<div class="wrap clear">
+		<div id="content" class="site-content wrap flex-hb-vt flex-hw">
