@@ -149,6 +149,8 @@ const index_module = new Vue({
                         for (var s = 0; s < this.listOfArticle.length; ++s) {
                             this.posts_id_sticky += (',' + this.listOfArticle[s].id);
                         }
+                        this.ifShowPost = false
+
                         params.per_page = this.per_page - this.listOfArticle.length
                         params.exclude = this.posts_id_sticky
                         axios.get(`${window.site_url}/wp-json/wp/v2/posts`, {
@@ -167,7 +169,6 @@ const index_module = new Vue({
                                 }
 
                             });
-                            this.ifShowPost = false
                             this.$nextTick(()=>{
                                 this.bindImagesLayer();
                             })
