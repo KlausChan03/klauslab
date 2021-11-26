@@ -276,6 +276,7 @@ const index_module = new Vue({
 		changeType(tab, event) {
 			this.page = 1
 			this.postType = tab.label
+            this.totalOfArticle = 0
 			this.getListByType(this.postType)
 			// debugger
 			// this.$router.push({

@@ -3448,7 +3448,7 @@ body {
 		margin-top: 15px;
 	}
 
-	.hentry + .kl-skeleton {
+	.article-list + .kl-skeleton {
 		margin-top: 15px;
 	}
 
@@ -4909,6 +4909,9 @@ div[itemprop='description'] {
 }
 
 .main-area {
+	&.w-1{
+		width: 100%;
+	}
 	width: 70%;
 	.content-content {
 		width: 100%;
