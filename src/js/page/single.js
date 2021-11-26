@@ -22,28 +22,37 @@ const index_module = new Vue({
 		this.getAllArticles()
 	},
 	mounted() {
-        const self = this
+		const self = this
 		window.onload = function () {
+
 			const copyButtons = document.querySelectorAll('.copy-code-btn')
 			for (let index = 0; index < copyButtons.length; index++) {
 				const element = copyButtons[index]
-                element.addEventListener('click', function(){
-                    const content = element.parentElement.firstChild.nodeValue
-                    const textarea = document.createElement('textarea');
-                    textarea.textContent = content
-                    document.body.appendChild(textarea);                  
-                    const selection = document.getSelection();
-                    const range = document.createRange();
-                    range.selectNode(textarea);
-                    selection.removeAllRanges();
-                    selection.addRange(range);                  
-                    selection.removeAllRanges();                  
-                    document.body.removeChild(textarea);
-                    self.$message({
-                        type: 'success',
-                        message: "复制成功",
-                    })
-                  })
+				element.addEventListener('click', function(){
+
+					const content = element.parentElement.firstChild.nodeValue
+					const textarea = document.createElement('textarea');
+					textarea.textContent = content
+					document.body.appendChild(textarea);
+					if (document.execCommand('copy')) {
+						textarea.select();
+						document.execCommand('copy');
+					} else {
+						const selection = document.getSelection();
+						const range = document.createRange();
+						range.selectNode(textarea);
+						selection.removeAllRanges();
+						selection.addRange(range);                  
+						selection.removeAllRanges(); 
+					}
+					
+
+					document.body.removeChild(textarea);
+					self.$message({
+							type: 'success',
+							message: "复制成功",
+					})
+				})
 			}
 		}
 	},

@@ -105,36 +105,6 @@ new Vue({
 		this.init()
 	},
 	methods: {
-		getArticleContent() {
-			let params = {}
-			return axios
-				.get(`${window.site_url}/wp-json/wp/v2/posts/${this.post_id}`, {
-					params: params,
-				})
-				.then((res) => {
-					this.$nextTick(() => {
-						let posts = JSON.parse(JSON.stringify(res.data))
-						for (const key in posts) {
-							if (posts.hasOwnProperty(key)) {
-								const element = posts[key]
-								for (const self in element) {
-									if (self === 'rendered') {
-										posts[key] = element[self]
-									}
-								}
-							}
-						}
-						posts.type = posts.type.indexOf('moment') > -1 ? 'moments' : 'posts'
-						this.format = !!(this.posts.type === 'moments' ? false : true)
-						this.changePostType()
-						this.posts = posts
-						this.posts.categories = posts.categories
-						this.$refs.categoryTree.setCheckedKeys(this.posts.categories)
-						this.posts.tags = posts.tags
-						window.tinymce.get('editor').setContent(this.posts.content)
-					})
-				})
-		},
 		init() {
 			const self = this
 			self.editorLoading = true
@@ -167,6 +137,61 @@ new Vue({
 				selector: `#editor`,
 			})
 		},
+		getTags() {
+			const params = {
+				page: 1,
+				per_page: 50
+			}
+			axios.get(`${window.site_url}/wp-json/wp/v2/tags`, {
+				params: params
+			}).then((res) => {
+				this.tagList = res.data
+			})
+		},
+		getCategories() {
+			const params = {
+				page: 1,
+				per_page: 50
+			}
+			axios.get(`${window.site_url}/wp-json/wp/v2/categories`, {
+				params: params
+			}).then((res) => {
+				this.categoryListOrigin = res.data
+				this.categoryList = transData(res.data, 'id', 'parent', 'children')
+			})
+		},
+
+		getArticleContent() {
+			let params = {}
+			return axios
+				.get(`${window.site_url}/wp-json/wp/v2/posts/${this.post_id}`, {
+					params: params,
+				})
+				.then((res) => {
+					this.$nextTick(() => {
+						let posts = JSON.parse(JSON.stringify(res.data))
+						for (const key in posts) {
+							if (posts.hasOwnProperty(key)) {
+								const element = posts[key]
+								for (const self in element) {
+									if (self === 'rendered') {
+										posts[key] = element[self]
+									}
+								}
+							}
+						}
+						posts.type = posts.type.indexOf('moment') > -1 ? 'moments' : 'posts'
+						this.format = !!(this.posts.type === 'moments' ? false : true)
+						this.changePostType()
+						this.posts = posts
+						this.posts.categories = posts.categories
+						this.$refs.categoryTree.setCheckedKeys(this.posts.categories)
+						this.posts.tags = posts.tags
+						window.tinymce.get('editor').setContent(this.posts.content)
+					})
+				})
+		},
+
 		doTagsChange(value) {
 			const { tagList } = this
 			value.forEach((element) => {
@@ -207,17 +232,7 @@ new Vue({
 			this.init()
 		},
 
-		getTags() {
-			axios.get(`${window.site_url}/wp-json/wp/v2/tags`).then((res) => {
-				this.tagList = res.data
-			})
-		},
-		getCategories() {
-			axios.get(`${window.site_url}/wp-json/wp/v2/categories`).then((res) => {
-				this.categoryListOrigin = res.data
-				this.categoryList = transData(res.data, 'id', 'parent', 'children')
-			})
-		},
+
 		handleExceed(files, fileList) {
 			this.$message.warning(
 				`当前限制选择 1 个特色图像，本次选择了 ${files.length} 个文件`

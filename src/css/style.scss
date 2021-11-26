@@ -3121,6 +3121,12 @@ body {
 		transform: none;
 	}
 
+	.widget red_envelope_widget {
+		img {
+			width: 80%
+		}
+	}
+
 	.widget-content {
 		overflow: hidden;
 		display: flex;
