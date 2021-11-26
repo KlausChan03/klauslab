@@ -11,8 +11,6 @@
 ?>
 </div>
 <!-- #content -->
-</div>
-<!-- .wrap  -->
 <footer id="footer" class="site-footer flex-hc-vc" role="contentinfo" v-block>
   <div class="site-info">
     <p class="flex-hc-vc flex-hw"><span>Theme KlausLab designed by Klaus &amp; Laura</span><span v-if="!window.ifMobileDevice" class="m-lr-5">|</span><span>All Rights Reserved</span></p>

@@ -1,0 +1,134 @@
+.article-list .entry-action .entry-author {
+  min-width: 120px;
+}
+
+.article-list .entry-action .entry-action-main span {
+  display: inline-block;
+  max-width: 30px;
+  line-height: 30px;
+  margin-left: 5px;
+  /* text-align: left; */
+}
+
+.article-list .entry-main.has-image .entry-summary {
+  margin: 0;
+  min-height: 120px;
+  margin-left: 200px;
+}
+
+.article-list .entry-main .featured-image {
+  position: absolute;
+}
+
+.article-list .entry-action .entry-action-main span {
+  text-align: right;
+}
+
+.article-list .entry-action-main .lalaksks {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .2s;
+  margin: 0;
+}
+
+/* .article-list .entry-action-main .lalaksks:hover {
+  color: transparent;
+} */
+.article-list .entry-action-main .lalaksks.lalaksks-ic-reply:hover {
+  background-color: #A0C4F2;
+}
+
+.article-list .entry-action-main .entry-zan .lalaksks-ic-zan:hover {
+  background-color: #F5B4A7;
+  color: #DD4422
+}
+
+.article-list .entry-action-main .entry-cai .lalaksks-ic-zan:hover {
+  background-color: #856D72;
+  color: #36292F
+}
+
+.article-list .el-tag:first-child {
+  margin-left: 0;
+}
+
+.article-list .entry-header {
+  line-height: 1.6;
+}
+
+.setting-part {
+  top: 10px;
+  right: 1.6rem;
+}
+
+.comment-list,
+.comment-input {
+  position: relative;
+}
+
+#comments>.comment-list:before {
+  position: absolute;
+  content: '评论列表';
+  background: #42A5F5;
+  color: #fff;
+  left: calc(-1.6rem - 20px);
+  word-wrap: break-word;
+  width: 20px;
+  text-align: center;
+  font-size: 12px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  padding: 4px;
+}
+
+#comments>.comment-input:before {
+  position: absolute;
+  content: '评论发布';
+  background: #42A5F5;
+  color: #fff;
+  left: calc(-1.6rem - 20px);
+  word-wrap: break-word;
+  width: 20px;
+  text-align: center;
+  font-size: 12px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  padding: 4px;
+}  
+
+
+@media screen and (max-width: 720px) {
+  .article-list .entry-main .featured-image {
+    width: 100%;
+    position: relative;
+    margin: 0;
+    height: 200px;
+  }
+
+  .article-list .entry-main .featured-image img {
+    width: 100%;
+    height: 200px;
+  }
+
+  .article-list .entry-main video {
+    max-height: 450px;
+    object-fit: cover;
+  }
+
+  .article-list .entry-main.has-image .entry-summary {
+    margin: 0;
+    margin-top: 1rem;
+    width: 100%;
+    min-height: auto;
+  }
+
+  .article-list .entry-main .entry-summary {
+    text-align: justify;
+    /* text-align-last: justify; */
+  }
+}

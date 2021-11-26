@@ -2789,10 +2789,10 @@ body {
 .site-content {
   border: none;
   min-height: calc(100vh - 60px - 80px);
-  margin-top: 60px;
+  padding: 10px;
+  padding-top: 75px;
 }
 
-/* .page-content, .entry-content{margin:0; padding:5% 1em;} */
 /* 标准页面 */
 .main-content .page-main {
   padding: 0;
@@ -2970,6 +2970,10 @@ body {
   bottom: 104px;
   top: auto;
   transform: none;
+}
+
+.widget-area .widget red_envelope_widget img {
+  width: 80%;
 }
 
 .widget-area .widget-content {
@@ -3190,10 +3194,7 @@ body {
 }
 
 .widget-area .widget_tag_cloud .tagcloud {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   padding: 0.3em 0;
   position: relative;
@@ -3203,8 +3204,6 @@ body {
   margin: 0;
   margin-right: 6px;
   margin-top: 10px;
-  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
 /* 固定插件 - 回到顶部 */
@@ -3265,7 +3264,11 @@ body {
 /* Content */
 /* # Posts and pages */
 .main-content .hentry {
-  margin-top: 0.8rem;
+  margin-top: 15px;
+}
+
+.main-content .hentry + .kl-skeleton {
+  margin-top: 15px;
 }
 
 .main-content article:first-of-type {
@@ -4243,11 +4246,9 @@ body {
   display: block;
 }
 
-/* 未分类 */
 .wrap {
   max-width: 1200px;
   margin: 0 auto;
-  padding-top: 0px;
 }
 
 .search-form {
@@ -4553,10 +4554,6 @@ div[itemprop='description'] {
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
-.main-area.w-1 {
-  width: 100%;
-}
-
 .page-template-page-layout-nosidebar.main-area.w-0 {
   width: 75%;
 }
@@ -4576,6 +4573,23 @@ div[itemprop='description'] {
 
 .nav-previous a {
   font-size: 18px;
+}
+
+.main-area {
+  width: 70%;
+}
+
+.main-area .content-content {
+  width: 100%;
+}
+
+.widget-area {
+  width: calc(100% - 70% - 15px);
+  margin-left: 15px;
+}
+
+.widget-area .widget-content {
+  width: 100%;
 }
 
 @media screen and (min-width: 1000px) {
@@ -4675,24 +4689,6 @@ div[itemprop='description'] {
   .site-header .main-navigation .menu-logo .custom-logo {
     width: auto;
     height: 45px;
-  }
-  .site-content {
-    padding: 10px;
-    padding-bottom: 0;
-  }
-  .main-area {
-    width: 75%;
-    float: left;
-  }
-  .content-content {
-    width: 100%;
-  }
-  .widget-area {
-    width: 28%;
-    float: right;
-  }
-  .widget-content {
-    width: 100%;
   }
 }
 
@@ -4817,51 +4813,21 @@ div[itemprop='description'] {
   #personal-menu {
     width: 100%;
   }
-  .site-content {
-    padding: 10px;
-    padding-bottom: 0;
-  }
-  .content-content,
-  .site-area,
-  .widget-area {
-    width: 100%;
-  }
-  .widget-content {
-    width: 100%;
-    margin-top: 15px;
-  }
   .main-area {
+    width: 100%;
+    max-width: 100%;
+  }
+  .widget-area {
     width: 100%;
   }
 }
 
 @media screen and (min-width: 1201px) {
-  .main-area {
-    width: 70%;
-  }
   .form-submit {
     display: inline-block;
   }
-  .wrap {
-    position: relative;
-  }
-  .main-content {
-    min-width: 700px;
-  }
   .comment-list .children {
     margin-left: 3em;
-  }
-}
-
-@media screen and (min-width: 1001px) and (max-width: 1200px) {
-  .main-area {
-    width: 68%;
-  }
-  .main-content {
-    width: 100%;
-  }
-  .sidebar {
-    width: 30%;
   }
 }
 

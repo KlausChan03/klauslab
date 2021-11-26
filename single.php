@@ -7,6 +7,8 @@
  */
 
 get_header(); ?>
+<link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/single.css">
+
 <script>
 	window.post_id = <?php echo get_the_ID(); ?>;
 </script>
@@ -68,104 +70,7 @@ get_header(); ?>
 	<!-- #main -->
 </div>
 <!-- #primary -->
-<style>
-	@media screen and (min-width: 720px) and (max-width: 1000px) {
-		.widget-content {
-			overflow: hidden;
-			width: 92%;
-			margin-left: 8%;
-		}
-	}
 
-	@media screen and (min-width: 720px) {
-
-		.article-container,
-		.comment-container,
-		.article-skeleton {
-			width: 92%;
-			margin-left: 8%;
-		}
-
-		.article-container {
-			overflow: hidden;
-		}
-
-		.article-panel {
-			position: fixed;
-			margin-left: -5rem;
-			top: 100px;
-		}
-	}
-
-	@media screen and (max-width: 720px) {
-		.article-panel {
-			display: none;
-		}
-	}
-
-	.article-panel .lalaksks {
-		color: #BBBBBB;
-	}
-
-	.article-panel .badge-item .el-badge__content {
-		background-color: #BBBBBB;
-	}
-
-	.article-panel-item .el-button.is-circle {
-		padding: 10px;
-	}
-
-	.article-panel-item:not(:first-child) {
-		margin-top: 30px;
-
-	}
-
-	.pay-chose button {
-		width: 120px;
-		height: 45px;
-		text-align: center;
-		border: 1px solid #e6e6e6;
-		border-radius: 2px;
-		display: inline-block;
-		line-height: 40px;
-		cursor: pointer;
-	}
-
-	.pay-chose button img {
-		height: 25px;
-		vertical-align: sub;
-	}
-
-	.pay-chose button.chosen {
-		border-color: #0092ee;
-	}
-
-	.pay-body .alipay,
-	.pay-body .wechatpay {
-		width: 220px;
-		height: 220px;
-	}
-
-	.entry-footer button:not(:first-child) {
-		margin-left: 20px;
-	}
-
-	.copyable {
-		position: relative;
-	}
-
-	.copy-code-btn {
-		position: absolute;
-		top: 5px;
-		right: 0;
-		background: #a1a1a1;
-		color: #fff;
-		border-radius: 4px;
-		padding: 0 4px;
-		cursor: pointer;
-		font-size: 12px;
-	}
-</style>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/skeleton.js"></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/reward.js"></script>
 
