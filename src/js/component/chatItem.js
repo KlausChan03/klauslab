@@ -25,16 +25,12 @@ Vue.component('chat-item', {
             </el-tooltip>
           </div>
         </div>
-        <div class="entry-action-main flex-hb-vc w-06">
-          <div class="entry-view flex-hc-vc flex-1-3">
-            <i class="lalaksks lalaksks-ic-view " ></i>
-            <span :style='{"font-size": Number(postData.post_metas.views) >= 1000 ? 12 + "px" : 14 + "px" }'>{{postData.post_metas.views}}</span>
-          </div>
-          <div class="entry-comment flex-hc-vc flex-1-3" @click="showComment(postData.id)">
+        <div class="entry-action-main flex-hb-vc w-04">
+          <div class="entry-comment flex-hc-vc flex-1-2" @click="showComment(postData.id)">
             <i class="lalaksks lalaksks-ic-reply  cur-p" :style='{color:postData.post_metas.comments_num > 0 ? "#4488EE":"inhert"}'></i>
             <span :style='{color:postData.post_metas.comments_num > 0 ? "#4488EE":"inhert"}'>{{postData.post_metas.comments_num > 0 ? postData.post_metas.comments_num : 0}}</span>
           </div>
-          <div class="entry-zan flex-hc-vc flex-1-3" @click="likeOrDislikePost(postData,'like')">
+          <div class="entry-zan flex-hc-vc flex-1-2" @click="likeOrDislikePost(postData,'like')">
               <i class="lalaksks lalaksks-ic-zan fs-16 cur-p" :style='{color:postData.post_metas.zan_num > 0 ? "#DD4422":"inhert", background: postData.post_metas.has_zan ? "#F5B4A7" : "inhert"}'></i>
               <span :style='{color:postData.post_metas.zan_num > 0 ? "#DD4422":"inhert"}'>{{postData.post_metas.zan_num > 0 ? postData.post_metas.zan_num : 0}}</span>
           </div>

@@ -29,8 +29,7 @@ const index_module = new Vue({
 			for (let index = 0; index < copyButtons.length; index++) {
 				const element = copyButtons[index]
 				element.addEventListener('click', function(){
-
-					const content = element.parentElement.firstChild.nodeValue
+					const content = element.parentElement.outerHTML.replace('复制代码','')
 					const textarea = document.createElement('textarea');
 					textarea.textContent = content
 					document.body.appendChild(textarea);
@@ -44,8 +43,7 @@ const index_module = new Vue({
 						selection.removeAllRanges();
 						selection.addRange(range);                  
 						selection.removeAllRanges(); 
-					}
-					
+					}				
 
 					document.body.removeChild(textarea);
 					self.$message({

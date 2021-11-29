@@ -32,7 +32,7 @@ get_header();
     }
 </style>
 
-<div class="post-main" id="post-page" v-block>
+<div id="post-page" class="post-main flex1" v-block>
     <el-form>
         <div class="post-header flex-hb-vc flex-hw">
             <div class="post-header-left">
