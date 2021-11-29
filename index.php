@@ -44,7 +44,7 @@ get_header();
               <quick-comment :ref="'quickComment-'+item.id" callback="true" :comment-data="item.listOfComment" :post-data="item" v-if="item.ifShowComment"></quick-comment>
             </article>
           </div>
-          <kl-skeleton v-if="ifShowChat || totalOfArticle === 0" type="post"></kl-skeleton>
+          <kl-skeleton v-if="ifShowChat || totalOfChat === 0" type="post"></kl-skeleton>
         </el-tab-pane>
         <!-- 存在Bug -->
         <el-tab-pane label="all" v-if="false">

@@ -278,14 +278,6 @@ const index_module = new Vue({
 			this.postType = tab.label
             this.totalOfArticle = 0
 			this.getListByType(this.postType)
-			// debugger
-			// this.$router.push({
-			//     path: window.home_url,
-			//     query:{
-			//         type: this.postType
-			//     }
-			// })
-			// url.searchParams.set('x', 42);
 		},
 
 		getListByType(type) {
