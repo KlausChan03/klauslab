@@ -29,7 +29,7 @@ const index_module = new Vue({
 			for (let index = 0; index < copyButtons.length; index++) {
 				const element = copyButtons[index]
 				element.addEventListener('click', function(){
-					const content = element.parentElement.outerHTML.replace('复制代码','')
+					const content = element.parentElement.outerText.replace('复制代码','')
 					const textarea = document.createElement('textarea');
 					textarea.textContent = content
 					document.body.appendChild(textarea);
