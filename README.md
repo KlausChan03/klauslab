@@ -1,7 +1,7 @@
 ﻿## Wordpress Theme KlausLab
 
 [![Version](https://img.shields.io/badge/version-2.3.5_beta-green.svg?style=flat-square)]()
-[![Author](https://img.shields.io/badge/author-KlausChan-blue.svg?style=flat-square)](https://shawnzeng.com)
+[![Author](https://img.shields.io/badge/author-KlausChan-blue.svg?style=flat-square)](https://klauslaura.cn)
 [![GitHub stars](https://img.shields.io/github/stars/KlausChan03/klauslab.svg?style=social)](https://github.com/KlausChan03/klauslab/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/KlausChan03/klauslab.svg?style=social)](https://github.com/KlausChan03/klauslab/network/members)
 
