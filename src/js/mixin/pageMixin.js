@@ -9,7 +9,10 @@ let pageMixin = {
 
                 },
                 post_metas: {
-                    reward: ""
+                    reward: "",
+                    location: "",
+                    address: "",
+                    position: "",
                 }
             },
         }

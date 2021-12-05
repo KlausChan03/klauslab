@@ -216,6 +216,9 @@ function get_post_meta_for_api($post)
     $catList = get_the_category($post['id']);
     $post_meta['cat_name'] = array_column($catList, 'name');
     $post_meta['reward'] = get_post_meta($post['id'], 'reward', true);
+    $post_meta['location'] = get_post_meta($post['id'], 'location', true);
+    $post_meta['address'] = get_post_meta($post['id'], 'address', true);
+    $post_meta['position'] = get_post_meta($post['id'], 'position', true);
     return $post_meta;
 }
 
