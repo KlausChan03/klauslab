@@ -4,6 +4,8 @@ Vue.component('article-item', {
 	data() {
 		return {
 			ifMobileDevice: window.ifMobileDevice,
+			ifShowLocationPopup: false,
+
 		}
 	},
 	// template: `
@@ -37,7 +39,10 @@ Vue.component('article-item', {
 					<i class="el-icon-picture-outline fs-24"></i>
 				</div>
 			</el-image>
-      <span class="entry-summary" v-html="postData.ifShowAll ? postData.content.rendered : postData.excerpt.rendered" :id="postData.id"></span>
+			<div>
+      	<p class="entry-summary" v-html="postData.ifShowAll ? postData.content.rendered : postData.excerpt.rendered" :id="postData.id"></p>
+				<p @click="showLocation(postData.post_metas.position)" v-if="postData.post_metas.address" class="fs-12 col-aaa cur-p"> <i class="el-icon-map-location mr-5" ></i> {{ postData.post_metas.address }} </p>
+			</div>
     </div>
     <div class="entry-footer flex-hb-vc flex-hw">
       <div class="entry-action flex-hb-vc flex-hw w-1" v-if="!ifMobileDevice">
@@ -111,9 +116,28 @@ Vue.component('article-item', {
              
       </div>
       </div>
+			<el-dialog :visible.sync="ifShowLocationPopup" fullscreen show-close>
+				<div id="location-container" class="location-container"> </div>
+				<div class="location-info flex-hc-vc flex-v">           
+				</div>
+			</el-dialog>
     </div>
     `,
 	methods: {
+		showLocation (position) {
+      const positionArr = position.split(',')
+      this.ifShowLocationPopup = true
+      this.$nextTick(() => {
+				const map = new AMap.Map('location-container', {
+					resizeEnable: true,
+          zoom: 16,
+          center: positionArr,
+				})
+				const marker = new AMap.Marker();
+        map.add(marker);
+        marker.setPosition(positionArr);				
+			})
+    },
 		changeIfShowAllToParent(id) {
 			this.$emit('change-type', id)
 		},

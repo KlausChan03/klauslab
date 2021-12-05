@@ -30,93 +30,7 @@ get_header();
         height: 60px;
     }
 
-    .location-container {
-        width: calc(100vw - 40px);
-        height: calc(100vh - 90px);
-    }
-
-    .location-info {
-        padding: 10px;
-        border-radius: 4px;
-        position: absolute;
-        width: 360px;
-        left: 15px;
-        top: 15px;
-        border-width: 0;
-        background-color: #fff;
-        box-shadow: 0 2px 6px 0 rgb(114 124 245 / 50%);
-    }
-
-
-    .location-info .input-item {
-        position: relative;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-        -ms-flex-align: center;
-        align-items: center;
-        width: 100%;
-        height: 3rem;
-    }
-
-    .location-info .input-item>input[type=text] {
-        position: relative;
-        -ms-flex: 1 1 auto;
-        flex: 1 1 auto;
-        width: 1%;
-        margin-bottom: 0;
-        background: #fff;
-        padding: 0.2rem 0.75rem;
-    }
-
-    .location-info input[type=text] {
-        display: inline-block;
-        width: 100%;
-        padding: 0.375rem 1.75rem 0.375rem 0.75rem;
-        line-height: 1.5;
-        color: #495057;
-        vertical-align: middle;
-        border: 1px solid #ced4da;
-        border-radius: 0.25rem;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-    }
-
-    .location-info .input-item>input[type=text]:not(:first-child) {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-    }
-
-    .location-info .input-item-prepend {
-        margin-right: -1px;
-    }
-
-    .location-info .input-item-text {
-        width: 6rem;
-        text-align: justify;
-        padding: 0.4rem 0.7rem;
-        display: inline-block;
-        text-justify: distribute-all-lines;
-        text-align-last: justify;
-        -moz-text-align-last: justify;
-        -webkit-text-align-last: justify;
-        -ms-flex-align: center;
-        align-items: center;
-        margin-bottom: 0;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #495057;
-        text-align: center;
-        white-space: nowrap;
-        background-color: #e9ecef;
-        border: 1px solid #ced4da;
-        border-radius: 0.25rem;
-        border-bottom-right-radius: 0;
-        border-top-right-radius: 0;
-    }
+    
 </style>
 
 <div id="post-page" class="post-main flex1" v-block>
@@ -262,20 +176,31 @@ get_header();
             <div class="location-info flex-hc-vc flex-v">
                 <!-- <h4 class="location-status mb-5">{{location.status === 1 ? '定位成功' : '定位失败'}}</h4> -->
                 <!-- <p id='result'></p> -->
-                <div class="input-item mt-10">
+                <!-- <div class="input-item mt-10">
                     <div class="input-item-prepend"><span class="input-item-text">经纬度</span></div>
                     <input id='lnglat' type="text" :value="location.simplePosition">
                 </div>
                 <div class="input-item">
                     <div class="input-item-prepend"><span class="input-item-text">地址</span></div>
                     <input id='address' type="text" disabled :value="location.address">
-                </div>
-                <el-button class="mt-5" type="primary" size="small" plain @click="saveLocation" >保存定位</el-button>
+                </div> -->
+                <el-input id="lnglat" placeholder="点击地图获取经纬度" v-model="location.simplePosition" size="medium">
+                    <template slot="prepend">经纬度</template>
+                </el-input>
+                <el-input class="mt-10" v-model="location.address" size="medium" disabled>
+                    <template slot="prepend">地址</template>
+                </el-input>           
+                <el-button class="mt-15 fs-14" type="primary" size="small" plain @click="saveLocation" >保存定位</el-button>
             </div>
         </el-dialog>
     </el-form>
 
 </div>
+<script type="text/javascript">
+    window._AMapSecurityConfig = {
+        securityJsCode:'63ff502b168849801ec542fe31304563',
+    }
+</script>
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=7c7a39e2e07d4245fa9c21dece87bf93&plugin=AMap.Geocoder"></script>
 <script type="text/javascript" src="https://cdn.tiny.cloud/1/7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/post.js"></script>
