@@ -214,17 +214,19 @@ new Vue({
 				return false
 			}
 			this.$nextTick(() => {
-				// this.posts.post_metas.location = !this.posts.post_metas.location
-				var map = new AMap.Map('location-container', {
+				const map = new AMap.Map('location-container', {
 					resizeEnable: true,
 				})
 
-				var geocoder = new AMap.Geocoder({
+				const geocoder = new AMap.Geocoder({
 					radius: 1000 //范围，默认：500
 				});
 
+				const marker = new AMap.Marker();
+
+
 				AMap.plugin('AMap.Geolocation', function () {
-					var geolocation = new AMap.Geolocation({
+					const geolocation = new AMap.Geolocation({
 						enableHighAccuracy: true, //是否使用高精度定位，默认:true
 						timeout: 10000, //超过10秒后停止定位，默认：5s
 						buttonPosition: 'RB', //定位按钮的停靠位置
@@ -244,28 +246,31 @@ new Vue({
 
 				map.on('click',function(e){
 					self.$set(self.location,'simplePosition',e.lnglat.lng + ',' + e.lnglat.lat)
-					debugger
 					regeoCode();
 				})
+
+				document.getElementById('lnglat').onkeydown = function(e) {
+					if (e.keyCode === 13) {
+							regeoCode();
+							return false;
+					}
+					return true;
+				};
 
 				//解析定位结果
 				function onComplete(data) {			
 					self.location = data
 					self.$set(self.location,'simplePosition',data.position.lng + ',' + data.position.lat)
-					
-					console.log(JSON.stringify(data))
+					regeoCode()
 				}
+
 				//解析定位错误信息
 				function onError(data) {
-					// document.getElementById('status').innerHTML = '定位失败'
-					// document.getElementById('result').innerHTML =
-					// 	'失败原因排查信息:' + data.message
 					self.$message.error(data.message)
 				}
 
 				function regeoCode() {        
 					const lnglat = self.location.simplePosition.split(',')
-					const marker = new AMap.Marker();
 					map.add(marker);
         	marker.setPosition(lnglat);
 					geocoder.getAddress(lnglat, function(status, result) {
@@ -277,8 +282,7 @@ new Vue({
             }
         	});
 				}
-			
-
+				
 			})
 		},
 
@@ -379,16 +383,6 @@ new Vue({
 			this.hasCommitFinish = true
 			this.posts.status = this.status === true ? 'publish' : 'draft'
 			this.posts.content = window.tinymce.get('editor').getContent()
-			this.posts.post_metas = []
-			for (const key in this.posts.post_metas) {
-				if (this.posts.post_metas.hasOwnProperty(key)) {
-					const element = this.posts.post_metas[key]
-					this.posts.post_metas.push({
-						key: key,
-						value: element === true ? '1' : '0',
-					})
-				}
-			}
 			if (this.posts.type === 'moments') {
 				let imgDom = ''
 				for (let index = 0; index < this.pictureList.length; index++) {
@@ -397,7 +391,19 @@ new Vue({
 				}
 				this.posts.content += `<div class="moment-gallery flex-hb-vc flex-hw">${imgDom}</div>`
 			}
-			const params = this.posts
+			const params = JSON.parse(JSON.stringify(this.posts))
+			params.post_metas = []
+			const extra = this.posts.post_metas
+			for (const key in extra) {
+				if (Object.hasOwnProperty.call(extra, key)) {
+					const element = extra[key];
+					params.post_metas.push({
+						'key': key,
+						'value': element
+					})
+					
+				}
+			}
 			const format = this.posts.type
 			if (!params.title && format === 'posts') {
 				this.$message({

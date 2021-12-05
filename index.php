@@ -15,7 +15,9 @@
 
 
 get_header();
+
 ?>
+
 <link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/index.css">
 <script>
   window.post_count = "<?php wp_count_posts(); ?>";
@@ -134,6 +136,13 @@ get_header();
   <!-- #main -->
 </div>
 <!-- #primary -->
+<script type="text/javascript">
+    window._AMapSecurityConfig = {
+        securityJsCode:'63ff502b168849801ec542fe31304563',
+    }
+</script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=7c7a39e2e07d4245fa9c21dece87bf93&plugin=AMap.Geocoder"></script>
+
 <!-- <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/lib/tinymce-vue.min.js"></script> -->
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/skeleton.js" defer></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/articleItem.js" defer></script>

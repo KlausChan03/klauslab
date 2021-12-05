@@ -7,6 +7,7 @@ const index_module = new Vue({
 		return {
 			ifShowSingle: false,
 			ifMobileDevice: window.ifMobileDevice,
+      ifShowLocationPopup: false,
 			post_id: window.post_id,
 			posts: {
 				post_metas: {
@@ -71,6 +72,22 @@ const index_module = new Vue({
 		}
 	},
 	methods: {
+
+		showLocation (position) {
+      const positionArr = position.split(',')
+      this.ifShowLocationPopup = true
+      this.$nextTick(() => {
+				const map = new AMap.Map('location-container', {
+					resizeEnable: true,
+          zoom: 16,
+          center: positionArr,
+				})
+				const marker = new AMap.Marker();
+        map.add(marker);
+        marker.setPosition(positionArr);				
+			})
+    },
+		
 		getAllArticles() {
 			this.ifShowSingle = false
 			let params = {}

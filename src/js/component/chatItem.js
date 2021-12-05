@@ -13,6 +13,7 @@ Vue.component('chat-item', {
         </div>       
       </div>       
       <p ref="entrysummary" class="entry-summary" v-html="postData.content.rendered" :id="postData.id"> </p>
+      <p @click="showLocation(postData.post_metas.position)" v-if="postData.post_metas.address" class="fs-12 col-aaa cur-p"> <i class="el-icon-map-location mr-5" ></i> {{ postData.post_metas.address }} </p>
     </div>    
     <div class="entry-footer flex-hb-vc flex-hw">
       <div class="entry-action flex-hb-vc w-1">
@@ -37,11 +38,33 @@ Vue.component('chat-item', {
         </div>   
       </div>
     </div>
-
+    <el-dialog :visible.sync="ifShowLocationPopup" fullscreen show-close>
+      <div id="location-container" class="location-container"> </div>
+      <div class="location-info flex-hc-vc flex-v">           
+      </div>
+    </el-dialog>
   </div>
     `,
-
+  data() {
+    return {
+      ifShowLocationPopup: false,
+    }
+  },
   methods: {
+    showLocation (position) {
+      const positionArr = position.split(',')
+      this.ifShowLocationPopup = true
+      this.$nextTick(() => {
+				const map = new AMap.Map('location-container', {
+					resizeEnable: true,
+          zoom: 16,
+          center: positionArr,
+				})
+				const marker = new AMap.Marker();
+        map.add(marker);
+        marker.setPosition(positionArr);				
+			})
+    },
     showComment(id) {
       this.$emit('show-comment', id)
     },

@@ -43,6 +43,7 @@ get_header(); ?>
 					<div class="entry-extra flex-hr-vc p-10 ">
 						<span class="flex-hc-vc fs-12 secondary-color"><i class="el-icon-notebook-2 fs-14"></i>字数统计 {{posts.post_count.text_num}} 字</span>
 						<span class="flex-hc-vc ml-10 fs-12 secondary-color"><i class="el-icon-timer fs-14"></i>预计阅读时长 {{posts.post_count.read_time}} 分钟</span>
+						<span class="flex-hc-vc ml-10 fs-12 secondary-color cur-p" @click="showLocation(posts.post_metas.position)" v-if="posts.post_metas.address" > <i class="el-icon-map-location mr-5" ></i> {{ posts.post_metas.address }} </p>
 					</div>
 					<div class="entry-content" v-html="posts.content.rendered"> </div>
 				</div>
@@ -55,6 +56,11 @@ get_header(); ?>
 					</template>
 				</div>
 			</div>
+			<el-dialog :visible.sync="ifShowLocationPopup" fullscreen show-close>
+				<div id="location-container" class="location-container"> </div>
+				<div class="location-info flex-hc-vc flex-v">           
+				</div>
+			</el-dialog>
 		</article>
 		<aside class="comment-container mt-10">
 			<h3 class="tips-header"><i class="lalaksks lalaksks-pinglun fs-20 mr-10"></i>评论区</h3>
@@ -64,12 +70,17 @@ get_header(); ?>
 			<template v-else>
 				<kl-empty description="暂不开放"></kl-empty>
 			</template>
-
 		</aside>
 	</main>
 	<!-- #main -->
 </div>
 <!-- #primary -->
+<script type="text/javascript">
+    window._AMapSecurityConfig = {
+        securityJsCode:'63ff502b168849801ec542fe31304563',
+    }
+</script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=7c7a39e2e07d4245fa9c21dece87bf93&plugin=AMap.Geocoder"></script>
 
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/skeleton.js"></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/reward.js"></script>

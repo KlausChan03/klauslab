@@ -60,38 +60,16 @@ function wp_rest_insert_tag_links()
         'post_metas',
         array(
             'get_callback' => 'get_post_meta_for_api',
-            'update_callback' => function ($meta, $post) {
-                $postId = $post->ID;
-                foreach ($meta as $data) {
-                    update_post_meta($postId, $data['key'], $data['value']);
-                }
-                return true;
-            },
+            'update_callback' => 'update_post_meta_for_api',
             'schema' => null,
         )
     );
-
-    // register_rest_field('post', 'metadata', array(
-    //     // 显示数据时候的回调，我们可以在这个函数里面，把自定义字段数据附加到 Rest API 文章接口返回的 Json 数据里
-    //     'get_callback' => function ($object) {
-    //         return get_post_meta($object->ID); //自行修改需要返回的数据，此处是使用获取内容方法返回的内容
-    //     },
-    //     // 保存数据的回调，这里是保存postmeta信息的地方
-    //     'update_callback' => function ($meta, $post) {
-    //         $postId = $post->ID;
-    //         foreach ($meta as $data) {
-    //             update_post_meta($postId, $data['key'], $data['value']);
-    //         }
-    //         return true;
-    //     },
-    // ));
-
     register_rest_field(
         'moments',
         'post_metas',
         array(
             'get_callback' => 'get_post_meta_for_api',
-            'update_callback' => null,
+            'update_callback' => 'update_post_meta_for_api',
             'schema' => null,
         )
     );
@@ -193,7 +171,13 @@ function wp_rest_insert_tag_links()
     //     )
     // );
 }
-
+function update_post_meta_for_api ($meta, $post) {
+    $postId = $post->ID;
+    foreach ($meta as $data) {
+        update_post_meta($postId, $data['key'], $data['value']);
+    }
+    return true;
+}
 
 function get_post_meta_for_api($post)
 {
@@ -212,7 +196,6 @@ function get_post_meta_for_api($post)
     $post_meta['thumbnail'] = get_the_post_thumbnail($post['id'], 'Full');
     $tagList = get_the_tags($post['id']);
     $post_meta['tag_name'] = array_column($tagList, 'name');
-    $post_meta['tag_test'] = $tagList;
     $catList = get_the_category($post['id']);
     $post_meta['cat_name'] = array_column($catList, 'name');
     $post_meta['reward'] = get_post_meta($post['id'], 'reward', true);
@@ -375,6 +358,49 @@ function reproduced_shortcode($atts)
     }
 }
 add_shortcode('reproduced', 'reproduced_shortcode');
+
+
+
+function dw_rest_prepare_post( $data, $post, $request ) { 
+	$_data = $data->data; 
+	$params = $request->get_params(); 
+	if ( ! isset( $params['id'] ) ) { 
+		unset( $_data['featured_media'] );
+		unset( $_data['author'] ); 
+		unset( $_data['format'] ); 
+		unset( $_data['ping_status'] ); 
+		unset( $_data['template'] ); 
+		unset( $_data['meta'] ); 
+		unset( $_data['modified_gmt'] ); 
+		unset( $_data['date_gmt'] ); 
+		unset( $_data['guid'] );         
+		unset( $_data['_links'] ); 
+	} 
+	$data->data = $_data; 
+	return $data; 
+}
+ 
+add_filter( 'rest_prepare_post', 'dw_rest_prepare_post', 10, 3 );
+
+//Add custom field to REST API
+function filter_post_json( $data, $post, $context ) {
+    $address = get_post_meta( $post->ID, 'address', true );
+    $contact = get_post_meta( $post->ID, 'contact', true );
+    $rating = get_post_meta( $post->ID, 'rating', true );
+    $social_media = get_post_custom_values( 'social-media' );
+
+    $sm = [];
+    if($social_media):
+        foreach ( $social_media as $key => $value ) {
+        $sm[]  = $value;
+
+        }
+    endif;
+    $data->data['jmeta'][] = array( 'social-media' => $sm, 'address' => $address, 'contact' => $contact, 'rating' => $rating );
+    $data->data['address'] = $address;
+        return $data;
+}
+add_filter( 'rest_prepare_custom-post-type', 'filter_post_json', 10, 3 );
 
 function gitchat_git_shortcode($atts)
 {
