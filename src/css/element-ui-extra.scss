@@ -5,6 +5,12 @@ body{
             top: 70px;
             min-width: 310px!important;
         }
+        // TODO: 待验证
+        @-moz-document url-prefix() {
+            .el-menu.el-menu-horizontal{ 
+                overflow: hidden;
+            }
+        }
         .el-menu.el-menu-horizontal{
             max-width: 640px;
             overflow-x: auto;

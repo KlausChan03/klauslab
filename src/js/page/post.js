@@ -45,8 +45,13 @@ new Vue({
 				categories: [],
 				post_metas: {
 					reward: true,
+					location: false,
+					address: '',
+					position: '',
 				},
 			},
+			ifShowLocationPopup: false,
+			location: {},
 			pictureList: [],
 			tagList: [],
 			categoryList: [],
@@ -77,19 +82,19 @@ new Vue({
 				// toolbar:  ['bold italic underline strikethrough blockquote|forecolor backcolor|formatselect | fontsizeselect  | alignleft aligncenter alignright alignjustify | outdent indent |codeformat blockformats| removeformat undo redo bullist numlist toc pastetext | codesample charmap  hr insertdatetime | lists image media table link unlink | emoticons |code searchreplace fullscreen help ' ],
 				plugins:
 					'emoticons lists image media table wordcount code fullscreen help codesample toc insertdatetime  searchreplace  link charmap paste hr anchor textpattern',
-					textpattern_patterns: [
-						{start: '*', end: '*', format: 'italic'},
-						{start: '**', end: '**', format: 'bold'},
-						{start: '#', format: 'h1'},
-						{start: '##', format: 'h2'},
-						{start: '###', format: 'h3'},
-						{start: '####', format: 'h4'},
-						{start: '#####', format: 'h5'},
-						{start: '######', format: 'h6'},
-						{start: '1. ', cmd: 'InsertOrderedList'},
-						{start: '* ', cmd: 'InsertUnorderedList'},
-						{start: '- ', cmd: 'InsertUnorderedList'}
-				 ]
+				textpattern_patterns: [
+					{ start: '*', end: '*', format: 'italic' },
+					{ start: '**', end: '**', format: 'bold' },
+					{ start: '#', format: 'h1' },
+					{ start: '##', format: 'h2' },
+					{ start: '###', format: 'h3' },
+					{ start: '####', format: 'h4' },
+					{ start: '#####', format: 'h5' },
+					{ start: '######', format: 'h6' },
+					{ start: '1. ', cmd: 'InsertOrderedList' },
+					{ start: '* ', cmd: 'InsertUnorderedList' },
+					{ start: '- ', cmd: 'InsertUnorderedList' },
+				],
 			},
 		}
 	},
@@ -140,25 +145,29 @@ new Vue({
 		getTags() {
 			const params = {
 				page: 1,
-				per_page: 50
+				per_page: 50,
 			}
-			axios.get(`${window.site_url}/wp-json/wp/v2/tags`, {
-				params: params
-			}).then((res) => {
-				this.tagList = res.data
-			})
+			axios
+				.get(`${window.site_url}/wp-json/wp/v2/tags`, {
+					params: params,
+				})
+				.then((res) => {
+					this.tagList = res.data
+				})
 		},
 		getCategories() {
 			const params = {
 				page: 1,
-				per_page: 50
+				per_page: 50,
 			}
-			axios.get(`${window.site_url}/wp-json/wp/v2/categories`, {
-				params: params
-			}).then((res) => {
-				this.categoryListOrigin = res.data
-				this.categoryList = transData(res.data, 'id', 'parent', 'children')
-			})
+			axios
+				.get(`${window.site_url}/wp-json/wp/v2/categories`, {
+					params: params,
+				})
+				.then((res) => {
+					this.categoryListOrigin = res.data
+					this.categoryList = transData(res.data, 'id', 'parent', 'children')
+				})
 		},
 
 		getArticleContent() {
@@ -192,6 +201,87 @@ new Vue({
 				})
 		},
 
+		saveLocation () {
+			this.posts.post_metas.address = this.location.address
+			this.posts.post_metas.position = this.location.simplePosition
+			this.ifShowLocationPopup = false
+		},
+
+		doLocationChange () {
+			const self = this
+			this.ifShowLocationPopup = this.posts.post_metas.location
+			if(this.ifShowLocationPopup === false) {
+				return false
+			}
+			this.$nextTick(() => {
+				// this.posts.post_metas.location = !this.posts.post_metas.location
+				var map = new AMap.Map('location-container', {
+					resizeEnable: true,
+				})
+
+				var geocoder = new AMap.Geocoder({
+					radius: 1000 //范围，默认：500
+				});
+
+				AMap.plugin('AMap.Geolocation', function () {
+					var geolocation = new AMap.Geolocation({
+						enableHighAccuracy: true, //是否使用高精度定位，默认:true
+						timeout: 10000, //超过10秒后停止定位，默认：5s
+						buttonPosition: 'RB', //定位按钮的停靠位置
+						buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+						zoomToAccuracy: true, //定位成功后是否自动调整地图视野到定位点
+						extensions: 'all',
+					})
+					map.addControl(geolocation)
+					geolocation.getCurrentPosition(function (status, result) {
+						if (status == 'complete') {
+							onComplete(result)
+						} else {
+							onError(result)
+						}
+					})
+				})
+
+				map.on('click',function(e){
+					self.$set(self.location,'simplePosition',e.lnglat.lng + ',' + e.lnglat.lat)
+					debugger
+					regeoCode();
+				})
+
+				//解析定位结果
+				function onComplete(data) {			
+					self.location = data
+					self.$set(self.location,'simplePosition',data.position.lng + ',' + data.position.lat)
+					
+					console.log(JSON.stringify(data))
+				}
+				//解析定位错误信息
+				function onError(data) {
+					// document.getElementById('status').innerHTML = '定位失败'
+					// document.getElementById('result').innerHTML =
+					// 	'失败原因排查信息:' + data.message
+					self.$message.error(data.message)
+				}
+
+				function regeoCode() {        
+					const lnglat = self.location.simplePosition.split(',')
+					const marker = new AMap.Marker();
+					map.add(marker);
+        	marker.setPosition(lnglat);
+					geocoder.getAddress(lnglat, function(status, result) {
+            if (status === 'complete'&&result.regeocode) {
+                const address = result.regeocode.formattedAddress;
+								self.$set(self.location,'address', address)
+            }else{
+								self.$message.error( '根据经纬度查询地址失败' )
+            }
+        	});
+				}
+			
+
+			})
+		},
+
 		doTagsChange(value) {
 			const { tagList } = this
 			value.forEach((element) => {
@@ -199,8 +289,8 @@ new Vue({
 					return item.id === element
 				}).length
 				if (tagListLen === 0) {
-          const params = new FormData;
-          params.append('name', element);
+					const params = new FormData()
+					params.append('name', element)
 					axios
 						.post(`${window.site_url}/wp-json/wp/v2/tags`, params, {
 							headers: {
@@ -209,15 +299,15 @@ new Vue({
 						})
 						.then((res) => {
 							if (res.data) {
-                const data = res.data
-                const len = this.posts.tags.length
-                this.posts.tags[len - 1] = data.id
-                this.$set(tagList, tagList.length ,data)
-                this.$forceUpdate()
-                this.$notify.success({
-                  message: '新增标签(Tag)成功',
-                  showClose: false
-                })
+								const data = res.data
+								const len = this.posts.tags.length
+								this.posts.tags[len - 1] = data.id
+								this.$set(tagList, tagList.length, data)
+								this.$forceUpdate()
+								this.$notify.success({
+									message: '新增标签(Tag)成功',
+									showClose: false,
+								})
 							}
 						})
 				}
@@ -231,7 +321,6 @@ new Vue({
 				: this.toolbar_default
 			this.init()
 		},
-
 
 		handleExceed(files, fileList) {
 			this.$message.warning(
@@ -326,11 +415,7 @@ new Vue({
 				this.hasCommitFinish = false
 				return false
 			}
-			// if() {
-			//     this.tagList
-			// }
-			console.log(this.tagList, this.posts.tags)
-			debugger
+
 			axios
 				.post(
 					`${window.site_url}/wp-json/wp/v2/${format}${
@@ -346,7 +431,7 @@ new Vue({
 				.then((res) => {
 					if (res.data) {
 						this.$message({
-							message: '发布成功',
+							message: type === 'update' ? '更新成功' : '发布成功',
 							type: 'success',
 						})
 						setTimeout(() => {
