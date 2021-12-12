@@ -11,7 +11,11 @@ get_header(); ?>
 <link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/catalog.css">
 
 <script>
-	window.post_id = <?php echo get_the_ID(); ?>;
+	window.post_id = '<?php echo get_the_ID(); ?>' || ''
+	window.post_type = '<?php echo get_post_type( $post ); ?>' || ''
+	if (window.post_type === 'post') {
+		window.post_type = 'posts'
+	}
 </script>
 
 <div id="primary" class="main-area">
@@ -45,8 +49,8 @@ get_header(); ?>
 				<div class="entry-main">
 					<div class="entry-extra flex-hb-vc p-10 ">
 						<div class="entry-extra-left flex-hc-vl flex-v">
-							<span class="flex-hc-vc fs-12 secondary-color"><i class="el-icon-notebook-2 fs-14"></i>字数统计 {{posts.post_count.text_num}} 字</span>
-							<span class="flex-hc-vc fs-12 secondary-color mt-5"><i class="el-icon-timer fs-14"></i>预计阅读时长 {{posts.post_count.read_time}} 分钟</span>
+							<span class="flex-hc-vc fs-12 secondary-color" v-if="posts?.post_count?.text_num"><i class="el-icon-notebook-2 fs-14"></i>字数统计 {{posts?.post_count?.text_num}} 字</span>
+							<span class="flex-hc-vc fs-12 secondary-color mt-5" v-if="posts?.post_count?.read_time"><i class="el-icon-timer fs-14"></i>预计阅读时长 {{posts?.post_count?.read_time}} 分钟</span>
 							<span class="flex-hc-vc fs-12 secondary-color cur-p mt-5" @click="showLocation(posts.post_metas.position)" v-if="posts.post_metas.address" > <i class="el-icon-map-location mr-5" ></i> {{ posts.post_metas.address }} </p>
 						</div>
 						<div class="entry-extra-right flex-hr-vc">
@@ -63,10 +67,10 @@ get_header(); ?>
 				</div>
 				<div class="entry-footer flex-hc-vc">
 					<template v-if="posts.post_metas.reward === '0' ? false : true">
-						<kl-reward></kl-reward>
+						<kl-reward title="打赏"></kl-reward>
 					</template>
 					<template v-if="true">
-						<el-button circle @click="updatePost()"><i class="el-icon-toilet-paper fs-20"></i></el-button>
+						<el-button circle @click="updatePost()"><i class="el-icon-toilet-paper fs-20" title="更新"></i></el-button>
 					</template>
 				</div>
 			</div>

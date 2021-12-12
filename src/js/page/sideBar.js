@@ -35,7 +35,6 @@ let secondaryPart = new Vue({
 						selector: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'strong'],
 						cool: true,
 					})
-					debugger
 					this.$nextTick(() => {
 						const catalogContent = document.querySelector('#catalog-content')
 						if (!catalogContent.clientHeight) {
