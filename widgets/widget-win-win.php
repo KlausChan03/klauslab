@@ -18,7 +18,7 @@ class red_envelope_widget extends WP_Widget
     echo '<h1 class="widget-title">福利</h1>';
     $red_envelope_code_id = cs_get_option('red_envelope_code_image');
     $red_envelope_code_image = wp_get_attachment_image_src($red_envelope_code_id, 'full');
-    echo ('<div class="flex-v flex-hl-vc pt-10"><img src="' . $red_envelope_code_image[0] . '"><p class="mt-5">打开支付宝，扫码领红包。</p><p>赠人玫瑰，手留余香。</p></div>');
+    echo ('<div class="flex-v flex-hl-vc pt-10"><img src="' . $red_envelope_code_image[0] . '"  style="height: 240px; width: 165px;"><p class="mt-5">打开支付宝，扫码领红包。</p><p>赠人玫瑰，手留余香。</p></div>');
     echo $args['after_widget'];
   }
 }

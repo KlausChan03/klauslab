@@ -4,7 +4,7 @@ let filterMixin = {
             return dayjs(value).fromNow()
         },
         formateDateMain: (value) => {
-            return dayjs(value).format('llll')
+            return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
         }
     }
 }

@@ -61,7 +61,7 @@ function create_moments() {
 		'add_new_item' 			=> '新建一个说说', 
 		'edit_item' 			=> '编辑说说', 
 		'new_item' 				=> '新说说', 
-        'all_items'          	=> ( '所有说说' ),
+		'all_items'          	=> ( '所有说说' ),
 		'view_item' 			=> '查看说说', 
 		'search_items' 			=> '搜索说说', 
 		'not_found' 			=> '没有找到有关说说', 
@@ -71,7 +71,7 @@ function create_moments() {
 	); 
 	$args = array( 
 		'labels' => $labels, 
-        'description'   => '写条说说',
+		'description'   => '写条说说',
 		'public' => true, 
 		'publicly_queryable' => true, 
 		'show_ui' => true, 
@@ -82,6 +82,7 @@ function create_moments() {
 		'capability_type' => 'post', 
 		'has_archive' => true, 
 		'hierarchical' => false, 
+		'feed'=> true,
 		'menu_position' => null, 
 		'taxonomies'=>array('moments'),
 		'supports' => array('title','editor','author','comments','custom-fields', 'thumbnail') 

@@ -14,10 +14,10 @@
 <footer id="footer" class="site-footer flex-hc-vc" role="contentinfo" v-block>
   <div class="site-info">
     <p class="flex-hc-vc flex-hw"><span>Theme KlausLab designed by Klaus &amp; Laura</span><span v-if="!window.ifMobileDevice" class="m-lr-5">|</span><span>All Rights Reserved</span></p>
-    <p>版权所有 © {{window.start_full_year}}-{{window.now_full_year}}</span>
+    <p>版权所有 © {{window.start_full_year  || 'xxxx' }}-{{window.now_full_year  || 'xxxx'}}</span>
       <!-- <a href="http://www.miitbeian.gov.cn/" rel="nofollow noopener noreferrer" target="_blank"> 粤 ICP 备17095567号</a> -->
       <a href="http://beian.miit.gov.cn" rel="nofollow" target="_blank">
-        {{window.icp_num}} 号
+        {{window.icp_num || 'xxxxxx'}} 号
       </a>
     </p>
   </div>
