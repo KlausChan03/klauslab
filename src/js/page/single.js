@@ -9,7 +9,6 @@ const index_module = new Vue({
 			ifShowSingle: false,
 			ifMobileDevice: window.ifMobileDevice,
       ifShowLocationPopup: false,
-			post_id: window.post_id,
 			posts: {
 				post_metas: {
 					zan_num: 0,
@@ -91,11 +90,9 @@ const index_module = new Vue({
 		
 		getAllArticles() {
 			this.ifShowSingle = false
-			let params = {}
+			const type = ''
 			return axios
-				.get(`${window.site_url}/wp-json/wp/v2/posts/${this.post_id}`, {
-					params: params,
-				})
+				.get(`${window.site_url}/wp-json/wp/v2/${window.post_type}/${window.post_id}`)
 				.then((res) => {
 					this.$nextTick(() => {
 						this.ifShowSingle = true
@@ -114,8 +111,8 @@ const index_module = new Vue({
 
 		updatePost() {
 			this.goToPage('page-post-simple', true, {
-				type: 'modified',
-				id: this.post_id,
+				type: window.post_type,
+				id: window.post_id,
 			})
 		},
 

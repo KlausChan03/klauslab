@@ -5,7 +5,7 @@ Vue.component('chat-item', {
   <div>  
     <div class="entry-main" >
       <div class="flex-hb-vc flex-hw mb-10">
-        <h5 v-if="postData.title.rendered" :href="postData.link">#{{postData.title.rendered}}#</h5>
+        <h5 class="entry-title" v-if="postData.title.rendered" ><a :href="postData.link">#{{postData.title.rendered}}#</a></h5>
         <div  class="entry-tag" :class="{'w-1': !postData.title.rendered, 'flex-hr-vc': !postData.title.rendered}">
           <el-tag class="ml-10" size="small" type="danger" v-if="postData.sticky">TOP</el-tag>
           <el-tag class="ml-10" size="small" type="danger" v-if="postData.newest">NEW</el-tag>

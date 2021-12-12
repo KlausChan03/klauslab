@@ -6,21 +6,26 @@ new Vue({
 	computed: {
 		tagNameList() {
 			let tagNameList = []
-			for (let i = 0; i < this.tagList.length; i++) {
-				for (let j = 0; j < this.posts.tags.length; j++) {
-					if (this.posts.tags[j] === this.tagList[i].id) {
-						tagNameList.push(this.tagList[i].name)
+			if(Array.isArray(this.posts.tags) && this.posts.tags.length > 0) {
+				for (let i = 0; i < this.tagList.length; i++) {
+					for (let j = 0; j < this.posts.tags.length; j++) {
+						if (this.posts.tags[j] === this.tagList[i].id) {
+							tagNameList.push(this.tagList[i].name)
+						}
 					}
 				}
 			}
+
 			return tagNameList
 		},
 		categoryNameList() {
 			let categoryNameList = []
-			for (let i = 0; i < this.categoryListOrigin.length; i++) {
-				for (let j = 0; j < this.posts.categories.length; j++) {
-					if (this.posts.categories[j] === this.categoryListOrigin[i].id) {
-						categoryNameList.push(this.categoryListOrigin[i].name)
+			if(Array.isArray(this.posts.categories) && this.posts.categories.length > 0) {
+				for (let i = 0; i < this.categoryListOrigin.length; i++) {
+					for (let j = 0; j < this.posts.categories.length; j++) {
+						if (this.posts.categories[j] === this.categoryListOrigin[i].id) {
+							categoryNameList.push(this.categoryListOrigin[i].name)
+						}
 					}
 				}
 			}
@@ -35,6 +40,7 @@ new Vue({
 			editorLoading: false,
 			status: true,
 			type: 'create',
+			post_type: '',
 			format: true,
 			posts: {
 				type: 'moments',
@@ -102,6 +108,7 @@ new Vue({
 		let urlParams = this.urlToObj(window.location.href)
 		if (urlParams.id) {
 			this.post_id = urlParams.id
+			this.post_type = urlParams.type
 			this.getArticleContent()
 			this.type = 'update'
 		}
@@ -173,9 +180,12 @@ new Vue({
 		getArticleContent() {
 			let params = {}
 			return axios
-				.get(`${window.site_url}/wp-json/wp/v2/posts/${this.post_id}`, {
-					params: params,
-				})
+				.get(
+					`${window.site_url}/wp-json/wp/v2/${this.post_type}/${this.post_id}`,
+					{
+						params: params,
+					}
+				)
 				.then((res) => {
 					this.$nextTick(() => {
 						let posts = JSON.parse(JSON.stringify(res.data))
@@ -190,27 +200,33 @@ new Vue({
 							}
 						}
 						posts.type = posts.type.indexOf('moment') > -1 ? 'moments' : 'posts'
-						this.format = !!(this.posts.type === 'moments' ? false : true)
+						this.format = !!(posts.type === 'moments' ? true : false)
 						this.changePostType()
 						this.posts = posts
-						this.posts.categories = posts.categories
-						this.$refs.categoryTree.setCheckedKeys(this.posts.categories)
-						this.posts.tags = posts.tags
-						window.tinymce.get('editor').setContent(this.posts.content)
+						if (posts.categories) {
+							this.posts.categories = posts.categories || []
+							this.$refs.categoryTree.setCheckedKeys(this.posts.categories)
+						}
+						if (posts.tags) {
+							this.posts.tags = posts.tags || []
+						}
+						this.$nextTick(() => {
+							window.tinymce.get('editor').setContent(this.posts.content)
+						})
 					})
 				})
 		},
 
-		saveLocation () {
+		saveLocation() {
 			this.posts.post_metas.address = this.location.address
 			this.posts.post_metas.position = this.location.simplePosition
 			this.ifShowLocationPopup = false
 		},
 
-		doLocationChange () {
+		doLocationChange() {
 			const self = this
 			this.ifShowLocationPopup = this.posts.post_metas.location
-			if(this.ifShowLocationPopup === false) {
+			if (this.ifShowLocationPopup === false) {
 				return false
 			}
 			this.$nextTick(() => {
@@ -219,11 +235,10 @@ new Vue({
 				})
 
 				const geocoder = new AMap.Geocoder({
-					radius: 1000 //范围，默认：500
-				});
+					radius: 1000, //范围，默认：500
+				})
 
-				const marker = new AMap.Marker();
-
+				const marker = new AMap.Marker()
 
 				AMap.plugin('AMap.Geolocation', function () {
 					const geolocation = new AMap.Geolocation({
@@ -244,23 +259,31 @@ new Vue({
 					})
 				})
 
-				map.on('click',function(e){
-					self.$set(self.location,'simplePosition',e.lnglat.lng + ',' + e.lnglat.lat)
-					regeoCode();
+				map.on('click', function (e) {
+					self.$set(
+						self.location,
+						'simplePosition',
+						e.lnglat.lng + ',' + e.lnglat.lat
+					)
+					regeoCode()
 				})
 
-				document.getElementById('lnglat').onkeydown = function(e) {
+				document.getElementById('lnglat').onkeydown = function (e) {
 					if (e.keyCode === 13) {
-							regeoCode();
-							return false;
+						regeoCode()
+						return false
 					}
-					return true;
-				};
+					return true
+				}
 
 				//解析定位结果
-				function onComplete(data) {			
+				function onComplete(data) {
 					self.location = data
-					self.$set(self.location,'simplePosition',data.position.lng + ',' + data.position.lat)
+					self.$set(
+						self.location,
+						'simplePosition',
+						data.position.lng + ',' + data.position.lat
+					)
 					regeoCode()
 				}
 
@@ -269,20 +292,19 @@ new Vue({
 					self.$message.error(data.message)
 				}
 
-				function regeoCode() {        
+				function regeoCode() {
 					const lnglat = self.location.simplePosition.split(',')
-					map.add(marker);
-        	marker.setPosition(lnglat);
-					geocoder.getAddress(lnglat, function(status, result) {
-            if (status === 'complete'&&result.regeocode) {
-                const address = result.regeocode.formattedAddress;
-								self.$set(self.location,'address', address)
-            }else{
-								self.$message.error( '根据经纬度查询地址失败' )
-            }
-        	});
+					map.add(marker)
+					marker.setPosition(lnglat)
+					geocoder.getAddress(lnglat, function (status, result) {
+						if (status === 'complete' && result.regeocode) {
+							const address = result.regeocode.formattedAddress
+							self.$set(self.location, 'address', address)
+						} else {
+							self.$message.error('根据经纬度查询地址失败')
+						}
+					})
 				}
-				
 			})
 		},
 
@@ -396,12 +418,11 @@ new Vue({
 			const extra = this.posts.post_metas
 			for (const key in extra) {
 				if (Object.hasOwnProperty.call(extra, key)) {
-					const element = extra[key];
+					const element = extra[key]
 					params.post_metas.push({
-						'key': key,
-						'value': element
+						key: key,
+						value: element,
 					})
-					
 				}
 			}
 			const format = this.posts.type
