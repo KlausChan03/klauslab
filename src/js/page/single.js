@@ -3,6 +3,7 @@ dayjs.extend(window.dayjs_plugin_relativeTime)
 
 const index_module = new Vue({
 	el: '.main-content',
+	mixins: [filterMixin],
 	data() {
 		return {
 			ifShowSingle: false,

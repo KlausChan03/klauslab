@@ -359,20 +359,6 @@ const index_module = new Vue({
 				self.getListByType(self.postType)
 			}
 			getList()
-
-			// let showNotify = () => {
-			//         this.$notify({
-			//             message: '切换成功',
-			//             duration: 3000,
-			//             type: 'success',
-			//             showClose: false,
-			//             // offset: 70
-			//         });
-			//     }
-			//     (async () => {
-			//         await getList();
-			//         await showNotify();
-			//     })();
 		},
 
 		resizeHandler() {
@@ -385,7 +371,7 @@ const index_module = new Vue({
 			for (let index = 0; index < imgList.length; index++) {
 				const element = imgList[index]
 				element &&
-					element.addEventListener('click', function () {
+					element.addEventListener('click', function (event) {
 						event.preventDefault()
 						self.imageUrls = []
 						let url = element.getAttribute('src')

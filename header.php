@@ -30,7 +30,7 @@
 	<?php wp_head(); ?>
 	<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/empty.js"></script>
 	<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/search.js"></script>
-	<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/mixin/filterMixin.js" defer></script>
+	<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/mixin/filterMixin.js"></script>
 </head>
 
 <body <?php body_class(); ?>>
@@ -38,6 +38,7 @@
 	<script>
 		// 全局参数
 		window.isLogin = "<?php echo is_user_logged_in(); ?>";
+		window.isSingle = "<?php echo is_single(); ?>";
 		window.the_custom_logo = `<?php echo the_custom_logo(); ?>`;
 		window.the_avatar = `<?php echo get_avatar($current_user->user_email, 38); ?>`;
 		window.the_bloginfo_name = `<?php echo get_bloginfo('name'); ?>`;
