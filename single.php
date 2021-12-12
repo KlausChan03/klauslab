@@ -8,6 +8,7 @@
 
 get_header(); ?>
 <link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/single.css">
+<link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/catalog.css">
 
 <script>
 	window.post_id = <?php echo get_the_ID(); ?>;
@@ -16,6 +17,8 @@ get_header(); ?>
 <div id="primary" class="main-area">
 	<main id="main" class="main-content" role="main" v-block>
 		<kl-skeleton v-if="!ifShowSingle" class="article-skeleton" type="single"></kl-skeleton>
+		<div id="catalog-content-wrapper"></div>
+		
 		<article class="article-container">
 			<div class="article-panel flex-v flex-hc-vc">
 				<div class="article-panel-item" @click="goAnchor('#comments')">
@@ -40,12 +43,23 @@ get_header(); ?>
 					<div id="banner-bg" class="featured-header-image bgc-primary" v-html="posts.post_metas.thumbnail"> </div>
 				</div>
 				<div class="entry-main">
-					<div class="entry-extra flex-hr-vc p-10 ">
-						<span class="flex-hc-vc fs-12 secondary-color"><i class="el-icon-notebook-2 fs-14"></i>字数统计 {{posts.post_count.text_num}} 字</span>
-						<span class="flex-hc-vc ml-10 fs-12 secondary-color"><i class="el-icon-timer fs-14"></i>预计阅读时长 {{posts.post_count.read_time}} 分钟</span>
-						<span class="flex-hc-vc ml-10 fs-12 secondary-color cur-p" @click="showLocation(posts.post_metas.position)" v-if="posts.post_metas.address" > <i class="el-icon-map-location mr-5" ></i> {{ posts.post_metas.address }} </p>
+					<div class="entry-extra flex-hb-vc p-10 ">
+						<div class="entry-extra-left flex-hc-vl flex-v">
+							<span class="flex-hc-vc fs-12 secondary-color"><i class="el-icon-notebook-2 fs-14"></i>字数统计 {{posts.post_count.text_num}} 字</span>
+							<span class="flex-hc-vc fs-12 secondary-color mt-5"><i class="el-icon-timer fs-14"></i>预计阅读时长 {{posts.post_count.read_time}} 分钟</span>
+							<span class="flex-hc-vc fs-12 secondary-color cur-p mt-5" @click="showLocation(posts.post_metas.position)" v-if="posts.post_metas.address" > <i class="el-icon-map-location mr-5" ></i> {{ posts.post_metas.address }} </p>
+						</div>
+						<div class="entry-extra-right flex-hr-vc">
+							<div class="flex-v flex-hc-vt">
+								<span class="fs-12">{{posts.post_metas.author}}</span>
+								<el-tooltip class="item" effect="dark" :content="posts.date | formateDateMain" placement="bottom">
+									<span class="fs-12" >{{posts.date | formateDate}}</span>
+								</el-tooltip>
+							</div>
+							<div v-html="posts.post_metas.avatar" class="ml-10"></div>
+						</div>						
 					</div>
-					<div class="entry-content" v-html="posts.content.rendered"> </div>
+					<div id="entry-content" class="entry-content" v-html="posts.content.rendered"> </div>
 				</div>
 				<div class="entry-footer flex-hc-vc">
 					<template v-if="posts.post_metas.reward === '0' ? false : true">
@@ -74,6 +88,7 @@ get_header(); ?>
 	</main>
 	<!-- #main -->
 </div>
+
 <!-- #primary -->
 <script type="text/javascript">
     window._AMapSecurityConfig = {
@@ -84,10 +99,15 @@ get_header(); ?>
 
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/skeleton.js"></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/reward.js"></script>
-
-<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/single.js"></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/plugin/catalog.js" type="module"></script>
+<!-- <script type="module">
+	import { Catalog } from "./src/js/plugin/catelog.js";
+</script> -->
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickCommentItem.js" defer></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickComment.js" defer></script>
+
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/single.js"></script>
+
 <?php setPostViews(get_the_ID()); ?>
 
 <?php get_sidebar(); ?>
