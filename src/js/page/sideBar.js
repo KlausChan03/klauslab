@@ -42,7 +42,7 @@ let secondaryPart = new Vue({
 							cataLogContainer.style.display = 'none'
 						}
 					})
-				}, 1000)
+				}, 3000)
 			})
 		},
 		showTimerFunc() {
