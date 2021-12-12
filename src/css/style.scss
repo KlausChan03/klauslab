@@ -19,6 +19,7 @@ Text Domain: KlausLab
 			format('woff'),
 		url('//at.alicdn.com/t/font_765116_mly7aa439a.ttf?t=1626245433174')
 			format('truetype');
+	font-display: 'auto';
 }
 // @font-face {
 //   font-family: 'lalaksks21';  /* project id 1616851 */
@@ -138,10 +139,9 @@ footer.site-footer {
 
 header.site-header {
 	z-index: 13;
-	position: fixed !important;
 	transition-property: all;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-	transition-duration: 0.15s;
+	transition-duration: 0.3s;
 	margin: 0 auto;
 	left: 50%;
 	transform: translate(-50%);
@@ -667,7 +667,9 @@ img {
 .site {
 	height: 100vh;
 	overflow-y: scroll;
+}
 
+.site, .widget_catalog{
 	&::-webkit-scrollbar {
 		width: 8px;
 		height: 10px;
@@ -2931,7 +2933,6 @@ body {
 	border: none;
 	min-height: calc(100vh - 60px - 80px);
 	padding: 10px;
-	padding-top: 75px;
 }
 
 
@@ -2964,6 +2965,7 @@ body {
 	padding: 10px 1em;
 	background-color: rgba(0, 0, 0, 0.4);
 	border-radius: 4px;
+	max-width: 90%;
 }
 
 /*  Widgets */
@@ -3122,6 +3124,11 @@ body {
 		img {
 			width: 80%
 		}
+	}
+
+	.widget_catalog{
+    max-height: calc(100vh - 90px);
+    overflow-y: auto;
 	}
 
 	.widget-content {
@@ -4926,9 +4933,6 @@ div[itemprop='description'] {
 }
 
 @media screen and (min-width: 1000px) {
-	.widget-content{
-		margin-left: 15px;
-	}
 	.site-header {
 		background: 0 0;
 	}

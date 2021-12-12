@@ -31,6 +31,7 @@ let headerPart = new Vue({
 			)
 		}
 		window.addEventListener('resize', this.resizeHandler)
+		window.isSingle && document.querySelector("#page").addEventListener('scroll', this.scrollHandler)
 	},
 	destroyed() {
 		window.onresize = null
@@ -118,6 +119,46 @@ let headerPart = new Vue({
 		},
 		resizeHandler() {
 			this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
+		},
+		scrollHandler() {
+			const $content = $('#content'),
+				$page = $('#page'),
+				$window = $(window),
+				$catalog = $('#catalog-widget')
+			if ($window.width() > 1000 && $content.height() > 2000) {
+				if ($page.scrollTop() >= $catalog.offset().top) {
+					$('.widget-area .widget-content').addClass('is-fixed')
+					$('.widget-area .widget-content').width($('.widget-area').width())
+					$('.widget-content .widget')
+						.not(':last')
+						.addClass('f_o_r ds-none h-0')
+						.removeClass('ds-block')
+					$('.widget-content .widget:last').css('margin-top', '60px')
+				} else if (
+					$page.scrollTop() >= 0 &&
+					$page.scrollTop() < $catalog.offset().top
+				) {
+					$('.widget-area .widget-content').removeClass('is-fixed')
+					$('.widget-content .widget')
+						.not(':last')
+						.removeClass('f_o_r ds-none h-0')
+						.addClass('ds-block')
+					$('.widget-content .widget:last').css('margin-top', '0')
+				}
+			} else {
+				$('.widget-area .widget-content').removeClass('is-fixed animated')
+			}
+
+			const scrollY = window.pageYOffset || $page.scrollTop()
+			const header = document.querySelector('header')
+
+			scrollY <= window.lastScroll
+				? (header.style.top = '0')
+				: (header.style.top = '-60px')
+			scrollY > 60
+				? (header.style.position = 'fixed')
+				: (header.style.position = 'relative')
+			window.lastScroll = scrollY
 		},
 	},
 })

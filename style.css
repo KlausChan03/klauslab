@@ -129,6 +129,7 @@ Text Domain: KlausLab
   font-family: 'lalaksks';
   /* Project id 765116 */
   src: url("//at.alicdn.com/t/font_765116_mly7aa439a.woff2?t=1626245433174") format("woff2"), url("//at.alicdn.com/t/font_765116_mly7aa439a.woff?t=1626245433174") format("woff"), url("//at.alicdn.com/t/font_765116_mly7aa439a.ttf?t=1626245433174") format("truetype");
+  font-display: 'auto';
 }
 
 :root {
@@ -233,10 +234,9 @@ footer.site-footer {
 
 header.site-header {
   z-index: 13;
-  position: fixed !important;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 0.15s;
+  transition-duration: 0.3s;
   margin: 0 auto;
   left: 50%;
   transform: translate(-50%);
@@ -712,18 +712,18 @@ img {
   overflow-y: scroll;
 }
 
-.site::-webkit-scrollbar {
+.site::-webkit-scrollbar, .widget_catalog::-webkit-scrollbar {
   width: 8px;
   height: 10px;
 }
 
-.site::-webkit-scrollbar-thumb {
+.site::-webkit-scrollbar-thumb, .widget_catalog::-webkit-scrollbar-thumb {
   background: var(--secondaryText);
   border-radius: 3px;
   border: 0;
 }
 
-.site::-webkit-scrollbar-track-piece {
+.site::-webkit-scrollbar-track-piece, .widget_catalog::-webkit-scrollbar-track-piece {
   background-color: #e7eaf1;
   border-radius: 3px;
 }
@@ -2796,7 +2796,6 @@ body {
   border: none;
   min-height: calc(100vh - 60px - 80px);
   padding: 10px;
-  padding-top: 75px;
 }
 
 /* 标准页面 */
@@ -2828,6 +2827,7 @@ body {
   padding: 10px 1em;
   background-color: rgba(0, 0, 0, 0.4);
   border-radius: 4px;
+  max-width: 90%;
 }
 
 /*  Widgets */
@@ -2980,6 +2980,11 @@ body {
 
 .widget-area .red_envelope_widget img {
   width: 80%;
+}
+
+.widget-area .widget_catalog {
+  max-height: calc(100vh - 90px);
+  overflow-y: auto;
 }
 
 .widget-area .widget-content {
@@ -4602,9 +4607,6 @@ div[itemprop='description'] {
 }
 
 @media screen and (min-width: 1000px) {
-  .widget-content {
-    margin-left: 15px;
-  }
   .site-header {
     background: 0 0;
   }

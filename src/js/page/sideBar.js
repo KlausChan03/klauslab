@@ -9,45 +9,81 @@ let secondaryPart = new Vue({
 		this.ifShowSidebar = false
 	},
 	mounted: function () {
-		let blog_create_time,
-			our_love_time,
-			photo_container = document.querySelector('.photo-container')
-		if (photo_container) {
-			let self = this
-			let params = new FormData()
-			params.append('action', 'love_time')
-			axios
-				.post(`${window.site_url}/wp-admin/admin-ajax.php`, params)
-				.then((res) => {
-					blog_create_time = res.data[0].user_registered // 博客建立时间（根据第一个用户诞生时间）
-					our_love_time = `2015-05-23 20:00:00` // 恋爱时间
-					if (photo_container) {
-						photo_container.innerHTML = ` <span class="m-lr-10">${res.data[1].img}</span> <i class="lalaksks lalaksks-ic-heart-2 throb"></i> <span class="m-lr-10">${res.data[2].img}</span> `
-					}
-					if (document.getElementById('createtime')) {
-						self.kl_count(blog_create_time, '#createtime', '它已经运作了')
-						window.showCreateTime = setInterval(() => {
-							self.kl_count(blog_create_time, '#createtime', '它已经运作了')
-						}, 1000)
-					}
-					if (document.getElementById('lovetime')) {
-						self.kl_count(our_love_time, '#lovetime', '他与她相恋了')
-						window.showLoveTime = setInterval(() => {
-							self.kl_count(our_love_time, '#lovetime', '他与她相恋了')
-						}, 1000)
-					}
-					this.$nextTick(() => {
-						this.ifShowSidebar = true
-					})
-				})
-		}
+		this.showTimerFunc()
+		window.isSingle && this.getCataLogFunc()
 	},
 	beforeDestroy() {
 		window.clearInterval(showCreateTime)
 		window.clearInterval(showLoveTime)
 	},
 	methods: {
-		kl_count(_time, _dom, _content) {
+		getCataLogFunc() {
+			this.$nextTick(() => {
+				const widgetDom = document.querySelectorAll('.widget-content')[0]
+				const cataLogContainer = document.createElement('aside')
+				let cataLogDom = document.createElement('div')
+				cataLogContainer.appendChild(cataLogDom)
+				const len = widgetDom.childNodes.length
+				widgetDom.insertBefore(cataLogContainer, widgetDom.childNodes[len])
+				cataLogContainer.setAttribute('id', 'catalog-widget')
+				cataLogContainer.setAttribute('class', 'widget widget_catalog')
+				cataLogDom.setAttribute('id', 'catalog-content')
+				setTimeout(() => {
+					new Catalog({
+						contentEl: 'entry-content',
+						catalogEl: 'catalog-content',
+						selector: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'strong'],
+						cool: true,
+					})
+					debugger
+					this.$nextTick(() => {
+						const catalogContent = document.querySelector('#catalog-content')
+						if (!catalogContent.clientHeight) {
+							cataLogContainer.style.display = 'none'
+						}
+					})
+				}, 1000)
+			})
+		},
+		showTimerFunc() {
+			let blog_create_time,
+				our_love_time,
+				photo_container = document.querySelector('.photo-container')
+			if (photo_container) {
+				let self = this
+				let params = new FormData()
+				params.append('action', 'love_time')
+				axios
+					.post(`${window.site_url}/wp-admin/admin-ajax.php`, params)
+					.then((res) => {
+						blog_create_time = res.data[0].user_registered // 博客建立时间（根据第一个用户诞生时间）
+						our_love_time = `2015-05-23 20:00:00` // 恋爱时间
+						if (photo_container) {
+							photo_container.innerHTML = ` <span class="m-lr-10">${res.data[1].img}</span> <i class="lalaksks lalaksks-ic-heart-2 throb"></i> <span class="m-lr-10">${res.data[2].img}</span> `
+						}
+						if (document.getElementById('createtime')) {
+							self.getTimerFunc(blog_create_time, '#createtime', '它已经运作了')
+							window.showCreateTime = setInterval(() => {
+								self.getTimerFunc(
+									blog_create_time,
+									'#createtime',
+									'它已经运作了'
+								)
+							}, 1000)
+						}
+						if (document.getElementById('lovetime')) {
+							self.getTimerFunc(our_love_time, '#lovetime', '他与她相恋了')
+							window.showLoveTime = setInterval(() => {
+								self.getTimerFunc(our_love_time, '#lovetime', '他与她相恋了')
+							}, 1000)
+						}
+						this.$nextTick(() => {
+							this.ifShowSidebar = true
+						})
+					})
+			}
+		},
+		getTimerFunc(_time, _dom, _content) {
 			if (_time) {
 				_time = _time.replace(/-/g, '/')
 				// 计算出相差毫秒
