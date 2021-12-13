@@ -1,23 +1,4 @@
-Date.prototype.Format = function (fmt) {
-    var o = {
-        "M+": this.getMonth() + 1, // 月份
-        "d+": this.getDate(), // 日
-        "h+": this.getHours(), // 小时
-        "m+": this.getMinutes(), // 分
-        "s+": this.getSeconds(), // 秒
-        "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
-        "S": this.getMilliseconds()
-        // 毫秒
-    };
-    if (/(y+)/.test(fmt))
-        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "")
-            .substr(4 - RegExp.$1.length));
-    for (var k in o)
-        if (new RegExp("(" + k + ")").test(fmt))
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) :
-                (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
-}
+
 
 let fixedPlugins = new Vue({
     el: "#fixed-plugins",
@@ -79,9 +60,9 @@ let fixedPlugins = new Vue({
         init() {
             let myDate = new Date();
             let mymonth = myDate.getMonth() + 1;
-            let today = myDate.Format('MM-dd');
-            let todayWithYear = myDate.Format('yyyy-MM-dd')
-            let MourningDate = ['04-04', '05-12'];
+            let today = dayjs(myDate).format('MM-DD');
+            let todayWithYear = dayjs(myDate).format('YYYY-MM-DD')
+            let MourningDate = ['04-04', '05-12', '12-13'];
             let ChristmasDate = ['12-24', '12-25'];
             let NewYearDate = ['2021-01-01']
             let _html = document.querySelectorAll('html')[0];
