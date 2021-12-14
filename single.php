@@ -13,7 +13,8 @@ get_header(); ?>
 	window.post_id = <?php echo get_the_ID(); ?>;
 </script>
 
-<div id="primary" class="main-area">
+<div id="primary" class="main-area <?php $is_show_sidebar = boolval(cs_get_option('klausLab_sideBar_switcher'));
+                                    echo ($is_show_sidebar == 1 ? '' : 'w-1'); ?>">
 	<main id="main" class="main-content" role="main" v-block>
 		<kl-skeleton v-if="!ifShowSingle" class="article-skeleton" type="single"></kl-skeleton>
 		<article class="article-container">
@@ -78,6 +79,7 @@ get_header(); ?>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickCommentItem.js" defer></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickComment.js" defer></script>
 <?php setPostViews(get_the_ID()); ?>
-
-<?php get_sidebar(); ?>
+<?php
+$is_show_sidebar == 1 ?  get_sidebar() : ''
+?>
 <?php get_footer(); ?>
