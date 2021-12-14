@@ -44,15 +44,17 @@
 		window.home_url = `<?php echo get_option('home') ?>`;
 		window._nonce = "<?php echo wp_create_nonce('wp_rest'); ?>";
 		window.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
-		window.site_url = '<?php echo site_url() ?>';
-		window.ajaxSourceUrl = window.site_url + '/wp-content/themes/KlausLab/inc'
-		window.homeSourceUrl = window.site_url + '/wp-content/themes/KlausLab/dist'
+		window.site_url = '<?php echo site_url(); ?>';
+		window.ajaxSourceUrl =  "<?php echo KL_URI; ?>" 
+		window.homeSourceUrl = "<?php echo KL_THEME_URI; ?>"
 		window.start_time = '<?php echo cs_get_option('klausLab_start_time'); ?>';
 		window.start_full_year = start_time ? new Date(start_time).getFullYear() : new Date().getFullYear();
 		window.now_full_year = new Date().getFullYear();
 		window.icp_num = '<?php echo get_option('zh_cn_l10n_icp_num') ?>';
 		window.tinyKey = "7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j";
 		window.userFullName = `<?php echo $current_user->user_firstname; ?>`;
+		window.wp_count_posts = "<?php $publish_posts = wp_count_posts()->publish; echo $publish_posts; ?>";
+
 		// 首屏Loading
 		const max_timer = 2
 		setTimeout(() => {

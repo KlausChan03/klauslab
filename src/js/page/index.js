@@ -11,6 +11,11 @@ const orderbyList = [
         name: '更新时间',
     },
 ];
+const per_page = Math.min(window.ifMobileDevice === true ? 6 : 10, window.wp_count_posts)
+const typeMap = {
+	'article': 'post',
+	'chat': 'chat'
+}
 const index_module = new Vue({
 	el: '.main-content',
 	mixins: [filterMixin],
@@ -27,8 +32,11 @@ const index_module = new Vue({
 			ifShowChat: false,
 			ifShowAll: true,
 			ifMobileDevice: window.ifMobileDevice,
-			per_page: window.ifMobileDevice === true ? 6 : 10,
 			page: 1,
+			per_page: {
+				'article': window.ifMobileDevice === true ? 6 : 10,
+				'chat': window.ifMobileDevice === true ? 6 : 10
+			},
 			postType: 'article',
 			posts_id_sticky: '',
 			orderby: 'date',
@@ -40,31 +48,13 @@ const index_module = new Vue({
 	},
 
 	async created() {
-		this.postType === 'article'
-			? await this.getAllArticles()
-			: await this.getAllChat()
-		// await this.getAllChat()
-		// this.getAllArticles()
+		await this.getPostCount(this.postType)
+		
+		
 	},
 	mounted() {
 		window.addEventListener('resize', this.resizeHandler)
 	},
-	// updated() {
-	//     let self = this
-	//     let imgList = document.querySelectorAll(".entry-summary img");
-	//     for (let index = 0; index < imgList.length; index++) {
-	//         const element = imgList[index];
-	//         element.addEventListener("click", function (e) {
-	//             e.preventDefault()
-	//             self.$alert(`<div class="p-10 flex-hc-vc">${element.outerHTML}</div>`, {
-	//                 dangerouslyUseHTMLString: true,
-	//                 closeOnClickModal: true,
-	//                 closeOnPressEscape: true,
-	//                 showConfirmButton: false,
-	//               });
-	//         })
-	//     }
-	// },
 	computed: {
 		getOrderby() {
 			let self = this
@@ -102,6 +92,22 @@ const index_module = new Vue({
 	},
 
 	methods: {
+		getPostCount (type) {
+			axios
+			.get(`${window.site_url}/wp-json/wp/v2/getPostCount`, {
+				params: {type: typeMap[type]},
+			})
+			.then((res) => {
+				this.per_page[this.postType] = Math.min(res.data.count, this.per_page[this.postType])
+				if (this.per_page[this.postType]!== 0) {
+					this.postType === 'article'
+					?  this.getAllArticles()
+					:  this.getAllChat()
+				} else {
+					
+				}
+			})
+		},
 		getAllTypePost() {
 			let self = this
 			self.per_page = self.per_page / 2
@@ -140,7 +146,7 @@ const index_module = new Vue({
 			this.ifShowPost = true
 			let params = {}
 			params.page = this.page
-			params.per_page = this.per_page
+			params.per_page = this.per_page[this.postType]
 			params.orderby = this.orderby
 			if (this.page === 1) {
 				axios
@@ -154,7 +160,7 @@ const index_module = new Vue({
 							this.posts_id_sticky += ',' + this.listOfArticle[s].id
 						}
 						this.ifShowPost = false
-						params.per_page = this.per_page - this.listOfArticle.length
+						params.per_page = this.per_page[this.postType] - this.listOfArticle.length
 						params.exclude = this.posts_id_sticky
 						axios
 							.get(`${window.site_url}/wp-json/wp/v2/posts`, {
@@ -223,7 +229,7 @@ const index_module = new Vue({
 			this.ifShowChat = true
 			let params = {}
 			params.page = this.page
-			params.per_page = this.per_page
+			params.per_page = this.per_page[this.postType]
 			params.orderby = this.orderby
 			axios
 				.get(`${window.site_url}/wp-json/wp/v2/moments`, {
@@ -248,11 +254,6 @@ const index_module = new Vue({
 							element.hotest = true
 						}
 						if (element.content.rendered.indexOf('img') > 0) {
-							// let dom = document.createElement('div')
-							// dom.innerHTML = element.content.rendered
-							// let imgList = dom.querySelectorAll('img')
-							// let text = dom.querySelectorAll()
-							// debugger
 							element.content.rendered = element.content.rendered.replace(
 								/(flex-hb-vc)/g,
 								'flex'
@@ -326,32 +327,6 @@ const index_module = new Vue({
 			})
 		},
 
-		// getListOfComment(id, page = this.commentPage) {
-		//     let params = {}
-		//     params.post = id
-		//     params.page = page
-		//     axios.get(`${window.site_url}/wp-json/wp/v2/comments`, {
-		//         params: params
-		//     }, {
-		//         headers: {
-		//             'X-WP-Nonce': window._nonce
-		//         }
-		//     }).then(res => {
-		//         this[this.postType === "article" ? 'listOfArticle' : 'listOfChat'].forEach(element => {
-		//             if (element.id === id) {
-		//                 this.$nextTick(() => {
-		//                     element.totalOfComment = parseInt(res.headers['x-wp-total'])
-		//                     element.ifShowComment = true
-		//                     let jsonDataTree = transData(res.data, 'id', 'parent', 'children');
-		//                     element.listOfComment = jsonDataTree
-		//                 })
-		//             }
-		//         })
-		//         this.$forceUpdate()
-
-		//     })
-		// },
-
 		handleCommand(type) {
 			this.orderby = type
 			let self = this
@@ -359,20 +334,6 @@ const index_module = new Vue({
 				self.getListByType(self.postType)
 			}
 			getList()
-
-			// let showNotify = () => {
-			//         this.$notify({
-			//             message: '切换成功',
-			//             duration: 3000,
-			//             type: 'success',
-			//             showClose: false,
-			//             // offset: 70
-			//         });
-			//     }
-			//     (async () => {
-			//         await getList();
-			//         await showNotify();
-			//     })();
 		},
 
 		resizeHandler() {
