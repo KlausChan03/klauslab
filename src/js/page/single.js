@@ -6,8 +6,9 @@ const index_module = new Vue({
 	mixins: [filterMixin],
 	data() {
 		return {
+			isSidebar: window.is_sidebar,
 			ifShowSingle: false,
-			ifMobileDevice: window.ifMobileDevice,
+			ifMobileDevice: window.if_mobile_device,
       ifShowLocationPopup: false,
 			posts: {
 				post_metas: {

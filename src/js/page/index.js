@@ -1,21 +1,17 @@
 dayjs.locale('zh-cn')
 dayjs.extend(window.dayjs_plugin_relativeTime)
 dayjs.extend(window.dayjs_plugin_localizedFormat)
-const orderbyList = [
-    {
-        type: 'date',
-        name: '创建时间',
-    },
-    {
-        type: 'modified',
-        name: '更新时间',
-    },
-];
+const per_page = Math.min(window.if_mobile_device === true ? 6 : 10, window.wp_count_posts)
+const typeMap = {
+	'article': 'post',
+	'chat': 'chat'
+}
 const index_module = new Vue({
-	el: '.main-content',
+	el: '#post-container',
 	mixins: [filterMixin],
 	data() {
 		return {
+			isSidebar: window.is_sidebar,
 			listOfAll: [],
 			listOfArticle: [],
 			listOfChat: [],
@@ -26,9 +22,12 @@ const index_module = new Vue({
 			ifShowPost: false,
 			ifShowChat: false,
 			ifShowAll: true,
-			ifMobileDevice: window.ifMobileDevice,
-			per_page: window.ifMobileDevice === true ? 6 : 10,
+			ifMobileDevice: window.if_mobile_device,
 			page: 1,
+			per_page: {
+				'article': window.if_mobile_device === true ? 6 : 10,
+				'chat': window.if_mobile_device === true ? 6 : 10
+			},
 			postType: 'article',
 			posts_id_sticky: '',
 			orderby: 'date',
@@ -36,39 +35,30 @@ const index_module = new Vue({
 			imgList: [],
 			imageUrl: '',
 			imageUrls: [],
+			orderbyList: [
+				{
+						type: 'date',
+						name: '创建时间',
+				},
+				{
+						type: 'modified',
+						name: '更新时间',
+				},
+			],
 		}
 	},
 
 	async created() {
-		this.postType === 'article'
-			? await this.getAllArticles()
-			: await this.getAllChat()
-		// await this.getAllChat()
-		// this.getAllArticles()
+		await this.getPostCount(this.postType)	
+		
 	},
 	mounted() {
 		window.addEventListener('resize', this.resizeHandler)
 	},
-	// updated() {
-	//     let self = this
-	//     let imgList = document.querySelectorAll(".entry-summary img");
-	//     for (let index = 0; index < imgList.length; index++) {
-	//         const element = imgList[index];
-	//         element.addEventListener("click", function (e) {
-	//             e.preventDefault()
-	//             self.$alert(`<div class="p-10 flex-hc-vc">${element.outerHTML}</div>`, {
-	//                 dangerouslyUseHTMLString: true,
-	//                 closeOnClickModal: true,
-	//                 closeOnPressEscape: true,
-	//                 showConfirmButton: false,
-	//               });
-	//         })
-	//     }
-	// },
 	computed: {
 		getOrderby() {
 			let self = this
-			let _item = orderbyList.filter((item) => {
+			let _item = this.orderbyList.filter((item) => {
 				return item.type === self.orderby
 			})
 			return _item[0].name
@@ -96,51 +86,33 @@ const index_module = new Vue({
 			}
 			return true
 		},
-		getPaperSize() {
-			return this.ifMobileDevice === true ? 3 : 8
-		},
 	},
 
 	methods: {
-		getAllTypePost() {
-			let self = this
-			self.per_page = self.per_page / 2
-			self.ifShowAll = true
-			self.total = 0
-			axios.all([this.getAllArticles(), this.getAllChat()]).then(
-				axios.spread(function () {
-					self.listOfAll = self.listOfArticle.concat(self.listOfChat)
-					self.listOfAll = self.listOfAll.sort((a, b) => {
-						return new Date(b.date).getTime() - new Date(a.date).getTime()
-					})
-					self.ifShowAll = false
-					self.per_page = self.per_page * 2
-					self.total = self.totalOfArticle + self.totalOfChat
-				})
-			)
+		getPostCount (type) {
+			axios
+			.get(`${window.site_url}/wp-json/wp/v2/getPostCount`, {
+				params: {type: typeMap[type]},
+			})
+			.then((res) => {
+				this.per_page[this.postType] = Math.min(res.data.count, this.per_page[this.postType])
+				if (this.per_page[this.postType]!== 0) {
+					this.postType === 'article'
+					?  this.getAllArticles()
+					:  this.getAllChat()
+				} else {
+					this.ifShowPost = true
+					this.ifShowPost = true
+				}
+			})
 		},
 
-		getTypeOfRecommend() {
-			let self = this
-			this.ifShowAll = true
-			let params = {}
-			params.per_page = self.per_paget
-			params.sticky = true
-			return axios
-				.get(`${window.site_url}/wp-json/wp/v2/posts`, {
-					params: params,
-				})
-				.then((res) => {
-					this.listOfRecommend = res.data
-					this.ifShowAll = false
-				})
-		},
 
 		getAllArticles() {
-			this.ifShowPost = true
+			this.ifShowPost = false
 			let params = {}
 			params.page = this.page
-			params.per_page = this.per_page
+			params.per_page = this.per_page[this.postType]
 			params.orderby = this.orderby
 			if (this.page === 1) {
 				axios
@@ -153,8 +125,7 @@ const index_module = new Vue({
 						for (var s = 0; s < this.listOfArticle.length; ++s) {
 							this.posts_id_sticky += ',' + this.listOfArticle[s].id
 						}
-						this.ifShowPost = false
-						params.per_page = this.per_page - this.listOfArticle.length
+						params.per_page = this.per_page[this.postType] - this.listOfArticle.length
 						params.exclude = this.posts_id_sticky
 						axios
 							.get(`${window.site_url}/wp-json/wp/v2/posts`, {
@@ -163,6 +134,7 @@ const index_module = new Vue({
 							.then((res) => {
 								this.totalOfArticle = parseInt(res.headers['x-wp-total'])
 								this.listOfArticle = this.listOfArticle.concat(res.data)
+								this.ifShowPost = true
 								this.listOfArticle.forEach((element) => {
 									element.ifShowAll = false
 									element.ifShowComment = false
@@ -181,6 +153,7 @@ const index_module = new Vue({
 										element.hotest = true
 									}
 								})
+								this.$forceUpdate()
 								this.$nextTick(() => {
 									this.bindImagesLayer()
 								})
@@ -197,7 +170,7 @@ const index_module = new Vue({
 					.then((res) => {
 						this.totalOfArticle = parseInt(res.headers['x-wp-total'])
 						this.listOfArticle = res.data
-						this.ifShowPost = false
+						this.ifShowPost = true
 						this.listOfArticle.forEach((element) => {
 							element.ifShowAll = false
 							element.ifShowComment = false
@@ -220,10 +193,10 @@ const index_module = new Vue({
 		},
 
 		getAllChat() {
-			this.ifShowChat = true
+			this.ifShowChat = false
 			let params = {}
 			params.page = this.page
-			params.per_page = this.per_page
+			params.per_page = this.per_page[this.postType]
 			params.orderby = this.orderby
 			axios
 				.get(`${window.site_url}/wp-json/wp/v2/moments`, {
@@ -232,7 +205,7 @@ const index_module = new Vue({
 				.then((res) => {
 					this.totalOfChat = parseInt(res.headers['x-wp-total'])
 					this.listOfChat = res.data
-					this.ifShowChat = false
+					this.ifShowChat = true
 					this.listOfChat.forEach((element) => {
 						element.ifShowComment = false
 						if (
@@ -248,11 +221,6 @@ const index_module = new Vue({
 							element.hotest = true
 						}
 						if (element.content.rendered.indexOf('img') > 0) {
-							// let dom = document.createElement('div')
-							// dom.innerHTML = element.content.rendered
-							// let imgList = dom.querySelectorAll('img')
-							// let text = dom.querySelectorAll()
-							// debugger
 							element.content.rendered = element.content.rendered.replace(
 								/(flex-hb-vc)/g,
 								'flex'
@@ -276,8 +244,10 @@ const index_module = new Vue({
 		changeType(tab, event) {
 			this.page = 1
 			this.postType = tab.label
-            this.totalOfArticle = 0
-			this.getListByType(this.postType)
+			this.totalOfArticle = 0
+			if (this.per_page[this.postType]!== 0) {
+				this.getListByType(this.postType)			
+			}
 		},
 
 		getListByType(type) {
@@ -302,7 +272,6 @@ const index_module = new Vue({
 		},
 
 		showItemComment(id) {
-			let self = this
 			this[
 				this.postType === 'article' ? 'listOfArticle' : 'listOfChat'
 			].forEach((element, index) => {
@@ -326,39 +295,9 @@ const index_module = new Vue({
 			})
 		},
 
-		// getListOfComment(id, page = this.commentPage) {
-		//     let params = {}
-		//     params.post = id
-		//     params.page = page
-		//     axios.get(`${window.site_url}/wp-json/wp/v2/comments`, {
-		//         params: params
-		//     }, {
-		//         headers: {
-		//             'X-WP-Nonce': window._nonce
-		//         }
-		//     }).then(res => {
-		//         this[this.postType === "article" ? 'listOfArticle' : 'listOfChat'].forEach(element => {
-		//             if (element.id === id) {
-		//                 this.$nextTick(() => {
-		//                     element.totalOfComment = parseInt(res.headers['x-wp-total'])
-		//                     element.ifShowComment = true
-		//                     let jsonDataTree = transData(res.data, 'id', 'parent', 'children');
-		//                     element.listOfComment = jsonDataTree
-		//                 })
-		//             }
-		//         })
-		//         this.$forceUpdate()
-
-		//     })
-		// },
-
 		handleCommand(type) {
 			this.orderby = type
-			let self = this
-			let getList = () => {
-				self.getListByType(self.postType)
-			}
-			getList()
+			this.getListByType(this.postType)
 		},
 
 		resizeHandler() {

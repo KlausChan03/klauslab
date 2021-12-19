@@ -55,6 +55,8 @@ function wp_rest_insert_tag_links()
     //     )
     // );
 
+
+
     register_rest_field(
         'post',
         'post_metas',
@@ -100,12 +102,20 @@ function wp_rest_insert_tag_links()
             'schema' => null,
         )
     );
-
     register_rest_field(
         'post',
         'post_count',
         array(
             'get_callback' => 'count_words_read_time_for_api',
+            'update_callback' => null,
+            'schema' => null,
+        )
+    );
+    register_rest_field(
+        'comment',
+        'comment_metas',
+        array(
+            'get_callback' => 'get_comment_meta_for_api',
             'update_callback' => null,
             'schema' => null,
         )
@@ -134,42 +144,28 @@ function wp_rest_insert_tag_links()
             'callback' => 'add_like',
         )
     );
-    register_rest_field(
-        'comment',
-        'comment_metas',
+    register_rest_route(
+        'wp/v2/',
+        'getPostCount',
         array(
-            'get_callback' => 'get_comment_meta_for_api',
-            'update_callback' => null,
-            'schema' => null,
+            'methods' => 'GET',
+            'callback' => 'get_post_count_api',
         )
     );
 
-    // register_rest_field(
-    //     'post',
-    //     'post_tags',
-    //     array(
-    //         'get_callback' => 'get_post_tags_for_api',
-    //         'update_callback' => null,
-    //         'schema' => null,
-    //     )
-    // );
-    // register_rest_field(
-    //     'post',
-    //     'post_prenext',
-    //     array(
-    //         'get_callback' => 'get_post_prenext_for_api',
-    //         'update_callback' => null,
-    //         'schema' => null,
-    //     )
-    // );
-    // register_rest_field('post',
-    //     'md_content',
-    //     array(
-    //         'get_callback' => 'get_post_content_for_api',
-    //         'update_callback' => null,
-    //         'schema' => null,
-    //     )
-    // );
+
+}
+
+function get_post_count_api($request) {
+    $type = $request->get_param('type');
+    if(!$type)
+    {
+        return new WP_Error( '401', "Parameter 'type' required." );
+    }
+    $response = array();
+    $response['count'] = wp_count_posts($type)->publish;
+    return wp_send_json( $response, '200' );
+
 }
 function update_post_meta_for_api ($meta, $post) {
     $postId = $post->ID;
@@ -195,9 +191,13 @@ function get_post_meta_for_api($post)
     $post_meta['has_cai'] = isset($_COOKIE['dislike_' . $post['id']]);
     $post_meta['thumbnail'] = get_the_post_thumbnail($post['id'], 'Full');
     $tagList = get_the_tags($post['id']);
-    $post_meta['tag_name'] = array_column($tagList, 'name');
+    if ($tagList) {
+        $post_meta['tag_name'] = array_column($tagList, 'name');
+    }
     $catList = get_the_category($post['id']);
-    $post_meta['cat_name'] = array_column($catList, 'name');
+    if ($catList) {
+        $post_meta['cat_name'] = array_column($catList, 'name');
+    }    
     $post_meta['reward'] = get_post_meta($post['id'], 'reward', true);
     $post_meta['location'] = get_post_meta($post['id'], 'location', true);
     $post_meta['address'] = get_post_meta($post['id'], 'address', true);
@@ -282,7 +282,8 @@ function get_post_img_for_api($post)
 function get_menu()
 {
     # Change 'menu' to your own navigation slug.
-    return wp_get_nav_menu_items('klaus');
+    // TODO: 待优化
+    return wp_get_nav_menu_items('main');
 }
 
 // 新增接口 - 获取基本信息

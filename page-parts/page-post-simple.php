@@ -32,13 +32,18 @@ get_header();
 
     
 </style>
+<script type="text/javascript">
+    window._AMapSecurityConfig = {
+        securityJsCode:'63ff502b168849801ec542fe31304563',
+    }
+</script>
 
-<div id="post-page" class="post-main flex1" v-block>
+<div id="post-page" class="post-main w-1" v-cloak>
     <el-form>
         <div class="post-header flex-hb-vc flex-hw">
             <div class="post-header-left">
                 <el-popover placement="bottom" width="400" trigger="click" v-if="format === false">
-                    <el-upload ref="upload" class="upload" list-type="picture-card" :limit="1" :on-exceed="handleExceed" :action=`${window.site_url}/wp-json/wp/v2/media` :on-progress="handleUploadBegin" :on-success="handleUploadSuccess" :headers="{'X-WP-Nonce': window._nonce}" multiple>
+                    <el-upload ref="upload" class="upload" list-type="picture-card" :limit="1" :on-exceed="handleExceed" :action=`${siteUrl}/wp-json/wp/v2/media` :on-progress="handleUploadBegin" :on-success="handleUploadSuccess" :headers="{'X-WP-Nonce': nonce}" multiple>
 
                         <i slot="default" class="el-icon-plus"></i>
                         <div slot="tip" class="el-upload__tip">文章的背景</em></div>
@@ -60,7 +65,7 @@ get_header();
                     <el-button class="upload-button mr-10" size="small" slot="reference"><i class="fs-20 el-icon-picture-outline fs-20 mr-10"></i>背景</el-button>
                 </el-popover>
                 <el-popover placement="bottom" width="400" trigger="click" v-if="format === true">
-                    <el-upload ref="upload" class="upload" list-type="picture-card" :limit="9" :on-exceed="handleExceed" :action=`${window.site_url}/wp-json/wp/v2/media` :on-progress="handleUploadBegin" :on-success="handleUploadSuccess" :headers="{'X-WP-Nonce': window._nonce}" multiple>
+                    <el-upload ref="upload" class="upload" list-type="picture-card" :limit="9" :on-exceed="handleExceed" :action=`${siteUrl}/wp-json/wp/v2/media` :on-progress="handleUploadBegin" :on-success="handleUploadSuccess" :headers="{'X-WP-Nonce': nonce}" multiple>
                         <i slot="default" class="el-icon-plus"></i>
                         <div slot="tip" class="el-upload__tip">瞬间的印象，支持最多九张图</em></div>
                         <div slot="file" slot-scope="{file}">
@@ -80,8 +85,8 @@ get_header();
                     </el-upload>
                     <el-button class="upload-button mr-10" size="small" slot="reference"><i class="el-icon-picture-outline fs-20 mr-10"></i>印象</el-button>
                 </el-popover>
-                <el-tag class="mr-10" size="small" v-for="(item,index) in tagNameList"> {{item}} </el-tag>
-                <el-tag type="warning" class="mr-10" size="small" v-for="(item,index) in categoryNameList"> {{item}} </el-tag>
+                <el-tag class="mr-10" size="small" v-for="(item,index) in tagNameList" :key='item'> {{item}} </el-tag>
+                <el-tag type="warning" class="mr-10" size="small" v-for="(item,index) in categoryNameList" :key='item'> {{item}} </el-tag>
             </div>
             <div class="post-header-right flex-hb-vc">
                 <div class="commit-type flex-v flex-ha-vc m-lr-15">
@@ -95,9 +100,6 @@ get_header();
             <el-form-item>
                 <el-input v-model="posts.title" :placeholder="format === true ? '#话题#' : '标题'"></el-input>
             </el-form-item>
-            <!-- <editor :api-key="tinyKey" cloud-channel="5" :disabled=false id="uuid" :setting="{inline: false}" :init="{ height: 360, menubar: true, paste_data_images: true, language: 'zh_CN', file_picker_types: 'file image media' ,images_upload_credentials: true, branding: true, statusbar: true,  }" initial-value="" :inline=false model-events="" 
-            plugins="codesample,advlist autolink lists link image charmap print preview anchor, searchreplace visualblocks  fullscreen, insertdatetime media table paste  help wordcount,  code emoticons" tag-name="div" toolbar=" undo redo | formatselect | image media table | emoticons | help " v-model="posts.content" />
-            </editor> -->
             <el-form-item v-loading="editorLoading" style="height: 360px">
                 <textarea id="editor" v-model="posts.content"></textarea>
             </el-form-item>
@@ -153,7 +155,7 @@ get_header();
                             <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id">
                             </el-option>
                         </el-select> -->
-                        <el-tree :data="categoryList" show-checkbox check-strictly="true" default-expand-all node-key="id" ref="categoryTree" highlight-current @check-change="handleCheckChange" :props="defaultProps" style="margin-left: 60px">
+                        <el-tree :data="categoryList" show-checkbox :props="{'checkStrictly': true}"  default-expand-all node-key="id" ref="categoryTree" highlight-current @check-change="handleCheckChange" :props="defaultProps" style="margin-left: 60px">
                         </el-tree>
                     </el-form-item>
                     <el-form-item>
@@ -196,14 +198,10 @@ get_header();
     </el-form>
 
 </div>
-<script type="text/javascript">
-    window._AMapSecurityConfig = {
-        securityJsCode:'63ff502b168849801ec542fe31304563',
-    }
-</script>
-<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=7c7a39e2e07d4245fa9c21dece87bf93&plugin=AMap.Geocoder"></script>
-<script type="text/javascript" src="https://cdn.tiny.cloud/1/7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/post.js"></script>
+
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=7c7a39e2e07d4245fa9c21dece87bf93&plugin=AMap.Geocoder" defer></script>
+<script type="text/javascript" src="https://cdn.tiny.cloud/1/7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j/tinymce/5/tinymce.min.js" referrerpolicy="origin" defer></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/post.js" defer></script>
 <?php
 get_footer();
 ?>

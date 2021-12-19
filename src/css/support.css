@@ -49,7 +49,7 @@
     padding-left:45px;
 }
 
-.kl-empty {
+.el-empty {
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
@@ -67,17 +67,17 @@
     padding: 32px 0;
 }
 
-.kl-empty__image{
+.el-empty__image{
     width: 180px;
     height: 180px;
 }
 
-.kl-empty__image img{
+.el-empty__image img{
     width: 100%;
     height: 100%;
 }
 
-.kl-empty__description {
+.el-empty__description {
     margin-top: 16px;
     padding: 0 60px;
     color: #969799;

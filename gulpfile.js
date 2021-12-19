@@ -52,12 +52,11 @@ let COPYJS = [
 	dir.src + '/js/**/canvas.js',
 	dir.src + '/js/**/fixed-plugins.js',
 	dir.src + '/js/flexible.js',
-	dir.src + '/js/login.js',
 ]
 let FILTERCSS = [dir.src + '/css/*.css', '!' + dir.src + '/css/*.min.css']
 let FILTERSCSS = [dir.src + '/css/*.scss']
 let FILTERTEMPCSS = [dir.dist + 'css/*.css']
-let COPYCSS = [dir.src + '/css/login.css']
+let COPYCSS = [dir.src + '/css/page/*.css']
 let COPYOTHERS = [
 	dir.src + '/theme/*',
 	dir.src + '/css/**/*.min.css',
@@ -114,7 +113,7 @@ var scss = {
 
 // Sass 编译
 var css = {
-	src: dir.src + 'scss/style.scss',
+	src: dir.src + 'scss/app.scss',
 	watch: dir.src + 'scss/**/*',
 	build: dir.build + dir.dist + 'css/',
 	sassOpts: {

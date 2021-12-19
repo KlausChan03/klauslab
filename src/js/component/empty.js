@@ -1,13 +1,13 @@
-Vue.component('kl-empty', {
+Vue.component('el-empty', {
     template: `
-        <div class="kl-empty">
-            <div class="kl-empty__image">
+        <div class="el-empty">
+            <div class="el-empty__image">
                 <img :src="getEmptyImgUrl(image)">
             </div>
-            <div class="kl-empty__description">
+            <div class="el-empty__description">
                 {{ description }}
             </div>            
-            <div class="kl-empty__bottom">
+            <div class="el-empty__bottom">
                 <slot></slot>
             </div>
         </div>

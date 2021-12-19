@@ -3,7 +3,7 @@ Vue.component('article-item', {
 	mixins: [filterMixin],
 	data() {
 		return {
-			ifMobileDevice: window.ifMobileDevice,
+			ifMobileDevice: window.if_mobile_device,
 			ifShowLocationPopup: false,
 
 		}
@@ -36,7 +36,7 @@ Vue.component('article-item', {
     <div class="entry-main flex-hl-vl flex-hw" :class="{'has-image' : postData?.post_img?.url}" v-if="postData.content.rendered || postData.excerpt.rendered">
 			<el-image class="featured-image" :src="postData.post_img.url" lazy v-if="postData?.post_img?.url">
 				<div slot="error" class="image-slot">
-					<i class="el-icon-picture-outline fs-24"></i>
+					<i class="el-icon-picture-outline fs-36"></i>
 				</div>
 			</el-image>
 			<div>

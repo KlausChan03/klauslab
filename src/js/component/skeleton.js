@@ -1,17 +1,16 @@
-Vue.component('kl-skeleton', {
+const klSkeleton = Vue.component('kl-skeleton', {
   props:{
     type:{
       type: String,
       default: 'post'
     },
     randomList: {
-      type: Array,
+      type: Number,
       default: Math.round(Math.random() * 2) + 1,
     }
 
   },
   template: `
-  <template>
     <div v-if="type === 'post'" class="kl-skeleton kl-skeleton-animated" id="kl-skeleton" >
       <div class="kl-skeleton-item" :style="{marginTop: Number(index) === 0 ? '0' : '15px'}" v-for="(item,index) in randomList" >
         <div class="kl-skeleton-content">        
@@ -50,6 +49,5 @@ Vue.component('kl-skeleton', {
         </div>
       </div>
     </div>
-  </template>
   `
 })
