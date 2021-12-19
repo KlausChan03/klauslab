@@ -10,7 +10,7 @@ let secondaryPart = new Vue({
 	},
 	mounted: function () {
 		this.showTimerFunc()
-		window.isSingle && this.getCataLogFunc()
+		window.is_single && this.getCataLogFunc()
 	},
 	beforeDestroy() {
 		window.clearInterval(showCreateTime)

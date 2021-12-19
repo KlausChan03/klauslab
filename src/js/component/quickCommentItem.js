@@ -9,7 +9,7 @@ Vue.component('quick-comment-item', {
   },
   inject: ["commentInfo"],
   template: `
-  <template>
+  <div>
     <ul class="comment-list" v-if="commentData && commentData.length > 0">
         <li v-for="(item,index) in commentData" :id="'comment-' + item.id" :key="item.id" class="comment-item" >
           <div class="comment-item-main flex-hl-vl">
@@ -43,7 +43,7 @@ Vue.component('quick-comment-item', {
           </template>
         </li>
       </ul>
-    </template>
+    </div>
     `,
   mounted() {
     // console.log(this.commentData,"kj")

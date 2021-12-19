@@ -40,12 +40,11 @@
 	}
 </style>
 
-<div id="secondary" class="widget-area sidebar" role="complementary" v-block>
+<div id="secondary" class="widget-area sidebar" role="complementary" v-cloak>
 	<kl-skeleton v-show="!ifShowSidebar" type="post"></kl-skeleton>
 	<div v-show="ifShowSidebar" class="widget-content">
 		<?php dynamic_sidebar('sidebar-1'); ?>
 	</div>
 </div>
 <!-- #secondary -->
-<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/skeleton.js" defer></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/sideBar.js" defer></script>

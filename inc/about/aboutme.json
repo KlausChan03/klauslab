@@ -3,7 +3,7 @@
         "type": "introduction",
         "value": [
             "欢迎来到我的博客，我是KlausChan。",
-            "我是一个重度拖延症兼轻度强迫症患者，所幸遇到她，一个急性子的女汉子。",
+            "我是一个重度拖延症兼轻度强迫症患者，所幸遇到Laura，一个急性子的女孩",
             "我是一个前端开发工程师，在这条路上已经披荆斩棘5年，从事且热衷开发、设计。",
             "如果你对我的博客内容感兴趣，可以<a class='link' href='#comment-part'>留言交换友链</a>或者通过<a class='link' href='./feed'>RSS订阅</a>我。"
         ]
@@ -79,6 +79,13 @@
         "name":"主题版本",
         "type":"version-timeline",
         "value":[
+            {
+                "version": "v2.4",
+                "versionName": "",
+                "description": "开发中",
+                "author": "KlausChan",
+                "date": "2021-12-19T15:49:10Z"
+            },
             {
                 "version": "v2.3.6",
                 "versionName": "",

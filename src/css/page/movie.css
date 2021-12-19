@@ -1,0 +1,139 @@
+.doubanboard-list {
+	margin: 15px 0;
+	overflow: hidden;
+	min-height: 100px;
+}
+
+.doubanboard-item {
+	position: relative;
+	overflow: hidden;
+	margin-bottom: 15px;
+	border-radius: 4px;
+}
+
+.doubanboard-thumb {
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+	background: #f7fbf7;
+	width: 100%;
+	/* customize this for diffrent style */
+	padding-top: 141%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	border-radius: 4px;
+	transition: ease all 0.3s;
+}
+
+.doubanboard-thumb:hover {
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.doubanboard-title {
+	background: #000;
+	opacity: 0.8;
+	padding: 8px;
+	border-radius: 4px;
+}
+
+.doubanboard-title .movie-title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: #fff;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.doubanboard-title .movie-title:hover {
+	color: #ddd;
+}
+
+.doubanboard-title .movie-mark * {
+	font-size: 12px;
+	color: #ff9900;
+}
+
+.s-tooltip {
+	min-width: 25%;
+	max-width: 80%;
+}
+
+.card-3d {
+	transition: all 0.2s;
+	perspective: 1500px;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+.card-3d .card {
+	background-size: cover;
+	background-position: center;
+	-webkit-transition: -webkit-transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+	transition: -webkit-transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+	-o-transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+	transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+	transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1),
+		-webkit-transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	min-height: 280px;
+	height: 100%;
+	border-radius: 4px;
+	overflow: hidden !important;
+}
+
+.card-3d .card:hover {
+	box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+	border-color: #eee;
+}
+
+.card-z {
+	background-color: rgb(64, 158, 255);
+}
+
+.card-f {
+	background-color: #48e;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+.card-f .inner {
+	/* transform: translateY(-50%) translateZ(60px) scale(0.94);
+        top: 50%; */
+	/* position: absolute;
+        left: 0; */
+	width: 100%;
+	padding: 0.5rem;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	outline: 1px solid transparent;
+	-webkit-perspective: inherit;
+	perspective: inherit;
+	z-index: 2;
+	height: -webkit-fill-available;
+}
+
+.card-f .inner h3,
+.card-f .inner p {
+	color: #fff;
+}
+
+.card-f-y {
+	transform: rotateY(-180deg);
+}
+
+.card-f-x {
+	transform: rotateX(-180deg);
+}
+
+.item-content {
+	text-overflow: -o-ellipsis-lastline;
+	overflow-y: auto;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	/* -webkit-line-clamp: 10; */
+	-webkit-box-orient: vertical;
+	line-height: 1.5;
+	height: calc(100% - 55px);
+}

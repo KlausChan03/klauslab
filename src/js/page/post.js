@@ -35,7 +35,8 @@ new Vue({
 	data() {
 		const ide = Date.now()
 		return {
-			// tinyKey: '7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j',
+			siteUrl: window.site_url,
+			nonce: window._nonce,
 			post_id: '',
 			editorLoading: false,
 			status: true,
@@ -132,9 +133,9 @@ new Vue({
 					let formData = new FormData()
 					formData.append('file', blobInfo.blob())
 					axios
-						.post(`${window.site_url}/wp-json/wp/v2/media`, formData, {
+						.post(`${this.siteUrl}/wp-json/wp/v2/media`, formData, {
 							headers: {
-								'X-WP-Nonce': window._nonce,
+								'X-WP-Nonce': this.nonce,
 							},
 						})
 						.then((response) => {
@@ -155,7 +156,7 @@ new Vue({
 				per_page: 50,
 			}
 			axios
-				.get(`${window.site_url}/wp-json/wp/v2/tags`, {
+				.get(`${this.siteUrl}/wp-json/wp/v2/tags`, {
 					params: params,
 				})
 				.then((res) => {
@@ -168,7 +169,7 @@ new Vue({
 				per_page: 50,
 			}
 			axios
-				.get(`${window.site_url}/wp-json/wp/v2/categories`, {
+				.get(`${this.siteUrl}/wp-json/wp/v2/categories`, {
 					params: params,
 				})
 				.then((res) => {
@@ -181,7 +182,7 @@ new Vue({
 			let params = {}
 			return axios
 				.get(
-					`${window.site_url}/wp-json/wp/v2/${this.post_type}/${this.post_id}`,
+					`${this.siteUrl}/wp-json/wp/v2/${this.post_type}/${this.post_id}`,
 					{
 						params: params,
 					}
@@ -318,9 +319,9 @@ new Vue({
 					const params = new FormData()
 					params.append('name', element)
 					axios
-						.post(`${window.site_url}/wp-json/wp/v2/tags`, params, {
+						.post(`${this.siteUrl}/wp-json/wp/v2/tags`, params, {
 							headers: {
-								'X-WP-Nonce': window._nonce,
+								'X-WP-Nonce': window.this.nonce,
 							},
 						})
 						.then((res) => {
@@ -445,13 +446,13 @@ new Vue({
 
 			axios
 				.post(
-					`${window.site_url}/wp-json/wp/v2/${format}${
+					`${this.siteUrl}/wp-json/wp/v2/${format}${
 						type === 'update' ? '/' + this.post_id : ''
 					}`,
 					params,
 					{
 						headers: {
-							'X-WP-Nonce': window._nonce,
+							'X-WP-Nonce': window.this.nonce,
 						},
 					}
 				)
@@ -463,7 +464,7 @@ new Vue({
 						})
 						setTimeout(() => {
 							this.hasCommitFinish = false
-							window.location.href = window.site_url
+							window.location.href = this.siteUrl
 						}, 1500)
 					}
 				})

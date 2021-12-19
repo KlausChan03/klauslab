@@ -272,21 +272,17 @@ function normal_style_script()
     if (FE_ENV !== "Development") {
         // 除style.css之外的样式
         wp_enqueue_style('main', KL_THEME_URI . '/css/main.css', array(), '1.0', false);
+        // vue.min.js   
+        wp_enqueue_script('vue', KL_THEME_URI . '/js/lib/vue.min.js', array(), '2.6.0', false);
     } else {
-        // 导航
-        // wp_enqueue_script('navigationNew', KL_THEME_URI . '/js/navigation.js', false, '1.0', array('jquery'));
-        // 媒体查询样式
-        // wp_enqueue_style('mediaCss', KL_THEME_URI . '/css/media.css', array(), '1.0', false);
         // 动画库样式
         wp_enqueue_style('animate', KL_THEME_URI . '/css/animate.min.css', array(), '3.5.1', false);
-        // 支持
-        // wp_enqueue_script('supportJs', KL_THEME_URI . '/js/support.js', false, '1.0', array('jquery'));
         // 基础方法
         wp_enqueue_script('myUtil', KL_THEME_URI . '/js/utils.js', array(), '1.0', false);
         // 插件样式
         wp_enqueue_style('supportCss', KL_THEME_URI . '/css/support.css', array(), '1.0', false);
-        // element-css 自定义样式
-        // wp_enqueue_style('extra', KL_THEME_URI . '/css/element-ui-extra.css', array(), '1.0', false);
+        // vue.min.js   
+        wp_enqueue_script('vue', KL_THEME_URI . '/js/lib/vue.dev.min.js', array(), '2.6.0', false);
     }
 
     // dayjs.min.js
@@ -295,31 +291,23 @@ function normal_style_script()
     wp_enqueue_script('dayjs-relativeTime', KL_THEME_URI . '/js/plugin/relativeTime.js', array(), '1.10.4', false);
     wp_enqueue_script('dayjs-localizedFormat', KL_THEME_URI . '/js/plugin/localizedFormat.js', array(), '1.10.4', false);
     wp_enqueue_script('dayjs-locale', KL_THEME_URI . '/js/plugin/zh-cn.js', array(), '1.10.4', false);
-    // vue.min.js   
-    wp_enqueue_script('vue', KL_THEME_URI . '/js/lib/vue.min.js', array(), '2.6.0', false);
-    // wp_enqueue_script('vue', KL_THEME_URI . '/js/lib/petite-vue.js', array(), '2.6.0', false);
+
     // jquery.min.js
     wp_enqueue_script('jquery', KL_THEME_URI . '/js/lib/jquery-3.1.1.min.js', array(), '3.1.1', false);
     // axios.min.js
     wp_enqueue_script('axios', KL_THEME_URI . '/js/lib/axios.min.js', array(), '0.19.0', false);
 
-    // 全局变量配置
-    // wp_enqueue_script('myConfig', KL_THEME_URI . '/js/config.js', array(), '1.0', false);
     // 配置
     wp_enqueue_script('myOptions', KL_THEME_URI . '/js/options.js', array(), '1.0', false);
-
 
     // ElementUI
     wp_enqueue_script('element-ui-js', KL_THEME_URI . '/js/lib/element-ui.min.js', array(), '1.0', false);
     wp_enqueue_style('element-ui-css', KL_THEME_URI . '/css/element-ui.min.css', array(), '1.0', false);
     wp_enqueue_script('tinymce-vue-js', KL_THEME_URI . '/js/lib/tinymce-vue.min.js', array(), '1.0', false);
+
     // elementUI额外样式
     wp_enqueue_style('icon-font19', '//at.alicdn.com/t/font_765116_by9ipi65sw7.css', array(), '1.0', false);
     wp_enqueue_script('icon-font21', '//at.alicdn.com/t/font_1616851_1gtnw3vh59j.js', array(), '1.0', false);
-
-    // MuseUI
-    //  wp_enqueue_script('muse-ui-js', KL_THEME_URI . '/theme/muse-ui.js', array(), '1.0', false);
-    //  wp_enqueue_style('muse-ui-css', KL_THEME_URI . '/theme/muse-ui.css', array(), '1.0', false);
 }
 
 
@@ -327,64 +315,43 @@ function normal_style_script()
 function footer_script()
 {
 
-    if (FE_ENV !== "Development") {
-        // 通过js判断当前环境
-        // 通用
-        wp_enqueue_script('app', KL_THEME_URI . '/js/app.js', array(), '1.0', false);
-        // wp_enqueue_script('main', KL_THEME_URI . '/js/common.js', array(), '1.0', false);
+    // 组件
+    wp_enqueue_script('search', KL_THEME_URI . '/js/component/search.js', array(), '1.0', false);
+    wp_enqueue_script('skeleton', KL_THEME_URI . '/js/component/skeleton.js', array(), '1.0', false);
+    wp_enqueue_script('empty', KL_THEME_URI . '/js/component/empty.js', array(), '1.0', false);
+    wp_enqueue_script('filterMixin', KL_THEME_URI . '/js/mixin/filterMixin.js', array(), '1.0', false);
 
+
+    // 通用
+    if (FE_ENV !== "Development") {
+        wp_enqueue_script('app', KL_THEME_URI . '/js/app.js', array(), '1.0', false);
     } else {
-        // 通用
         wp_enqueue_script('main', KL_THEME_URI . '/js/common.js', array(), '1.0', false);
     }
 
     // 动画
     wp_enqueue_script('canvasFunc', KL_THEME_URI . '/js/canvas.js', array(), '1.0', false);
-    // 动画
-    wp_enqueue_script('canvasFunc', KL_THEME_URI . '/js/canvas.js', array(), '1.0', false);
-    // 右下角固定插件
-    wp_enqueue_script('fixedPlugins', KL_THEME_URI . '/js/fixed-plugins.js', array(), '1.0', false);
-    // 先将ajaxurl变数设定好
-    // wp_localize_script('ajax', 'my_ajax_obj', array('ajaxurl' => admin_url('admin-ajax.php')));
-    // wp_localize_script('fixedPlugins', 'KlausLabConfig', array(
-    //     'siteUrl' => get_stylesheet_directory_uri(),
-    //     'siteStartTime' => cs_get_option('memory_start_time'),
-    //     'ajaxUrl' => admin_url('admin-ajax.php'),
-    //     'commentEditAgain' => cs_get_option('memory_comment_edit'),
-    //     'loadPjax' => cs_get_option('memory_pjax'),
-    // ));
 }
 
 function my_custom_login()
 {
-    // vue.min.js   
-    // wp_enqueue_script('vue', KL_THEME_URI . '/js/vue.min.js', array(), '2.6.0', false);
-    // 全局变量配置
-    // wp_enqueue_script('myConfig', KL_THEME_URI . '/js/config.js', array(), '1.0', false);
-    // 配置
-    // wp_enqueue_script('myOptions', KL_THEME_URI . '/js/options.js', array(), '1.0', false);
-    wp_enqueue_style('myLogin', KL_THEME_URI . '/css/login.css', array(), '1.0', false);
-    wp_enqueue_script('myLogin', KL_THEME_URI . '/js/login.js', array(), '1.0', false);
+    wp_enqueue_style('myLogin', KL_THEME_URI . '/css/page/login.css', array(), '1.0', false);
+    wp_enqueue_script('myLogin', KL_THEME_URI . '/js/page/login.js', array(), '1.0', false);
 }
 
 
 function styles_scripts()
 {
-    if (!is_admin()) { // 前台加载的脚本与样式表
+    // 前台加载的脚本与样式表
+    if (!is_admin()) {
         // 去除已注册的 jquery 脚本
         wp_deregister_script('jquery');
-        // 注册 jquery 脚本
-        // wp_register_script('jquery', '//code.jquery.com/jquery.min.js', array(), 'lastest', false);
         // 提交加载 jquery 脚本
         wp_enqueue_script('jquery');
-        // if (is_mobile() === true && is_user_logged_in() === false) {
-        //     wp_enqueue_script('flexible', KL_THEME_URI . '/js/flexible.js', array(), 'lastet', false);
         // }
     } else { // 后台加载的脚本与样式表
         // 取消加载 jquery 脚本
         wp_dequeue_script('jquery');
-        // 注册并加载 jquery 脚本
-        // wp_enqueue_script('jquery', '//code.jquery.com/jquery.min.js', array(), 'lastest', false);
     }
 }
 
@@ -1273,7 +1240,7 @@ function ajax_comment_callback()
     {
 
         // $avatar = preg_replace("/http:\/\/(www|\d).gravatar.com/", "https://gravatar.loli.net", $avatar);
-        $avatar = str_replace(array("www.gravatar.com", "0.gravatar.com", "1.gravatar.com", "2.gravatar.com","secure.gravatar.com"), "gravatar.loli.net" , $avatar);
+        $avatar = str_replace(array("www.gravatar.com", "0.gravatar.com", "1.gravatar.com", "2.gravatar.com", "secure.gravatar.com"), "gravatar.loli.net", $avatar);
         //~ 替换为 https 协议
         $avatar = str_replace("http://", "https://", $avatar);
         return $avatar;
@@ -1596,20 +1563,20 @@ function ajax_comment_callback()
 
 
 
-// 允许post类型展示自定义字段
-$object_type = 'post';
-$meta_args = array( // Validate and sanitize the meta value.
-    // Note: currently (4.7) one of 'string', 'boolean', 'integer',
-    // 'number' must be used as 'type'. The default is 'string'.
-    'type'         => 'string',
-    // Shown in the schema for the meta key.
-    'description'  => 'A meta key associated with a string meta value.',
-    // Return a single value of the type.
-    'single'       => true,
-    // Show in the WP REST API response. Default: false.
-    'show_in_rest' => true,
-);
-register_meta( $object_type, 'my_meta_key', $meta_args );
+    // 允许post类型展示自定义字段
+    $object_type = 'post';
+    $meta_args = array( // Validate and sanitize the meta value.
+        // Note: currently (4.7) one of 'string', 'boolean', 'integer',
+        // 'number' must be used as 'type'. The default is 'string'.
+        'type'         => 'string',
+        // Shown in the schema for the meta key.
+        'description'  => 'A meta key associated with a string meta value.',
+        // Return a single value of the type.
+        'single'       => true,
+        // Show in the WP REST API response. Default: false.
+        'show_in_rest' => true,
+    );
+    register_meta($object_type, 'my_meta_key', $meta_args);
 
 
 

@@ -56,6 +56,10 @@ class DoubanAPI
             fwrite($file, json_encode(array('time' => time(), 'data' => $oldData)));
             fclose($file);
             $data = $oldData;
+            foreach($data as $index=>$value) {
+                if($value->name === '') unset($data[$index]);            
+            }
+            // 清理空数组
             $total = count($data);
             if ($From < 0 || $From > $total - 1) echo json_encode(array());
             else {
@@ -68,6 +72,10 @@ class DoubanAPI
             }
         } else {
             $data = json_decode(file_get_contents(__DIR__ . '/cache/movie.json'))->data;
+            // 清理空数组
+            foreach($data as $index=>$value) {
+                if($value->name === '') unset($data[$index]);            
+            }
             $total = count($data);
             if ($From < 0 || $From > $total - 1) echo json_encode(array());
             else {

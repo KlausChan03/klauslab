@@ -6,13 +6,13 @@ Vue.component('quick-comment', {
   props: ['commentData', 'postData', 'callback'],
   data() {
     return {
+			tinyKey: window.tinyKey,
       listOfComment: '',
       commentPage: 1,
       commentContent: '',
       hasCommitFinish: false,
       ifShowCommentAll: false,
       ifShowEditor: false,
-      per_page: 10,
       page: 1,
       commentInfo: {
         replyTo: '',
@@ -22,7 +22,7 @@ Vue.component('quick-comment', {
       commentAuthor: '',
       commentEmail: '',
       commentUrl: '',
-      // hitokoto:
+      isLogin: window.is_login,
     }
   },
   provide() {
@@ -35,7 +35,7 @@ Vue.component('quick-comment', {
   },
   template: `
   <div id="comments" style="margin: 0; padding: 1.5rem; position: relative; border-top: 1px solid #eee;">
-    <template v-if="!window.isLogin">
+    <template v-if="!isLogin">
       <div  class="flex-hb-vc flex-hw mb-10">
         <el-input type="text" name="author" v-model="commentAuthor" class="text-input" id="comment-author" placeholder="昵称 *"></el-input>
         <el-input type="text" name="email" v-model="commentEmail" class="text-input" id="comment-email" placeholder="邮箱 *"></el-input>
@@ -65,9 +65,9 @@ Vue.component('quick-comment', {
       </div>
     </div>
     <template v-if="listOfComment" >     
-      <quick-comment-item  :comment-data="commentData ? commentData : listOfComment"></quick-comment-item>    
+      <quick-comment-item  class="comment-item" :comment-data="commentData ? commentData : listOfComment"></quick-comment-item>    
       <div class="flex-hc-vc m-tb-10" v-if="(postData.totalOfComment ? postData.totalOfComment : totalOfComment) > 10">
-        <el-pagination layout="prev, pager, next, jumper" background :total="postData.totalOfComment ? postData.totalOfComment : totalOfComment" :pager-count="getPaperSize" :page-size="per_page" :current-page.sync="page" @current-change="handleCommentCurrentChange"> </el-pagination>
+        <el-pagination layout="prev, pager, next, jumper" background :total="postData.totalOfComment ? postData.totalOfComment : totalOfComment"   :current-page.sync="page" @current-change="handleCommentCurrentChange"> </el-pagination>
       </div>
     </template>
     <template v-else>
@@ -78,17 +78,11 @@ Vue.component('quick-comment', {
   mounted() {
     if (!this.callback) {
       this.getListOfComment()
-
     }
-    // console.log("kkk")
   },
   computed: {
-    getPaperSize() {
-      return window.ifMobileDevice === true ? 3 : 8
-    },
     hitokoto() {
-      let hitokoto = window.localStorage.getItem('baseInfo') ? JSON.parse(window.localStorage.getItem('baseInfo')).hitokoto : ''
-      return hitokoto
+      return window.localStorage.getItem('baseInfo') ? JSON.parse(window.localStorage.getItem('baseInfo')).hitokoto : ''
     }
   },
   methods: {
@@ -108,16 +102,8 @@ Vue.component('quick-comment', {
       }).then(res => {
         this.totalOfComment = parseInt(res.headers['x-wp-total'])
         this.listOfComment = transData(res.data, 'id', 'parent', 'children')
-        if (this.callback) {
-          // debugger
-        }
       })
     },
-
-    // changeCommentCurrent(val) {
-    //   this.commentPage = val
-    //   this.getListOfComment(this.currentCommentId)
-    // },
 
     commitComment() {
       this.hasCommitFinish = true
@@ -125,7 +111,7 @@ Vue.component('quick-comment', {
       params.post = this.postData.id
       params.content = this.commentContent
       params.parent = this.commentInfo.parentId ? this.commentInfo.parentId : "0"
-      if (!window.isLogin) {
+      if (!this.isLogin) {
         params.author_name = this.commentAuthor
         params.author_email = this.commentEmail
         params.author_url = this.commentUrl

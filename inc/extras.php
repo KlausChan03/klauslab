@@ -13,12 +13,13 @@
  * @param array $classes Classes for the body element.
  * @return array
  */
-function KlausLab_body_classes( $classes ) {
+function body_classes( $classes ) {
 	// Adds a class of group-blog to blogs with more than 1 published author.
 	if ( is_multi_author() ) {
-		$classes[] = 'group-blog';
+		$classes[] = 'hfeed';
+		$classes[] = 'site';
 	}
 
 	return $classes;
 }
-add_filter( 'body_class', 'KlausLab_body_classes' );
+add_filter( 'body_class', 'body_classes' );
