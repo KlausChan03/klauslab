@@ -321,7 +321,7 @@ new Vue({
 					axios
 						.post(`${this.siteUrl}/wp-json/wp/v2/tags`, params, {
 							headers: {
-								'X-WP-Nonce': window.this.nonce,
+								'X-WP-Nonce': this.nonce,
 							},
 						})
 						.then((res) => {
@@ -452,7 +452,7 @@ new Vue({
 					params,
 					{
 						headers: {
-							'X-WP-Nonce': window.this.nonce,
+							'X-WP-Nonce': this.nonce,
 						},
 					}
 				)
