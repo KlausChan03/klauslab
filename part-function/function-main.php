@@ -26,8 +26,8 @@ if (FE_ENV !== "Development") {
 
 define('KL_DIR', get_template_directory() . '/inc');
 define('KL_URI', get_template_directory_uri() . '/inc');
-define('page_template_directory', 'page-parts/');
-define('content_template_directory', 'template-parts/');
+define('page_template_directory', 'part-page/');
+define('content_template_directory', 'part-template/');
 
 
 if (!function_exists('KlausLab_setup')) :
@@ -254,18 +254,18 @@ endif;
 /**
  * Custom template tags for this theme.
  */
-require KL_DIR . '/template-tags.php';
+// require KL_DIR . '/template-tags.php';
 
 /**
  * Custom functions that act independently of the theme templates.
  */
 
-require KL_DIR . '/extras.php';
+// require KL_DIR . '/extras.php';
 
 /**
  * Customizer additions.
  */
-require KL_DIR . '/customizer.php';
+// require KL_DIR . '/customizer.php';
 
 function normal_style_script()
 {
