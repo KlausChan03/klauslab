@@ -1,6 +1,6 @@
 <?php 
 // 任何添加于主题目录functions文件夹内的php文件都被调用到这里
-define('functions', TEMPLATEPATH.'/functions');
+define('functions', TEMPLATEPATH.'/part-function');
 IncludeAll( functions );
 function IncludeAll($dir){
     $dir = realpath($dir);

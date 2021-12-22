@@ -15,7 +15,7 @@ function add_some_wp_widgets(){
 	// );
 	// foreach( $unregister_widgets as $widget )
 	// 	unregister_widget( 'WP_Widget_' . $widget );
-	foreach( glob( get_template_directory() . '/widgets/widget-*.php' ) as $file_path )
+	foreach( glob( get_template_directory() . '/part-widget/widget-*.php' ) as $file_path )
 		include( $file_path );
 }
 add_action( 'widgets_init' , 'add_some_wp_widgets' , 1 );
