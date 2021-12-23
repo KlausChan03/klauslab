@@ -33,7 +33,7 @@ get_header();
   </el-card>
 </div>
 
-<script>
+<script defer>
   const app = new Vue({
     el: '#container',
     data: {

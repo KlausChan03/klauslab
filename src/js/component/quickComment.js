@@ -2,7 +2,8 @@ dayjs.locale('zh-cn')
 dayjs.extend(window.dayjs_plugin_relativeTime)
 
 // let quickCommentItem = require('./qickCommentItem.js');
-Vue.component('quick-comment', {
+const quickComment = Vue.component('quick-comment', {
+  components: { quickCommentItem: quickCommentItem},
   props: ['commentData', 'postData', 'callback'],
   data() {
     return {

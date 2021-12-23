@@ -5,7 +5,6 @@ body{
             top: 70px;
             min-width: 310px!important;
         }
-        // TODO: 待验证
         @-moz-document url-prefix() {
             .el-menu.el-menu-horizontal{ 
                 overflow: hidden;
@@ -16,22 +15,37 @@ body{
             overflow-x: auto;
             display: flex;
             &::-webkit-scrollbar {
-                width: auto;
-                height: 5px;
-              }
-            
-              &::-webkit-scrollbar-thumb {
-                background: var(--secondaryText);
-                border-radius: 3px;
-                border: 0;
-              }
-            
-              &::-webkit-scrollbar-track-piece {
-                background-color: #e7eaf1;
-                border-radius: 3px;
-              }
+              width: auto;
+              height: 5px;
+            }
+          
+            &::-webkit-scrollbar-thumb {
+              background: var(--secondaryText);
+              border-radius: 3px;
+              border: 0;
+            }
+          
+            &::-webkit-scrollbar-track-piece {
+              background-color: #e7eaf1;
+              border-radius: 3px;
+            }
+            .el-menu-item.is-active {
+              border-width: 4px;
+            }
+
         }
     }
+
+    #container {
+      .el-empty__description{
+        p {
+          margin-top: 30px;
+          font-size: 18px;
+          color: #ccc;
+        }    
+      }
+    }
+
     .el-tabs__nav-wrap {
         background: #fff;
         padding: .8rem 1.6rem;
@@ -105,5 +119,8 @@ body{
             border-bottom: none;
         }
     }
+
+
     
 }
+

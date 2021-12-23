@@ -1,302 +1,308 @@
+const _ = window.lodash;
 const header = new Vue({
-	el: '#header',
-	components:{
-		klSkeleton: klSkeleton,
-		klSearch: klSearch,
-	},
-	data() {
-		return {
-			originMenuList: [],
-			menuList: [],
-			ifShowSearch: false,
-			ifShowMenu: false,
-			ifMobileDevice: window.if_mobile_device,
-			menuIcon: [
-				{ className: 'home', iconName: 'el-icon-house' },
-				{ className: 'memory', iconName: 'el-icon-film' },
-				{ className: 'link', iconName: 'el-icon-link' },
-				{ className: 'archive', iconName: 'el-icon-date' },
-				{ className: 'about', iconName: 'el-icon-user' },
-			],
-			bloginfoName: window.the_bloginfo_name,
-			isLogin: window.is_login,
-			customLogo: window.the_custom_logo,
-			userFullName: window.user_full_name,
-			homeUrl: window.home_url
-		}
-	},
-	mounted() {
-		let sessionFlag =
-			window.localStorage.getItem('menuList') &&
-			window.localStorage.getItem('baseInfo')
-				? true
-				: false
-		if (!sessionFlag) {
-			this.getMenuList()
-			this.getBaseInfo()
-		} else {
-			this.originMenuList = this.menuList = JSON.parse(
-				window.localStorage.getItem('menuList')
-			)
-		}
-		window.addEventListener('resize', this.resizeHandler)
-		window.is_single && document.querySelector("#page").addEventListener('scroll', this.scrollHandler)
-	},
-	destroyed() {
-		window.onresize = null
-	},
-	computed: {
-		activeIndex() {
-			for (let index = 0; index < this.originMenuList.length; index++) {
-				const element = this.originMenuList[index]
-				if (window.location.href === element.url) {
-					return Number(element.ID)
-				}
-			}
-		},
-	},
-	methods: {
-		changeMenu() {
-			this.ifShowMenu = !this.ifShowMenu
-		},
+  el: "#header",
+  components: {
+    klSkeleton: klSkeleton,
+    klSearch: klSearch,
+  },
+  data() {
+    return {
+      originMenuList: [],
+      menuList: [],
+      ifShowSearch: false,
+      ifShowMenu: false,
+      ifMobileDevice: window.if_mobile_device,
+      menuIcon: [
+        { className: "home", iconName: "el-icon-house" },
+        { className: "memory", iconName: "el-icon-film" },
+        { className: "link", iconName: "el-icon-link" },
+        { className: "archive", iconName: "el-icon-date" },
+        { className: "about", iconName: "el-icon-user" },
+      ],
+      bloginfoName: window.the_bloginfo_name,
+      isLogin: window.is_login,
+      customLogo: window.the_custom_logo,
+      userFullName: window.user_full_name,
+      homeUrl: window.home_url,
+    };
+  },
+  mounted() {
+    const sessionFlag =
+      _.isEmpty(JSON.parse(window.localStorage.getItem("menuList"))) ||
+      _.isEmpty(JSON.parse(window.localStorage.getItem("baseInfo")))
+        ? true
+        : false;
+    if (sessionFlag) {
+      this.getMenuList();
+      this.getBaseInfo();
+    } else {
+      this.originMenuList = this.menuList = JSON.parse(
+        window.localStorage.getItem("menuList")
+      );
+    }
+    window.addEventListener("resize", this.resizeHandler);
+    window.addEventListener("scroll", this.scrollHandler);
+   
+  },
+  destroyed() {
+    window.onresize = null;
+  },
+  computed: {
+    activeIndex() {
+      for (let index = 0; index < this.originMenuList.length; index++) {
+        const element = this.originMenuList[index];
+        if (window.location.href === element.url) {
+          return element.db_id.toString();
+        }
+      }
+    },
+  },
+  methods: {
+    changeMenu() {
+      this.ifShowMenu = !this.ifShowMenu;
+    },
 
-		getBaseInfo() {
-			axios
-				.get(`${window.site_url}/wp-json/wp/v2/info`)
-				.then((res) => {
-					let data = res.data
-					window.localStorage.setItem('baseInfo', JSON.stringify(data))
-				})
-				.catch({})
-		},
-		getMenuList() {
-			axios
-				.get(`${window.site_url}/wp-json/wp/v2/menu`)
-				.then((res) => {
-					this.originMenuList = res.data
-					this.menuList = transData(
-						res.data,
-						'ID',
-						'menu_item_parent',
-						'children'
-					)
-					for (let i = 0; i < this.menuList.length; i++) {
-						const element = this.menuList[i]
-						for (let j = 0; j < this.menuIcon.length; j++) {
-							const item = this.menuIcon[j]
-							if (item.className === element.classes[0]) {
-								element.iconName = item.iconName
-							}
-						}
-					}
-					window.localStorage.setItem('menuList', JSON.stringify(this.menuList))
-				})
-				.catch()
-		},
-		showSearch() {
-			this.ifShowSearch = true
-			this.$nextTick(() => {
-				this.$refs.searchMain.$refs.searchInput.focus()
-			})
-		},
-		goToPage(route, domain = false, params = '') {
-			let url = ''
-			url += domain ? `${window.home_url}/${route}` : route
-			url += params ? `?${this.convertObj(params)}` : ''
-			window.location.href = url
-		},
-		convertObj(data) {
-			var _result = []
-			for (var key in data) {
-				var value = data[key]
-				if (value.constructor == Array) {
-					value.forEach(function (_value) {
-						_result.push(key + '=' + _value)
-					})
-				} else {
-					_result.push(key + '=' + value)
-				}
-			}
-			return _result.join('&')
-		},
-		handleCommand(command) {
-			if (!command) return
-			this.goToPage(command, true)
-		},
-		closeSearch() {
-			this.ifShowSearch = false
-		},
-		resizeHandler() {
-			this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false
-		},
-		scrollHandler() {
-			const $content = $('#content'),
-				$page = $('#page'),
-				$window = $(window),
-				$catalog = $('#catalog-widget')
-			if ($window.width() > 1000 && $content.height() > 2000) {
-				if ($page.scrollTop() >= $catalog.offset().top) {
-					$('.widget-area .widget-content').addClass('is-fixed')
-					$('.widget-area .widget-content').width($('.widget-area').width())
-					$('.widget-content .widget')
-						.not(':last')
-						.addClass('f_o_r ds-none h-0')
-						.removeClass('ds-block')
-					$('.widget-content .widget:last').css('margin-top', '60px')
-				} else if (
-					$page.scrollTop() >= 0 &&
-					$page.scrollTop() < $catalog.offset().top
-				) {
-					$('.widget-area .widget-content').removeClass('is-fixed')
-					$('.widget-content .widget')
-						.not(':last')
-						.removeClass('f_o_r ds-none h-0')
-						.addClass('ds-block')
-					$('.widget-content .widget:last').css('margin-top', '0')
-				}
-			} else {
-				$('.widget-area .widget-content').removeClass('is-fixed animated')
-			}
+    getBaseInfo() {
+      axios
+        .get(`${window.site_url}/wp-json/wp/v2/info`)
+        .then((res) => {
+          let data = res.data;
+          window.localStorage.setItem("baseInfo", JSON.stringify(data));
+        })
+        .catch({});
+    },
+    getMenuList() {
+      axios
+        .get(`${window.site_url}/wp-json/wp/v2/menu`)
+        .then((res) => {
+          this.originMenuList = res.data;
+          this.menuList = transData(
+            res.data,
+            "ID",
+            "menu_item_parent",
+            "children"
+          );
+          for (let i = 0; i < this.menuList.length; i++) {
+            const element = this.menuList[i];
+            for (let j = 0; j < this.menuIcon.length; j++) {
+              const item = this.menuIcon[j];
+              if (item.className === element.classes[0]) {
+                element.iconName = item.iconName;
+              }
+            }
+          }
+          window.localStorage.setItem(
+            "menuList",
+            JSON.stringify(this.menuList)
+          );
+        })
+        .catch();
+    },
+    showSearch() {
+      this.ifShowSearch = true;
+      this.$nextTick(() => {
+        this.$refs.searchMain.$refs.searchInput.focus();
+      });
+    },
+    handleChangeMenu (route, index) {
+      window.localStorage.setItem('current-menu-item', index)
+      this.goToPage(route)
+    },
+    goToPage(route, domain = false, params = "") {
+      let url = "";
+      url += domain ? `${window.home_url}/${route}` : route;
+      url += params ? `?${convertObj(params)}` : "";
+      window.location.href = url;
+    },
 
-			const scrollY = window.pageYOffset || $page.scrollTop()
-			const header = document.querySelector('header')
+    handleCommand(command) {
+      if (!command) return;
+      this.goToPage(command, true);
+    },
+    closeSearch() {
+      this.ifShowSearch = false;
+    },
+    resizeHandler() {
+      this.ifMobileDevice = document.body.clientWidth <= 1000 ? true : false;
+    },
+    scrollHandler() {
+      // singgle页监听滚动设置目录插件的状态
+      if (window.is_single) {
+        const $content = $("#main"),
+          $page = $("#page"),
+          $window = $(window),
+          $catalog = $("#catalog-widget");
+        if ($window.width() > 1000 && $content.height() > 2000) {
+          if ($page.scrollTop() >= $catalog.offset().top) {
+            $(".widget-area .widget-content").addClass("is-fixed");
+            $(".widget-area .widget-content").width($(".widget-area").width());
+            $(".widget-content .widget")
+              .not(":last")
+              .addClass("f_o_r ds-none h-0")
+              .removeClass("ds-block");
+            $(".widget-content .widget:last").css("margin-top", "60px");
+          } else if (
+            $page.scrollTop() >= 0 &&
+            $page.scrollTop() < $catalog.offset().top
+          ) {
+            $(".widget-area .widget-content").removeClass("is-fixed");
+            $(".widget-content .widget")
+              .not(":last")
+              .removeClass("f_o_r ds-none h-0")
+              .addClass("ds-block");
+            $(".widget-content .widget:last").css("margin-top", "0");
+          }
+        } else {
+          $(".widget-area .widget-content").removeClass("is-fixed animated");
+        }
+      }
+      // 监听滚动设置header的状态
+      const scrollY = window.pageYOffset;
+      const header = document.querySelector("header");
+      scrollY <= window.lastScroll
+        ? (header.style.top = "0")
+        : (header.style.top = "-60px");
+      scrollY > 0
+        ? (header.style.position = "fixed")
+        : (header.style.position = "relative");
+      window.lastScroll = scrollY;
+    },
+  },
+});
 
-			scrollY <= window.lastScroll
-				? (header.style.top = '0')
-				: (header.style.top = '-60px')
-			scrollY > 60
-				? (header.style.position = 'fixed')
-				: (header.style.position = 'relative')
-			window.lastScroll = scrollY
-		},
-	},
-})
-
-const footer= new Vue({
-	el: '#footer',
-	data() {
-		return {
-			ifMobileDevice: window.if_mobile_device,
-			icpNum: window.icp_num,
-			startFullYear: window.start_full_year,
-			nowFullYear: window.now_full_year
-		}
-	},
-})
+const footer = new Vue({
+  el: "#footer",
+  data() {
+    return {
+      ifMobileDevice: window.if_mobile_device,
+      icpNum: window.icp_num,
+      startFullYear: window.start_full_year,
+      nowFullYear: window.now_full_year,
+    };
+  },
+});
 
 const fixedPart = new Vue({
-	el: "#fixed-plugins",
-	data() {
-			return {
-					isLogin: window.is_login,
-					searchValue:'',
-					ifShowChangeMode: false,
-					ifShowSearchFormDialog: false,
-					season: "spring",
-					mascot: {
-							"spring": "sakura",
-							"winter": "snow",
-					}
-			}
-	},
-	mounted() {
-			const self = this
-			window.onload = () => {
-				this.init()
-			}
-			// 登录和登出
-			var plugins_ = document.querySelector(".fixed-plugins");
-			var login_ = document.querySelector(".fp-login");
-			var logout_ = document.querySelector(".fp-logout");
-			var register_ = document.getElementsByClassName("fp-register")[0];
-			if (login_ || logout_) {
-					hover(plugins_, function () {
-							toggleClass(register_, "show")
-					}, function () {
-							toggleClass(register_, "hide")
-					})
-			}
+  el: "#fixed-plugins",
+  data() {
+    return {
+      isLogin: window.is_login,
+      searchValue: "",
+      ifShowChangeMode: false,
+      ifShowSearchFormDialog: false,
+      season: "spring",
+      mascot: {
+        spring: "sakura",
+        winter: "snow",
+      },
+    };
+  },
+  mounted() {
+    const self = this;
+    window.onload = () => {
+      this.init();
+    };
+    // 登录和登出
+    var plugins_ = document.querySelector(".fixed-plugins");
+    var login_ = document.querySelector(".fp-login");
+    var logout_ = document.querySelector(".fp-logout");
+    var register_ = document.getElementsByClassName("fp-register")[0];
+    if (login_ || logout_) {
+      hover(
+        plugins_,
+        function () {
+          toggleClass(register_, "show");
+        },
+        function () {
+          toggleClass(register_, "hide");
+        }
+      );
+    }
 
-			// 切换背景功能
-			let [background_, background_in, background_out] = [document.querySelector(".fp-background"), document.querySelector('.fp-background-in'), document.querySelector('.fp-background-out')];
-			background_ && background_.addEventListener('mouseover', function (e) {
-					removeClass(background_out, 'hide');
-					addClass(background_out, 'show');
-					background_out.querySelectorAll('li')[0].onclick = function (event) {
-							Animation.closeGravity();
-							Animation.closeSnow();
-							Animation.snow(self.mascot[self.season], 88);
-					}
-					background_out.querySelectorAll('li')[0].ondblclick = function (event) {
-							Animation.closeSnow();
-					}
-					background_out.querySelectorAll('li')[1].onclick = function (event) {
-							Animation.closeSnow();
-							Animation.closeGravity();
-							Animation.gravity();
-					}
-					background_out.querySelectorAll('li')[1].ondblclick = function (event) {
-							Animation.closeGravity();
-					}
-			})
+    // 切换背景功能
+    let [background_, background_in, background_out] = [
+      document.querySelector(".fp-background"),
+      document.querySelector(".fp-background-in"),
+      document.querySelector(".fp-background-out"),
+    ];
+    background_ &&
+      background_.addEventListener("mouseover", function (e) {
+        removeClass(background_out, "hide");
+        addClass(background_out, "show");
+        background_out.querySelectorAll("li")[0].onclick = function (event) {
+          Animation.closeGravity();
+          Animation.closeSnow();
+          Animation.snow(self.mascot[self.season], 88);
+        };
+        background_out.querySelectorAll("li")[0].ondblclick = function (event) {
+          Animation.closeSnow();
+        };
+        background_out.querySelectorAll("li")[1].onclick = function (event) {
+          Animation.closeSnow();
+          Animation.closeGravity();
+          Animation.gravity();
+        };
+        background_out.querySelectorAll("li")[1].ondblclick = function (event) {
+          Animation.closeGravity();
+        };
+      });
+  },
+  methods: {
+    init() {
+      let myDate = new Date();
+      let mymonth = myDate.getMonth() + 1;
+      let today = dayjs(myDate).format("MM-DD");
+      let todayWithYear = dayjs(myDate).format("YYYY-MM-DD");
+      let MourningDate = ["04-04", "05-12", "12-13"];
+      let ChristmasDate = ["12-24", "12-25"];
+      let NewYearDate = ["2021-01-01"];
+      let _html = document.querySelectorAll("html")[0];
+      let _body = document.querySelectorAll("body")[0];
+      if (document.getElementsByClassName("widget").length > 0) {
+        let _widget_userinfo = document
+          .getElementsByClassName("widget")[0]
+          .querySelectorAll(".user-bg")[0];
+        for (let index = 0; index < MourningDate.length; index++) {
+          if (today === MourningDate[index]) {
+            _html.classList.add("mourning");
+          }
+        }
+        for (let index = 0; index < ChristmasDate.length; index++) {
+          if (today === ChristmasDate[index]) {
+            _widget_userinfo.classList.add("christmas-bg");
+          }
+        }
+        for (let index = 0; index < NewYearDate.length; index++) {
+          if (todayWithYear === NewYearDate[index]) {
+            _widget_userinfo.classList.add("newYear-bg");
+          }
+        }
+      }
 
-	},
-	methods: {
-			init() {
-					let myDate = new Date();
-					let mymonth = myDate.getMonth() + 1;
-					let today = dayjs(myDate).format('MM-DD');
-					let todayWithYear = dayjs(myDate).format('YYYY-MM-DD')
-					let MourningDate = ['04-04', '05-12', '12-13'];
-					let ChristmasDate = ['12-24', '12-25'];
-					let NewYearDate = ['2021-01-01']
-					let _html = document.querySelectorAll('html')[0];
-					let _body = document.querySelectorAll('body')[0];
-					if (document.getElementsByClassName('widget').length > 0) {
-							let _widget_userinfo = document.getElementsByClassName('widget')[0].querySelectorAll('.user-bg')[0];
-							for (let index = 0; index < MourningDate.length; index++) {
-									if (today === MourningDate[index]) {
-											_html.classList.add('mourning')
-									}
-							}
-							for (let index = 0; index < ChristmasDate.length; index++) {
-									if (today === ChristmasDate[index]) {
-											_widget_userinfo.classList.add('christmas-bg')
-									}
-							}
-							for (let index = 0; index < NewYearDate.length; index++) {
-									if (todayWithYear === NewYearDate[index]) {
-											_widget_userinfo.classList.add('newYear-bg')
-									}
-							}
-					}
+      if (1 < mymonth && mymonth <= 4) {
+        this.season = "spring";
+      } else if (10 < mymonth || mymonth <= 1) {
+        this.season = "winter";
+      }
+      Animation.snow(this.mascot[this.season], 88);
+    },
 
-					if (1 < mymonth && mymonth <= 4) {
-							this.season = "spring"
-					} else if (10 < mymonth || mymonth <= 1) {
-							this.season = "winter"
-					}
-					Animation.snow(this.mascot[this.season], 88);
+    showSearchDialog() {
+      this.ifShowSearchFormDialog = true;
+    },
 
-			},
-
-			showSearchDialog() {
-					this.ifShowSearchFormDialog = true
-			},
-
-
-			// 消息推送
-			createMessage(message, time = 1000) {
-					if ($(".message").length > 0) {
-							$(".message").remove();
-					}
-					$("body").append('<div class="message"><p class="message-info">' + message + '</p></div>');
-					setTimeout("$('.message').remove()", time);
-			},
-
-	}
-})
-
+    // 消息推送
+    createMessage(message, time = 1000) {
+      if ($(".message").length > 0) {
+        $(".message").remove();
+      }
+      $("body").append(
+        '<div class="message"><p class="message-info">' + message + "</p></div>"
+      );
+      setTimeout("$('.message').remove()", time);
+    },
+  },
+});
 
 // 返回顶部
 // var backTop = document.getElementsByClassName("fp-gototop")[0];
@@ -377,9 +383,6 @@ const fixedPart = new Vue({
 //     __pageScrollY()
 // }
 
-
-
-
 // 搜索功能
 // let [search_, search_in, search_out, search_form] = [document.querySelector('.fp-search'), document.querySelector('.fp-search-in'), document.querySelector('.fp-search-out'), document.querySelector('.fp-search-out .search-form')];
 // addClass(search_form, 'flex-hc-vc');
@@ -419,7 +422,6 @@ const fixedPart = new Vue({
 //     console.log(imgSrc)
 //     imgSrc = img[i].getAttribute("src").replace(/https:/g, "");
 // }
-
 
 // 繁体简体切换
 // var Default_isFT = 0 // 默认是否繁体，0-简体，1-繁体，如果修改默认为繁体下面的所有“繁”、“简”互换
@@ -465,7 +467,6 @@ const fixedPart = new Vue({
 //     }
 // }
 
-
 // function Traditionalized(cc) {
 //     var str = '',
 //         ss = JTPYStr(),
@@ -488,7 +489,6 @@ const fixedPart = new Vue({
 //     return str;
 // }
 
-
 // var lang_Obj = document.getElementById("fp-change-lang")
 // if (lang_Obj) {
 //     var JF_cn = "ft" + self.location.hostname.toString().replace(/\./g, "")
@@ -508,7 +508,6 @@ const fixedPart = new Vue({
 //         setTimeout("StranBody()", StranIt_Delay)
 //     }
 // }
-
 
 // function JTPYStr() {
 //     return '皑蔼碍爱翱袄奥坝罢摆败颁办绊帮绑镑谤剥饱宝报鲍辈贝钡狈备惫绷笔毕毙闭边编贬变辩辫鳖瘪濒滨宾摈饼拨钵铂驳卜补参蚕残惭惨灿苍舱仓沧厕侧册测层诧搀掺蝉馋谗缠铲产阐颤场尝长偿肠厂畅钞车彻尘陈衬撑称惩诚骋痴迟驰耻齿炽冲虫宠畴踌筹绸丑橱厨锄雏础储触处传疮闯创锤纯绰辞词赐聪葱囱从丛凑窜错达带贷担单郸掸胆惮诞弹当挡党荡档捣岛祷导盗灯邓敌涤递缔点垫电淀钓调迭谍叠钉顶锭订东动栋冻斗犊独读赌镀锻断缎兑队对吨顿钝夺鹅额讹恶饿儿尔饵贰发罚阀珐矾钒烦范贩饭访纺飞废费纷坟奋愤粪丰枫锋风疯冯缝讽凤肤辐抚辅赋复负讣妇缚该钙盖干赶秆赣冈刚钢纲岗皋镐搁鸽阁铬个给龚宫巩贡钩沟构购够蛊顾剐关观馆惯贯广规硅归龟闺轨诡柜贵刽辊滚锅国过骇韩汉阂鹤贺横轰鸿红后壶护沪户哗华画划话怀坏欢环还缓换唤痪焕涣黄谎挥辉毁贿秽会烩汇讳诲绘荤浑伙获货祸击机积饥讥鸡绩缉极辑级挤几蓟剂济计记际继纪夹荚颊贾钾价驾歼监坚笺间艰缄茧检碱硷拣捡简俭减荐槛鉴践贱见键舰剑饯渐溅涧浆蒋桨奖讲酱胶浇骄娇搅铰矫侥脚饺缴绞轿较秸阶节茎惊经颈静镜径痉竞净纠厩旧驹举据锯惧剧鹃绢杰洁结诫届紧锦仅谨进晋烬尽劲荆觉决诀绝钧军骏开凯颗壳课垦恳抠库裤夸块侩宽矿旷况亏岿窥馈溃扩阔蜡腊莱来赖蓝栏拦篮阑兰澜谰揽览懒缆烂滥捞劳涝乐镭垒类泪篱离里鲤礼丽厉励砾历沥隶俩联莲连镰怜涟帘敛脸链恋炼练粮凉两辆谅疗辽镣猎临邻鳞凛赁龄铃凌灵岭领馏刘龙聋咙笼垄拢陇楼娄搂篓芦卢颅庐炉掳卤虏鲁赂禄录陆驴吕铝侣屡缕虑滤绿峦挛孪滦乱抡轮伦仑沦纶论萝罗逻锣箩骡骆络妈玛码蚂马骂吗买麦卖迈脉瞒馒蛮满谩猫锚铆贸么霉没镁门闷们锰梦谜弥觅绵缅庙灭悯闽鸣铭谬谋亩钠纳难挠脑恼闹馁腻撵捻酿鸟聂啮镊镍柠狞宁拧泞钮纽脓浓农疟诺欧鸥殴呕沤盘庞国爱赔喷鹏骗飘频贫苹凭评泼颇扑铺朴谱脐齐骑岂启气弃讫牵扦钎铅迁签谦钱钳潜浅谴堑枪呛墙蔷强抢锹桥乔侨翘窍窃钦亲轻氢倾顷请庆琼穷趋区躯驱龋颧权劝却鹊让饶扰绕热韧认纫荣绒软锐闰润洒萨鳃赛伞丧骚扫涩杀纱筛晒闪陕赡缮伤赏烧绍赊摄慑设绅审婶肾渗声绳胜圣师狮湿诗尸时蚀实识驶势释饰视试寿兽枢输书赎属术树竖数帅双谁税顺说硕烁丝饲耸怂颂讼诵擞苏诉肃虽绥岁孙损笋缩琐锁獭挞抬摊贪瘫滩坛谭谈叹汤烫涛绦腾誊锑题体屉条贴铁厅听烃铜统头图涂团颓蜕脱鸵驮驼椭洼袜弯湾顽万网韦违围为潍维苇伟伪纬谓卫温闻纹稳问瓮挝蜗涡窝呜钨乌诬无芜吴坞雾务误锡牺袭习铣戏细虾辖峡侠狭厦锨鲜纤咸贤衔闲显险现献县馅羡宪线厢镶乡详响项萧销晓啸蝎协挟携胁谐写泻谢锌衅兴汹锈绣虚嘘须许绪续轩悬选癣绚学勋询寻驯训讯逊压鸦鸭哑亚讶阉烟盐严颜阎艳厌砚彦谚验鸯杨扬疡阳痒养样瑶摇尧遥窑谣药爷页业叶医铱颐遗仪彝蚁艺亿忆义诣议谊译异绎荫阴银饮樱婴鹰应缨莹萤营荧蝇颖哟拥佣痈踊咏涌优忧邮铀犹游诱舆鱼渔娱与屿语吁御狱誉预驭鸳渊辕园员圆缘远愿约跃钥岳粤悦阅云郧匀陨运蕴酝晕韵杂灾载攒暂赞赃脏凿枣灶责择则泽贼赠扎札轧铡闸诈斋债毡盏斩辗崭栈战绽张涨帐账胀赵蛰辙锗这贞针侦诊镇阵挣睁狰帧郑证织职执纸挚掷帜质钟终种肿众诌轴皱昼骤猪诸诛烛瞩嘱贮铸筑驻专砖转赚桩庄装妆壮状锥赘坠缀谆浊兹资渍踪综总纵邹诅组钻致钟么为只凶准启板里雳余链泄';

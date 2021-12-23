@@ -1,5 +1,4 @@
 <?php
-
 /**
  *  @package KlausLab
  *  Template Name: 观影记录
@@ -59,7 +58,7 @@ get_header();
     </el-card>
 </div>
 
-<script>
+<script defer>
     const app = new Vue({
         el: "#container",
         data: {

@@ -51,6 +51,16 @@ body header .el-menu.el-menu-horizontal::-webkit-scrollbar-track-piece {
   border-radius: 3px;
 }
 
+body header .el-menu.el-menu-horizontal .el-menu-item.is-active {
+  border-width: 4px;
+}
+
+body #container .el-empty__description p {
+  margin-top: 30px;
+  font-size: 18px;
+  color: #ccc;
+}
+
 body .el-tabs__nav-wrap {
   background: #fff;
   padding: .8rem 1.6rem;

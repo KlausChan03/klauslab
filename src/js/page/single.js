@@ -91,7 +91,6 @@ const index_module = new Vue({
 		
 		getAllArticles() {
 			this.ifShowSingle = false
-			const type = ''
 			return axios
 				.get(`${window.site_url}/wp-json/wp/v2/${window.post_type}/${window.post_id}`)
 				.then((res) => {
@@ -120,23 +119,8 @@ const index_module = new Vue({
 		goToPage(route, domain = false, params = '') {
 			let url = ''
 			url += domain ? `${window.home_url}/${route}` : route
-			url += params ? `?${this.convertObj(params)}` : ''
+			url += params ? `?${convertObj(params)}` : ''
 			window.location.href = url
-		},
-
-		convertObj(data) {
-			var _result = []
-			for (var key in data) {
-				var value = data[key]
-				if (value.constructor == Array) {
-					value.forEach(function (_value) {
-						_result.push(key + '=' + _value)
-					})
-				} else {
-					_result.push(key + '=' + value)
-				}
-			}
-			return _result.join('&')
 		},
 
 		likeOrDislikePost(item, action) {

@@ -1,0 +1,26 @@
+.info-main h3 {
+  color: #333333;
+  font-weight: 600;
+  font-size: 20px;
+  padding: 1.5rem 0;
+  line-height: 2;
+}
+
+.info-main li,
+.info-main span,
+.info-main p {
+  color: #666666;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.info-main label {
+  color: #999999;
+  font-size: 12px;
+}
+
+.info-main .el-rate {
+  height: 24px;
+  line-height: 1;
+  margin-left: 10px;
+}

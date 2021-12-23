@@ -21,7 +21,7 @@ get_header();
             <svg class="icon icon-title mr-10" aria-hidden="true">
                 <use xlink:href="#lalaksks21-worldwide"></use>
             </svg>
-            <h2>{{title}}</h2>
+            <h2>{{title}} [待重构]</h2>
         </div>
         <el-form id="archive-filter" class="archive-filter mt-15">
             <el-form-item class="filter-author" label="作者">
@@ -50,7 +50,7 @@ get_header();
 </div>
 
 
-<script>
+<script defer>
     const app = new Vue({
         el: '#container',
         data: {
@@ -74,7 +74,6 @@ get_header();
                     this.filterArr[1] = $event.target.attributes['data-author'].value;
                     this.filterName[1] = $event.target.innerText;
                 }
-                console.log(this.filterArr)
                 this.search()
             },
             search() {
@@ -82,7 +81,6 @@ get_header();
                 let params = new FormData;
                 params.append('action', 'filter_archive');
                 params.append('filter', this.filterArr);
-                console.log(params)
                 axios.post(`${window.site_url}/wp-admin/admin-ajax.php`, params).then((res) => {
                     this.$nextTick(() => {
                         this.archiveContent = res.data;
