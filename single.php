@@ -9,8 +9,8 @@
 get_header(); ?>
 <?php setPostViews(get_the_ID()); ?>
 
-<link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/page/single.css">
-<link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/catalog.css">
+<link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/page/single.css"  rel="preload">
+<link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/catalog.css"  rel="preload">
 
 <script>
 	window.is_sidebar = "<?php $is_sidebar = boolval(cs_get_option('klausLab_sideBar_switcher'));
@@ -61,8 +61,8 @@ get_header(); ?>
 					<div class="entry-extra-right flex-hr-vc">
 						<div class="flex-v flex-hc-vt">
 							<span class="fs-12">{{posts.post_metas.author}}</span>
-							<el-tooltip class="item" effect="dark" :content="posts.date | formateDateMain" placement="bottom">
-								<span class="fs-12">{{posts.date | formateDate}}</span>
+							<el-tooltip class="item" effect="dark" :content="posts.date | formatDateToSecond" placement="bottom">
+								<span class="fs-12">{{posts.date | formatDate}}</span>
 							</el-tooltip>
 						</div>
 						<div v-html="posts.post_metas.avatar" class="ml-10"></div>

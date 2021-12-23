@@ -1,4 +1,4 @@
-Vue.component('kl-reward', {
+const klReward = Vue.component('kl-reward', {
     data() {
         return {
             ifShowPayImage: true,

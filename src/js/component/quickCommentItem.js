@@ -1,5 +1,5 @@
 
-Vue.component('quick-comment-item', {
+const quickCommentItem =  Vue.component('quick-comment-item', {
   props: ['commentData'],
   mixins:[filterMixin],
   data() {
@@ -27,7 +27,7 @@ Vue.component('quick-comment-item', {
                 <div class="comment-comment">
                   <p v-html="item.content.rendered"></p> 
                   <div class="comment-info flex-hb-vc">
-                    <span class="comment-time">{{item.date | formateDate}}</span> 
+                    <span class="comment-time">{{item.date | formatDate}}</span> 
                     <span class="reply flex-hr-vc">
                       <a @click="replyToThis(item)" rel="nofollow"  data-respondelement="respond" aria-label="" class="comment-reply-link">
                         <i class="lalaksks lalaksks-ic-reply"></i>

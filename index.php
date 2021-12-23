@@ -18,7 +18,7 @@ get_header();
 
 ?>
 
-<link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/page/index.css">
+<link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/page/index.css"  rel="preload">
 <script type="text/javascript">
   window.is_sidebar = "<?php $is_sidebar = boolval(cs_get_option('klausLab_sideBar_switcher'));
                         echo $is_sidebar; ?>";
@@ -40,7 +40,7 @@ get_header();
           </article>
         </template>
         <template v-else>
-          <el-empty class="flex-hc-vc flex-v" style="min-height: 300px"></el-empty>
+          <el-empty></el-empty>
         </template>
       </template>
       <kl-skeleton v-else type="post"></kl-skeleton>
@@ -55,7 +55,7 @@ get_header();
           </article>
         </template>
         <template v-else>
-          <el-empty class="flex-hc-vc flex-v" style="min-height: 300px"></el-empty>
+          <el-empty></el-empty>
         </template>
       </template>
       <kl-skeleton v-else type="post"></kl-skeleton>
@@ -69,10 +69,16 @@ get_header();
       </el-dropdown-menu>
     </el-dropdown>
   </div>
-  <el-card class="flex-hc-vc mt-15" shadow="hover" v-if="per_page[postType]">
-    <el-pagination layout="prev, pager, next" background :page-size="per_page[postType]" :current-page.sync="page" :total="getTotal" :hide-on-single-page="judgeCount" @current-change="handleCurrentChange">
+
+  <el-card class="flex-hc-vc mt-15" shadow="hover" v-if="getCurrent" :title="getCurrent">
+    <el-pagination layout="prev, pager, next" background :page-size="getCurrent" :current-page.sync="page" :total="getTotal" :hide-on-single-page="judgeCount" @current-change="handleCurrentChange">
     </el-pagination>
   </el-card>
+  <template>
+    <div>
+      
+    </div>
+  </template>
   <div class="image-part" v-if="imageUrl">
     <el-image ref="imageUrl" style="width: 0; height: 0;" :src="imageUrl" :preview-src-list="imageUrls"> </el-image>
   </div>

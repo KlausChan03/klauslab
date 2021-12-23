@@ -54,13 +54,16 @@
 
 		// 首屏Loading
 		const max_timer = 2
+    document.querySelector("#page").style.overflowY = 'hidden'
 		setTimeout(() => {
 			fadeout(document.getElementById('kl-loader'), 0, 1500);
 			document.getElementById("kl-loader-container") && document.getElementById("kl-loader-container").remove();
+      document.querySelector("#page").style.overflowY = 'auto'
 		}, max_timer * 1000);
 		window.onload = function() {
 			fadeout(document.getElementById('kl-loader'), 0, 1500);
 			document.getElementById("kl-loader-container") && document.getElementById("kl-loader-container").remove();
+      document.querySelector("#page").style.overflowY = 'auto'
 		}
 	</script>
 
@@ -82,7 +85,7 @@
 			<div class="flex-hc-vc">
 				<i class="lalaksks lalaksks-ic-search" @click="showSearch"></i>
 			</div>
-			<el-menu v-show="ifShowMenu" class="el-menu-vertical" :props="{'defaultActive': activeIndex}">
+			<el-menu v-show="ifShowMenu" class="el-menu-vertical" :default-active="activeIndex">
 				<div class="flex-hb-vc p-10">
 					<el-button v-if="isLogin" class="flex-1-2" @click="goToPage('page-post-simple', true, {type:'new'})" type="primary" size="medium">发布</el-button>
 					<el-button v-if="!isLogin" class="flex-1-2" @click="goToPage('wp-login.php?action=login',true)" type="primary" size="medium">登录</el-button>
@@ -117,7 +120,7 @@
 					<div v-html="customLogo"> </div>
 				</div>
 				<div class="ml-15">
-					<el-menu class="el-menu-horizontal" mode="horizontal" :props="{'defaultActive': activeIndex}">
+					<el-menu class="el-menu-horizontal" mode="horizontal" :default-active="activeIndex">
 						<template v-for="(item,index) in menuList">
 							<el-menu-item v-if="!item.children || item.children.length === 0" :index="item.db_id.toString()" @click="goToPage(item.url)"><i v-if="item.iconName" :class="item.iconName"></i><span>{{item.title}}</span></el-menu-item>
 							<template v-if="item.children && item.children.length > 0">

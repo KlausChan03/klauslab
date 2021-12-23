@@ -41,7 +41,7 @@ const dir = {
 	minimist = require('minimist')
 
 // let FILTERJS = [dir.src + '/js/*.js', '!' + dir.src + '/js/*.min.js', '!' + dir.src + '/js/**/canvas.js', '!' + dir.src + '/js/**/fixed-plugins.js'];
-let HEADERJS = [dir.src + '/js/options.js']
+let HEADERJS = []
 let FOOTERJS = [dir.src + '/js/common.js', dir.src + '/js/utils.js']
 let COPYJS = [
 	dir.src + '/js/**/*.min.js',
@@ -170,33 +170,32 @@ const js = {
 	filename: 'scripts.js',
 }
 
-gulp.task('headerJs', function () {
-	return (
-		gulp
-			.src(HEADERJS)
-			.pipe(
-				babel({
-					presets: [
-						[
-							'es2015',
-							{
-								strict: false,
-								loose: true,
-							},
-						],
-					],
-				})
-			)
-			// 压缩不美化
-			.pipe(
-				uglify({
-					compress: true,
-				})
-			)
-			.pipe(concat('options.js'))
-			.pipe(gulp.dest(js.build))
-	)
-})
+// gulp.task('headerJs', function () {
+// 	return (
+// 		gulp
+// 			.src(HEADERJS)
+// 			.pipe(
+// 				babel({
+// 					presets: [
+// 						[
+// 							'es2015',
+// 							{
+// 								strict: false,
+// 								loose: true,
+// 							},
+// 						],
+// 					],
+// 				})
+// 			)
+// 			// 压缩不美化
+// 			.pipe(
+// 				uglify({
+// 					compress: true,
+// 				})
+// 			)
+// 			.pipe(gulp.dest(js.build))
+// 	)
+// })
 
 gulp.task('footerJs', function () {
 	return (
@@ -287,5 +286,5 @@ gulp.task('constants', function () {
 
 gulp.task(
 	'default',
-	gulp.series('clean', 'headerJs', 'footerJs', 'css', 'scss', 'copy')
+	gulp.series('clean', 'footerJs', 'css', 'scss', 'copy')
 )

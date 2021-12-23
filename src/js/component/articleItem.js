@@ -25,10 +25,10 @@ Vue.component('article-item', {
         <el-tag class="ml-10" size="small" type="danger" v-if="postData.sticky">TOP</el-tag>
         <el-tag class="ml-10" size="small" type="danger" v-if="postData.newest">NEW</el-tag>
         <el-tag class="ml-10" size="small" type="danger" v-if="postData.hotest">HOT</el-tag>
-        <el-tag class="ml-10" size="small" v-for="(item,index) in postData.post_metas.tag_name">
+        <el-tag class="ml-10" size="small" v-for="(item,index) in postData.post_metas.tag_name" :key="item + index">
           {{item}}
         </el-tag>
-        <el-tag type="warning" class="ml-10" size="small" v-for="(item,index) in postData.post_metas.cat_name">
+        <el-tag type="warning" class="ml-10" size="small" v-for="(item,index) in postData.post_metas.cat_name" :key="item + index">
           {{item}}
         </el-tag>
       </div>     
@@ -50,8 +50,8 @@ Vue.component('article-item', {
           <div v-html="postData.post_metas.avatar" class="mr-10"></div>
           <div class="flex-v flex-hc-vt">
             <span class="fs-12">{{postData.post_metas.author}}</span>
-            <el-tooltip class="item" effect="dark" :content="postData.date | formateDateMain" placement="bottom">
-              <span class="fs-12" >{{postData.date | formateDate}}</span>
+            <el-tooltip class="item" effect="dark" :content="postData.date | formatDateToSecond" placement="bottom">
+              <span class="fs-12" >{{postData.date | formatDate}}</span>
             </el-tooltip>
           </div>
         </div>
@@ -84,8 +84,8 @@ Vue.component('article-item', {
 						<div v-html="postData.post_metas.avatar" class="mr-10"></div>
 							<div class="flex-v flex-hc-vt">
 								<span class="fs-12">{{postData.post_metas.author}}</span>
-								<el-tooltip class="item" effect="dark" :content="postData.date | formateDateMain" placement="bottom">
-									<span class="fs-12" >{{postData.date | formateDate}}</span>
+								<el-tooltip class="item" effect="dark" :content="postData.date | formatDateToSecond" placement="bottom">
+									<span class="fs-12" >{{postData.date | formatDate}}</span>
 								</el-tooltip>
 							</div>
 						</div>

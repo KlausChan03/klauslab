@@ -1,10 +1,13 @@
-let filterMixin = {
+window.filterMixin = {
     filters: {
-        formateDate: (value) => {
+        formatDate: (value) => {
             return dayjs(value).fromNow()
         },
-        formateDateMain: (value) => {
+        formatDateToSecond: (value) => {
             return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
+        },
+        formatDateToSecond: (value) => {
+          return dayjs(value).format('YYYY-MM-DD')
         }
     }
 }
