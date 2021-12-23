@@ -10,7 +10,7 @@
 			format('woff'),
 		url('//at.alicdn.com/t/font_765116_mly7aa439a.ttf?t=1626245433174')
 			format('truetype');
-	font-display: 'auto';
+	font-display: optional;
 }
 // @font-face {
 //   font-family: 'lalaksks21';  /* project id 1616851 */
@@ -86,7 +86,7 @@
 	font-family: Play, 'Microsoft Yahei', 'Hiragino Sans GB', 'Helvetica Neue',
 		Helvetica, tahoma, arial, 'WenQuanYi Micro Hei', Verdana, sans-serif,
 		'\5B8B\4F53';
-	font-display: swap;
+	font-display: optional;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 
