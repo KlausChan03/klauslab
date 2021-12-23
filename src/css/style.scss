@@ -10,20 +10,10 @@
 			format('woff'),
 		url('//at.alicdn.com/t/font_765116_mly7aa439a.ttf?t=1626245433174')
 			format('truetype');
-	font-display: optional;
+	font-display: swap;
 }
-// @font-face {
-//   font-family: 'lalaksks21';  /* project id 1616851 */
-//   src: url('//at.alicdn.com/t/font_1616851_1gtnw3vh59j.eot');
-//   src: url('//at.alicdn.com/t/font_1616851_1gtnw3vh59j.eot?#iefix') format('embedded-opentype'),
-//   url('//at.alicdn.com/t/font_1616851_1gtnw3vh59j.woff2') format('woff2'),
-//   url('//at.alicdn.com/t/font_1616851_1gtnw3vh59j.woff') format('woff'),
-//   url('//at.alicdn.com/t/font_1616851_1gtnw3vh59j.ttf') format('truetype'),
-//   url('//at.alicdn.com/t/font_1616851_1gtnw3vh59j.svg#lalaksks21') format('svg');
-// }
 
 // 主要标签元素自定义设置
-
 :root {
 	--primaryText: #222831;
 	--regularText: #393e46;
@@ -86,7 +76,7 @@
 	font-family: Play, 'Microsoft Yahei', 'Hiragino Sans GB', 'Helvetica Neue',
 		Helvetica, tahoma, arial, 'WenQuanYi Micro Hei', Verdana, sans-serif,
 		'\5B8B\4F53';
-	font-display: optional;
+	font-display: swap;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 
