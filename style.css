@@ -139,7 +139,7 @@ body .about-main .el-menu.el-menu--horizontal {
   font-family: 'lalaksks';
   /* Project id 765116 */
   src: url("//at.alicdn.com/t/font_765116_mly7aa439a.woff2?t=1626245433174") format("woff2"), url("//at.alicdn.com/t/font_765116_mly7aa439a.woff?t=1626245433174") format("woff"), url("//at.alicdn.com/t/font_765116_mly7aa439a.ttf?t=1626245433174") format("truetype");
-  font-display: optional;
+  font-display: swap;
 }
 
 :root {
@@ -201,7 +201,9 @@ body .about-main .el-menu.el-menu--horizontal {
   word-wrap: break-word;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  font-family: Play, 'Microsoft Yahei', 'Hiragino Sans GB', 'Helvetica Neue', Helvetica, tahoma, arial, 'WenQuanYi Micro Hei', Verdana, sans-serif, '\5B8B\4F53';
+  font-family: Play, 'Microsoft Yahei', 'Hiragino Sans GB', 'Helvetica Neue',
+ Helvetica, tahoswapl, 'WenQuanYi Micro Hei', Verdana, sans-serif,
+ '\5B8B\4F53';
   font-display: optional;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -205,7 +205,7 @@ function footer_script()
   // 组件
   wp_enqueue_script('search', KL_THEME_URI . '/js/component/search.js', array(), '1.0', false);
   wp_enqueue_script('skeleton', KL_THEME_URI . '/js/component/skeleton.js', array(), '1.0', false);
-  wp_enqueue_script('empty', KL_THEME_URI . '/js/component/empty.js', array(), '1.0', false);
+  // wp_enqueue_script('empty', KL_THEME_URI . '/js/component/empty.js', array(), '1.0', false);
   wp_enqueue_script('filterMixin', KL_THEME_URI . '/js/mixin/filterMixin.js', array(), '1.0', false);
   // 通用
   if (FE_ENV !== "Development") {
