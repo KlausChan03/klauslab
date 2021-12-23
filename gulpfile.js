@@ -12,7 +12,7 @@ const dir = {
 		build:
 			env === 'dev'
 				? 'C:/Tools/xampp/htdocs/dashboard/klausLab/wp-content/themes/KlausLab/' // 'C:/xampp/htdocs/dashboard/klausLab/wp-content/themes/klausLab/'
-				: '/var/www/html/wordpress/wp-content/themes/KlausLab/',
+				: '/www/wwwroot/wordpress/wp-content/themes/KlausLab/',
 	},
 	// Gulp 和 插件
 	gulp = require('gulp'),
