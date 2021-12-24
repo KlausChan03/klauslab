@@ -160,6 +160,11 @@ function woocommerce_support()
 
 function normal_style_script()
 {
+
+  // jquery.min.js
+  wp_enqueue_script('jquery', KL_THEME_URI . '/js/lib/jquery-3.1.1.min.js', array(), '3.1.1', false);
+  // 基础方法
+  wp_enqueue_script('myUtil', KL_THEME_URI . '/js/utils.js', array(), '1.0', false);
   if (FE_ENV !== "Development") {
     // 除style.css之外的样式
     wp_enqueue_style('main', KL_THEME_URI . '/css/main.css', array(), '1.0', false);
@@ -167,16 +172,13 @@ function normal_style_script()
     wp_enqueue_script('vue', KL_THEME_URI . '/js/lib/vue.min.js', array(), '2.6.0', false);
   } else {
     // 动画库样式
-    wp_enqueue_style('animate', KL_THEME_URI . '/css/animate.min.css', array(), '3.5.1', false);
-    // 基础方法
-    wp_enqueue_script('myUtil', KL_THEME_URI . '/js/utils.js', array(), '1.0', false);
+    wp_enqueue_style('animate', KL_THEME_URI . '/css/animate.min.css', array(), '3.5.1', false);    
     // 插件样式
     wp_enqueue_style('supportCss', KL_THEME_URI . '/css/support.css', array(), '1.0', false);
     // vue.min.js   
     wp_enqueue_script('vue', KL_THEME_URI . '/js/lib/vue.dev.min.js', array(), '2.6.0', false);
   }
-  // jquery.min.js
-  wp_enqueue_script('jquery', KL_THEME_URI . '/js/lib/jquery-3.1.1.min.js', array(), '3.1.1', false);
+
   // axios.min.js
   wp_enqueue_script('axios', KL_THEME_URI . '/js/lib/axios.min.js', array(), '0.19.0', false);
   // ElementUI
