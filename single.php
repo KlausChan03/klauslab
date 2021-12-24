@@ -13,8 +13,6 @@ get_header(); ?>
 <link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/catalog.css"  rel="preload">
 
 <script>
-	window.is_sidebar = "<?php $is_sidebar = boolval(cs_get_option('klausLab_sideBar_switcher'));
-												echo $is_sidebar; ?>";
 	window.post_id = '<?php echo get_the_ID(); ?>' || ''
 	window.post_type = '<?php echo get_post_type($post); ?>' || ''
 	if (window.post_type === 'post') {
@@ -103,5 +101,6 @@ get_header(); ?>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickComment.js" defer></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/single.js" defer></script>
 
-<?php $is_sidebar ? get_sidebar() : ''; ?>
+
+<?php $is_sidebar && is_mobile() ? get_sidebar() : ''; ?>
 <?php get_footer(); ?>

@@ -35,5 +35,5 @@ get_header(); ?>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickCommentItem.js" defer></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickComment.js" defer></script>
 
-<?php get_sidebar(); ?>
+<?php $is_sidebar && is_mobile() ? get_sidebar() : ''; ?>
 <?php get_footer(); ?>
