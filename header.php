@@ -11,7 +11,6 @@
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
-
 <head>
 	<?php
 	$description = cs_get_option('klausLab_description');
@@ -34,6 +33,7 @@
 		// 全局参数
 		window.is_login = "<?php echo is_user_logged_in(); ?>";
 		window.is_single = "<?php echo is_single(); ?>";
+		window.is_home = "<?php echo is_home(); ?>";
 		window.the_custom_logo = `<?php echo the_custom_logo(); ?>`;
 		window.the_avatar = `<?php echo get_avatar($current_user->user_email, 38); ?>`;
 		window.the_bloginfo_name = `<?php echo get_bloginfo('name'); ?>`;
@@ -51,29 +51,30 @@
 		window.user_full_name = `<?php echo $current_user->user_firstname; ?>`;
 		window.wp_count_posts = "<?php $publish_posts = wp_count_posts()->publish;
 															echo $publish_posts; ?>";
-
-		// 首屏Loading
-		const max_timer = 2
-    document.querySelector("#page").style.overflowY = 'hidden'
-		setTimeout(() => {
-			fadeout(document.getElementById('kl-loader'), 0, 1500);
-			document.getElementById("kl-loader-container") && document.getElementById("kl-loader-container").remove();
-      document.querySelector("#page").style.overflowY = 'auto'
-		}, max_timer * 1000);
-		window.onload = function() {
-			fadeout(document.getElementById('kl-loader'), 0, 1500);
-			document.getElementById("kl-loader-container") && document.getElementById("kl-loader-container").remove();
-      document.querySelector("#page").style.overflowY = 'auto'
-		}
+    // 首屏Loading
+    if (window.is_home) {
+      const max_timer = 2
+      const pageDom = document.querySelector("#page")
+      const headerDom = document.querySelector("#header")
+      const loadingDom = document.createElement('div')
+      loadingDom.setAttribute('id','kl-loader-container')
+      loadingDom.setAttribute('class','kl-loader-container')
+      loadingDom.innerHTML = "<div class='loader-wrapper ☯-bg fadeOut animated'> <div class='☯'></div> </div>"
+      pageDom.insertBefore(loadingDom, headerDom)
+      const loadingMainDom = document.querySelector("#kl-loader")
+      pageDom.style.overflowY = 'hidden'
+      setTimeout(() => {
+        fadeout(loadingMainDom, 0, 1500);
+        loadingDom && loadingDom.remove();
+        pageDom.style.overflowY = 'auto'
+      }, max_timer * 1000);
+      window.onload = function() {
+        fadeout(loadingMainDom, 0, 1500);
+        loadingDom && loadingDom.remove();
+        pageDom.style.overflowY = 'auto'
+      }
+    }
 	</script>
-
-	<!-- loading 动画  -->
-	<div id="kl-loader-container" class="kl-loader-container">
-		<div class="loader-wrapper ☯-bg fadeOut animated">
-			<div class='☯'></div>
-		</div>
-	</div>
-
 	<header id="header" class="site-header" role="banner" v-cloak>
 		<div v-if="ifMobileDevice" id="site-touch-header" class="menu-touch">
 			<div class="menu-toggle flex-hc-vc" @click="changeMenu">
