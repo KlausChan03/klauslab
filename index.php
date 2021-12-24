@@ -15,17 +15,9 @@
 
 
 get_header();
-
 ?>
 
 <link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/page/index.css"  rel="preload">
-<script type="text/javascript">
-  window.is_sidebar = "<?php $is_sidebar = boolval(cs_get_option('klausLab_sideBar_switcher'));
-                        echo $is_sidebar; ?>";
-  window._AMapSecurityConfig = {
-    securityJsCode: '63ff502b168849801ec542fe31304563',
-  }
-</script>
 
 <div id="post-container" class="main-area main-content pos-r" :class="!isSidebar ? 'w-1': ''" role="main" v-cloak>
   <el-tabs @tab-click="changeType">
@@ -91,5 +83,5 @@ get_header();
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickComment.js" defer></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/index.js" defer></script>
 
-<?php $is_sidebar ? get_sidebar() : ''; ?>
+<?php $is_sidebar && is_mobile() ? get_sidebar() : ''; ?>
 <?php get_footer(); ?>

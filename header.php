@@ -32,6 +32,7 @@
 	<script>
 		// 全局参数
 		window.is_login = "<?php echo is_user_logged_in(); ?>";
+    window.is_sidebar = "<?php $is_sidebar = boolval(cs_get_option('klausLab_sideBar_switcher')); echo $is_sidebar; ?>";
 		window.is_single = "<?php echo is_single(); ?>";
 		window.is_home = "<?php echo is_home(); ?>";
 		window.the_custom_logo = `<?php echo the_custom_logo(); ?>`;
@@ -51,6 +52,7 @@
 		window.user_full_name = `<?php echo $current_user->user_firstname; ?>`;
 		window.wp_count_posts = "<?php $publish_posts = wp_count_posts()->publish;
 															echo $publish_posts; ?>";
+    window._AMapSecurityConfig = { securityJsCode: '63ff502b168849801ec542fe31304563', }
     // 首屏Loading
     if (window.is_home) {
       const max_timer = 2
