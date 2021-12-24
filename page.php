@@ -35,5 +35,9 @@ get_header(); ?>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickCommentItem.js" defer></script>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/component/quickComment.js" defer></script>
 
-<?php $is_sidebar && is_mobile() ? get_sidebar() : ''; ?>
+<?php
+$is_sidebar = boolval(cs_get_option('klausLab_sideBar_switcher'));
+$is_mobile = boolval(is_mobile());
+$is_sidebar && !$is_mobile ? get_sidebar() : ''; 
+?>
 <?php get_footer(); ?>

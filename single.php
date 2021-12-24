@@ -18,11 +18,7 @@ get_header(); ?>
 	if (window.post_type === 'post') {
 		window.post_type = 'posts'
 	}
-	window._AMapSecurityConfig = {
-		securityJsCode: '63ff502b168849801ec542fe31304563',
-	}
 </script>
-
 <main id="main" class="main-area main-content pos-r" :class="!isSidebar ? 'w-1': ''" role="main" v-cloak>
 	<kl-skeleton v-if="!ifShowSingle" class="article-skeleton" type="single"></kl-skeleton>
 	<div id="catalog-content-wrapper"></div>
@@ -102,5 +98,10 @@ get_header(); ?>
 <script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/single.js" defer></script>
 
 
-<?php $is_sidebar && is_mobile() ? get_sidebar() : ''; ?>
+<?php
+$is_sidebar = boolval(cs_get_option('klausLab_sideBar_switcher'));
+$is_mobile = boolval(is_mobile());
+$is_sidebar && !$is_mobile ? get_sidebar() : ''; 
+?>
+
 <?php get_footer(); ?>
