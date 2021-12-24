@@ -548,11 +548,10 @@ class ParserDom
         return $node->parentNode;
     }
 }
-$PageSize = 20;
 $ValidTimeSpan = 60 * 60 * 24;
 $From = $_GET['from'];
 $UserID = $_GET['db_id'];
-
+$PageSize = $_GET['pageSize'];
 $Type = $_GET['type'];
 
 if ($Type == 'movie') {
