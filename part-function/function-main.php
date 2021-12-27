@@ -8,10 +8,10 @@
 
 // 定义目录变量
 // @if NODE_ENV = 'prod'
-define('FE_ENV', "Production");
+// define('FE_ENV', "Production");
 // @endif
 // @if NODE_ENV = 'dev'
-// define('FE_ENV', "Development");
+define('FE_ENV', "Development");
 // @endif
 
 if (FE_ENV !== "Development") {

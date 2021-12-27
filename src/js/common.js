@@ -1,4 +1,5 @@
 const _ = window.lodash;
+
 const header = new Vue({
   el: "#header",
   components: {
@@ -24,6 +25,7 @@ const header = new Vue({
       customLogo: window.the_custom_logo,
       userFullName: window.user_full_name,
       homeUrl: window.home_url,
+      // catalogToTop: ''
     };
   },
   mounted() {
@@ -40,6 +42,11 @@ const header = new Vue({
         window.localStorage.getItem("menuList")
       );
     }
+    // setTimeout(() => {
+    //   this.catalogToTop = $("#catalog-widget").offset().top    
+    // console.log(this.catalogToTop)
+
+    // }, 1500);
     window.addEventListener("resize", this.resizeHandler);
     window.addEventListener("scroll", this.scrollHandler);
    
@@ -129,11 +136,15 @@ const header = new Vue({
       // singgle页监听滚动设置目录插件的状态
       if (window.is_single) {
         const $content = $("#main"),
-          $page = $("#page"),
           $window = $(window),
           $catalog = $("#catalog-widget");
+        const catalogHeight = window.sessionStorage.getItem('catalogHeight')
+        if ( $catalog.offset().top && !catalogHeight) {
+          window.sessionStorage.setItem('catalogHeight', $catalog.offset().top)
+        }
+        console.log($window.scrollTop(),catalogHeight )
         if ($window.width() > 1000 && $content.height() > 2000) {
-          if ($page.scrollTop() >= $catalog.offset().top) {
+          if ($window.scrollTop() >= catalogHeight) {
             $(".widget-area .widget-content").addClass("is-fixed");
             $(".widget-area .widget-content").width($(".widget-area").width());
             $(".widget-content .widget")
@@ -141,10 +152,7 @@ const header = new Vue({
               .addClass("f_o_r ds-none h-0")
               .removeClass("ds-block");
             $(".widget-content .widget:last").css("margin-top", "60px");
-          } else if (
-            $page.scrollTop() >= 0 &&
-            $page.scrollTop() < $catalog.offset().top
-          ) {
+          } else {
             $(".widget-area .widget-content").removeClass("is-fixed");
             $(".widget-content .widget")
               .not(":last")

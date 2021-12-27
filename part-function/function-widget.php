@@ -66,20 +66,21 @@ function widget_userinfo()
 
 ?>
 
-
-
 	<div class="widget-user-container">
 		<div class="user-bg"></div>
 		<div class="user-main">
-			<div class="user-avatar flex-hc-vc">
-				<?php if (function_exists('get_avatar')) {
-					echo get_avatar($current_user->user_email, 64);
-				} ?>
-			</div>
-			<div class="user-default flex-hl-vc" style="padding-left: 90px; line-height: 32px">
-				<span class="fs-16"><?php echo ($user_name ? '@' . $user_name : ''); ?></span>
-				<span class="ml-5"><?php echo get_author_class($current_user->user_email); ?></span>
-			</div>
+      <?php 
+        $is_login = is_user_logged_in();
+        $the_avatar = get_avatar($current_user->user_email, 64);
+        if ($is_login === true) {?>        
+          <div class="user-avatar flex-hc-vc">		
+            <?php echo $the_avatar; ?>
+          </div>
+          <div class="user-default flex-hl-vc" style="padding-left: 90px; line-height: 32px">
+            <span class="fs-16"><?php echo ($user_name ? '@' . $user_name : ''); ?></span>
+            <span class="ml-5"><?php echo get_author_class($current_user->user_email); ?></span>
+          </div>
+      <?php } ?>
 			<div class="user-info-main flex-hb-vc">
 				<?php global $user_ID;
 				if (!$current_user->display_name && $user_ID === 0) : ?>
@@ -90,7 +91,6 @@ function widget_userinfo()
 					<p class="flex-hc-vc flex-v"><span> <?php echo (count_user_posts($user_ID, 'moments')); ?> 篇</span><span>说说</span></p>
 					<span class="flex-hc-vc col-b2bbbe">/</span>
 					<p class="flex-hc-vc flex-v"><span> <?php echo (get_comments('count=true&user_id=' . $user_ID)); ?> 条</span><span>评论</span></p>
-
 					<?php
 					if (in_array('administrator', $current_user->roles)) {
 						$movie_data = json_decode(file_get_contents(get_template_directory() . '/inc/douban/cache/movie.json'))->data;
@@ -98,11 +98,7 @@ function widget_userinfo()
 						echo ('<span class="flex-hc-vc col-b2bbbe">/</span> <p class="flex-hc-vc flex-v"><span> ' . $movoe_data_lengh . ' 条</span><span>影评</span></p> ');
 					}
 					?>
-
-
 				<?php endif; ?>
-
-
 			</div>
 		</div>
 	</div>
