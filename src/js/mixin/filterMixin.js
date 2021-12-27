@@ -8,6 +8,9 @@ window.filterMixin = {
         },
         formatDateToSecond: (value) => {
           return dayjs(value).format('YYYY-MM-DD')
+        },
+        formatUserName: (value) => {
+          return value.split('')[0].toUpperCase()
         }
     }
 }

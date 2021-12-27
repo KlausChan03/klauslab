@@ -5,10 +5,6 @@ let secondaryPart = new Vue({
       ifShowSidebar: false,
     };
   },
-
-  created() {
-    this.ifShowSidebar = false;
-  },
   mounted() {
     this.showTimerFunc();
     window.is_single && this.getCataLogFunc();
@@ -22,31 +18,29 @@ let secondaryPart = new Vue({
   },
   methods: {
     getCataLogFunc() {
-      this.$nextTick(() => {
-        const widgetDom = document.querySelectorAll(".widget-content")[0];
-        const cataLogContainer = document.createElement("aside");
-        let cataLogDom = document.createElement("div");
-        cataLogContainer.appendChild(cataLogDom);
-        const len = widgetDom.childNodes.length;
-        widgetDom.insertBefore(cataLogContainer, widgetDom.childNodes[len]);
-        cataLogContainer.setAttribute("id", "catalog-widget");
-        cataLogContainer.setAttribute("class", "widget widget_catalog");
-        cataLogDom.setAttribute("id", "catalog-content");
-        setTimeout(() => {
-          new Catalog({
-            contentEl: "entry-content",
-            catalogEl: "catalog-content",
-            selector: ["h1", "h2", "h3", "h4", "h5", "h6", "strong"],
-            cool: true,
-          });
-          this.$nextTick(() => {
-            const catalogContent = document.querySelector("#catalog-content");
-            if (!catalogContent.clientHeight) {
-              cataLogContainer.style.display = "none";
-            }
-          });
-        }, 8000);
-      });
+      const widgetDom = document.querySelectorAll(".widget-content")[0];
+      const cataLogContainer = document.createElement("aside");
+      let cataLogDom = document.createElement("div");
+      cataLogContainer.appendChild(cataLogDom);
+      const len = widgetDom.childNodes.length;
+      widgetDom.insertBefore(cataLogContainer, widgetDom.childNodes[len]);
+      cataLogContainer.setAttribute("id", "catalog-widget");
+      cataLogContainer.setAttribute("class", "widget widget_catalog");
+      cataLogDom.setAttribute("id", "catalog-content");
+      setTimeout(() => {
+        new Catalog({
+          contentEl: "entry-content",
+          catalogEl: "catalog-content",
+          selector: ["h1", "h2", "h3", "h4", "h5", "h6", "strong"],
+          cool: true,
+        });
+        this.$nextTick(() => {
+          const catalogContent = document.querySelector("#catalog-content");
+          if (!catalogContent.clientHeight) {
+            cataLogContainer.style.display = "none";
+          }
+        });
+      }, 1500);
     },
     showTimerFunc() {
       let blog_create_time,

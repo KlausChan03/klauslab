@@ -53,13 +53,13 @@ get_header(); ?>
 						<span class="flex-hc-vc fs-12 secondary-color cur-p mt-5" @click="showLocation(posts.post_metas.position)" v-if="posts.post_metas.address"> <i class="el-icon-map-location mr-5"></i> {{ posts.post_metas.address }} </p>
 					</div>
 					<div class="entry-extra-right flex-hr-vc">
-						<div class="flex-v flex-hc-vt">
+						<div class="flex-v flex-hc-vr">
 							<span class="fs-12">{{posts.post_metas.author}}</span>
 							<el-tooltip class="item" effect="dark" :content="posts.date | formatDateToSecond" placement="bottom">
 								<span class="fs-12">{{posts.date | formatDate}}</span>
 							</el-tooltip>
 						</div>
-						<div v-html="posts.post_metas.avatar" class="ml-10"></div>
+            <el-avatar shape="square" :size="36"  class="ml-10">{{posts.post_metas.author | formatUserName}}</el-avatar>
 					</div>
 				</div>
 				<div id="entry-content" class="entry-content" v-html="posts.content.rendered"> </div>

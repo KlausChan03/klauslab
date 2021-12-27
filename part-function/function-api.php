@@ -138,7 +138,7 @@ function rest_prepare_post_api($data, $post, $request)
 
   $_data = $data->data;
   $params = $request->get_params();
-  if ( ! isset( $params['id'] ) ) {
+  if ( !isset( $params['id'] ) ) {
     // unset($_data['excerpt']);
     unset($_data['author']);
     unset($_data['featured_media']);
@@ -151,7 +151,11 @@ function rest_prepare_post_api($data, $post, $request)
     unset($_data['modified_gmt']);
     unset($_data['date_gmt']);
     unset($_data['guid']);
+    if ($_data['type'] === 'post') {
+      unset($_data['content']);
+    }
   }
+
   $data->data = $_data;
   return $data;
 }

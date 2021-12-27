@@ -33,22 +33,22 @@ Vue.component('article-item', {
         </el-tag>
       </div>     
     </div>
-    <div class="entry-main flex-hl-vl flex-hw" :class="{'has-image' : postData?.post_img?.url}" v-if="postData.content.rendered || postData.excerpt.rendered">
+    <div class="entry-main flex-hl-vl flex-hw" :class="{'has-image' : postData?.post_img?.url}" v-if="postData.excerpt.rendered">
 			<el-image class="featured-image" :src="postData.post_img.url" lazy v-if="postData?.post_img?.url">
 				<div slot="error" class="image-slot">
 					<i class="el-icon-picture-outline fs-36"></i>
 				</div>
 			</el-image>
 			<div>
-      	<p class="entry-summary" v-html="postData.ifShowAll ? postData.content.rendered : postData.excerpt.rendered" :id="postData.id"></p>
+      	<p class="entry-summary" v-html="postData.excerpt.rendered" :id="postData.id"></p>
 				<p @click="showLocation(postData.post_metas.position)" v-if="postData.post_metas.address" class="fs-12 col-aaa cur-p"> <i class="el-icon-map-location mr-5" ></i> {{ postData.post_metas.address }} </p>
 			</div>
     </div>
     <div class="entry-footer flex-hb-vc flex-hw">
       <div class="entry-action flex-hb-vc flex-hw w-1" v-if="!ifMobileDevice">
         <div class="entry-author fs-16 flex-hl-vc">
-          <div v-html="postData.post_metas.avatar" class="mr-10"></div>
-          <div class="flex-v flex-hc-vt">
+          <el-avatar shape="square" :size="36" >{{postData.post_metas.author | formatUserName}}</el-avatar>
+          <div class="flex-v flex-hc-vt ml-10">
             <span class="fs-12">{{postData.post_metas.author}}</span>
             <el-tooltip class="item" effect="dark" :content="postData.date | formatDateToSecond" placement="bottom">
               <span class="fs-12" >{{postData.date | formatDate}}</span>
@@ -72,22 +72,18 @@ Vue.component('article-item', {
               <i class="lalaksks lalaksks-ic-zan fs-16 cur-p" style="transform: rotateX(180deg)" :style='{color:postData.post_metas.cai_num > 0 ? "#36292F":"inhert", background: postData.post_metas.has_cai ? "#856D72" : "inhert"}'></i>
               <span :style='{color:postData.post_metas.cai_num > 0 ? "#36292F":"inhert"}'>{{postData.post_metas.cai_num > 0 ? postData.post_metas.cai_num : 0}}</span>
           </div>
-        </div> 
-        <div class="entry-extra" style="min-width:100px;text-align:right" v-if="!ifMobileDevice">
-          <button v-if="!postData.ifShowAll" @click="changeIfShowAllToParent(postData.id)" class="kl-btn kl-btn-sm gradient-blue-red border-n">预览全文</button>
-          <button v-if="postData.ifShowAll" @click="changeIfShowAllToParent(postData.id)" class="kl-btn kl-btn-sm gradient-red-blue border-n">收起全文</button> 
-        </div>        
+        </div>       
       </div>
       <div class="entry-action w-1" v-if="ifMobileDevice">
         <div class="flex-hb-vc mb-10">
           <div class="entry-author fs-16 flex-hl-vc">
-						<div v-html="postData.post_metas.avatar" class="mr-10"></div>
-							<div class="flex-v flex-hc-vt">
-								<span class="fs-12">{{postData.post_metas.author}}</span>
-								<el-tooltip class="item" effect="dark" :content="postData.date | formatDateToSecond" placement="bottom">
-									<span class="fs-12" >{{postData.date | formatDate}}</span>
-								</el-tooltip>
-							</div>
+            <el-avatar shape="square" :size="36" >{{postData.post_metas.author | formatUserName}}</el-avatar>
+            <div class="flex-v flex-hc-vt ml-10">
+              <span class="fs-12">{{postData.post_metas.author}}</span>
+              <el-tooltip class="item" effect="dark" :content="postData.date | formatDateToSecond" placement="bottom">
+                <span class="fs-12" >{{postData.date | formatDate}}</span>
+              </el-tooltip>
+            </div>
 						</div>
 						<div class="entry-extra" style="min-width:100px;text-align:right">
 							<button v-if="!postData.ifShowAll" @click="changeIfShowAllToParent(postData.id)" class="kl-btn kl-btn-sm gradient-blue-red border-n">预览全文</button>

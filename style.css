@@ -2777,7 +2777,7 @@ body {
 .site-footer .site-info {
   margin: 0;
   width: 100%;
-  min-height: 100px;
+  min-height: 80px;
 }
 
 .site-footer .site-info > p {
@@ -2804,7 +2804,7 @@ body {
 
 .site-content {
   border: none;
-  min-height: calc(100vh - 60px - 80px - 30px);
+  min-height: calc(100vh - 60px - 60px - 30px);
   padding: 15px 0;
 }
 

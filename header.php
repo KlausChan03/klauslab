@@ -159,7 +159,8 @@
 				<div id="menu-avatar" :class="{'flex-hc-vc':ifMobileDevice,'has-login':isLogin}" class="menu-avatar pos-r m-lr-15">
 					<el-dropdown @command="handleCommand">
 						<span class="el-dropdown-link">
-							<el-button class="header-user-avatar" :icon="userFullName || 'el-icon-user-solid'">{{userFullName || ''}}</el-button>
+              <el-avatar v-if="isLogin" shape="square" :size="40" >{{userFullName}}</el-avatar>
+              <el-avatar v-else shape="square" :size="40" icon="el-icon-user-solid"></el-avatar>
 						</span>
 						<el-dropdown-menu slot="dropdown">
 							<template v-if="isLogin">

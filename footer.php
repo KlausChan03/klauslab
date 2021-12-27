@@ -28,7 +28,7 @@
 
 <!-- fixed 工具 -->
 <div id="fixed-plugins" class="fixed-plugins flex-v flex-hl-vc">
-  <el-backtop style="position:static" target="#page" :bottom="220" :right="15">
+  <el-backtop style="position:static"  :bottom="15" :right="15">
     <div class="fp-items"><i class="lalaksks lalaksks-ic-backtotop"></i></div>
   </el-backtop>
   <!-- <div class="fp-user pos-r" style="margin-top:3px">
@@ -45,23 +45,23 @@
         <a href="<?php echo wp_login_url() ?>" class="login-btn"><i class="lalaksks lalaksks-ic-login"></i></a>
       </div>
     </template> -->
-  </div>
+</div>
 
-  <!-- 待开发 -->
-  <!-- <div class="fp-items" v-if="ifShowChangeMode">
+<!-- 待开发 -->
+<!-- <div class="fp-items" v-if="ifShowChangeMode">
     <a title="浅色模式" class="fp-day"><i class="lalaksks lalaksks-ic-day"></i></a>
     <a title="浅色模式" class="fp-night hide"><i class="lalaksks lalaksks-ic-night"></i></a>
   </div> -->
 
 
-  <!-- <el-tooltip content="搜索" effect="dark" placement="top">
+<!-- <el-tooltip content="搜索" effect="dark" placement="top">
     <div class="flex-hl-vc fp-search pos-r">
       <div class="fp-items fp-search-in" @click="showSearchDialog">
         <a class="flex-hc-vc"><i class="lalaksks lalaksks-ic-search"></i></a>
       </div>
     </div>
   </el-tooltip> -->
-  <!-- <div class="flex-hl-vc fp-background pos-r">
+<!-- <div class="flex-hl-vc fp-background pos-r">
     <el-tooltip content="切换背景" effect="dark" placement="top">
       <div class="fp-items fp-background-in">
         <a class="flex-hc-vc"><i class="lalaksks lalaksks-ic-background"></i></a>
@@ -74,10 +74,10 @@
       </ul>
     </div>
   </div> -->
-  <!-- <div class="fp-items fp-gototop">
+<!-- <div class="fp-items fp-gototop">
     <a title="返回顶部"><i class="lalaksks lalaksks-ic-backtotop"></i></a>
   </div> -->
-  <!-- <div class="fp-items fp-change-lang">
+<!-- <div class="fp-items fp-change-lang">
     <a id="fp-change-lang" title="繁简切换" href="javascript:StranBody()" title="繁體"><i>繁</i></a>
   </div> -->
 
