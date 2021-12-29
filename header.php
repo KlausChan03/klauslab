@@ -25,12 +25,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, user-scalable=no" />
 	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
 	<?php wp_head(); ?>
-</head>
-
-<body id="page" <?php body_class(); ?>>
-	<?php global $current_user; ?>
 	<script>
-		// 全局参数
+		// 全局变量 [依赖后台]
 		window.is_login = "<?php echo is_user_logged_in(); ?>";
     window.is_sidebar = "<?php $is_sidebar = boolval(cs_get_option('klausLab_sideBar_switcher')); echo $is_sidebar; ?>";
 		window.is_single = "<?php echo is_single(); ?>";
@@ -40,43 +36,18 @@
 		window.the_bloginfo_name = `<?php echo get_bloginfo('name'); ?>`;
 		window.home_url = `<?php echo get_option('home') ?>`;
 		window._nonce = "<?php echo wp_create_nonce('wp_rest'); ?>";
-		window.if_mobile_device = document.body.clientWidth <= 1000 ? true : false
 		window.site_url = '<?php echo site_url(); ?>';
 		window.ajaxSourceUrl = "<?php echo KL_URI; ?>"
 		window.homeSourceUrl = "<?php echo KL_THEME_URI; ?>"
 		window.start_time = '<?php echo cs_get_option('klausLab_start_time'); ?>';
 		window.start_full_year = start_time ? new Date(start_time).getFullYear() : new Date().getFullYear();
-		window.now_full_year = new Date().getFullYear();
 		window.icp_num = '<?php echo get_option('zh_cn_l10n_icp_num') ?>';
-		window.tinyKey = "7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j";
-		window.user_full_name = `<?php echo $current_user->user_firstname; ?>`;
-		window.wp_count_posts = "<?php $publish_posts = wp_count_posts()->publish;
-															echo $publish_posts; ?>";
-    window._AMapSecurityConfig = { securityJsCode: '63ff502b168849801ec542fe31304563', }
-    // 首屏Loading
-    if (window.is_home) {
-      const max_timer = 2
-      const pageDom = document.querySelector("#page")
-      const headerDom = document.querySelector("#header")
-      const loadingDom = document.createElement('div')
-      loadingDom.setAttribute('id','kl-loader-container')
-      loadingDom.setAttribute('class','kl-loader-container')
-      loadingDom.innerHTML = "<div class='loader-wrapper ☯-bg fadeOut animated'> <div class='☯'></div> </div>"
-      pageDom.insertBefore(loadingDom, headerDom)
-      const loadingMainDom = document.querySelector("#kl-loader")
-      pageDom.style.overflowY = 'hidden'
-      setTimeout(() => {
-        fadeout(loadingMainDom, 0, 1500);
-        loadingDom && loadingDom.remove();
-        pageDom.style.overflowY = 'auto'
-      }, max_timer * 1000);
-      window.onload = function() {
-        fadeout(loadingMainDom, 0, 1500);
-        loadingDom && loadingDom.remove();
-        pageDom.style.overflowY = 'auto'
-      }
-    }
+		window.user_full_name = `<?php global $current_user; echo $current_user->user_firstname; ?>`;
+		window.wp_count_posts = "<?php echo wp_count_posts()->publish; ?>";
 	</script>
+</head>
+
+<body id="page" <?php body_class(); ?>>	
 	<header id="header" class="site-header" role="banner" v-cloak>
 		<div v-if="ifMobileDevice" id="site-touch-header" class="menu-touch">
 			<div class="menu-toggle flex-hc-vc" @click="changeMenu">
@@ -150,7 +121,7 @@
 				<div class="menu-publish mr-30">
 					<el-button icon="el-icon-position" type="text" @click="goToPage('feed',true)" size="medium">订阅</el-button>
 				</div>
-				<div class="menu-search mr-30">
+				<div class="menu-search mr-30" v-if="isSingle || isHome">
 					<el-button icon="el-icon-search" type="text" @click="showSearch" size="medium">搜索</el-button>
 				</div>
 				<div class="menu-publish mr-30" v-if="isLogin">
