@@ -31,6 +31,18 @@
   <el-backtop style="position:static"  :bottom="15" :right="15">
     <div class="fp-items"><i class="lalaksks lalaksks-ic-backtotop"></i></div>
   </el-backtop>
+  <div class="flex-hl-vc fp-background pos-r">
+    <div class="fp-items fp-background-in">
+      <a class="flex-hc-vc"><i class="lalaksks lalaksks-ic-background"></i></a>
+    </div>
+    <div class="pos-a hide fp-background-out" style="right:40px;">
+      <ul class="flex-hr-vc">
+        <li data-type="snow" class="col-fff mr-5">季节</li>
+        <li data-type="gravity" class="col-fff mr-5">引力</li>
+        <li data-type="none" class="col-fff mr-5">空白</li>
+      </ul>
+    </div>
+  </div>
   <!-- <div class="fp-user pos-r" style="margin-top:3px">
     <template v-if="isLogin">
       <div class="fp-items fp-logout">

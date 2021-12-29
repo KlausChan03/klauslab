@@ -1,4 +1,4 @@
-let secondaryPart = new Vue({
+const secondaryPart = new Vue({
   el: "#secondary",
   data() {
     return {
@@ -7,10 +7,14 @@ let secondaryPart = new Vue({
   },
   mounted() {
     this.showTimerFunc();
-    window.is_single && this.getCataLogFunc();
-    setTimeout(() => {
-      this.ifShowSidebar = true;
-    }, 1500);
+    this.ifShowSidebar = true;
+    this.$bus.$on("isGotPost", (msg) => {
+      if (msg === true) {
+        this.$nextTick(() => {
+          window.is_single && this.getCataLogFunc();
+        });
+      }
+    });
   },
   beforeDestroy() {
     window.clearInterval(showCreateTime);
@@ -20,27 +24,23 @@ let secondaryPart = new Vue({
     getCataLogFunc() {
       const widgetDom = document.querySelectorAll(".widget-content")[0];
       const cataLogContainer = document.createElement("aside");
-      let cataLogDom = document.createElement("div");
+      const cataLogDom = document.createElement("div");
       cataLogContainer.appendChild(cataLogDom);
       const len = widgetDom.childNodes.length;
       widgetDom.insertBefore(cataLogContainer, widgetDom.childNodes[len]);
       cataLogContainer.setAttribute("id", "catalog-widget");
       cataLogContainer.setAttribute("class", "widget widget_catalog");
       cataLogDom.setAttribute("id", "catalog-content");
-      setTimeout(() => {
-        new Catalog({
-          contentEl: "entry-content",
-          catalogEl: "catalog-content",
-          selector: ["h1", "h2", "h3", "h4", "h5", "h6", "strong"],
-          cool: true,
-        });
-        this.$nextTick(() => {
-          const catalogContent = document.querySelector("#catalog-content");
-          if (!catalogContent.clientHeight) {
-            cataLogContainer.style.display = "none";
-          }
-        });
-      }, 1500);
+      new Catalog({
+        contentEl: "entry-content",
+        catalogEl: "catalog-content",
+        selector: ["h1", "h2", "h3", "h4", "h5", "h6", "strong"],
+        cool: true,
+      });
+      const catalogContent = document.querySelector("#catalog-content");
+      if (!catalogContent.clientHeight) {
+        cataLogContainer.style.display = "none";
+      }
     },
     showTimerFunc() {
       let blog_create_time,
@@ -115,6 +115,6 @@ let secondaryPart = new Vue({
         var _final = _content + "  " + _time;
         document.querySelector(_dom).innerHTML = _final;
       }
-    },
-  },
+    }
+  }
 });

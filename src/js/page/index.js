@@ -1,6 +1,4 @@
-dayjs.locale("zh-cn");
-dayjs.extend(window.dayjs_plugin_relativeTime);
-dayjs.extend(window.dayjs_plugin_localizedFormat);
+
 const typeMap = {
   article: "post",
   chat: "moments",
