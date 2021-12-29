@@ -46,7 +46,6 @@ class DoubanAPI
             return json_encode(array('code' => '0', 'data' => '', 'msg' => '请在后台填写豆瓣用户ID'));
         }
         $expired = self::__isCacheExpired(__DIR__ . '/cache/movie.json', $ValidTimeSpan);
-        // echo $expired;
         if ($expired != 0) {
             $oldData = json_decode(file_get_contents(__DIR__ . '/cache/movie.json'))->data;
             $data = self::__getMovieRawData($UserID, $oldData[0]->name);
@@ -56,7 +55,7 @@ class DoubanAPI
             fwrite($file, json_encode(array('time' => time(), 'data' => $oldData)));
             fclose($file);
             $data = $oldData;
-            foreach($data as $index=>$value) {
+            foreach((array)$data as $index=>$value) {
                 if($value->name === '') unset($data[$index]);            
             }
             // 清理空数组
@@ -73,7 +72,7 @@ class DoubanAPI
         } else {
             $data = json_decode(file_get_contents(__DIR__ . '/cache/movie.json'))->data;
             // 清理空数组
-            foreach($data as $index=>$value) {
+            foreach((array)$data as $index=>$value) {
                 if($value->name === '') unset($data[$index]);            
             }
             $total = count($data);
@@ -128,7 +127,7 @@ class DoubanAPI
             if ($raw == null || $raw == "" || !$raw) break;
             $doc = new ParserDom($raw);
             $itemArray = $doc->find("div.item");
-            foreach ($itemArray as $v) {
+            foreach ((array)$itemArray as $v) {
                 $t = $v->find("li.title", 0);
                 $r = $v->find("li", 3);
                 $m = $v->find("li", 2);
@@ -314,7 +313,7 @@ class ParserDom
     {
         $innerHTML = "";
         $children = $this->node->childNodes;
-        foreach ($children as $child) {
+        foreach ((array)$children as $child) {
             $innerHTML .= $this->node->ownerDocument->saveHTML($child) ?: '';
         }
         return $innerHTML;
@@ -380,11 +379,11 @@ class ParserDom
      */
     private function parse_selector($selector_string)
     {
-        $pattern = '/([\w-:\*]*)(?:\#([\w-]+)|\.([\w-]+))?(?:\[@?(!?[\w-:]+)(?:([!*^$]?=)["\']?(.*?)["\']?)?\])?([\/, ]+)/is';
+        $pattern = '/([\w\-:\*]*)(?:\#([\w-]+)|\.([\w-]+))?(?:\[@?(!?[\w\-:]+)(?:([!*^$]?=)["\']?(.*?)["\']?)?\])?([\/, ]+)/is';
         preg_match_all($pattern, trim($selector_string) . ' ', $matches, PREG_SET_ORDER);
         $selectors = [];
         $result = [];
-        foreach ($matches as $m) {
+        foreach ((array)$matches as $m) {
             $m[0] = trim($m[0]);
             if ($m[0] === '' || $m[0] === '/' || $m[0] === '//')
                 continue;
@@ -453,7 +452,7 @@ class ParserDom
             }
         }
         if (!empty($search->childNodes)) {
-            foreach ($search->childNodes as $val) {
+            foreach ((array)$search->childNodes as $val) {
                 if ($this->search($val, $idx, $selectors, $level, $search_level + 1)) {
                     return TRUE;
                 }
