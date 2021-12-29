@@ -47,7 +47,7 @@ const index_module = new Vue({
   },
   mounted() {
     window.addEventListener("resize", this.resizeHandler);
-    this.init()
+    this.init();
   },
   computed: {
     getOrderby() {
@@ -56,7 +56,7 @@ const index_module = new Vue({
       }).name;
     },
     getCurrent() {
-      return this.per_page[this.postType] 
+      return this.per_page[this.postType];
     },
     getTotal() {
       if (this.postType === "article") {
@@ -75,16 +75,16 @@ const index_module = new Vue({
   },
 
   methods: {
-    async init () {
-      const { postType } = this
+    async init() {
+      const { postType } = this;
       const postCount = await this.getPostCount(this.postType);
-      this.per_page[postType] = postCount
+      this.per_page[postType] = postCount;
       if (postCount !== 0) {
         postType === "article"
           ? await this.getAllArticles()
           : await this.getAllChat();
       } else {
-        this[postType === 'article' ? 'ifShowPost' : 'ifShowChat'] = true
+        this[postType === "article" ? "ifShowPost" : "ifShowChat"] = true;
       }
     },
     getListByType(type) {
@@ -101,12 +101,10 @@ const index_module = new Vue({
           params: { type: typeMap[type] },
         })
         .then((res) => {
-          return Math.min(
-            res.data.count,
-            this.per_page[this.postType]
-          );
+          return Math.min(res.data.count, this.per_page[this.postType]);
         });
     },
+
     getStickyArticles(params) {
       return axios
         .get(`${window.site_url}/wp-json/wp/v2/posts?sticky=true`, {
@@ -229,7 +227,8 @@ const index_module = new Vue({
     changeType(tab, event) {
       this.page = 1;
       this.postType = tab.label;
-      this.init()
+      this[this.postType === "article" ? "ifShowPost" : "ifShowChat"] = false;
+      this.init();
     },
 
     changeItemType(id) {

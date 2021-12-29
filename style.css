@@ -2069,6 +2069,11 @@ body {
   width: 33.3%;
 }
 
+.flex-1-4 {
+  flex: 0 1 auto;
+  width: 25%;
+}
+
 .flex1 {
   -webkit-box-flex: 1;
   /* OLD - iOS 6-, Safari 3.1-6 */
@@ -3413,19 +3418,16 @@ body {
   border-bottom: 1px solid #eee;
   margin: 0 0 1.6em;
   padding: 1.2em;
-}
-
-.entry-footer .entry-action {
   line-height: 1.5;
 }
 
-.entry-footer .entry-action .entry-action-main {
+.entry-footer .entry-action-main {
   border: 1px solid #ddd;
   border-radius: 16px;
   padding: 0.4rem 0.8rem;
 }
 
-.entry-footer .entry-action a {
+.entry-footer a {
   color: #495762;
 }
 

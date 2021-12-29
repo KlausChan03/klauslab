@@ -2145,6 +2145,11 @@ body {
 	width: 33.3%;
 }
 
+.flex-1-4 {
+	flex: 0 1 auto;
+	width: 25%;
+}
+
 .flex1 {
 	-webkit-box-flex: 1;
 
@@ -3564,20 +3569,15 @@ body {
 	border-bottom: 1px solid #eee;
 	margin: 0 0 1.6em;
 	padding: 1.2em;
-
-	.entry-action {
-		line-height: 1.5;
-
-		.entry-action-main {
-			border: 1px solid #ddd;
-			border-radius: 16px;
-			padding: 0.4rem 0.8rem;
-		}
-
-		a {
-			color: #495762;
-		}
-	}
+  line-height: 1.5;
+  .entry-action-main {
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    padding: 0.4rem 0.8rem;
+  }
+  a {
+    color: #495762;
+  }
 }
 
 .entry-footer-wrapper {

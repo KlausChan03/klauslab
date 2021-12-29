@@ -27,7 +27,7 @@ get_header();
         <template v-if="listOfArticle.length > 0">
           <!-- 文章列表 -->
           <article class="article-list hentry" v-for="(item,index) in listOfArticle" :key="item.id">
-            <article-item clss="article-item" :post-data="item" @change-type="changeItemType" @show-comment="showItemComment"></article-item>
+            <article-item class="article-item" :post-data="item" @change-type="changeItemType" @show-comment="showItemComment"></article-item>
             <quick-comment :ref="'quickComment-'+item.id" callback="true" :comment-data="item.listOfComment" :post-data="item" v-if="item.ifShowComment"></quick-comment>
           </article>
         </template>
@@ -42,7 +42,7 @@ get_header();
       <template v-if="ifShowChat">
         <template v-if="listOfChat.length > 0">
           <article class="article-list hentry" v-for="(item,index) in listOfChat" :key="item.id">
-            <chat-item clss="article-item" :post-data="item" @show-comment="showItemComment"></chat-item>
+            <chat-item class="article-item" :post-data="item" @show-comment="showItemComment"></chat-item>
             <quick-comment :ref="'quickComment-'+item.id" callback="true" :comment-data="item.listOfComment" :post-data="item" v-if="item.ifShowComment"></quick-comment>
           </article>
         </template>
@@ -61,16 +61,10 @@ get_header();
       </el-dropdown-menu>
     </el-dropdown>
   </div>
-
   <el-card class="flex-hc-vc mt-15" shadow="hover" v-if="getCurrent" :title="getCurrent">
     <el-pagination layout="prev, pager, next" background :page-size="getCurrent" :current-page.sync="page" :total="getTotal" :hide-on-single-page="judgeCount" @current-change="handleCurrentChange">
     </el-pagination>
   </el-card>
-  <template>
-    <div>
-      
-    </div>
-  </template>
   <div class="image-part" v-if="imageUrl">
     <el-image ref="imageUrl" style="width: 0; height: 0;" :src="imageUrl" :preview-src-list="imageUrls"> </el-image>
   </div>
@@ -88,4 +82,5 @@ $is_sidebar = boolval(cs_get_option('klausLab_sideBar_switcher'));
 $is_mobile = boolval(is_mobile());
 $is_sidebar && !$is_mobile ? get_sidebar() : ''; 
 ?>
+
 <?php get_footer(); ?>

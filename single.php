@@ -48,15 +48,15 @@ get_header(); ?>
 			<div class="entry-main">
 				<div class="entry-extra flex-hb-vc p-10 ">
 					<div class="entry-extra-left flex-hc-vl flex-v">
-						<span class="flex-hc-vc fs-12 secondary-color" v-if="posts?.post_count?.text_num"><i class="el-icon-notebook-2 fs-14"></i>字数统计 {{posts?.post_count?.text_num}} 字</span>
-						<span class="flex-hc-vc fs-12 secondary-color mt-5" v-if="posts?.post_count?.read_time"><i class="el-icon-timer fs-14"></i>预计阅读时长 {{posts?.post_count?.read_time}} 分钟</span>
+						<span class="flex-hc-vc fs-12 secondary-color" v-if="posts?.post_count?.text_num"><i class="el-icon-notebook-2 fs-14 mr-5"></i>字数统计 {{posts?.post_count?.text_num}} 字</span>
+						<span class="flex-hc-vc fs-12 secondary-color mt-5" v-if="posts?.post_count?.read_time"><i class="el-icon-timer fs-14 mr-5"></i>预计阅读时长 {{posts?.post_count?.read_time}} 分钟</span>
 						<span class="flex-hc-vc fs-12 secondary-color cur-p mt-5" @click="showLocation(posts.post_metas.position)" v-if="posts.post_metas.address"> <i class="el-icon-map-location mr-5"></i> {{ posts.post_metas.address }} </p>
 					</div>
-					<div class="entry-extra-right flex-hr-vc">
+					<div class="entry-extra-right flex-hr-vc ml-10" style="flex: 1 0 auto;">
 						<div class="flex-v flex-hc-vr">
-							<span class="fs-12">{{posts.post_metas.author}}</span>
+							<span class="fs-12 secondary-color">{{posts.post_metas.author}}</span>
 							<el-tooltip class="item" effect="dark" :content="posts.date | formatDateToSecond" placement="bottom">
-								<span class="fs-12">{{posts.date | formatDate}}</span>
+								<span class="fs-12 secondary-color">{{posts.date | formatDate}}</span>
 							</el-tooltip>
 						</div>
             <el-avatar shape="square" :size="36"  class="ml-10">{{posts.post_metas.author | formatUserName}}</el-avatar>

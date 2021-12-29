@@ -17,16 +17,16 @@ Vue.component('chat-item', {
     </div>    
     <div class="entry-footer flex-hb-vc flex-hw">
       <div class="entry-action flex-hb-vc w-1">
-        <div class="entry-author fs-16 flex-hl-vc w-04">
-          <div v-html="postData.post_metas.avatar" class="mr-10"></div>
-          <div class="flex-v flex-hc-vt">
+        <div class="entry-author flex-hl-vc">
+          <el-avatar shape="square" :size="36" >{{postData.post_metas.author | formatUserName}}</el-avatar>
+          <div class="flex-v flex-hc-vt ml-10">
             <span class="fs-12">{{postData.post_metas.author}}</span>
             <el-tooltip class="item" effect="dark" :content="postData.date | formatDateToSecond" placement="bottom">
               <span class="fs-12" >{{postData.date | formatDate}}</span>
             </el-tooltip>
           </div>
         </div>
-        <div class="entry-action-main flex-hb-vc w-04">
+        <div class="entry-action-main flex-hb-vc"  style="flex:1 0 auto">
           <div class="entry-comment flex-hc-vc flex-1-2" @click="showComment(postData.id)">
             <i class="lalaksks lalaksks-ic-reply  cur-p" :style='{color:postData.post_metas.comments_num > 0 ? "#4488EE":"inhert"}'></i>
             <span :style='{color:postData.post_metas.comments_num > 0 ? "#4488EE":"inhert"}'>{{postData.post_metas.comments_num > 0 ? postData.post_metas.comments_num : 0}}</span>
