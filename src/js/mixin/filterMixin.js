@@ -6,7 +6,7 @@ window.filterMixin = {
         formatDateToSecond: (value) => {
             return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
         },
-        formatDateToSecond: (value) => {
+        formatDateToDay: (value) => {
           return dayjs(value).format('YYYY-MM-DD')
         },
         formatUserName: (value) => {
