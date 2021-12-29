@@ -6,29 +6,6 @@
  * @package KlausLab
  */
 
-// 定义目录变量
-// @if NODE_ENV = 'prod'
-// define('FE_ENV', "Production");
-// @endif
-// @if NODE_ENV = 'dev'
-define('FE_ENV', "Development");
-// @endif
-
-if (FE_ENV !== "Development") {
-  define('KL_THEME_DIR', get_template_directory() . '/dist');
-  define('KL_THEME_URI', get_template_directory_uri() . '/dist');
-} else {
-  define('KL_THEME_DIR', get_template_directory() . '/src');
-  define('KL_THEME_URI', get_template_directory_uri() . '/src');
-}
-
-
-define('KL_DIR', get_template_directory() . '/inc');
-define('KL_URI', get_template_directory_uri() . '/inc');
-define('page_template_directory', 'part-page/');
-define('content_template_directory', 'part-template/');
-
-
 if (!function_exists('KlausLab_setup')) :
   function KlausLab_setup()
   {
@@ -41,7 +18,7 @@ if (!function_exists('KlausLab_setup')) :
     // load_theme_textdomain( 'KlausLab', get_template_directory() . '/languages' );
 
     // Add default posts and comments RSS feed links to head.
-    add_theme_support('automatic-feed-links');
+    // add_theme_support('automatic-feed-links');
 
     /*
 	 * Let WordPress manage the document title.
@@ -49,31 +26,30 @@ if (!function_exists('KlausLab_setup')) :
 	 * hard-coded <title> tag in the document head, and expect WordPress to
 	 * provide it for us.
 	 */
-    add_theme_support('title-tag');
-    add_theme_support('custom-logo');
+    // add_theme_support('title-tag');
+    // add_theme_support('custom-logo');
 
     // This theme uses wp_nav_menu() in one location.
-    register_nav_menus(array(
-      'primary' => esc_html__('Primary Menu', 'KlausLab'),
-      'social'  => esc_html__('Social Links', 'KlausLab'),
-    ));
+    // register_nav_menus(array(
+    //   'primary' => esc_html__('Primary Menu', 'KlausLab'),
+    //   'social'  => esc_html__('Social Links', 'KlausLab'),
+    // ));
 
 
     /*
 	 * Switch default core markup for search form, comment form, and comments
 	 * to output valid HTML5.
 	 */
-    add_theme_support('html5', array(
-      'search-form',
-      'comment-form',
-      'comment-list',
-      'gallery',
-      'caption',
-    ));
+    // add_theme_support('html5', array(
+    //   'search-form',
+    //   'comment-form',
+    //   'comment-list',
+    //   'gallery',
+    //   'caption',
+    // ));
   }
 endif; // KlausLab_setup
 add_action('after_setup_theme', 'KlausLab_setup');
-
 
 /**
  * Register widget area.
@@ -136,11 +112,11 @@ add_action('wp_enqueue_scripts', 'KlausLab_scripts');
 
 
 // Declare WooCommerce Support
-add_action('after_setup_theme', 'woocommerce_support');
-function woocommerce_support()
-{
-  add_theme_support('woocommerce');
-}
+// add_action('after_setup_theme', 'woocommerce_support');
+// function woocommerce_support()
+// {
+//   add_theme_support('woocommerce');
+// }
 
 /**
  * Custom template tags for this theme.
@@ -241,43 +217,11 @@ function styles_scripts()
   }
 }
 
-
 add_action('init', 'styles_scripts');
 add_action('wp_footer', 'footer_script');
 add_action('wp_enqueue_scripts', 'normal_style_script');
 add_action('login_footer', 'my_custom_login');
-add_action('wp_ajax_list_rec', 'list_rec_callback');
 
-function list_rec_callback()
-{
-  // 读取POST资料
-  global $wpdb; //可以拿POST来的资料作为条件，捞DB的资料来作显示
-  echo the_content();
-  die(); // this is required to return a proper result
-}
-
-function load_post()
-{
-  // 如果 action ID 是 load_post, 并且传入的必须参数存在, 则执行响应方法 
-  if ($_GET['action'] == 'load_post' && $_GET['id'] != '') {
-    $id = $_GET["id"];
-    $output = '';
-    // 获取文章对象 
-    global $wpdb, $post;
-    $post = $wpdb->get_row(
-      $wpdb->prepare("SELECT * FROM $wpdb->posts WHERE ID = %d LIMIT 1", $id)
-    );
-    // 如果指定 ID 的文章存在, 则对他进行格式化 
-    if ($post) {
-      $content = $post->post_content;
-      $output = balanceTags($content);
-      $output = wpautop($output);
-    }
-    // 打印文章内容并中断后面的处理 
-    echo $output;
-    die();
-  }
-}
 
 // 清除无用资源
 remove_action('wp_head', 'feed_links_extra', 3); //去除评论feed
