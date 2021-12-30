@@ -166,7 +166,10 @@ const index_module = new Vue({
       let [stickyArticles, commonArticles] = [[], []];
       if (this.page === 1) {
         stickyArticles = await this.getStickyArticles(params);
-        commonArticles = await this.getCommonArticles(params);
+        if ( stickyArticles.length < 6) {
+          params.per_page = params.per_page - stickyArticles.length
+          commonArticles = await this.getCommonArticles(params);
+        }
       } else {
         commonArticles = await this.getCommonArticles(params);
       }
