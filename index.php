@@ -18,6 +18,7 @@ get_header();
 ?>
 
 <link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/page/index.css"  rel="preload">
+<link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/page/loading.css"  rel="preload">
 
 <div id="post-container" class="main-area main-content pos-r" :class="!isSidebar ? 'w-1': ''" role="main" v-cloak>
   <el-tabs @tab-click="changeType">

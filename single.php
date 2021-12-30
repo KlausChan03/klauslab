@@ -11,6 +11,7 @@ get_header(); ?>
 
 <link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/page/single.css"  rel="preload">
 <link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/catalog.css"  rel="preload">
+<link rel="stylesheet" href="<?php echo KL_THEME_URI; ?>/css/page/loading.css"  rel="preload">
 
 <script>
 	window.post_id = '<?php echo get_the_ID(); ?>' || ''

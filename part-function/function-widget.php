@@ -210,10 +210,10 @@ function widget_authorinfo()
 				<!-- <a href="<?php echo get_author_posts_url(get_the_author_meta('ID')) ?>" target="_blank">(<?php the_author_posts(); ?>篇文章)</a> -->
 				<p><?php the_author_meta('description'); ?></p>
 			</div>
-			<div class="author-social flex-hb-vc flex-hw mt-15">
-				<!-- <el-button type="primary" size="small" circle class="swing-button">
+			<!-- <div class="author-social flex-hb-vc flex-hw mt-15">
+				<el-button type="primary" size="small" circle class="swing-button">
 					<a href="<?php the_author_meta('user_url'); ?>" title="我的站点" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-laptop"></i></a>
-				</el-button> -->
+				</el-button>
 				<el-button type="primary" size="small" circle class="swing-button">
 					<a href="<?php the_author_meta('weibo'); ?>" title="微博" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-weibo"></i></a>
 				</el-button>
@@ -226,7 +226,7 @@ function widget_authorinfo()
 				<el-button type="primary" size="small" circle class="swing-button">
 					<a href="<?php the_author_meta('github'); ?>" title="github" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-github"></i></a>
 				</el-button>
-				<!-- <span class="">
+				<span class="">
 					<a href="<?php the_author_meta('juejin'); ?>" title="掘金" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-github"></i></a>
 				</span>
 				<span class="">
@@ -234,8 +234,8 @@ function widget_authorinfo()
 				</span>
 				<span class="">
 					<a href="<?php the_author_meta('bilibili'); ?>" title="bilibili" rel="nofollow" target="_blank"><i class="col-fff lalaksks lalaksks-ic-github"></i></a>
-				</span> -->
-			</div>
+				</span>
+			</div> -->
 		</div>
 	<?php
 }

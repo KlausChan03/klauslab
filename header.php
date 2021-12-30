@@ -131,7 +131,7 @@
 					<el-dropdown @command="handleCommand">
 						<span class="el-dropdown-link">
               <el-avatar v-if="isLogin" shape="square" :size="40" >{{userFullName}}</el-avatar>
-              <el-avatar v-else shape="square" :size="40" icon="el-icon-user-solid"></el-avatar>
+              <el-avatar v-else shape="square" :size="40" class="large-icon" icon="el-icon-user-solid"></el-avatar>
 						</span>
 						<el-dropdown-menu slot="dropdown">
 							<template v-if="isLogin">
