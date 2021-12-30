@@ -113,8 +113,7 @@ new Vue({
 			this.getArticleContent()
 			this.type = 'update'
 		}
-		this.getTags()
-		this.getCategories()
+
 		this.init()
 	},
 	methods: {
@@ -161,6 +160,8 @@ new Vue({
 				})
 				.then((res) => {
 					this.tagList = res.data
+          console.log(this.tagList)
+
 				})
 		},
 		getCategories() {
@@ -175,6 +176,7 @@ new Vue({
 				.then((res) => {
 					this.categoryListOrigin = res.data
 					this.categoryList = transData(res.data, 'id', 'parent', 'children')
+          console.log(this.categoryList)
 				})
 		},
 
@@ -203,14 +205,16 @@ new Vue({
 						posts.type = posts.type.indexOf('moment') > -1 ? 'moments' : 'posts'
 						this.format = !!(posts.type === 'moments' ? true : false)
 						this.changePostType()
-						this.posts = posts
-						if (posts.categories) {
+            if (posts.categories) {
 							this.posts.categories = posts.categories || []
 							this.$refs.categoryTree.setCheckedKeys(this.posts.categories)
 						}
 						if (posts.tags) {
 							this.posts.tags = posts.tags || []
 						}
+            posts.post_metas.location = Boolean(posts.post_metas.location)
+						this.posts = posts
+
 						this.$nextTick(() => {
 							window.tinymce.get('editor').setContent(this.posts.content)
 						})
@@ -224,7 +228,7 @@ new Vue({
 			this.ifShowLocationPopup = false
 		},
 
-		doLocationChange() {
+		showLocationMap() {
 			const self = this
 			this.ifShowLocationPopup = this.posts.post_metas.location
 			if (this.ifShowLocationPopup === false) {
@@ -346,6 +350,10 @@ new Vue({
 			this.defaultInit.toolbar = this.format
 				? this.toolbar_simple
 				: this.toolbar_default
+      if (this.posts.type === 'posts') {
+        this.getTags()
+        this.getCategories()
+      }
 			this.init()
 		},
 
