@@ -102,7 +102,7 @@ const quickComment = Vue.component('quick-comment', {
       })
     },
 
-    commitComment() {
+    commitComment: _.throttle(function (item, action) {
       this.hasCommitFinish = true
       let params = {}
       params.post = this.postData.id
@@ -152,7 +152,7 @@ const quickComment = Vue.component('quick-comment', {
           })
         }
       })
-    },
+    }, 3000),
     handleCommentCurrentChange(val) {
       // this.$emit('change-page', val)
       // this.changeCommentCurrent(val)

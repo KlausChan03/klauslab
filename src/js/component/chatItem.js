@@ -1,6 +1,6 @@
-Vue.component('chat-item', {
-  props: ['postData'],
-  mixins:[filterMixin],
+Vue.component("chat-item", {
+  props: ["postData"],
+  mixins: [filterMixin],
   template: `
   <div>  
     <div class="entry-main" >
@@ -48,82 +48,100 @@ Vue.component('chat-item', {
   data() {
     return {
       ifShowLocationPopup: false,
-    }
+    };
   },
   methods: {
-    showLocation (position) {
-      const positionArr = position.split(',')
-      this.ifShowLocationPopup = true
+    showLocation(position) {
+      const positionArr = position.split(",");
+      this.ifShowLocationPopup = true;
       this.$nextTick(() => {
-				const map = new AMap.Map('location-container', {
-					resizeEnable: true,
+        const map = new AMap.Map("location-container", {
+          resizeEnable: true,
           zoom: 16,
           center: positionArr,
-				})
-				const marker = new AMap.Marker();
+        });
+        const marker = new AMap.Marker();
         map.add(marker);
-        marker.setPosition(positionArr);				
-			})
+        marker.setPosition(positionArr);
+      });
     },
     showComment(id) {
-      this.$emit('show-comment', id)
+      this.$emit("show-comment", id);
     },
-    likeOrDislikePost(item, action) {
-      let params = {}
-      params.id = item.id
-      params.action = action
+    likeOrDislikePost: _.throttle(function (item, action) {
+      let params = {};
+      params.id = item.id;
+      params.action = action;
       if (item.post_metas.has_zan || item.post_metas.has_cai) {
         this.$message({
           message: "你已经评价过！",
-          type: 'warning'
-        })
-        return false
+          type: "warning",
+        });
+        return false;
       }
       if (action === "dislike") {
-        this.$confirm('点踩会打击作者的创作积极性, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          axios.post(`${window.site_url}/wp-json/wp/v2/likePost`, params, {
-            headers: {
-              'X-WP-Nonce': _nonce
-            }
-          }).then(res => {
-            this.$nextTick(() => {
-              console.log(this.postData.post_metas)
-              this.$set(this.postData.post_metas, action === 'like' ? 'zan_num' : 'cai_num', res.data)
-              this.$set(this.postData.post_metas, action === 'like' ? 'has_zan' : 'has_cai', true)
-              this.$message({
-                message: action === 'like' ? "点赞成功！" : "点踩成功！",
-                type: 'success'
-              })
-
-            })
-          })
-        }).catch(() => {
-          return false
-        });
-      } else {
-        axios.post(`${window.site_url}/wp-json/wp/v2/likePost`, params, {
-          headers: {
-            'X-WP-Nonce': _nonce
-          }
-        }).then(res => {
-          this.$nextTick(() => {
-            console.log(this.postData.post_metas)
-            this.$set(this.postData.post_metas, action === 'like' ? 'zan_num' : 'cai_num', res.data)
-            this.$set(this.postData.post_metas, action === 'like' ? 'has_zan' : 'has_cai', true)
-            this.$message({
-              message: action === 'like' ? "点赞成功！" : "点踩成功！",
-              type: 'success'
-            })
-
-          })
+        this.$confirm("点踩会打击作者的创作积极性, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
         })
+          .then(() => {
+            axios
+              .post(`${window.site_url}/wp-json/wp/v2/likePost`, params, {
+                headers: {
+                  "X-WP-Nonce": _nonce,
+                },
+              })
+              .then((res) => {
+                this.$nextTick(() => {
+                  console.log(this.postData.post_metas);
+                  this.$set(
+                    this.postData.post_metas,
+                    action === "like" ? "zan_num" : "cai_num",
+                    res.data
+                  );
+                  this.$set(
+                    this.postData.post_metas,
+                    action === "like" ? "has_zan" : "has_cai",
+                    true
+                  );
+                  this.$message({
+                    message: action === "like" ? "点赞成功！" : "点踩成功！",
+                    type: "success",
+                  });
+                });
+              });
+          })
+          .catch(() => {
+            return false;
+          });
+      } else {
+        axios
+          .post(`${window.site_url}/wp-json/wp/v2/likePost`, params, {
+            headers: {
+              "X-WP-Nonce": _nonce,
+            },
+          })
+          .then((res) => {
+            this.$nextTick(() => {
+              console.log(this.postData.post_metas);
+              this.$set(
+                this.postData.post_metas,
+                action === "like" ? "zan_num" : "cai_num",
+                res.data
+              );
+              this.$set(
+                this.postData.post_metas,
+                action === "like" ? "has_zan" : "has_cai",
+                true
+              );
+              this.$message({
+                message: action === "like" ? "点赞成功！" : "点踩成功！",
+                type: "success",
+              });
+            });
+          });
       }
-
-    },
-    
-  }
-})
+    }, 3000),
+  },
+});

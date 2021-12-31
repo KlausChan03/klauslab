@@ -123,7 +123,7 @@ const index_module = new Vue({
       url += params ? `?${convertObj(params)}` : "";
       window.location.href = url;
     },
-    likeOrDislikePost(item, action) {
+    likeOrDislikePost: _.throttle(function (item, action) {
       let params = {};
       params.id = item.id;
       params.action = action;
@@ -197,6 +197,6 @@ const index_module = new Vue({
             });
           });
       }
-    },
+    }, 3000),
   },
 });

@@ -160,7 +160,7 @@ get_header();
               定位
             </span>
             <div class="flex-hl-vc flex-hw">
-              <el-switch v-model="posts.post_metas.location" @change="handleLocationChange"  class="mr-15" active-text="是" inactive-text="否"></el-switch>
+              <el-switch v-model="posts.post_metas.location"  class="mr-15" active-text="是" inactive-text="否"></el-switch>
               <el-button v-if="posts.post_metas.location" @click="showLocationMap" class="mr-15" type="primary" size="mini">查找定位</el-button>
               <p v-if="posts.post_metas.location && posts.post_metas.address" class="fs-12 secondary-color text-overflow" style="max-width: 100vw"><i class="el-icon-map-location mr-5"></i>{{posts.post_metas.address}}</p>
 

@@ -12,30 +12,7 @@ dayjs.locale("zh-cn");
 dayjs.extend(window.dayjs_plugin_relativeTime);
 dayjs.extend(window.dayjs_plugin_localizedFormat);
 
-// 首屏加载Loading
-if (window.is_home) {
-  const max_timer = 2;
-  const pageDom = document.querySelector("#page");
-  const headerDom = document.querySelector("#header");
-  const loadingDom = document.createElement("div");
-  loadingDom.setAttribute("id", "kl-loader-container");
-  loadingDom.setAttribute("class", "kl-loader-container");
-  loadingDom.innerHTML =
-    "<div class='loader-wrapper ☯-bg fadeOut animated'> <div class='☯'></div> </div>";
-  pageDom.insertBefore(loadingDom, headerDom);
-  const loadingMainDom = document.querySelector("#kl-loader");
-  pageDom.style.overflowY = "hidden";
-  setTimeout(() => {
-    fadeout(loadingMainDom, 0, 1500);
-    loadingDom && loadingDom.remove();
-    pageDom.style.overflowY = "auto";
-  }, max_timer * 1000);
-  window.onload = function () {
-    fadeout(loadingMainDom, 0, 1500);
-    loadingDom && loadingDom.remove();
-    pageDom.style.overflowY = "auto";
-  };
-}
+
 // 事件总线EventBus
 const EventBus = new Vue();
 Object.defineProperties(Vue.prototype, {
@@ -45,6 +22,7 @@ Object.defineProperties(Vue.prototype, {
     },
   },
 });
+
 const header = new Vue({
   el: "#header",
   components: {
