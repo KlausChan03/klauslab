@@ -246,7 +246,7 @@ function most_active_friends($friends_num = 10)
 {
 	global $wpdb;
   $counts = [];
-  $countsOfLogin = $wpdb->get_results("SELECT e.display_name, e.user_url, e.user_email, d.meta_value FROM $wpdb->users AS e, $wpdb->usermeta AS d WHERE d.user_id != '1' AND e.ID = d.user_id AND d.meta_key = 'last_login' LIMIT $friends_num");
+  $countsOfLogin = $wpdb->get_results("SELECT e.display_name, e.user_url, e.user_email, d.meta_value FROM $wpdb->users AS e, $wpdb->usermeta AS d WHERE d.user_id != '1' AND e.ID = d.user_id AND d.meta_key = 'last_login' AND to_days(now()) - to_days(meta_value) <= 30 LIMIT $friends_num");
 	$countsOfComment = $wpdb->get_results("SELECT * FROM (SELECT * FROM $wpdb->comments WHERE user_id != '1' AND comment_approved='1' ORDER BY comment_date DESC) AS tempcmt GROUP BY comment_author_email ORDER BY comment_date DESC LIMIT $friends_num");
 	$mostactive = '';
 	$el_start = ' <el-tooltip class="item" effect="dark"  placement="top">';
