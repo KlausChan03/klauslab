@@ -138,7 +138,7 @@ function rest_prepare_post_api($data, $post, $request)
 
   $_data = $data->data;
   $params = $request->get_params();
-  if ( !isset( $params['id'] ) ) {
+  if (!isset($params['id'])) {
     // unset($_data['excerpt']);
     unset($_data['author']);
     unset($_data['featured_media']);
@@ -216,32 +216,26 @@ function get_comment_meta_for_api($comment)
 
 
 // 开启用户等级-评论模块
-function get_author_class_for_api($comment_author_email)
+function get_author_class_for_api($comment_author_email, $user_name = '')
 {
   global $wpdb;
-  $author_count = count($wpdb->get_results(
-    "SELECT comment_ID as author_count FROM $wpdb->comments WHERE comment_author_email = '$comment_author_email' "
-  ));
-  // if(is_user_logged_in()){
+  $author_count = count($wpdb->get_results( "SELECT comment_ID as author_count FROM $wpdb->comments WHERE comment_author_email = '$comment_author_email' " ));
+  $user = $user_name ? '<span class="mr-5">'. $user_name .'</span>' : '';
   if ($author_count >= 1 && $author_count <= 10) //数字可自行修改，代表评论次数。
-    return '<span class="vip level_1">LV.1</span>';
+    $dom = '<span class="vip level_1"> '. $user . 'LV.1</span>';
   else if ($author_count >= 11 && $author_count <= 20)
-    return '<span class="vip level_2">LV.2</span>';
+    $dom = '<span class="vip level_2"> '. $user . 'LV.2</span>';
   else if ($author_count >= 21 && $author_count <= 40)
-    return '<span class="vip level_3">LV.3</span>';
+    $dom = '<span class="vip level_3"> '. $user . 'LV.3</span>';
   else if ($author_count >= 41 && $author_count <= 80)
-    return '<span class="vip level_4">LV.4</span>';
+    $dom = '<span class="vip level_4"> '. $user . 'LV.4</span>';
   else if ($author_count >= 81 && $author_count <= 160)
-    return '<span class="vip level_5">LV.5</span>';
+    $dom = '<span class="vip level_5"> '. $user . 'LV.5</span>';
   else if ($author_count >= 161 && $author_count <= 320)
-    return '<span class="vip level_6">LV.6</span>';
+    $dom = '<span class="vip level_6"> '. $user . 'LV.6</span>';
   else if ($author_count >= 321)
-    return '<span class="vip level_Max">LV.7</span>';
-  // } else {
-  //     return '<span class="vip">LV.0</span>';
-
-  // }
-
+    $dom = '<span class="vip level_Max"> '. $user . 'LV.7</span>';
+  return $dom;
 }
 
 // 统计预估阅读时间

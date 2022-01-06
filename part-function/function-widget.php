@@ -245,20 +245,34 @@ function widget_authorinfo()
 function most_active_friends($friends_num = 10)
 {
 	global $wpdb;
-	$counts = $wpdb->get_results("SELECT * FROM (SELECT * FROM $wpdb->comments WHERE user_id!='1' AND comment_approved='1' ORDER BY comment_date DESC) AS tempcmt GROUP BY comment_author_email ORDER BY comment_date DESC LIMIT $friends_num");
+  $counts = [];
+  $countsOfLogin = $wpdb->get_results("SELECT e.display_name, e.user_url, e.user_email, d.meta_value FROM $wpdb->users AS e, $wpdb->usermeta AS d WHERE d.user_id != '1' AND e.ID = d.user_id AND d.meta_key = 'last_login' LIMIT $friends_num");
+	$countsOfComment = $wpdb->get_results("SELECT * FROM (SELECT * FROM $wpdb->comments WHERE user_id != '1' AND comment_approved='1' ORDER BY comment_date DESC) AS tempcmt GROUP BY comment_author_email ORDER BY comment_date DESC LIMIT $friends_num");
 	$mostactive = '';
-	$el_start = ' <el-tooltip class="item" effect="light"  placement="top">';
+	$el_start = ' <el-tooltip class="item" effect="dark"  placement="top">';
 	$el_end = '</el-tooltip>';
-
-	foreach ($counts as $count) {
-		$c_url = $count->comment_author_url;
-		$c_name = $count->comment_author;
-		$c_vip = get_author_class_for_api($count->comment_author_email);
-		$c_avatar = get_avatar($count, 40);
-		$c_avatar_default = '<img src=" ' . KL_THEME_URI . '/img/wp-default-gravatar.png"  style="width: 40px; height: 40px; object-fit: cover;"/>';
-		$mostactive .= '<li class="widget-visitor flex" style="flex: 0 1 auto; border: none; margin:0; padding: 5px 8px">' . $el_start . '<div slot="content"><div class="flex-hc-vc flex-v" style="line-height:2; min-width:40px">' . $c_name .  $c_vip . '</div></div><a href="' . ($c_url ?  $c_url : '#') . '" >' . ($c_avatar ? $c_avatar : $c_avatar_default) . '</a>' . $el_end . '</li>';
+	foreach ($countsOfComment as $count) {
+    $count->order_date = $count->comment_date;
+  }
+  foreach ($countsOfLogin as $count) {
+    $count->order_date = $count->meta_value;
+  }
+  // 合并数组
+  $counts = array_merge($countsOfComment,$countsOfLogin);
+  // 按照sort字段升序  其中SORT_ASC表示升序 SORT_DESC表示降序
+  $sort = array_column($counts, 'order_date');
+  array_multisort($sort, SORT_DESC, $counts);
+  // 截取数组
+  $counts = array_slice($counts, 0, $friends_num);
+  $c_avatar_default = '<img src=" ' . KL_THEME_URI . '/img/wp-default-gravatar.png"  style="width: 40px; height: 40px; object-fit: cover;"/>';
+  foreach ($counts as $count) {
+		$c_url = $count->comment_author_url ? $count->comment_author_url : $count->user_url;
+		$c_name = $count->comment_author ? $count->comment_author : $count->display_name;
+		$c_vip = get_author_class_for_api($count->comment_author_email ? $count->comment_author_email : $count->user_email, $c_name);
+		$c_avatar = get_avatar($count->comment_author_email ? $count->comment_author_email : $count->user_email, 40);
+		$mostactive .= '<li class="widget-visitor flex" style="flex: 0 1 auto; border: none; margin:0; padding: 5px 8px">' . $el_start . '<div slot="content"><div class="flex-hb-vc" style="line-height:2; min-width:40px">'.  $c_vip . '</div></div><a href="' . ($c_url ?  $c_url : '#') . '" >' . ($c_avatar ? $c_avatar : $c_avatar_default) . '</a>' . $el_end . '</li>';
 	}
-	return $mostactive;
+  return $mostactive;
 }
 
 	?>
