@@ -95,7 +95,11 @@ function widget_userinfo()
           <?php
           if (in_array('administrator', $current_user->roles)) {
             $movie_data = json_decode(file_get_contents(get_template_directory() . '/inc/douban/cache/movie.json'))->data;
-            $movoe_data_lengh = sizeof($movie_data);
+            // 清理空数组
+            foreach((array)$movie_data as $index=>$value) {
+              if($value->name === '') unset($movie_data[$index]);            
+            }
+            $movoe_data_lengh = count($movie_data);
             echo ('<span class="flex-hc-vc col-b2bbbe">/</span> <p class="flex-hc-vc flex-v"><span> ' . $movoe_data_lengh . ' 条</span><span>影评</span></p> ');
           }
           ?>

@@ -1,5 +1,7 @@
 <?php
 ini_set('max_execution_time', '0');
+require_once 'simple_html_dom.php';
+
 
 /**
  * 按符号截取字符串的指定部分
@@ -123,9 +125,10 @@ class DoubanAPI
         $data = array();
         while ($api != null) {
             $raw = self::curl_file_get_contents($api);
-            // echo $raw;
             if ($raw == null || $raw == "" || !$raw) break;
-            $doc = new ParserDom($raw);
+            $doc = new simple_html_dom; 
+            $doc -> load($raw); 
+            // $doc = str_get_html($raw);
             $itemArray = $doc->find("div.item");
             foreach ((array)$itemArray as $v) {
                 $t = $v->find("li.title", 0);
@@ -134,36 +137,36 @@ class DoubanAPI
                 $movie_name = str_replace(strstr(str_replace(
                     array(" ", "　", "\t", "\n", "\r"),
                     array("", "", "", "", ""),
-                    $t->getPlainText()
+                    $t->text()
                 ), "/"), "", str_replace(
                     array(" ", "　", "\t", "\n", "\r"),
                     array("", "", "", "", ""),
-                    $t->getPlainText()
+                    $t->text()
                 ));
-                $movie_img  = $v->find("div.pic a img", 0)->getAttr("src");
-                $movie_url  = $t->find("a", 0)->getAttr("href");
-                $movie_remark  = $r->find("span.comment", 0)->getPlainText();
+                $movie_img  = $v->find("div.pic a img", 0)->src;
+                $movie_url  = $t->find("a", 0)->href;
+                $movie_remark  = $r->find("span.comment", 0)->text();
                 // TODO: 临时注释
-                $movie_mark_myself  = '';
-                // $movie_mark_myself  = floatval(preg_replace('/[^0-9]/', '', $m->find("span", 0)->getAttr("class")) * 2);
-                $movie_date = str_replace("\"", "\'", $m->find("span", 1)->getPlainText());
-                // $movie_tags = str_replace("\"", "\'", $m->find("span", 2)->getPlainText());
+                // $movie_mark_myself = '';
+                $movie_mark_myself  = floatval(preg_replace('/[^0-9]/', '', $m->find("span", 0)->class) * 2);
+                $movie_date = str_replace("\"", "\'", $m->find("span", 1)->text());
+                // $movie_tags = str_replace("\"", "\'", $m->find("span", 2)->text());
                 // TODO: 临时注释
-                // $api_num = cut_str($movie_url, '/', -2);
-                // $api_movie = 'https://movie.douban.com/subject/' . $api_num . '/';
-                // $raw_movie = self::curl_file_get_contents($api_movie);
-                // $doc_movie = new ParserDom($raw_movie);
+                // $movie_mark_douban = '';
+                $api_num = cut_str($movie_url, '/', -2);
+                $api_movie = 'https://movie.douban.com/subject/' . $api_num . '/';
+                $raw_movie = self::curl_file_get_contents($api_movie);
+                $doc_movie = new simple_html_dom; 
+                $doc_movie -> load($raw_movie);                 
                 // $doc_movie_detail = $doc_movie->find("strong.rating_num", 0);
-                $doc_movie_detail = '';
-                $movie_mark_douban = $doc_movie_detail ? floatval($doc_movie_detail->getPlainText()) : '';
-                // $movie_mark_douban = floatval($doc_movie->find("strong.rating_num", 0)->getPlainText());
-
+                // $movie_mark_douban = $doc_movie_detail ? floatval($doc_movie_detail->text()) : '';
+                $movie_mark_douban = floatval($doc_movie->find("strong.rating_num", 0)->text());
                 if ($oldData == $movie_name) return $data;
                 $data[] = array("name" => $movie_name, "img" => 'https://images.weserv.nl/?url=' . $movie_img, "url" => $movie_url, "remark" => $movie_remark, "date" => $movie_date,  "mark_myself" => $movie_mark_myself, "mark_douban" => $movie_mark_douban);
             }
             $url = $doc->find("span.next a", 0);
             if ($url) {
-                $api = "https://movie.douban.com" . $url->getAttr("href");
+                $api = "https://movie.douban.com" . $url->href;
             } else {
                 $api = null;
             }
@@ -251,7 +254,7 @@ class ParserDom
             case 'innertext':
                 return $this->innerHtml();
             case 'plaintext':
-                return $this->getPlainText();
+                return $this->text();
             case 'href':
                 return $this->getAttr("href");
             case 'src':
@@ -301,7 +304,7 @@ class ParserDom
      *
      * @return string
      */
-    public function getPlainText()
+    public function text()
     {
         return $this->text($this->node);
     }
@@ -466,7 +469,7 @@ class ParserDom
      * @param \DOMNode $node
      * @return string
      */
-    private function text(&$node)
+    private function textnew(&$node)
     {
         return $node->textContent;
     }
