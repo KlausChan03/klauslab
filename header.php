@@ -51,29 +51,6 @@
 </head>
 
 <body id="page" <?php body_class(); ?>>
-  <script>
-    // 首屏加载Loading
-    if (window.is_home || window.is_single) {
-      const max_timer = 1.5;
-      const pageDom = document.querySelector("#page");
-      const headerDom = document.querySelector("#header");
-      const loadingDom = document.createElement("div");
-      loadingDom.setAttribute("id", "kl-loader-container");
-      loadingDom.setAttribute("class", "kl-loader-container");
-      loadingDom.innerHTML =
-        "<div class='loader-wrapper ☯-bg fadeOut animated'> <div class='☯'></div> </div>";
-      pageDom.insertBefore(loadingDom, headerDom);
-      pageDom.style.overflowY = "hidden";
-      setTimeout(() => {
-        loadingDom && loadingDom.remove();
-        pageDom.style.overflowY = "auto";
-      }, max_timer * 1000);
-      window.onload = function() {
-        loadingDom && loadingDom.remove();
-        pageDom.style.overflowY = "auto";
-      };
-    }
-  </script>
   <header id="header" class="site-header" role="banner" v-cloak>
     <div v-if="ifMobileDevice" id="site-touch-header" class="menu-touch">
       <div class="menu-toggle flex-hc-vc" @click="changeMenu">

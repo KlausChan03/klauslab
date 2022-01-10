@@ -23,6 +23,25 @@ Object.defineProperties(Vue.prototype, {
   },
 });
 
+// 首屏加载Loading
+if (window.is_home || window.is_single) {
+  const max_timer = 2;
+  const pageDom = document.querySelector("#page");
+  const headerDom = document.querySelector("#header");
+  const loadingDom = document.createElement("div");
+  loadingDom.setAttribute("id", "loader-container");
+  loadingDom.setAttribute("class", "loader-container");
+  loadingDom.innerHTML =
+    "<div class='loader-wrapper ☯-bg fadeOut animated'> <div class='☯'></div> </div>";
+    pageDom.insertBefore(loadingDom, headerDom);
+  setTimeout(() => {
+    loadingDom && loadingDom.remove();
+  }, max_timer * 1000);
+  window.onload = function() {
+    loadingDom && loadingDom.remove();
+  };
+}
+
 const header = new Vue({
   el: "#header",
   components: {

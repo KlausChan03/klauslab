@@ -642,12 +642,12 @@ img {
 	background: transparent;
 }
 /* 自定义滚动条 */
-body {
+#page {
 	height: 100vh;
 	overflow-y: auto;
 }
 
-body, .widget_catalog{
+#page {
 	&::-webkit-scrollbar {
 		width: 8px;
 		height: 10px;
