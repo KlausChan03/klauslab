@@ -1,97 +1,110 @@
+@media screen and (min-width: 720px) and (max-width: 1000px) {
+  .widget-content {
+    overflow: hidden;
+    width: 92%;
+    margin-left: 8%;
+  }
+}
 
-	@media screen and (min-width: 720px) and (max-width: 1000px) {
-		.widget-content {
-			overflow: hidden;
-			width: 92%;
-			margin-left: 8%;
-		}
-	}
+@media screen and (min-width: 720px) {
+  .article-container,
+  .comment-container,
+  .article-skeleton {
+    width: 92%;
+    margin-left: 8%;
+  }
 
-	@media screen and (min-width: 720px) {
+  .article-container {
+    overflow: hidden;
+  }
 
-		.article-container,
-		.comment-container,
-		.article-skeleton {
-			width: 92%;
-			margin-left: 8%;
-		}
+  .article-panel {
+    position: fixed;
+    margin-left: -5rem;
+    top: 100px;
+  }
+}
 
-		.article-container {
-			overflow: hidden;
-		}
+@media screen and (max-width: 720px) {
+  .article-panel {
+    display: none;
+  }
+}
 
-		.article-panel {
-			position: fixed;
-			margin-left: -5rem;
-			top: 100px;
-		}
-	}
+.article-panel .lalaksks {
+  color: #bbbbbb;
+}
 
-	@media screen and (max-width: 720px) {
-		.article-panel {
-			display: none;
-		}
-	}
+.article-panel .badge-item .el-badge__content {
+  background-color: #bbbbbb;
+}
 
-	.article-panel .lalaksks {
-		color: #BBBBBB;
-	}
+.article-panel-item .el-button.is-circle {
+  padding: 10px;
+}
 
-	.article-panel .badge-item .el-badge__content {
-		background-color: #BBBBBB;
-	}
+.article-panel-item:not(:first-child) {
+  margin-top: 30px;
+}
 
-	.article-panel-item .el-button.is-circle {
-		padding: 10px;
-	}
+.pay-chose button {
+  width: 120px;
+  height: 45px;
+  text-align: center;
+  border: 1px solid #e6e6e6;
+  border-radius: 2px;
+  display: inline-block;
+  line-height: 40px;
+  cursor: pointer;
+}
 
-	.article-panel-item:not(:first-child) {
-		margin-top: 30px;
+.pay-chose button img {
+  height: 25px;
+  vertical-align: sub;
+}
 
-	}
+.pay-chose button.chosen {
+  border-color: #0092ee;
+}
 
-	.pay-chose button {
-		width: 120px;
-		height: 45px;
-		text-align: center;
-		border: 1px solid #e6e6e6;
-		border-radius: 2px;
-		display: inline-block;
-		line-height: 40px;
-		cursor: pointer;
-	}
+.pay-body .alipay,
+.pay-body .wechatpay {
+  width: 220px;
+  height: 220px;
+}
 
-	.pay-chose button img {
-		height: 25px;
-		vertical-align: sub;
-	}
+.entry-footer button:not(:first-child) {
+  margin-left: 20px;
+}
 
-	.pay-chose button.chosen {
-		border-color: #0092ee;
-	}
+.copyable {
+  position: relative;
+}
 
-	.pay-body .alipay,
-	.pay-body .wechatpay {
-		width: 220px;
-		height: 220px;
-	}
+.copy-code-btn {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  background: #a1a1a1;
+  color: #fff;
+  border-radius: 4px;
+  padding: 0 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
 
-	.entry-footer button:not(:first-child) {
-		margin-left: 20px;
-	}
+.widget_catalog::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
 
-	.copyable {
-		position: relative;
-	}
+.widget_catalog::-webkit-scrollbar-thumb {
+  background: var(--secondaryText);
+  border-radius: 3px;
+  border: 0;
+}
 
-	.copy-code-btn {
-		position: absolute;
-		top: 5px;
-		right: 0;
-		background: #a1a1a1;
-		color: #fff;
-		border-radius: 4px;
-		padding: 0 4px;
-		cursor: pointer;
-		font-size: 12px;
-	}
+.widget_catalog::-webkit-scrollbar-track-piece {
+  background-color: #e7eaf1;
+  border-radius: 3px;
+}
