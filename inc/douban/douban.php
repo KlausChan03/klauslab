@@ -158,9 +158,9 @@ class DoubanAPI
                 $raw_movie = self::curl_file_get_contents($api_movie);
                 $doc_movie = new simple_html_dom; 
                 $doc_movie -> load($raw_movie);                 
-                // $doc_movie_detail = $doc_movie->find("strong.rating_num", 0);
-                // $movie_mark_douban = $doc_movie_detail ? floatval($doc_movie_detail->text()) : '';
-                $movie_mark_douban = floatval($doc_movie->find("strong.rating_num", 0)->text());
+                $doc_movie_detail = $doc_movie->find("strong.rating_num", 0) ;
+                $movie_mark_douban = $doc_movie_detail ? floatval($doc_movie_detail->text()) : '';
+                // $movie_mark_douban = floatval($doc_movie->find("strong.rating_num", 0)->text());
                 if ($oldData == $movie_name) return $data;
                 $data[] = array("name" => $movie_name, "img" => 'https://images.weserv.nl/?url=' . $movie_img, "url" => $movie_url, "remark" => $movie_remark, "date" => $movie_date,  "mark_myself" => $movie_mark_myself, "mark_douban" => $movie_mark_douban);
             }
