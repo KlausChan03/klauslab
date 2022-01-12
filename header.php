@@ -34,7 +34,6 @@
     window.is_single = "<?php echo is_single(); ?>";
     window.is_home = "<?php echo is_home(); ?>";
     window.the_custom_logo = `<?php echo the_custom_logo(); ?>`;
-    window.the_avatar = `<?php echo get_avatar($current_user->user_email, 38); ?>`;
     window.the_bloginfo_name = `<?php echo get_bloginfo('name'); ?>`;
     window.home_url = `<?php echo get_option('home') ?>`;
     window._nonce = "<?php echo wp_create_nonce('wp_rest'); ?>";
@@ -45,7 +44,7 @@
     window.start_full_year = start_time ? new Date(start_time).getFullYear() : new Date().getFullYear();
     window.icp_num = '<?php echo get_option('zh_cn_l10n_icp_num') ?>';
     window.user_full_name = `<?php global $current_user;
-                              echo $current_user->user_firstname; ?>`;
+                              echo $current_user->nickname; ?>`;
     window.wp_count_posts = "<?php echo wp_count_posts()->publish; ?>";
   </script>
 </head>

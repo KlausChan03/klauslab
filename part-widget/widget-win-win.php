@@ -22,7 +22,8 @@ class red_envelope_widget extends WP_Widget
     echo $args['after_widget'];
   }
 }
-add_action(
-  'widgets_init',
-  create_function('', 'return register_widget("red_envelope_widget");')
-);
+// add_action(
+//   'widgets_init',
+//   create_function('', 'return register_widget("red_envelope_widget");')
+// );
+register_widget( 'red_envelope_widget' );
