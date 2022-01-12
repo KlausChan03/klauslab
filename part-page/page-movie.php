@@ -22,6 +22,7 @@ get_header();
         <use xlink:href="#lalaksks21-views"></use>
       </svg>
       <h2>{{title}}</h2>
+      <span class="secondary-color ml-10">{{tip}}</span>
     </div>
     <div class="tips mt-15" v-if="count">
       <span>记录阅片数量：{{count}}</span>
@@ -33,17 +34,17 @@ get_header();
             <rotate-card trigger="hover" direction="row">
               <div slot="cz" v-if="item.url" v-bind:class="'doubanboard-thumb'" v-bind:style="{backgroundImage : 'url(' + item.img +')'}">
                 <div class="doubanboard-title flex-hb-vc">
-                  <a class="movie-title w-06" v-bind:href="item.url" v-bind:title="item.name" target="_blank">{{item.name}}</a>
-                  <div class="movie-mark flex-hr-vc w-04">
-                    <span class="flex-hr-vc mr-5" v-if="item.mark_myself"><i class="lalaksks lalaksks-ic-tag"></i> {{item.mark_myself}}</span>
-                    <span class="flex-hr-vc" v-if="item.mark_douban"><i class="lalaksks lalaksks-ic-douban"></i> {{item.mark_douban}}</span>
-                  </div>
+                  <a class="movie-title " v-bind:href="item.url" v-bind:title="item.name" target="_blank">{{item.name}}</a>
                 </div>
               </div>
-              <div slot="cf" v-bind:class="'inner'">
+              <div slot="cf" class="inner">
                 <h3>{{item.name}}</h3>
-                <p class="mt-10 item-content" v-bind:title=item.remark>{{item.remark}}</p>
-                <p>{{item.date}}</p>
+                <p class="item-content mt-10" v-bind:title=item.remark>{{item.remark}}</p>
+                <p class="item-extra flex-hr-vc mt-5">
+                  <el-tag class="flex-hr-vc mr-5 fs-12" size="mini" effect="dark" v-if="item.mark_myself"> {{Number(item.mark_myself).toFixed(1)}} </el-tag>
+                  <el-tag class="flex-hr-vc mr-5 fs-12" size="mini" effect="dark" type="success" v-if="item.mark_douban">  {{item.mark_douban}} </el-tag>
+                  <span>{{item.date}}</span>
+                </p>
               </div>
             </rotate-card>
           </el-col>
@@ -63,9 +64,9 @@ get_header();
   const app = new Vue({
     el: "#container",
     data: {
-      ifMobileDevice: window.if_mobile_device,
       title: window.the_titile,
       pageID: window.the_ID,
+      tip: "单击卡片可以翻转查看详情",
       curBooks_read: 0,
       curBooks_reading: 0,
       curBooks_wish: 0,
@@ -74,12 +75,11 @@ get_header();
       count: 0,
       pageSize: 24,
       loadingAll: true,
-      ifShowMore: false
+      ifShowMore: false,
     },
     mounted() {
       setTimeout(() => {
         this.loadMovies();
-        
       }, 1000);
     },
     methods: {
@@ -92,6 +92,7 @@ get_header();
         params.from = String(this.curMovies);
         const data = params ? `?${convertObj(params)}` : ''
         axios.post(window.ajaxSourceUrl + "/douban/douban.php" + data).then(res => {
+          this.loadingAll = false;
           const result = res.data
           const code = Number(result.code)
           if (code === 1) {
@@ -101,7 +102,8 @@ get_header();
               this.ifShowMore = true
             }
             this.list = this.list.concat(result.data);
-            if (this.ifMobileDevice === true) {
+            // 移动端替换为大图
+            if (window.if_mobile_device === true) {
               this.list.forEach(item => {
                 item.img = item.img.replace(/s_ratio_poster/g, 'm_ratio_poster')
               });
@@ -117,8 +119,6 @@ get_header();
               message: result.msg,
             })
           }
-          this.loadingAll = false;
-
         });
       }
     },
@@ -165,10 +165,8 @@ get_header();
         this.$refs.cardf.style.transform = !bool ? arr[0] : arr[1]
       },
       eve_cardres_click() {
-        // if (this.trigger == 'click') {
         this.fn_reserve_action(this.surface)
         this.surface = !this.surface
-        // }
       },
       eve_cardres_msover() {
         if (this.trigger == 'hover') this.fn_reserve_action(true)

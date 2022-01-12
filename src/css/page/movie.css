@@ -91,7 +91,7 @@
 }
 
 .card-f {
-	background-color: #48e;
+	background-color: #666;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -99,12 +99,8 @@
 }
 
 .card-f .inner {
-	/* transform: translateY(-50%) translateZ(60px) scale(0.94);
-        top: 50%; */
-	/* position: absolute;
-        left: 0; */
 	width: 100%;
-	padding: 0.5rem;
+	padding: 10px;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	outline: 1px solid transparent;
@@ -132,8 +128,23 @@
 	overflow-y: auto;
 	text-overflow: ellipsis;
 	display: -webkit-box;
-	/* -webkit-line-clamp: 10; */
 	-webkit-box-orient: vertical;
 	line-height: 1.5;
-	height: calc(100% - 55px);
+	height: calc(100% - 60px);
+}
+
+.item-content::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+
+.item-content::-webkit-scrollbar-thumb {
+  background: var(--secondaryText);
+  border-radius: 3px;
+  border: 0;
+}
+
+.item-content::-webkit-scrollbar-track-piece {
+  background-color: #e7eaf1;
+  border-radius: 3px;
 }

@@ -1179,6 +1179,18 @@ body .about-main .el-menu.el-menu--horizontal {
   height: 100%;
 }
 
+.loader-container {
+  position: fixed;
+  background-color: #ddd;
+  opacity: .7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  z-index: 1314520;
+}
+
 .loader-wrapper {
   width: 148px;
   height: 100px;
@@ -2311,23 +2323,23 @@ img {
 }
 
 /* 自定义滚动条 */
-body {
+#page {
   height: 100vh;
   overflow-y: auto;
 }
 
-body::-webkit-scrollbar, .widget_catalog::-webkit-scrollbar {
+#page::-webkit-scrollbar {
   width: 8px;
   height: 10px;
 }
 
-body::-webkit-scrollbar-thumb, .widget_catalog::-webkit-scrollbar-thumb {
+#page::-webkit-scrollbar-thumb {
   background: var(--secondaryText);
   border-radius: 3px;
   border: 0;
 }
 
-body::-webkit-scrollbar-track-piece, .widget_catalog::-webkit-scrollbar-track-piece {
+#page::-webkit-scrollbar-track-piece {
   background-color: #e7eaf1;
   border-radius: 3px;
 }

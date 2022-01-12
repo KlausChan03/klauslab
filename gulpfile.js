@@ -1,6 +1,7 @@
 // Gulp.js config file
 
 'use strict'
+const config  = require('./config.js');
 const env = process.env.NODE_ENV
 const dir = {
 		// 源文件和构建目录
@@ -8,11 +9,8 @@ const dir = {
 		dist: 'dist/',
 		srcRouter: './src/',
 		distRouter: './dist/',
-		// 注意：这里的路径需要根据自己的 wordpress 安装路径进行修改
-		build:
-			env === 'dev'
-				? 'C:/Tools/xampp/htdocs/dashboard/klausLab/wp-content/themes/KlausLab/' // 'C:/xampp/htdocs/dashboard/klausLab/wp-content/themes/klausLab/'
-				: '/www/wwwroot/wordpress/wp-content/themes/KlausLab/',
+		// 注意：路径需要根据自己的 wordpress 安装路径进行修改，配置位置见config.js
+		build: env === 'dev' ? config.local : config.production,
 	},
 	// Gulp 和 插件
 	gulp = require('gulp'),
@@ -40,8 +38,6 @@ const dir = {
 	preprocess = require('gulp-preprocess'),
 	minimist = require('minimist')
 
-// let FILTERJS = [dir.src + '/js/*.js', '!' + dir.src + '/js/*.min.js', '!' + dir.src + '/js/**/canvas.js', '!' + dir.src + '/js/**/fixed-plugins.js'];
-let HEADERJS = []
 let FOOTERJS = [dir.src + '/js/common.js']
 let COPYJS = [
 	dir.src + '/js/**/*.min.js',
@@ -171,33 +167,6 @@ const js = {
 	build: dir.build + dir.dist + 'js/',
 	filename: 'scripts.js',
 }
-
-// gulp.task('headerJs', function () {
-// 	return (
-// 		gulp
-// 			.src(HEADERJS)
-// 			.pipe(
-// 				babel({
-// 					presets: [
-// 						[
-// 							'es2015',
-// 							{
-// 								strict: false,
-// 								loose: true,
-// 							},
-// 						],
-// 					],
-// 				})
-// 			)
-// 			// 压缩不美化
-// 			.pipe(
-// 				uglify({
-// 					compress: true,
-// 				})
-// 			)
-// 			.pipe(gulp.dest(js.build))
-// 	)
-// })
 
 gulp.task('footerJs', function () {
 	return (

@@ -24,7 +24,7 @@ get_header();
       <h2>{{pageInfo.title.rendered}}</h2>
     </div>
     <div class="entry-content page-content" v-loading="!ifShowAll" style="min-height: 300px">
-      <template v-if="info">
+      <template v-if="Array.isArray(info) && info.length > 0">
         <el-collapse v-model="activeNames" class="info-main" v-for="(item,index) in info" :key="item.name">
           <el-collapse-item :name="index">
             <template slot="title">
@@ -130,7 +130,7 @@ get_header();
         postID: window.post_id,
         listContent: '',
         ifGetList: false,
-        info: {},
+        info: [],
         ifShowAll: false,
         ifShowPayImage: true,
         commentPage: 1,
@@ -154,6 +154,9 @@ get_header();
         axios.get(`${window.ajaxSourceUrl}/about/aboutme.json`).then(res => {
           this.info = res.data ? res.data : ''
           this.ifShowAll = true
+        }).catch((err)=>{
+          this.ifShowAll = true
+          this.info = []
         })
       },
       changeChoose() {

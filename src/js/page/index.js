@@ -75,7 +75,8 @@ const index_module = new Vue({
   methods: {
     async init() {
       const { postType } = this;
-      const postCount = await this.getPostCount(this.postType);
+      const per_page = window.sessionStorage.getItem(`per_page_${postType}`);
+      const postCount = per_page || await this.getPostCount(postType);
       this.per_page[postType] = postCount;
       if (postCount !== 0) {
         postType === "article"
@@ -94,12 +95,15 @@ const index_module = new Vue({
     },
 
     getPostCount(type) {
+      const { postType } = this 
       return axios
         .get(`${window.site_url}/wp-json/wp/v2/getPostCount`, {
           params: { type: typeMap[type] },
         })
         .then((res) => {
-          return Math.min(res.data.count, this.per_page[this.postType]);
+          const per_page = Math.min(res.data.count, this.per_page[postType])
+          window.sessionStorage.setItem(`per_page_${postType}`, per_page)
+          return per_page;
         });
     },
 
