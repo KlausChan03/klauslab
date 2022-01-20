@@ -145,22 +145,26 @@ class DoubanAPI
                 ));
                 $movie_img  = $v->find("div.pic a img", 0)->src;
                 $movie_url  = $t->find("a", 0)->href;
-                $movie_remark  = $r->find("span.comment", 0)->text();
-                // TODO: 临时注释
-                // $movie_mark_myself = '';
-                $movie_mark_myself  = floatval(preg_replace('/[^0-9]/', '', $m->find("span", 0)->class) * 2);
-                $movie_date = str_replace("\"", "\'", $m->find("span", 1)->text());
+                $movie_remark  = $r->find("span.comment", 0) ? $r->find("span.comment", 0)->text() : '';
+                $movie_mark_myself = '';
+                $movie_mark_myself_before =  $m->find("span", 0)->class;
+                $movie_mark_myself  = $movie_mark_myself_before ? floatval(preg_replace('/[^0-9]/', '', $movie_mark_myself_before) * 2) : '';
+                $movie_date_before = $m->find("span", 1)->text();
+                $movie_date = $movie_date_before ? str_replace("\"", "\'", $movie_date_before) : '';
                 // $movie_tags = str_replace("\"", "\'", $m->find("span", 2)->text());
                 // TODO: 临时注释
-                // $movie_mark_douban = '';
-                $api_num = cut_str($movie_url, '/', -2);
-                $api_movie = 'https://movie.douban.com/subject/' . $api_num . '/';
-                $raw_movie = self::curl_file_get_contents($api_movie);
-                $doc_movie = new simple_html_dom; 
-                $doc_movie -> load($raw_movie);                 
-                $doc_movie_detail = $doc_movie->find("strong.rating_num", 0) ;
-                $movie_mark_douban = $doc_movie_detail ? floatval($doc_movie_detail->text()) : '';
-                // $movie_mark_douban = floatval($doc_movie->find("strong.rating_num", 0)->text());
+                $movie_mark_douban = '';
+                // if ($movie_url) {
+                //     $api_num = cut_str($movie_url, '/', -2);
+                //     $api_movie = 'https://movie.douban.com/subject/' . $api_num . '/';
+                //     $raw_movie = self::curl_file_get_contents($api_movie);
+                //     $doc_movie = new simple_html_dom; 
+                //     $doc_movie -> load($raw_movie);                 
+                //     $movie_mark_douban_before = $doc_movie->find("strong.rating_num", 0)->text() ;
+                //     $movie_mark_douban = $movie_mark_douban_before ? floatval($movie_mark_douban_before) : '';
+                // }
+                // TODO: 临时注释
+                // $movie_remark  = $r->find("span.comment", 0) ? var_dump(trim($r->find("span.comment", 0)->text())) : '';
                 if ($oldData == $movie_name) return $data;
                 $data[] = array("name" => $movie_name, "img" => 'https://images.weserv.nl/?url=' . $movie_img, "url" => $movie_url, "remark" => $movie_remark, "date" => $movie_date,  "mark_myself" => $movie_mark_myself, "mark_douban" => $movie_mark_douban);
             }
