@@ -13,8 +13,12 @@ const quickCommentItem =  Vue.component('quick-comment-item', {
     <ul class="comment-list" v-if="commentData && commentData.length > 0">
         <li v-for="(item,index) in commentData" :id="'comment-' + item.id" :key="item.id" class="comment-item" >
           <div class="comment-item-main flex-hl-vl">
-            <div class="commentator-avatar">
-              <img alt="avatar" :src="item.author_avatar_urls ? item.author_avatar_urls[48] : ''"  height="32" width="32" class="avatar avatar-32 photo">
+            <div class="commentator-avatar">              
+              <el-image class="avatar featured-image" v-if="item.author_avatar_urls?.[24]" :src="item.author_avatar_urls[24]" lazy alt="avatar">
+                <div slot="error" class="image-slot">
+                  <i class="el-icon-user-solid fs-24"></i>
+                </div>
+              </el-image>
             </div>
             <div class="commentator-content">
               <span class="commentator-name">
@@ -45,9 +49,6 @@ const quickCommentItem =  Vue.component('quick-comment-item', {
       </ul>
     </div>
     `,
-  mounted() {
-    // console.log(this.commentData,"kj")
-  },
   methods: {
     replyToThis(item){
       this.$nextTick(()=>{

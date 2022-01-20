@@ -3856,12 +3856,10 @@ div[itemprop='description'] {
 		flex: 0 0 auto;
 		margin-right: 10px;
 
-		img {
+		.avatar {
+			width: 24px;
+			height: 24px;
 			border-radius: 2px;
-			// border: 1px solid #ddd;
-			// padding: 2px;
-			// -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-			// box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
 		}
 	}
 
