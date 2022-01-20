@@ -11,3 +11,4 @@ build_blog.sh
 
 package-lock.json
 yarn.lock
+/config.js
