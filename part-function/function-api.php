@@ -221,7 +221,7 @@ function get_author_class_for_api($comment_author_email, $user_name = '')
   global $wpdb;
   $author_count = count($wpdb->get_results( "SELECT comment_ID as author_count FROM $wpdb->comments WHERE comment_author_email = '$comment_author_email' " ));
   $user = $user_name ? '<span class="mr-5">'. $user_name .'</span>' : '';
-  if ($author_count >= 1 && $author_count <= 10) //数字可自行修改，代表评论次数。
+  if ($author_count >= 0 && $author_count <= 10) //数字可自行修改，代表评论次数。
     $dom = '<span class="vip level_1"> '. $user . 'LV.1</span>';
   else if ($author_count >= 11 && $author_count <= 20)
     $dom = '<span class="vip level_2"> '. $user . 'LV.2</span>';
