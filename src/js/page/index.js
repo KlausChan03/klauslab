@@ -133,7 +133,7 @@ const index_module = new Vue({
         .then((res) => {
           const data = res.data;
           this.totalOfArticle = parseInt(res.headers["x-wp-total"]);
-          this.ifShowMorePost = true
+          this.ifShowMorePost = true        
           return data;
         });
     },
@@ -171,10 +171,10 @@ const index_module = new Vue({
       };
       let [stickyArticles, commonArticles] = [[], []];
       if (this.page === 1) {
+        this.ifShowMorePost = false
         stickyArticles = await this.getStickyArticles(params);
         if ( stickyArticles.length < 6) {
           params.per_page = params.per_page - stickyArticles.length
-          this.ifShowMorePost = false
           commonArticles = await this.getCommonArticles(params);
         }
       } else {

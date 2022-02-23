@@ -25,17 +25,17 @@ get_header();
     <el-tab-pane label="article">
       <span slot="label"><i class="el-icon-tickets mr-5"></i>文章</span>
       <template v-if="ifShowPost">
-        <template v-if="listOfArticle.length > 0 && ifShowMorePost">
+        <template v-if="listOfArticle.length > 0">
           <!-- 文章列表 -->
           <article class="article-list hentry" v-for="(item,index) in listOfArticle" :key="item.id">
             <article-item class="article-item" :post-data="item" @change-type="changeItemType" @show-comment="showItemComment"></article-item>
             <quick-comment :ref="'quickComment-'+item.id" callback="true" :comment-data="item.listOfComment" :post-data="item" v-if="item.ifShowComment"></quick-comment>
           </article>
         </template>
-        <kl-skeleton v-else-if="listOfArticle.length > 0 && !ifShowMorePost" type="post"></kl-skeleton>
         <template v-else>
           <el-empty></el-empty>
         </template>
+        <kl-skeleton v-if="!ifShowMorePost" type="post"></kl-skeleton>
       </template>
       <kl-skeleton v-else type="post"></kl-skeleton>
     </el-tab-pane>
