@@ -18,6 +18,7 @@ const index_module = new Vue({
       totalOfChat: 0,
       ifShowPost: false,
       ifShowChat: false,
+      ifShowMorePost: false,
       ifShowAll: true,
       postType: "article",
       posts_id_sticky: "",
@@ -54,7 +55,7 @@ const index_module = new Vue({
       }).name;
     },
     getCurrent() {
-      return this.per_page[this.postType];
+      return Number(this.per_page[this.postType]);
     },
     getTotal() {
       if (this.postType === "article") {
@@ -132,6 +133,7 @@ const index_module = new Vue({
         .then((res) => {
           const data = res.data;
           this.totalOfArticle = parseInt(res.headers["x-wp-total"]);
+          this.ifShowMorePost = true
           return data;
         });
     },
@@ -172,6 +174,7 @@ const index_module = new Vue({
         stickyArticles = await this.getStickyArticles(params);
         if ( stickyArticles.length < 6) {
           params.per_page = params.per_page - stickyArticles.length
+          this.ifShowMorePost = false
           commonArticles = await this.getCommonArticles(params);
         }
       } else {

@@ -3,16 +3,9 @@ Vue.component("chat-item", {
   mixins: [filterMixin],
   template: `
   <div>  
-    <div class="entry-main" >
-      <div class="flex-hb-vc flex-hw mb-10">
-        <h5 class="entry-title" v-if="postData.title.rendered" ><a class="fs-16" :href="postData.link">#{{postData.title.rendered}}#</a></h5>
-        <div  class="entry-tag" :class="{'w-1': !postData.title.rendered, 'flex-hr-vc': !postData.title.rendered}">
-          <el-tag class="ml-10" size="small" type="danger" v-if="postData.sticky">TOP</el-tag>
-          <el-tag class="ml-10" size="small" type="danger" v-if="postData.newest">NEW</el-tag>
-          <el-tag class="ml-10" size="small" type="danger" v-if="postData.hotest">HOT</el-tag>
-        </div>       
-      </div>       
-      <p ref="entrysummary" class="entry-summary" v-html="postData.content.rendered" :id="postData.id"> </p>
+    <div class="entry-main">
+      <p class="entry-summary" ref="entrysummary" v-html="postData.content.rendered" :id="postData.id"> </p>
+      <p class="entry-title" v-if="postData.title.rendered" ><a class="fs-16" :href="postData.link">#{{postData.title.rendered}}#</a></p>
       <p @click="showLocation(postData.post_metas.position)" v-if="postData.post_metas.address" class="fs-12 col-aaa cur-p"> <i class="el-icon-map-location mr-5" ></i> {{ postData.post_metas.address }} </p>
     </div>    
     <div class="entry-footer flex-hb-vc flex-hw">
