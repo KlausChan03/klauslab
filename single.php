@@ -44,6 +44,18 @@ get_header(); ?>
 		<div class="article-main" v-if="ifShowSingle">
 			<div class="entry-header flex-hc-vc">
 				<h3 class="entry-title">{{posts.title.rendered}}</h3>
+        <div class="entry-tag">
+          <el-tag class="ml-10" size="small" type="danger" v-if="posts.sticky">TOP</el-tag>
+          <el-tag class="ml-10" size="small" type="danger" v-if="posts.newest">NEW</el-tag>
+          <el-tag class="ml-10" size="small" type="danger" v-if="posts.hotest">HOT</el-tag>
+          <el-tag class="ml-10" size="small" v-for="(item,index) in posts.post_metas.tag_name" :key="item + index">
+            {{item}}
+          </el-tag>
+          <el-tag type="warning" class="ml-10" size="small" v-for="(item,index) in posts.post_metas.cat_name"
+            :key="item + index">
+            {{item}}
+          </el-tag>
+        </div>
 				<div id="banner-bg" class="featured-header-image bgc-primary" v-html="posts.post_metas.thumbnail"> </div>
 			</div>
 			<div class="entry-main">
@@ -69,7 +81,7 @@ get_header(); ?>
 				<template v-if="posts.post_metas.reward === '0' ? false : true">
 					<kl-reward title="打赏"></kl-reward>
 				</template>
-				<template v-if="true">
+				<template v-if="Number(userID) === Number(posts.author)">
 					<el-button circle @click="updatePost()"><i class="el-icon-toilet-paper fs-20" title="更新"></i></el-button>
 				</template>
 			</div>
@@ -83,7 +95,7 @@ get_header(); ?>
 	<aside class="comment-container mt-10">
 		<h3 class="tips-header"><i class="lalaksks lalaksks-pinglun fs-20 mr-10"></i>评论区</h3>
 		<template v-if="posts.comment_status === 'open'">
-			<quick-comment :post-data="posts" v-if=""></quick-comment>
+			<quick-comment :post-data="posts"></quick-comment>
 		</template>
 		<template v-else>
 			<el-empty description="暂不开放"></el-empty>

@@ -7,6 +7,7 @@ const index_module = new Vue({
       ifShowSingle: false,
       ifMobileDevice: window.if_mobile_device,
       ifShowLocationPopup: false,
+      userID: window.user_id,
       posts: {
         post_metas: {
           zan_num: 0,

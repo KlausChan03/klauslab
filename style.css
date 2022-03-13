@@ -5340,7 +5340,9 @@ div[itemprop='description'] {
   margin-right: 10px;
 }
 
-#comments .commentator-avatar img {
+#comments .commentator-avatar .avatar {
+  width: 24px;
+  height: 24px;
   border-radius: 2px;
 }
 

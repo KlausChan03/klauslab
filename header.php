@@ -14,6 +14,7 @@
 
 <head>
   <?php
+  global $current_user;
   $description = cs_get_option('klausLab_description');
   $keywords = cs_get_option('klausLab_keywords');
   // 去除不必要的空格和HTML标签
@@ -43,8 +44,8 @@
     window.start_time = '<?php echo cs_get_option('klausLab_start_time'); ?>';
     window.start_full_year = start_time ? new Date(start_time).getFullYear() : new Date().getFullYear();
     window.icp_num = '<?php echo get_option('zh_cn_l10n_icp_num') ?>';
-    window.user_full_name = `<?php global $current_user;
-                              echo $current_user->nickname; ?>`;
+    window.user_full_name = `<?php echo $current_user->nickname; ?>`;
+    window.user_id = `<?php echo $current_user->ID; ?>`;
     window.wp_count_posts = "<?php echo wp_count_posts()->publish; ?>";
   </script>
 </head>
