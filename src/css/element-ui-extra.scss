@@ -13,6 +13,7 @@ body{
         .el-menu.el-menu-horizontal{
             max-width: 640px;
             overflow-x: auto;
+            overflow-y: hidden;
             display: flex;
             &::-webkit-scrollbar {
               width: auto;
