@@ -142,9 +142,6 @@
     width: 30px;
     box-sizing: border-box;
 }
-.article-main .entry-content ul{
-  /* padding-left: 25px; */
-}
 .article-main .entry-content ul li{
   padding-left: 20px; 
 }
