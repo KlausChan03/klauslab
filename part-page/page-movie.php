@@ -24,13 +24,16 @@ get_header();
       <h2>{{title}}</h2>
       <span class="secondary-color ml-10">{{tip}}</span>
     </div>
-    <div class="tips mt-15" v-if="count">
-      <span>记录阅片数量：{{count}}</span>
+    <div class="tips mt-15 flex-hb-vc">
+      <span v-if="count">记录阅片数量：{{count}}</span>
+      <el-autocomplete v-model="state" :fetch-suggestions="querySearchAsync" placeholder="请输入内容" @select="handleSelect">
+        <el-button slot="append" icon="el-icon-search"></el-button>
+      </el-autocomplete>
     </div>
     <div id="douban-movie-list" class="entry-content doubanboard-list" v-loading="loadingAll">
       <template v-if="count">
         <el-row v-bind:gutter="20">
-          <el-col :span="6" :xs="24" :sm="12" :md="6" :lg="4" v-for="(item,index) in list" :key="item.url" v-bind:class="'doubanboard-item'" v-if="item.url">
+          <el-col :span="6" :xs="24" :sm="12" :md="6" :lg="4" v-for="(item,index) in listCommon" :key="item.url" v-bind:class="'doubanboard-item'" v-if="item.url">
             <rotate-card trigger="hover" direction="row">
               <div slot="cz" v-if="item.url" v-bind:class="'doubanboard-thumb'" v-bind:style="{backgroundImage : 'url(' + item.img +')'}">
                 <div class="doubanboard-title flex-hb-vc">
@@ -42,7 +45,7 @@ get_header();
                 <p class="item-content mt-10" v-bind:title=item.remark>{{item.remark}}</p>
                 <p class="item-extra flex-hr-vc mt-5">
                   <el-tag class="flex-hr-vc mr-5 fs-12" size="mini" effect="dark" v-if="item.mark_myself"> {{Number(item.mark_myself).toFixed(1)}} </el-tag>
-                  <el-tag class="flex-hr-vc mr-5 fs-12" size="mini" effect="dark" type="success" v-if="item.mark_douban">  {{item.mark_douban}} </el-tag>
+                  <el-tag class="flex-hr-vc mr-5 fs-12" size="mini" effect="dark" type="success" v-if="item.mark_douban"> {{item.mark_douban}} </el-tag>
                   <span>{{item.date}}</span>
                 </p>
               </div>
@@ -72,18 +75,28 @@ get_header();
       curBooks_wish: 0,
       curMovies: 0,
       list: [],
+      listFilter: [],
       count: 0,
       pageSize: 24,
       loadingAll: true,
       ifShowMore: false,
+      queryData: [],
+      state: '',
+      timeout: null
     },
     mounted() {
-      setTimeout(() => {
-        this.loadMovies();
-      }, 1000);
+      this.loadMovies();
+      this.query()
+
+    },
+    computed: {
+      listCommon() {
+        const { list, listFilter } = this
+        return listFilter.length > 0 ? listFilter : list
+      }
     },
     methods: {
-      loadMovies: function() {
+      loadMovies() {
         this.loadingAll = true;
         const params = {}
         params.db_id = window.db_id;
@@ -120,6 +133,35 @@ get_header();
             })
           }
         });
+      },
+      query() {
+        this.loadingAll = true
+        axios.get(`${window.ajaxSourceUrl}/douban/cache/movie.json`).then(res => {
+          this.queryData = res.data.data
+          this.queryData.forEach((item) => {
+            item.value = item.name
+          })
+          this.loadingAll = false
+        }).catch((err) => {
+          this.loadingAll = false
+        })
+      },
+      querySearchAsync(queryString, cb) {
+        var queryData = this.queryData;
+        var results = queryString ? queryData.filter(this.createStateFilter(queryString)) : [];
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          this.listFilter = results
+          cb(results);
+        }, 3000 * Math.random());
+      },
+      createStateFilter(queryString) {
+        return (state) => {
+          return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+        };
+      },
+      handleSelect(item) {
+        console.log(item);
       }
     },
   })
