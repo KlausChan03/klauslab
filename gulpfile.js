@@ -158,7 +158,7 @@ gulp.task('scss', function () {
 				extname: '.css',
 			})
 		)
-		.pipe(gulp.dest(dir.build))
+		.pipe(gulp.dest(scss.build))
 })
 
 // Javascript 的处理
