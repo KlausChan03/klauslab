@@ -72,6 +72,8 @@ const header = new Vue({
     };
   },
   mounted() {
+    this.recordLoginTime()
+    this.init()
     const sessionFlag =
       _.isEmpty(JSON.parse(window.localStorage.getItem("menuList"))) ||
       _.isEmpty(JSON.parse(window.localStorage.getItem("baseInfo")))
@@ -90,23 +92,9 @@ const header = new Vue({
     var OriginTitile = document.title;
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) {
-        // var link =
-        //   document.querySelector("link[rel*='icon']") ||
-        //   document.createElement("link");
-        // link.type = "image/x-icon";
-        // link.rel = "shortcut icon";
-        // link.href = "/favicon2.ico";
-        // document.getElementsByTagName("head")[0].appendChild(link);
         document.title = "|ω･) 哎呦~页面不见了~";
         clearTimeout(titleTime);
       } else {
-        // var link =
-        //   document.querySelector("link[rel*='icon']") ||
-        //   document.createElement("link");
-        // link.type = "image/x-icon";
-        // link.rel = "shortcut icon";
-        // link.href = "/favicon.ico";
-        // document.getElementsByTagName("head")[0].appendChild(link);
         document.title = "(/≧▽≦)/ 呦吼~肥来啦！";
         titleTime = setTimeout(function () {
           document.title = OriginTitile;
@@ -168,6 +156,61 @@ const header = new Vue({
           );
         })
         .catch();
+    },
+    init() {
+      const { isFirstVisit, isLogin } = this
+      // 获取日期
+      const myDate = new Date();
+      const mymonth = myDate.getMonth() + 1;
+      const today = dayjs(myDate).format("MM-DD");
+      // 定义特殊日
+      const specialDate = [
+        { name: 'MourningDate',  dates: ["04-04", "05-12", "12-13"], content: '逝者已矣，生者如斯。', title: '哀悼纪念日' },
+        { name: 'ChristmasDate',  dates: ["12-24", "12-25"], content: 'Marry Christmas!🎄🎁', title: '圣诞节' },
+        { name: 'NewYearDate',  dates: ["01-01"], content: '祝愿新年新气象！', title: '元旦节' }
+      ]
+      // 初始化弹窗提示对象
+      const tip = {
+        title: '你好',
+        content: isLogin ? '欢迎回来' : '欢迎访问敝站' 
+      }
+      const _html = document.querySelectorAll("html")[0];
+      let _widget_userinfo = document
+        .getElementsByClassName("widget")[0]
+        .querySelectorAll(".user-bg")[0];
+
+      specialDate.forEach(item => {
+        if (item.dates.indexOf(today) >= 0) {
+          tip.title = item.title
+          tip.content = item.content
+          switch (item.name) {
+            case 'MourningDate':
+              _html.classList.add("mourning")                
+              break;
+            case 'ChristmasDate':
+              _widget_userinfo.classList.add("christmas-bg")
+              break;
+            case 'NewYearDate':
+              _widget_userinfo.classList.add("newYear-bg")             
+              break;
+            default:
+              break;
+          }
+        }
+      });
+      // 每天首次访问提示
+      if (isFirstVisit) {
+        this.$notify({
+          title: tip.title,
+          message: tip.content,
+          duration: 6000
+        })
+      }        
+      if (1 < mymonth && mymonth <= 4) {
+        this.season = "spring";
+      } else if (10 < mymonth || mymonth <= 1) {
+        this.season = "winter";
+      }
     },
     showSearch() {
       this.ifShowSearch = true;
@@ -243,14 +286,33 @@ const header = new Vue({
       // 监听滚动设置header的状态
       const scrollY = window.pageYOffset;
       const header = document.querySelector("header");
-      scrollY <= window.lastScroll
+      const headerHeight = $(header).height();
+      scrollY <= window.lastScroll && scrollY < headerHeight
         ? (header.style.top = "0")
         : (header.style.top = "-60px");
-      scrollY > 0
+      scrollY > headerHeight
         ? (header.style.position = "fixed")
         : (header.style.position = "relative");
       window.lastScroll = scrollY;
+
     },
+    
+    recordLoginTime () {
+      var firstDate = localStorage.getItem('firstDate')
+      // 获取当前时间（年月日）
+      var now = new Date().toLocaleDateString()
+      // 转换成时间戳
+      var time = Date.parse(new Date(now))
+      if (localStorage.getItem('firstDate')) {
+        if (time > firstDate) {
+          this.isFirstVisit = true
+          localStorage.setItem('firstDate', JSON.stringify(time))
+        }
+      } else {
+        this.isFirstVisit = true
+        localStorage.setItem('firstDate', JSON.stringify(time))
+      }
+    }
   },
 });
 
@@ -282,11 +344,7 @@ const fixedPart = new Vue({
     };
   },
   mounted() {
-    this.recordLoginTime()
-    this.init()
-    // window.onload = () => {
-    //   this.init();
-    // };
+
     // 切换背景功能
     let [background_, background_in, background_out] = [
       document.querySelector(".fp-background"),
@@ -324,81 +382,5 @@ const fixedPart = new Vue({
         removeClass(background_out, "show");
         addClass(background_out, "hide");
       });
-  },
-  methods: {
-    init() {
-      const { isFirstVisit, isLogin } = this
-      // 获取日期
-      const myDate = new Date();
-      const mymonth = myDate.getMonth() + 1;
-      const today = dayjs(myDate).format("MM-DD");
-      // 定义特殊日
-      const specialDate = [
-        { name: 'MourningDate',  dates: ["04-04", "05-12", "12-13"], content: '逝者已矣，生者如斯。', title: '哀悼纪念日' },
-        { name: 'ChristmasDate',  dates: ["12-24", "12-25"], content: 'Marry Christmas!🎄🎁', title: '圣诞节' },
-        { name: 'NewYearDate',  dates: ["01-01"], content: '祝愿新年新气象！', title: '元旦节' }
-      ]
-      // 初始化弹窗提示对象
-      const tip = {
-        title: '你好',
-        content: isLogin ? '欢迎回来' : '欢迎访问敝站' 
-      }
-      const _html = document.querySelectorAll("html")[0];
-      if (document.getElementsByClassName("widget").length > 0) {
-        let _widget_userinfo = document
-          .getElementsByClassName("widget")[0]
-          .querySelectorAll(".user-bg")[0];
-
-        specialDate.forEach(item => {
-          if (item.dates.indexOf(today) >= 0) {
-            tip.title = item.title
-            tip.content = item.content
-            switch (item.name) {
-              case 'MourningDate':
-                _html.classList.add("mourning")                
-                break;
-             case 'ChristmasDate':
-                _widget_userinfo.classList.add("christmas-bg")
-                break;
-             case 'NewYearDate':
-                _widget_userinfo.classList.add("newYear-bg")             
-                break;
-              default:
-                break;
-            }
-          }
-        });
-        // 每天首次访问提示
-        if (isFirstVisit) {
-          this.$notify({
-            title: tip.title,
-            message: tip.content,
-            duration: 6000
-          })
-        }
-        
-      }
-      if (1 < mymonth && mymonth <= 4) {
-        this.season = "spring";
-      } else if (10 < mymonth || mymonth <= 1) {
-        this.season = "winter";
-      }
-    },
-    recordLoginTime () {
-      var firstDate = localStorage.getItem('firstDate')
-      // 获取当前时间（年月日）
-      var now = new Date().toLocaleDateString()
-      // 转换成时间戳
-      var time = Date.parse(new Date(now))
-      if (localStorage.getItem('firstDate')) {
-        if (time > firstDate) {
-          this.isFirstVisit = true
-          localStorage.setItem('firstDate', JSON.stringify(time))
-        }
-      } else {
-        this.isFirstVisit = true
-        localStorage.setItem('firstDate', JSON.stringify(time))
-      }
-    }
-  },
+  }
 });

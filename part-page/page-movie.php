@@ -24,8 +24,8 @@ get_header();
       <h2>{{title}}</h2>
       <span class="secondary-color ml-10">{{tip}}</span>
     </div>
-    <div class="tips mt-15 flex-hb-vc">
-      <span v-if="count">记录阅片数量：{{count}}</span>
+    <div class="tips mt-15 flex-hb-vc" v-if="count">
+      <span>记录阅片数量：{{count}}</span>
       <el-autocomplete v-model="state" :fetch-suggestions="querySearchAsync" placeholder="请输入内容" @select="handleSelect">
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-autocomplete>
@@ -37,15 +37,15 @@ get_header();
             <rotate-card trigger="hover" direction="row">
               <div slot="cz" v-if="item.url" v-bind:class="'doubanboard-thumb'" v-bind:style="{backgroundImage : 'url(' + item.img +')'}">
                 <div class="doubanboard-title flex-hb-vc">
-                  <a class="movie-title " v-bind:href="item.url" v-bind:title="item.name" target="_blank">{{item.name}}</a>
+                  <a class="movie-title " v-bind:href="item.url" v-bind:title="item.name" target="_blank">{{ item.name }}</a>
                 </div>
               </div>
               <div slot="cf" class="inner">
                 <h3>{{item.name}}</h3>
-                <p class="item-content mt-10" v-bind:title=item.remark>{{item.remark}}</p>
+                <p class="item-content mt-10" v-bind:title=item.remark>{{ item.remark }}</p>
                 <p class="item-extra flex-hr-vc mt-5">
-                  <el-tag class="flex-hr-vc mr-5 fs-12" size="mini" effect="dark" v-if="item.mark_myself"> {{Number(item.mark_myself).toFixed(1)}} </el-tag>
-                  <el-tag class="flex-hr-vc mr-5 fs-12" size="mini" effect="dark" type="success" v-if="item.mark_douban"> {{item.mark_douban}} </el-tag>
+                  <el-tag class="flex-hr-vc mr-5 fs-12" size="mini" effect="dark" v-if="item.mark_myself">{{ Number(item.mark_myself).toFixed(1) }}</el-tag>
+                  <el-tag class="flex-hr-vc mr-5 fs-12" size="mini" effect="dark" type="success" v-if="item.mark_douban">{{ item.mark_douban }}</el-tag>
                   <span>{{item.date}}</span>
                 </p>
               </div>
