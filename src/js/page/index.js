@@ -289,8 +289,10 @@ const index_module = new Vue({
           element.addEventListener("click", function (event) {
             event.preventDefault();
             self.imageUrls = [];
-            let url = element.getAttribute("src");
-            debugger;
+            let url = element.getAttribute("data-large-file") || element.getAttribute("src");
+            if (!url) {
+              return
+            }
             if (!self.imageUrls.includes(url)) {
               self.imageUrls.push(url);
             }

@@ -72,8 +72,11 @@ const header = new Vue({
     };
   },
   mounted() {
+    const { isHome } = this
     this.recordLoginTime()
-    this.init()
+    if (isHome) {
+      this.init()
+    }
     const sessionFlag =
       _.isEmpty(JSON.parse(window.localStorage.getItem("menuList"))) ||
       _.isEmpty(JSON.parse(window.localStorage.getItem("baseInfo")))
@@ -87,20 +90,20 @@ const header = new Vue({
         window.localStorage.getItem("menuList")
       );
     }
-    // 动态图标
-    var titleTime;
-    var OriginTitile = document.title;
-    document.addEventListener("visibilitychange", function () {
-      if (document.hidden) {
-        document.title = "|ω･) 哎呦~页面不见了~";
-        clearTimeout(titleTime);
-      } else {
-        document.title = "(/≧▽≦)/ 呦吼~肥来啦！";
-        titleTime = setTimeout(function () {
-          document.title = OriginTitile;
-        }, 1000);
-      }
-    });
+    // 动态图标 - 暂停使用
+    // var titleTime;
+    // var OriginTitile = document.title;
+    // document.addEventListener("visibilitychange", function () {
+    //   if (document.hidden) {
+    //     document.title = "|ω･) 哎呦~页面不见了~";
+    //     clearTimeout(titleTime);
+    //   } else {
+    //     document.title = "(/≧▽≦)/ 呦吼~肥来啦！";
+    //     titleTime = setTimeout(function () {
+    //       document.title = OriginTitile;
+    //     }, 1000);
+    //   }
+    // });
     window.addEventListener("resize", this.resizeHandler);
     window.addEventListener("scroll", this.scrollHandler);
   },
@@ -287,10 +290,10 @@ const header = new Vue({
       const scrollY = window.pageYOffset;
       const header = document.querySelector("header");
       const headerHeight = $(header).height();
-      scrollY <= window.lastScroll && scrollY < headerHeight
+      scrollY <= window.lastScroll && scrollY < headerHeight && scrollY > 0
         ? (header.style.top = "0")
         : (header.style.top = "-60px");
-      scrollY > headerHeight
+      scrollY > headerHeight && scrollY > 0
         ? (header.style.position = "fixed")
         : (header.style.position = "relative");
       window.lastScroll = scrollY;

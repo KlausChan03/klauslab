@@ -420,6 +420,7 @@ new Vue({
 					const element = this.pictureList[index]
 					imgDom += element.dom
 				}
+        // TODO: 需要清理旧的dom，再插入新的dom
 				this.posts.content += `<div class="moment-gallery flex-hb-vc flex-hw">${imgDom}</div>`
 			}
 			const params = JSON.parse(JSON.stringify(this.posts))
