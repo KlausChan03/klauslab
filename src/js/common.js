@@ -290,7 +290,7 @@ const header = new Vue({
       const scrollY = window.pageYOffset;
       const header = document.querySelector("header");
       const headerHeight = $(header).height();
-      scrollY <= window.lastScroll && scrollY < headerHeight && scrollY > 0
+      scrollY <= window.lastScroll && scrollY > 0
         ? (header.style.top = "0")
         : (header.style.top = "-60px");
       scrollY > headerHeight && scrollY > 0
