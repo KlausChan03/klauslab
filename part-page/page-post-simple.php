@@ -41,7 +41,7 @@ get_header();
     <div class="post-header flex-hb-vc flex-hw">
       <div class="post-header-left">
         <el-popover placement="bottom" width="400" trigger="click" v-if="format === false">
-          <el-upload ref="upload" class="upload" list-type="picture-card" :limit="1" :on-exceed="handleExceed" :action=`${siteUrl}/wp-json/wp/v2/media` :on-progress="handleUploadBegin" :on-success="handleUploadSuccess" :headers="{'X-WP-Nonce': nonce}" multiple>
+          <el-upload ref="upload" class="upload" list-type="picture-card" :limit="1" :on-exceed="handleExceed" :action=`${siteUrl}/wp-json/wp/v2/media` :on-progress="handleUploadBegin" :on-success="handleUploadSuccess" :before-upload="handleBeforeUpload" :headers="{'X-WP-Nonce': nonce}" multiple>
 
             <i slot="default" class="el-icon-plus"></i>
             <div slot="tip" class="el-upload__tip">文章的背景</em></div>
@@ -63,7 +63,7 @@ get_header();
           <el-button class="upload-button mr-10" size="small" slot="reference"><i class="fs-20 el-icon-picture-outline fs-20 mr-10"></i>背景</el-button>
         </el-popover>
         <el-popover placement="bottom" width="400" trigger="click" v-if="format === true">
-          <el-upload ref="upload" class="upload" list-type="picture-card" :limit="9" :on-exceed="handleExceed" :action=`${siteUrl}/wp-json/wp/v2/media` :on-progress="handleUploadBegin" :on-success="handleUploadSuccess" :headers="{'X-WP-Nonce': nonce}" multiple>
+          <el-upload ref="upload" class="upload" list-type="picture-card" :limit="9" :on-exceed="handleExceed" :action=`${siteUrl}/wp-json/wp/v2/media` :on-progress="handleUploadBegin" :on-success="handleUploadSuccess" :before-upload="handleBeforeUpload" :headers="{'X-WP-Nonce': nonce}" multiple>
             <i slot="default" class="el-icon-plus"></i>
             <div slot="tip" class="el-upload__tip">瞬间的印象，支持最多九张图</em></div>
             <div slot="file" slot-scope="{file}">
@@ -200,7 +200,9 @@ get_header();
 
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=7c7a39e2e07d4245fa9c21dece87bf93&plugin=AMap.Geocoder" defer></script>
 <script type="text/javascript" src="https://cdn.tiny.cloud/1/7b4pdrcfzcszmsf2gjor1x94mha4srj4jalmdpq94fgpaa6j/tinymce/5/tinymce.min.js" referrerpolicy="origin" defer></script>
-<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/post.js" defer></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/lib/exif.js" defer ></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/plugin/fileUtil.js" defer ></script>
+<script type="text/javascript" src="<?php echo KL_THEME_URI; ?>/js/page/post.js" defer ></script>
 <?php
 get_footer();
 ?>
