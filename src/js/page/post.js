@@ -6,7 +6,7 @@ new Vue({
 	computed: {
 		tagNameList() {
 			let tagNameList = []
-			if(Array.isArray(this.posts.tags) && this.posts.tags.length > 0) {
+			if (Array.isArray(this.posts.tags) && this.posts.tags.length > 0) {
 				for (let i = 0; i < this.tagList.length; i++) {
 					for (let j = 0; j < this.posts.tags.length; j++) {
 						if (this.posts.tags[j] === this.tagList[i].id) {
@@ -20,7 +20,7 @@ new Vue({
 		},
 		categoryNameList() {
 			let categoryNameList = []
-			if(Array.isArray(this.posts.categories) && this.posts.categories.length > 0) {
+			if (Array.isArray(this.posts.categories) && this.posts.categories.length > 0) {
 				for (let i = 0; i < this.categoryListOrigin.length; i++) {
 					for (let j = 0; j < this.posts.categories.length; j++) {
 						if (this.posts.categories[j] === this.categoryListOrigin[i].id) {
@@ -160,7 +160,7 @@ new Vue({
 				})
 				.then((res) => {
 					this.tagList = res.data
-          console.log(this.tagList)
+					console.log(this.tagList)
 
 				})
 		},
@@ -176,7 +176,7 @@ new Vue({
 				.then((res) => {
 					this.categoryListOrigin = res.data
 					this.categoryList = transData(res.data, 'id', 'parent', 'children')
-          console.log(this.categoryList)
+					console.log(this.categoryList)
 				})
 		},
 
@@ -205,14 +205,14 @@ new Vue({
 						posts.type = posts.type.indexOf('moment') > -1 ? 'moments' : 'posts'
 						this.format = !!(posts.type === 'moments' ? true : false)
 						this.changePostType()
-            if (posts.categories) {
+						if (posts.categories) {
 							this.posts.categories = posts.categories || []
 							this.$refs.categoryTree.setCheckedKeys(this.posts.categories)
 						}
 						if (posts.tags) {
 							this.posts.tags = posts.tags || []
 						}
-            posts.post_metas.location = Boolean(posts.post_metas.location)
+						posts.post_metas.location = Boolean(posts.post_metas.location)
 						this.posts = posts
 
 						this.$nextTick(() => {
@@ -344,16 +344,17 @@ new Vue({
 				}
 			})
 		},
+
 		changePostType() {
 			window.tinymce.remove()
 			this.posts.type = this.format === true ? 'moments' : 'posts'
 			this.defaultInit.toolbar = this.format
 				? this.toolbar_simple
 				: this.toolbar_default
-      if (this.posts.type === 'posts') {
-        this.getTags()
-        this.getCategories()
-      }
+			if (this.posts.type === 'posts') {
+				this.getTags()
+				this.getCategories()
+			}
 			this.init()
 		},
 
@@ -396,7 +397,27 @@ new Vue({
 			this.dialogImageUrl = file.url
 			this.dialogVisible = true
 		},
-		handleDownload(file) {},
+		handleBeforeUpload(file) {
+			return new Promise((resolve) => {
+				getOrientation(file).then((orient) => {
+					if (orient && orient === 6) {
+						let reader = new FileReader()
+						let img = new Image()
+						reader.onload = (e) => {
+							img.src = e.target.result
+							img.onload = function () {
+								const data = rotateImage(img, img.width, img.height)
+								const newFile = dataURLtoFile(data, file.name)
+								resolve(newFile)
+							}
+						}
+						reader.readAsDataURL(file)
+					} else {
+						resolve(file)
+					}
+				})
+			})
+		},
 
 		urlToObj(str) {
 			var obj = {}
@@ -420,7 +441,7 @@ new Vue({
 					const element = this.pictureList[index]
 					imgDom += element.dom
 				}
-        // TODO: 需要清理旧的dom，再插入新的dom
+				// TODO: 需要清理旧的dom，再插入新的dom
 				this.posts.content += `<div class="moment-gallery flex-hb-vc flex-hw">${imgDom}</div>`
 			}
 			const params = JSON.parse(JSON.stringify(this.posts))
@@ -455,8 +476,7 @@ new Vue({
 
 			axios
 				.post(
-					`${this.siteUrl}/wp-json/wp/v2/${format}${
-						type === 'update' ? '/' + this.post_id : ''
+					`${this.siteUrl}/wp-json/wp/v2/${format}${type === 'update' ? '/' + this.post_id : ''
 					}`,
 					params,
 					{
