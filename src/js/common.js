@@ -168,7 +168,7 @@ const header = new Vue({
       const today = dayjs(myDate).format("MM-DD");
       // 定义特殊日
       const specialDate = [
-        { name: 'MourningDate',  dates: ["04-04", "05-12", "12-13"], content: '逝者已矣，生者如斯。', title: '哀悼纪念日' },
+        { name: 'MourningDate',  dates: ["04-04", "05-12", "12-01", "12-13"], content: '逝者已矣，生者如斯。', title: '哀悼纪念日' },
         { name: 'ChristmasDate',  dates: ["12-24", "12-25"], content: 'Marry Christmas!🎄🎁', title: '圣诞节' },
         { name: 'NewYearDate',  dates: ["01-01"], content: '祝愿新年新气象！', title: '元旦节' }
       ]
