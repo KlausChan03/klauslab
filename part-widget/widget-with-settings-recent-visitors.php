@@ -43,8 +43,8 @@ class widget_recent_visitors extends WP_Widget {
           	$icon = 'memory-visitors';
       	else
           	$icon = $instance['icon'];
-        $readerNum = $instance['readerNum'];
-        echo $before_widget;  //id开始框
+            $readerNum = $instance['readerNum'];
+            echo $before_widget;  //id开始框
         if( $title ) echo $args['before_title'] . '<i class="memory ' . $icon . '"></i> ' . $title . $args['after_title'];
         if (function_exists('most_active_friends')) { echo "<ul class='widget-visitors flex-hl-vc flex-hw'>" . most_active_friends($readerNum) . "</ul>";} ;
         echo $after_widget;  //框架结束

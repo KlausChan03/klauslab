@@ -333,7 +333,7 @@ set_post_thumbnail_size(160);
 function autoset_featured()
 {
   global $post;
-  $already_has_thumb = has_post_thumbnail($post->ID);
+  $already_has_thumb = empty($already_has_thumb) ? has_post_thumbnail($post->ID) : $already_has_thumb;
   if (!$already_has_thumb) {
     $attached_image = get_children("post_parent=$post->ID&post_type=attachment&post_mime_type=image&numberposts=1");
     if ($attached_image) {

@@ -121,7 +121,9 @@ body{
         }
     }
 
-
-    
+    .el-tooltip__popper span {
+      line-height: 2; 
+      min-width: 40px;
+    }
 }
 

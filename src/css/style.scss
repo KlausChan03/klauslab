@@ -2406,9 +2406,7 @@ body {
 				margin-bottom: 0;
 			}
 
-			&.widget_userinfo {
-				padding: 0;
-			}
+			
 
 			&.widget_blog_subscription {
 				#subscribe-text {
@@ -2497,6 +2495,20 @@ body {
 							color: #fff;
 						}
 					}
+				}
+			}
+
+			&.widget_userinfo {
+				padding: 0;
+			}
+
+			&.widget_recent_visitors {
+				.widget-visitor {
+					flex: 0 1 auto; 
+					border: none; 
+					margin: 0px; 
+					padding: 5px 8px;
+					
 				}
 			}
 		}
@@ -3295,7 +3307,7 @@ body {
 
 .vip {
 	width: auto;
-	padding: 1px 4px;
+	padding: 4px;
 	border-radius: 3px;
 	color: white;
 	font-size: 12px;

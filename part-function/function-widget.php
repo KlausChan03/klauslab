@@ -299,10 +299,13 @@ function most_active_friends($friends_num = 10)
   $c_avatar_default = '<img src=" ' . KL_THEME_URI . '/img/wp-default-gravatar.png"  style="width: 40px; height: 40px; object-fit: cover;"/>';
   foreach ($counts as $count) {
     $c_url = !empty($count->comment_author_url) ? $count->comment_author_url : $count->user_url;
+    $c_order_date = !empty($count->order_date) ? $count->order_date : $count->order_date;
     $c_name = !empty($count->comment_author) ? $count->comment_author : (!empty($count->display_name) ? $count->display_name : $count->user_nicename);
     $c_vip = get_author_class_for_api(!empty($count->comment_author_email) ? $count->comment_author_email : $count->user_email, $c_name);
     $c_avatar = get_avatar(!empty($count->comment_author_email) ? $count->comment_author_email : $count->user_email, 40);
-    $mostactive .= '<li class="widget-visitor flex" style="flex: 0 1 auto; border: none; margin:0; padding: 5px 8px">' . $el_start . '<div slot="content"><div class="flex-hb-vc" style="line-height:2; min-width:40px">' .  $c_vip . '</div></div><a href="' . ($c_url ?  $c_url : '#') . '" >' . ($c_avatar ? $c_avatar : $c_avatar_default) . '</a>' . $el_end . '</li>';
+    $mostactive 
+    .= '<li class="widget-visitor flex">' 
+    . $el_start . '<div slot="content"><div class="flex-hc-vt flex-v"><span>' .  $c_vip . '</span><span>最后登录：' . $c_order_date .'</span></div></div><a href="' . ($c_url ?  $c_url : '#') . '" >' . ($c_avatar ? $c_avatar : $c_avatar_default) . '</a>' . $el_end . '</li>';
   }
   return $mostactive;
 }

@@ -118,12 +118,12 @@
   counter-reset: item;
 }
 
-.article-main .entry-content ol li {
+.article-main .entry-content ol > li {
   margin-bottom: 10px;
   padding-left: 20px;
 }
 
-.article-main .entry-content ol li:before {
+.article-main .entry-content ol > li:before {
   content: counter(item);
     counter-increment: item;
     font-size: 11.4px;
