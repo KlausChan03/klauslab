@@ -16,8 +16,77 @@
 
 # Use
 
-获取稳定版本分支的代码，放置在`wordpress`项目的`themes`目录下，通过`npm`安装 package.json 里的依赖后，再通过`npm run dev` or `npm run prod`进行编译打包，打包后的 dist 即静态资源。
-因为项目目前仅为个人开源主题，没有推广或者商用。建议使用者最好具备 nodejs 及相关 php 知识储备。如若遇到问题，建议通过 github 或者[作者博客](https://klauslaura.cn)咨询作者。
+## 安装步骤
+
+1. 获取稳定版本分支的代码，放置在 `wordpress` 项目的 `themes` 目录下
+2. 安装依赖：
+   ```bash
+   npm install
+   ```
+3. 配置构建路径（编辑 `config.js`）：
+   ```javascript
+   module.exports = {
+     local: '/your/local/wordpress/wp-content/themes/klauslab/',
+     production: '/your/production/wordpress/wp-content/themes/klauslab/'
+   }
+   ```
+
+## 构建命令
+
+### Vite 构建方式（推荐）
+
+- **开发环境构建**：
+  ```bash
+  npm run dev
+  ```
+  
+- **生产环境构建**：
+  ```bash
+  npm run build
+  # 或
+  npm run prod
+  ```
+
+- **开发服务器**（可选）：
+  ```bash
+  npm run serve
+  ```
+
+- **预览生产构建**：
+  ```bash
+  npm run preview
+  ```
+
+### Gulp 构建方式（已废弃，保留兼容）
+
+如果需要使用旧的 Gulp 构建方式：
+```bash
+npm run gulp:dev   # 开发环境
+npm run gulp:prod  # 生产环境
+```
+
+**注意**：Gulp 方式已不再维护，建议迁移到 Vite 构建。
+
+## 说明
+
+- 打包后的 `dist` 目录即为静态资源输出目录
+- 开发环境会生成 source map 用于调试
+- 生产环境会自动压缩、优化代码
+- 项目目前仅为个人开源主题，没有推广或者商用
+- 建议使用者最好具备 Node.js 及相关 PHP 知识储备
+- 如若遇到问题，建议通过 GitHub 或者[作者博客](https://klauslaura.cn)咨询作者
+
+## 技术栈
+
+- **构建工具**: Vite 5.x
+- **前端框架**: Vue 2.x
+- **UI 组件库**: Element UI
+- **CSS 预处理器**: SCSS/Sass
+- **浏览器兼容**: 最新 2 个版本，> 2%
+
+## 详细文档
+
+查看 [STRUCTURE.md](./STRUCTURE.md) 了解完整的项目组织结构说明。
 
 # View
 
