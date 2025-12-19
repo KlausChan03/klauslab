@@ -31,6 +31,13 @@ new Vue({
 			}
 			return categoryNameList
 		},
+		// 获取预览图片列表（用于瞬间模式的多图预览）
+		previewImageList() {
+			if (this.posts.type === 'moments' && this.pictureList.length > 0) {
+				return this.pictureList.map(item => item.url).filter(url => url)
+			}
+			return []
+		},
 	},
 	data() {
 		const ide = Date.now()
@@ -71,6 +78,7 @@ new Vue({
 			dialogImageUrl: '',
 			dialogVisible: false,
 			disabled: false,
+			uploadProgress: {},
 			toolbar_simple: ['undo redo | emoticons'],
 			toolbar_default: [
 				'bold italic underline strikethrough blockquote|forecolor backcolor|formatselect | fontsizeselect  | alignleft aligncenter alignright alignjustify | outdent indent |codeformat blockformats| removeformat undo redo bullist numlist toc pastetext | codesample charmap  hr insertdatetime | lists image media table link unlink anchor | emoticons |code searchreplace fullscreen help ',
@@ -129,20 +137,24 @@ new Vue({
 				},
 				// 图片上传
 				images_upload_handler: function (blobInfo, success, failure) {
-					let formData = new FormData()
+					const formData = new FormData()
 					formData.append('file', blobInfo.blob())
 					axios
-						.post(`${this.siteUrl}/wp-json/wp/v2/media`, formData, {
+						.post(`${self.siteUrl}/wp-json/wp/v2/media`, formData, {
 							headers: {
-								'X-WP-Nonce': this.nonce,
+								'X-WP-Nonce': self.nonce,
 							},
 						})
 						.then((response) => {
-							if (response.status == 201) {
+							if (response.status === 201) {
 								success(response.data['source_url'])
 							} else {
 								failure('上传失败！')
 							}
+						})
+						.catch((error) => {
+							const errorMsg = error?.response?.data?.message || error?.message || '上传失败'
+							failure(errorMsg)
 						})
 				},
 				// 挂载的DOM对象
@@ -359,90 +371,222 @@ new Vue({
 		},
 
 		handleExceed(files, fileList) {
+			const limit = this.format ? 9 : 1
+			const type = this.format ? '图片' : '特色图像'
 			this.$message.warning(
-				`当前限制选择 1 个特色图像，本次选择了 ${files.length} 个文件`
+				`当前限制选择 ${limit} 个${type}，本次选择了 ${files.length} 个文件，已超出限制`
 			)
 		},
-		handleUploadBegin() {
+		handleUploadBegin(event, file, fileList) {
+			// 上传开始，显示进度
 			this.hasCommitFinish = true
+			// 记录上传进度
+			this.$set(this.uploadProgress, file.uid, {
+				percent: 0,
+				status: 'uploading'
+			})
 		},
-		handleUploadSuccess(res, file) {
+		handleUploadProgress(event, file, fileList) {
+			// 上传开始，显示进度
+			if (!this.uploadProgress[file.uid]) {
+				this.hasCommitFinish = true
+				this.$set(this.uploadProgress, file.uid, {
+					percent: 0,
+					status: 'uploading'
+				})
+			}
+			// 更新上传进度
+			if (this.uploadProgress[file.uid]) {
+				this.uploadProgress[file.uid].percent = Math.round(event.percent)
+			}
+		},
+		handleUploadSuccess(res, file, fileList) {
+			// 更新上传状态为成功
+			if (this.uploadProgress[file.uid]) {
+				this.uploadProgress[file.uid].status = 'success'
+				this.uploadProgress[file.uid].percent = 100
+			}
+			
 			if (this.posts.type === 'moments') {
 				this.pictureList.push({
 					id: res.id,
 					dom: res.description.rendered,
+					url: res.source_url || res.url,
 				})
+				const total = this.format ? 9 : 1
+				if (this.pictureList.length < total) {
+					this.$message.success(`图片上传成功 (${this.pictureList.length}/${total})`)
+				}
 			} else {
 				this.posts.featured_media = res.id
+				this.$message.success('背景图片上传成功')
 			}
 			this.hasCommitFinish = false
+		},
+		handleUploadError(err, file, fileList) {
+			this.hasCommitFinish = false
+			// 更新上传状态为失败
+			if (this.uploadProgress[file.uid]) {
+				this.uploadProgress[file.uid].status = 'error'
+			}
+			const errorMsg = err?.response?.data?.message || err?.message || '上传失败'
+			this.$message.error(`图片上传失败: ${errorMsg}`)
 		},
 		handleCheckChange(data, checked, indeterminate) {
 			this.posts.categories = this.$refs.categoryTree.getCheckedKeys()
 		},
 		handleRemove(file, fileList) {
-			this.$refs.upload.handleRemove(file)
-			if (this.posts.type === 'posts') {
-				for (let index = 0; index < this.pictureList.length; index++) {
-					const element = array[index]
-					if (Number(element.id) === Number(file.response.id)) {
-						this.pictureList = this.pictureList.splice(index, 1)
-					}
+			// 确认删除
+			this.$confirm('确定要删除这张图片吗？', '提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			}).then(() => {
+				this.$refs.upload.handleRemove(file)
+				if (this.posts.type === 'moments') {
+					// 瞬间模式：从pictureList中移除
+					const fileId = file.response?.id || file.uid
+					this.pictureList = this.pictureList.filter(item => {
+						return Number(item.id) !== Number(fileId)
+					})
+				} else {
+					// 文章模式：清除特色图片
+					this.posts.featured_media = ''
 				}
-			} else {
-				this.posts.featured_media = ''
-			}
+				this.$message.success('删除成功')
+			}).catch(() => {
+				// 取消删除，不做任何操作
+			})
 		},
 		handlePictureCardPreview(file) {
-			this.dialogImageUrl = file.url
-			this.dialogVisible = true
+			// 如果是瞬间模式且有多个图片，使用Element UI内置的预览功能
+			// Element UI的upload组件会自动处理多图预览
+			// 单图或文章模式使用自定义对话框
+			if (this.posts.type === 'moments' && this.pictureList.length > 1) {
+				// Element UI会自动处理多图预览，这里不需要额外操作
+				return
+			} else {
+				// 单图预览使用自定义对话框
+				this.dialogImageUrl = file.url || file.response?.source_url || file.response?.url
+				this.dialogVisible = true
+			}
 		},
 		handleBeforeUpload(file) {
-			return new Promise((resolve) => {
+			// 检查文件类型
+			const isImage = file.type.startsWith('image/')
+			if (!isImage) {
+				this.$message.error('只能上传图片文件！')
+				return false
+			}
+			
+			// 检查文件大小（限制10MB）
+			const isLt10M = file.size / 1024 / 1024 < 10
+			if (!isLt10M) {
+				this.$message.error('图片大小不能超过 10MB！')
+				return false
+			}
+			
+			return new Promise((resolve, reject) => {
 				getOrientation(file).then((orient) => {
-					if (orient && orient === 6) {
-						let reader = new FileReader()
-						let img = new Image()
-						reader.onload = (e) => {
-							img.src = e.target.result
-							img.onload = function () {
-								const data = rotateImage(img, img.width, img.height)
+					// 如果orientation为1（正常）或undefined，直接上传
+					if (!orient || orient === 1) {
+						resolve(file)
+						return
+					}
+					
+					// 需要修正方向的图片
+					const reader = new FileReader()
+					const img = new Image()
+					
+					reader.onload = (e) => {
+						img.src = e.target.result
+						img.onload = () => {
+							try {
+								// 使用新的fixImageOrientation函数处理所有orientation值
+								const data = fixImageOrientation(img, orient)
 								const newFile = dataURLtoFile(data, file.name)
 								resolve(newFile)
+							} catch (error) {
+								console.error('图片处理失败:', error)
+								this.$message.warning('图片处理失败，将使用原图上传')
+								resolve(file)
 							}
 						}
-						reader.readAsDataURL(file)
-					} else {
-						resolve(file)
+						img.onerror = () => {
+							this.$message.error('图片加载失败')
+							reject(new Error('图片加载失败'))
+						}
 					}
+					reader.onerror = () => {
+						this.$message.error('文件读取失败')
+						reject(new Error('文件读取失败'))
+					}
+					reader.readAsDataURL(file)
+				}).catch((error) => {
+					console.error('获取EXIF信息失败:', error)
+					// EXIF读取失败时，直接上传原图
+					resolve(file)
 				})
 			})
 		},
 
 		urlToObj(str) {
-			var obj = {}
-			var arr1 = str.split('?')
-			var arr2 = arr1[1].split('&')
-			for (var i = 0; i < arr2.length; i++) {
-				var res = arr2[i].split('=')
-				obj[res[0]] = res[1]
+			const obj = {}
+			try {
+				// 尝试使用URL API（适用于绝对路径）
+				const url = new URL(str)
+				url.searchParams.forEach((value, key) => {
+					obj[key] = value
+				})
+			} catch (e) {
+				// 回退到手动解析（适用于相对路径）
+				const arr1 = str.split('?')
+				if (arr1.length > 1) {
+					const arr2 = arr1[1].split('&')
+					for (let i = 0; i < arr2.length; i++) {
+						const res = arr2[i].split('=')
+						if (res.length === 2) {
+							obj[decodeURIComponent(res[0])] = decodeURIComponent(res[1])
+						}
+					}
+				}
 			}
 			return obj
 		},
 
 		commitPost() {
 			const { type } = this
+			
+			// 检查是否有正在上传的图片
+			const uploadingFiles = Object.values(this.uploadProgress).filter(item => item.status === 'uploading')
+			if (uploadingFiles.length > 0) {
+				this.$message.warning('请等待图片上传完成后再发布')
+				return false
+			}
+			
 			this.hasCommitFinish = true
 			this.posts.status = this.status === true ? 'publish' : 'draft'
 			this.posts.content = window.tinymce.get('editor').getContent()
+			
 			if (this.posts.type === 'moments') {
+				// 清理旧的moment-gallery DOM
+				const tempDiv = document.createElement('div')
+				tempDiv.innerHTML = this.posts.content
+				const oldGalleries = tempDiv.querySelectorAll('.moment-gallery')
+				oldGalleries.forEach(gallery => gallery.remove())
+				this.posts.content = tempDiv.innerHTML
+				
+				// 构建新的图片DOM
 				let imgDom = ''
 				for (let index = 0; index < this.pictureList.length; index++) {
 					const element = this.pictureList[index]
 					imgDom += element.dom
 				}
-				// TODO: 需要清理旧的dom，再插入新的dom
-				this.posts.content += `<div class="moment-gallery flex-hb-vc flex-hw">${imgDom}</div>`
+				
+				// 插入新的图片gallery
+				if (imgDom) {
+					this.posts.content += `<div class="moment-gallery flex-hb-vc flex-hw">${imgDom}</div>`
+				}
 			}
 			const params = JSON.parse(JSON.stringify(this.posts))
 			params.post_metas = []
@@ -457,6 +601,8 @@ new Vue({
 				}
 			}
 			const format = this.posts.type
+			
+			// 验证标题（文章模式必填）
 			if (!params.title && format === 'posts') {
 				this.$message({
 					message: '标题不能为空！',
@@ -465,9 +611,22 @@ new Vue({
 				this.hasCommitFinish = false
 				return false
 			}
-			if (!params.content) {
+			
+			// 验证内容
+			const contentText = params.content.replace(/<[^>]*>/g, '').trim()
+			if (!contentText && this.pictureList.length === 0) {
 				this.$message({
 					message: '内容不能为空！',
+					type: 'warning',
+				})
+				this.hasCommitFinish = false
+				return false
+			}
+			
+			// 验证瞬间模式是否有图片
+			if (format === 'moments' && this.pictureList.length === 0) {
+				this.$message({
+					message: '瞬间至少需要一张图片！',
 					type: 'warning',
 				})
 				this.hasCommitFinish = false
@@ -490,11 +649,14 @@ new Vue({
 						this.$message({
 							message: type === 'update' ? '更新成功' : '发布成功',
 							type: 'success',
+							duration: 2000
 						})
+						// 清理上传进度
+						this.uploadProgress = {}
 						setTimeout(() => {
 							this.hasCommitFinish = false
 							window.location.href = this.siteUrl
-						}, 1500)
+						}, 2000)
 					}
 				})
 				.catch((err) => {

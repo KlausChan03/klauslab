@@ -347,6 +347,7 @@ const fixedPart = new Vue({
     };
   },
   mounted() {
+    const { mascot, season } = this
 
     // 切换背景功能
     let [background_, background_in, background_out] = [
@@ -361,7 +362,7 @@ const fixedPart = new Vue({
         background_out.querySelectorAll("li")[0].onclick = () => {
           Animation.closeGravity();
           Animation.closeSnow();
-          Animation.snow(this.mascot[self.season], 60);
+          Animation.snow(mascot[season], 60);
         };
         background_out.querySelectorAll("li")[0].ondblclick = () => {
           Animation.closeSnow();

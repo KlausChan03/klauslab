@@ -29,6 +29,21 @@ get_header();
   .commit-type {
     height: 60px;
   }
+
+  .image-preview-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+  }
+
+  .el-upload-list--picture-card .el-upload-list__item {
+    transition: all 0.3s;
+  }
+
+  .el-upload-list--picture-card .el-upload-list__item:hover {
+    transform: scale(1.05);
+  }
 </style>
 <script type="text/javascript">
   window._AMapSecurityConfig = {
@@ -41,18 +56,15 @@ get_header();
     <div class="post-header flex-hb-vc flex-hw">
       <div class="post-header-left">
         <el-popover placement="bottom" width="400" trigger="click" v-if="format === false">
-          <el-upload ref="upload" class="upload" list-type="picture-card" :limit="1" :on-exceed="handleExceed" :action=`${siteUrl}/wp-json/wp/v2/media` :on-progress="handleUploadBegin" :on-success="handleUploadSuccess" :before-upload="handleBeforeUpload" :headers="{'X-WP-Nonce': nonce}" multiple>
+          <el-upload ref="upload" class="upload" list-type="picture-card" :limit="1" :on-exceed="handleExceed" :action=`${siteUrl}/wp-json/wp/v2/media` :on-progress="handleUploadProgress" :on-success="handleUploadSuccess" :on-error="handleUploadError" :before-upload="handleBeforeUpload" :headers="{'X-WP-Nonce': nonce}" :file-list="format === false ? (posts.featured_media ? [{url: '', response: {id: posts.featured_media}}] : []) : []" accept="image/*" :auto-upload="true">
 
             <i slot="default" class="el-icon-plus"></i>
-            <div slot="tip" class="el-upload__tip">文章的背景</em></div>
+            <div slot="tip" class="el-upload__tip">文章的背景图（支持JPG、PNG格式，最大10MB）</div>
             <div slot="file" slot-scope="{file}">
               <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
               <span class="el-upload-list__item-actions">
                 <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
                   <i class="el-icon-zoom-in"></i>
-                </span>
-                <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleDownload(file)">
-                  <i class="el-icon-download"></i>
                 </span>
                 <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
                   <i class="el-icon-delete"></i>
@@ -63,17 +75,15 @@ get_header();
           <el-button class="upload-button mr-10" size="small" slot="reference"><i class="fs-20 el-icon-picture-outline fs-20 mr-10"></i>背景</el-button>
         </el-popover>
         <el-popover placement="bottom" width="400" trigger="click" v-if="format === true">
-          <el-upload ref="upload" class="upload" list-type="picture-card" :limit="9" :on-exceed="handleExceed" :action=`${siteUrl}/wp-json/wp/v2/media` :on-progress="handleUploadBegin" :on-success="handleUploadSuccess" :before-upload="handleBeforeUpload" :headers="{'X-WP-Nonce': nonce}" multiple>
+          <el-upload ref="upload" class="upload" list-type="picture-card" :limit="9" :on-exceed="handleExceed" :action=`${siteUrl}/wp-json/wp/v2/media` :on-progress="handleUploadProgress" :on-success="handleUploadSuccess" :on-error="handleUploadError" :before-upload="handleBeforeUpload" :headers="{'X-WP-Nonce': nonce}" multiple accept="image/*" :auto-upload="true">
+
             <i slot="default" class="el-icon-plus"></i>
-            <div slot="tip" class="el-upload__tip">瞬间的印象，支持最多九张图</em></div>
+            <div slot="tip" class="el-upload__tip">瞬间的印象，支持最多九张图（支持JPG、PNG格式，每张最大10MB）</div>
             <div slot="file" slot-scope="{file}">
               <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
               <span class="el-upload-list__item-actions">
                 <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
                   <i class="el-icon-zoom-in"></i>
-                </span>
-                <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleDownload(file)">
-                  <i class="el-icon-download"></i>
                 </span>
                 <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
                   <i class="el-icon-delete"></i>
@@ -169,8 +179,10 @@ get_header();
         </el-collapse-item>
       </el-collapse>
     </el-card>
-    <el-dialog :visible.sync="dialogVisible">
-      <img width="100%" :src="dialogImageUrl" alt="">
+    <el-dialog :visible.sync="dialogVisible" :close-on-click-modal="true" :close-on-press-escape="true" width="90%" top="5vh">
+      <div class="image-preview-container" style="text-align: center;">
+        <img :src="dialogImageUrl" alt="" style="max-width: 100%; max-height: 80vh; object-fit: contain;">
+      </div>
     </el-dialog>
     <el-dialog :visible.sync="ifShowLocationPopup" fullscreen show-close>
       <div id="location-container" class="location-container"> </div>

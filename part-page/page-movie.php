@@ -24,11 +24,36 @@ get_header();
       <h2>{{title}}</h2>
       <span class="secondary-color ml-10">{{tip}}</span>
     </div>
-    <div class="tips mt-15 flex-hb-vc" v-if="count">
-      <span>记录阅片数量：{{count}}</span>
-      <el-autocomplete v-model="state" :fetch-suggestions="querySearchAsync" placeholder="请输入内容" @select="handleSelect">
-        <el-button slot="append" icon="el-icon-search"></el-button>
-      </el-autocomplete>
+    <div class="tips mt-15 flex-hb-vc flex-hw" v-if="count">
+      <div class="flex-hl-vc">
+        <span class="mr-15">记录阅片数量：{{count}}</span>
+        <span class="mr-15">筛选后：{{listCommon.length}}</span>
+      </div>
+      <div class="flex-hl-vc flex-hw" style="flex-wrap: wrap; gap: 10px;">
+        <el-select v-model="filterYear" placeholder="年份" clearable style="width: 120px;" size="small" @change="handleFilterChange">
+          <el-option v-for="year in yearOptions" :key="year" :label="year" :value="year"></el-option>
+        </el-select>
+        <el-select v-model="filterRating" placeholder="豆瓣评分" clearable style="width: 140px;" size="small" @change="handleFilterChange">
+          <el-option label="9.0分以上" value="9.0"></el-option>
+          <el-option label="8.0-9.0分" value="8.0"></el-option>
+          <el-option label="7.0-8.0分" value="7.0"></el-option>
+          <el-option label="6.0-7.0分" value="6.0"></el-option>
+          <el-option label="6.0分以下" value="0"></el-option>
+        </el-select>
+        <el-select v-model="sortBy" placeholder="排序方式" style="width: 140px;" size="small" @change="handleSortChange">
+          <el-option label="观看时间（最新）" value="date_desc"></el-option>
+          <el-option label="观看时间（最早）" value="date_asc"></el-option>
+          <el-option label="豆瓣评分（高→低）" value="rating_desc"></el-option>
+          <el-option label="豆瓣评分（低→高）" value="rating_asc"></el-option>
+          <el-option label="我的评分（高→低）" value="my_rating_desc"></el-option>
+          <el-option label="我的评分（低→高）" value="my_rating_asc"></el-option>
+          <el-option label="年份（新→旧）" value="year_desc"></el-option>
+          <el-option label="年份（旧→新）" value="year_asc"></el-option>
+        </el-select>
+        <el-autocomplete v-model="state" :fetch-suggestions="querySearchAsync" placeholder="搜索电影名称" style="width: 200px;" size="small" @select="handleSelect" clearable>
+          <el-button slot="append" icon="el-icon-search" @click="handleSearch"></el-button>
+        </el-autocomplete>
+      </div>
     </div>
     <div id="douban-movie-list" class="entry-content doubanboard-list" v-loading="loadingAll">
       <template v-if="count">
@@ -42,11 +67,12 @@ get_header();
               </div>
               <div slot="cf" class="inner">
                 <h3>{{item.name}}</h3>
-                <p class="item-content mt-10" v-bind:title=item.remark>{{ item.remark }}</p>
-                <p class="item-extra flex-hr-vc mt-5">
-                  <el-tag class="flex-hr-vc mr-5 fs-12" size="mini" effect="dark" v-if="item.mark_myself">{{ Number(item.mark_myself).toFixed(1) }}</el-tag>
-                  <el-tag class="flex-hr-vc mr-5 fs-12" size="mini" effect="dark" type="success" v-if="item.mark_douban">{{ item.mark_douban }}</el-tag>
-                  <span>{{item.date}}</span>
+                <p class="item-content mt-10" v-bind:title=item.remark>{{ item.remark || '暂无评价' }}</p>
+                <p class="item-extra flex-hr-vc mt-5" style="flex-wrap: wrap; gap: 5px;">
+                  <el-tag class="flex-hr-vc mr-5 fs-12" size="mini" effect="dark" v-if="item.mark_myself" type="warning">我的评分: {{ Number(item.mark_myself).toFixed(1) }}</el-tag>
+                  <el-tag class="flex-hr-vc mr-5 fs-12" size="mini" effect="dark" type="success" v-if="item.mark_douban">豆瓣: {{ Number(item.mark_douban).toFixed(1) }}</el-tag>
+                  <el-tag class="flex-hr-vc mr-5 fs-12" size="mini" v-if="item.year" type="info">{{ item.year }}年</el-tag>
+                  <span class="fs-12 secondary-color">{{item.date}}</span>
                 </p>
               </div>
             </rotate-card>
@@ -82,7 +108,11 @@ get_header();
       ifShowMore: false,
       queryData: [],
       state: '',
-      timeout: null
+      timeout: null,
+      filterYear: '',
+      filterRating: '',
+      sortBy: 'date_desc',
+      yearOptions: []
     },
     mounted() {
       this.loadMovies();
@@ -91,8 +121,33 @@ get_header();
     },
     computed: {
       listCommon() {
-        const { list, listFilter } = this
-        return listFilter.length > 0 ? listFilter : list
+        let result = this.listFilter.length > 0 ? this.listFilter : this.list
+        
+        // 应用年份筛选
+        if (this.filterYear) {
+          result = result.filter(item => item.year === this.filterYear)
+        }
+        
+        // 应用评分筛选
+        if (this.filterRating) {
+          const rating = parseFloat(this.filterRating)
+          if (rating >= 9.0) {
+            result = result.filter(item => item.mark_douban && parseFloat(item.mark_douban) >= 9.0)
+          } else if (rating >= 8.0) {
+            result = result.filter(item => item.mark_douban && parseFloat(item.mark_douban) >= 8.0 && parseFloat(item.mark_douban) < 9.0)
+          } else if (rating >= 7.0) {
+            result = result.filter(item => item.mark_douban && parseFloat(item.mark_douban) >= 7.0 && parseFloat(item.mark_douban) < 8.0)
+          } else if (rating >= 6.0) {
+            result = result.filter(item => item.mark_douban && parseFloat(item.mark_douban) >= 6.0 && parseFloat(item.mark_douban) < 7.0)
+          } else if (rating === 0) {
+            result = result.filter(item => item.mark_douban && parseFloat(item.mark_douban) < 6.0)
+          }
+        }
+        
+        // 应用排序
+        result = this.applySort(result)
+        
+        return result
       }
     },
     methods: {
@@ -122,9 +177,11 @@ get_header();
               });
             }
             this.count = result.total;
-            if (this.list[0].name === '') {
+            if (this.list.length > 0 && this.list[0].name === '') {
               this.count = 0
             }
+            // 提取年份选项
+            this.extractYearOptions()
             this.curMovies += this.pageSize;
           } else if (code === 0) {
             this.$message({
@@ -161,7 +218,92 @@ get_header();
         };
       },
       handleSelect(item) {
-        console.log(item);
+        // 搜索选中后，筛选列表
+        this.listFilter = this.list.filter(movie => 
+          movie.name.toLowerCase().includes(item.value.toLowerCase())
+        )
+      },
+      handleSearch() {
+        // 手动搜索
+        if (this.state) {
+          this.listFilter = this.list.filter(movie => 
+            movie.name.toLowerCase().includes(this.state.toLowerCase())
+          )
+        } else {
+          this.listFilter = []
+        }
+      },
+      handleFilterChange() {
+        // 筛选改变时，清空搜索
+        this.listFilter = []
+        this.state = ''
+      },
+      handleSortChange() {
+        // 排序改变时，触发computed重新计算
+        this.$forceUpdate()
+      },
+      applySort(list) {
+        const sorted = [...list]
+        switch (this.sortBy) {
+          case 'date_desc':
+            return sorted.sort((a, b) => {
+              if (!a.date || !b.date) return 0
+              return new Date(b.date) - new Date(a.date)
+            })
+          case 'date_asc':
+            return sorted.sort((a, b) => {
+              if (!a.date || !b.date) return 0
+              return new Date(a.date) - new Date(b.date)
+            })
+          case 'rating_desc':
+            return sorted.sort((a, b) => {
+              const ratingA = parseFloat(a.mark_douban) || 0
+              const ratingB = parseFloat(b.mark_douban) || 0
+              return ratingB - ratingA
+            })
+          case 'rating_asc':
+            return sorted.sort((a, b) => {
+              const ratingA = parseFloat(a.mark_douban) || 0
+              const ratingB = parseFloat(b.mark_douban) || 0
+              return ratingA - ratingB
+            })
+          case 'my_rating_desc':
+            return sorted.sort((a, b) => {
+              const ratingA = parseFloat(a.mark_myself) || 0
+              const ratingB = parseFloat(b.mark_myself) || 0
+              return ratingB - ratingA
+            })
+          case 'my_rating_asc':
+            return sorted.sort((a, b) => {
+              const ratingA = parseFloat(a.mark_myself) || 0
+              const ratingB = parseFloat(b.mark_myself) || 0
+              return ratingA - ratingB
+            })
+          case 'year_desc':
+            return sorted.sort((a, b) => {
+              const yearA = parseInt(a.year) || 0
+              const yearB = parseInt(b.year) || 0
+              return yearB - yearA
+            })
+          case 'year_asc':
+            return sorted.sort((a, b) => {
+              const yearA = parseInt(a.year) || 0
+              const yearB = parseInt(b.year) || 0
+              return yearA - yearB
+            })
+          default:
+            return sorted
+        }
+      },
+      extractYearOptions() {
+        // 从列表中提取所有年份
+        const years = new Set()
+        this.list.forEach(item => {
+          if (item.year) {
+            years.add(item.year)
+          }
+        })
+        this.yearOptions = Array.from(years).sort((a, b) => parseInt(b) - parseInt(a))
       }
     },
   })

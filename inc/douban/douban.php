@@ -102,7 +102,7 @@ class DoubanAPI
     $file = fopen($FilePath, "r");
     if (!$file) {
       $file = fopen($FilePath, "w");
-      fwrite($file, json_encode(array('code' => '1', 'time' => '946656000', 'data' => array(array("name" => "", "img" => "", "url" => "", "remark" => "", "date" => "",  "mark_myself" => "", "mark_douban" => "")))));
+      fwrite($file, json_encode(array('code' => '1', 'time' => '946656000', 'data' => array(array("name" => "", "img" => "", "url" => "", "remark" => "", "date" => "", "year" => "", "mark_myself" => "", "mark_douban" => "")))));
       return -1;
     }
     $content = json_decode(fread($file, filesize($FilePath)));
@@ -128,12 +128,13 @@ class DoubanAPI
       if ($raw == null || $raw == "" || !$raw) break;
       $doc = new simple_html_dom;
       $doc->load($raw);
-      // $doc = str_get_html($raw);
       $itemArray = $doc->find("div.item");
       foreach ((array)$itemArray as $v) {
         $t = $v->find("li.title", 0);
         $r = $v->find("li", 3);
         $m = $v->find("li", 2);
+        
+        // 获取电影名称
         $movie_name = str_replace(strstr(str_replace(
           array(" ", "　", "\t", "\n", "\r"),
           array("", "", "", "", ""),
@@ -143,30 +144,96 @@ class DoubanAPI
           array("", "", "", "", ""),
           $t->text()
         ));
+        
         $movie_img  = $v->find("div.pic a img", 0)->src;
         $movie_url  = $t->find("a", 0)->href;
-        $movie_remark  = $r->find("span.comment", 0) ? $r->find("span.comment", 0)->text() : '';
+        $movie_remark  = $r->find("span.comment", 0) ? trim($r->find("span.comment", 0)->text()) : '';
+        
+        // 获取个人评分
         $movie_mark_myself = '';
         $movie_mark_myself_before =  $m->find("span", 0)->class;
         $movie_mark_myself  = $movie_mark_myself_before ? floatval(preg_replace('/[^0-9]/', '', $movie_mark_myself_before) * 2) : '';
+        
+        // 获取观看日期
         $movie_date_before = $m->find("span", 1)->text();
-        $movie_date = $movie_date_before ? str_replace("\"", "\'", $movie_date_before) : '';
-        // $movie_tags = str_replace("\"", "\'", $m->find("span", 2)->text());
-        // TODO: 临时注释
+        $movie_date = $movie_date_before ? str_replace("\"", "\'", trim($movie_date_before)) : '';
+        
+        // 从日期中提取年份
+        $movie_year = '';
+        if ($movie_date) {
+          // 尝试从日期字符串中提取年份（格式可能是 "2024-01-01" 或 "2024年1月1日"）
+          if (preg_match('/(\d{4})/', $movie_date, $matches)) {
+            $movie_year = $matches[1];
+          }
+        }
+        
+        // 获取豆瓣官方评分 - 方法1：从列表页获取
         $movie_mark_douban = '';
-        // if ($movie_url) {
-        //     $api_num = cut_str($movie_url, '/', -2);
-        //     $api_movie = 'https://movie.douban.com/subject/' . $api_num . '/';
-        //     $raw_movie = self::curl_file_get_contents($api_movie);
-        //     $doc_movie = new simple_html_dom; 
-        //     $doc_movie -> load($raw_movie);                 
-        //     $movie_mark_douban_before = $doc_movie->find("strong.rating_num", 0)->text() ;
-        //     $movie_mark_douban = $movie_mark_douban_before ? floatval($movie_mark_douban_before) : '';
-        // }
-        // TODO: 临时注释
-        // $movie_remark  = $r->find("span.comment", 0) ? var_dump(trim($r->find("span.comment", 0)->text())) : '';
+        // 尝试从列表页的评分区域获取（多种可能的class名称）
+        $rating_selectors = array("span.rating", "span[class*=rating]", "div.rating");
+        foreach ($rating_selectors as $selector) {
+          $rating_span = $v->find($selector, 0);
+          if ($rating_span) {
+            $rating_class = $rating_span->class;
+            // 匹配 rating5-t, rating45-t 等格式
+            if (preg_match('/rating(\d+)-t/', $rating_class, $matches)) {
+              $movie_mark_douban = floatval($matches[1]) / 10; // 转换为10分制
+              break;
+            }
+            // 匹配其他可能的格式
+            if (preg_match('/rating(\d+)/', $rating_class, $matches)) {
+              $rating_value = floatval($matches[1]);
+              if ($rating_value > 0 && $rating_value <= 50) {
+                $movie_mark_douban = $rating_value / 10;
+                break;
+              }
+            }
+          }
+        }
+        
+        // 方法2：尝试从列表页的文本中提取评分
+        if (empty($movie_mark_douban)) {
+          $info_text = $v->plaintext;
+          // 查找类似 "8.5" 的评分格式
+          if (preg_match('/(\d+\.\d+)\s*分/', $info_text, $matches)) {
+            $potential_rating = floatval($matches[1]);
+            if ($potential_rating >= 0 && $potential_rating <= 10) {
+              $movie_mark_douban = $potential_rating;
+            }
+          }
+        }
+        
+        // 方法3：如果列表页没有评分，尝试从详情页获取（延迟获取，避免频繁请求）
+        // 注意：这里可以选择是否启用详情页获取，因为会增加请求次数
+        // 如果启用，建议添加缓存机制
+        if (empty($movie_mark_douban) && $movie_url && false) { // 默认关闭，避免过多请求
+          $movie_mark_douban = self::__getMovieRatingFromDetail($movie_url);
+          // 添加延迟，避免请求过快
+          usleep(500000); // 0.5秒延迟
+        }
+        
+        // 如果还是没有年份，尝试从电影名称后的信息中获取年份
+        if (empty($movie_year)) {
+          $title_text = $t->text();
+          // 提取年份（通常在电影名称后，格式如 "2024"）
+          // 只匹配1900-2099之间的年份，避免误匹配
+          if (preg_match('/\b(19\d{2}|20\d{2})\b/', $title_text, $year_matches)) {
+            $movie_year = $year_matches[1];
+          }
+        }
+        
         if ($oldData == $movie_name) return $data;
-        $data[] = array("name" => $movie_name, "img" => 'https://images.weserv.nl/?url=' . $movie_img, "url" => $movie_url, "remark" => $movie_remark, "date" => $movie_date,  "mark_myself" => $movie_mark_myself, "mark_douban" => $movie_mark_douban);
+        
+        $data[] = array(
+          "name" => $movie_name, 
+          "img" => 'https://images.weserv.nl/?url=' . $movie_img, 
+          "url" => $movie_url, 
+          "remark" => $movie_remark, 
+          "date" => $movie_date,
+          "year" => $movie_year,
+          "mark_myself" => $movie_mark_myself, 
+          "mark_douban" => $movie_mark_douban
+        );
       }
       $url = $doc->find("span.next a", 0);
       if ($url) {
@@ -177,6 +244,58 @@ class DoubanAPI
     }
     return $data;
   }
+  
+  /**
+   * 从电影详情页获取豆瓣官方评分
+   * 
+   * @access  private
+   * @param   string    $movieUrl     电影详情页URL
+   * @return  float     返回评分，失败返回空字符串
+   */
+  private static function __getMovieRatingFromDetail($movieUrl)
+  {
+    try {
+      $raw_movie = self::curl_file_get_contents($movieUrl);
+      if (!$raw_movie) return '';
+      
+      $doc_movie = new simple_html_dom;
+      $doc_movie->load($raw_movie);
+      
+      // 方法1: 查找 strong.rating_num
+      $rating_elem = $doc_movie->find("strong.rating_num", 0);
+      if ($rating_elem) {
+        $rating_text = trim($rating_elem->text());
+        if ($rating_text && is_numeric($rating_text)) {
+          return floatval($rating_text);
+        }
+      }
+      
+      // 方法2: 查找评分相关的其他元素
+      $rating_span = $doc_movie->find("span[property=v:average]", 0);
+      if ($rating_span) {
+        $rating_text = trim($rating_span->text());
+        if ($rating_text && is_numeric($rating_text)) {
+          return floatval($rating_text);
+        }
+      }
+      
+      // 方法3: 从评分区域查找
+      $rating_wrapper = $doc_movie->find("div.rating_wrap", 0);
+      if ($rating_wrapper) {
+        $rating_num = $rating_wrapper->find("strong", 0);
+        if ($rating_num) {
+          $rating_text = trim($rating_num->text());
+          if ($rating_text && is_numeric($rating_text)) {
+            return floatval($rating_text);
+          }
+        }
+      }
+      
+      return '';
+    } catch (Exception $e) {
+      return '';
+    }
+  }
 
   public static function curl_file_get_contents($_url)
   {
@@ -186,11 +305,26 @@ class DoubanAPI
     curl_setopt($myCurl, CURLOPT_SSL_VERIFYHOST, false);
     curl_setopt($myCurl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($myCurl, CURLOPT_REFERER, 'https://www.douban.com');
-    curl_setopt($myCurl,  CURLOPT_HEADER, false);
+    curl_setopt($myCurl, CURLOPT_HEADER, false);
+    // 设置User-Agent，模拟浏览器访问
+    curl_setopt($myCurl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+    // 设置超时时间
+    curl_setopt($myCurl, CURLOPT_TIMEOUT, 30);
+    curl_setopt($myCurl, CURLOPT_CONNECTTIMEOUT, 10);
+    // 跟随重定向
+    curl_setopt($myCurl, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($myCurl, CURLOPT_MAXREDIRS, 3);
     //获取
     $content = curl_exec($myCurl);
+    $httpCode = curl_getinfo($myCurl, CURLINFO_HTTP_CODE);
     //关闭
     curl_close($myCurl);
+    
+    // 检查HTTP状态码
+    if ($httpCode !== 200 || !$content) {
+      return null;
+    }
+    
     return $content;
   }
 }
